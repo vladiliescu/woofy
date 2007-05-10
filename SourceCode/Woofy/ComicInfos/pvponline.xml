@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="PvP Online">
+    <startUrl><![CDATA[http://www.pvponline.com/article]]></startUrl>
+    <comicRegex><![CDATA[http://www\.pvponline\.com/images/[a-zA-Z0-9]*\.(gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>http://www.pvponline.com/article/[0-9]*/[a-zA-Z0-9-]*)"\sid="backBtn">]]></backButtonRegex>
+</comicInfo>

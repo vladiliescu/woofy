@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Sinfest">
+    <startUrl><![CDATA[http://www.sinfest.net]]></startUrl>
+    <comicRegex><![CDATA[http://sinfest\.net/comikaze/comics/[0-9]{4}-[0-9]{2}-[0-9]{2}\.(gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>http://sinfest\.net/archive_page\.php\?comicID=[0-9]*)"><img\ssrc="images/prev_a\.gif"\sborder="0"\salt="Previous"\s/></a>]]></backButtonRegex>
+</comicInfo>

@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Ugly Hill">
+    <startUrl><![CDATA[http://www.uglyhill.com]]></startUrl>
+    <comicRegex><![CDATA[(?<contentToBeMerged>/comics/[0-9]{8}_?[^.]*\.(gif|jpg|jpeg|png))]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<contentToBeMerged>/d/[0-9]{8}\.html)"\starget="_self"><img\sborder=0\ssrc="/images/back_button\.gif"></a>]]></backButtonRegex>
+</comicInfo>

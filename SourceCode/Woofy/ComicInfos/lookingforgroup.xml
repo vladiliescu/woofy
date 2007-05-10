@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Looking for Group">
+    <startUrl><![CDATA[http://www.lfgcomic.com]]></startUrl>
+    <comicRegex><![CDATA[http://archive\.lfgcomic\.com/lfg[0-9]{4}\.(gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[<li\sclass="cn-prev"><a\shref="(?<contentToBeMerged>/page/[0-9]*)"><span>&lt;Previous</span></a></li>]]></backButtonRegex>
+</comicInfo>
