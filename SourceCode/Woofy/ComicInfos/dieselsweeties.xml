@@ -2,5 +2,5 @@
 <comicInfo friendlyName="Diesel Sweeties">
     <startUrl><![CDATA[http://www.dieselsweeties.com/]]></startUrl>
     <comicRegex><![CDATA[(?<contentToBeMerged>hstrips/[0-9]{1}/[0-9]{1}/[0-9]{1}/[0-9]{1}/[0-9]{5}\.(gif|jpg|jpeg|png))]]></comicRegex>
-    <backButtonRegex><![CDATA[(<a\shref="(?<contentToBeMerged>archive\.php\?s=[0-9]{4})"><img\ssrc="http://www\.dieselsweeties\.com/images2/bluebackarrow\.png"\salt="previous\scomic")|(<a\stitle="read\sthe\sprevious\scomic"\shref="(?<contentToBeMerged>archive\.php\?s=[0-9]{4})"><img\ssrc="/images2/prev\.gif")]]></backButtonRegex>
+    <backButtonRegex><![CDATA[<a\s(title="read\sthe\sprevious\scomic"\s)?href="(?<contentToBeMerged>archive\.php\?s=[0-9]*)">previous\scomic</a>]]></backButtonRegex>
 </comicInfo>
