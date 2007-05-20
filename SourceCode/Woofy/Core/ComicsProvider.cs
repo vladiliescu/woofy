@@ -189,7 +189,7 @@ namespace Woofy.Core
         public string[] RetrieveComicLinksFromPage(string pageContent, ComicInfo comicInfo)
         {
             List<string> comicLinks = new List<string>();
-            MatchCollection comicMatches = Regex.Matches(pageContent, _comicInfo.ComicRegex, RegexOptions.IgnoreCase | RegexOptions.Multiline);
+            MatchCollection comicMatches = Regex.Matches(pageContent, _comicInfo.ComicRegex, RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace);
 
             foreach (Match comicMatch in comicMatches)
             {
@@ -229,7 +229,7 @@ namespace Woofy.Core
         public string[] RetrieveBackButtonLinksFromPage(string pageContent, ComicInfo comicInfo)
         {
             List<string> backButtonLinks = new List<string>();
-            MatchCollection backButtonMatches = Regex.Matches(pageContent, _comicInfo.BackButtonRegex, RegexOptions.IgnoreCase | RegexOptions.Multiline);
+            MatchCollection backButtonMatches = Regex.Matches(pageContent, _comicInfo.BackButtonRegex, RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace);
 
             foreach (Match backButtonMatch in backButtonMatches)
             {
