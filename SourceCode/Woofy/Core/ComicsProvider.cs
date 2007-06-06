@@ -81,7 +81,7 @@ namespace Woofy.Core
         /// <param name="comicInfo">An instance of the <see cref="ComicInfo"/> class, used to determine how to get the comic links.</param>
         public ComicsProvider(ComicInfo comicInfo)
             : this(comicInfo, new ComicsDownloader())
-        {            
+        {
         }
 
 
@@ -120,6 +120,12 @@ namespace Woofy.Core
             DownloadComicsRecursive(comicsToDownload, downloadDirectory, _comicInfo.StartUrl);
         }
 
+        /// <summary>
+        /// Downloads the first <see cref="comicsToDownload"/> comic links.
+        /// </summary>
+        /// <param name="comicsToDownload">Number of comics to download. Pass <see cref="AllAvailableComics"/> in order to download all the available comics.</param>
+        /// <param name="downloadDirectory">A string representing the name of the directory to which to download the comics. If it doesn't exist, it will be created.</param>
+        /// <param name="startUrl">The url at which to start the download.</param>
         public void DownloadComicsRecursive(int comicsToDownload, string downloadDirectory, string startUrl)
         {
             if (comicsToDownload != ComicsProvider.AllAvailableComics && comicsToDownload <= 0)
@@ -129,6 +135,15 @@ namespace Woofy.Core
             using (WebClient client = new WebClient())
             {
                 client.Credentials = CredentialCache.DefaultNetworkCredentials;
+
+                WebProxy proxy = null;
+                if (!string.IsNullOrEmpty(Settings.Default.ProxyAddress))
+                {
+                    proxy = new WebProxy(Settings.Default.ProxyAddress, Settings.Default.ProxyPort);
+                    proxy.Credentials = CredentialCache.DefaultNetworkCredentials;
+                    client.Proxy = proxy;
+                }
+
                 string currentUrl = startUrl;
                 bool fileDownloaded;
                 for (int i = 0; i < comicsToDownload || comicsToDownload == ComicsProvider.AllAvailableComics; i++)
@@ -141,7 +156,7 @@ namespace Woofy.Core
                     if (string.IsNullOrEmpty(comicLink))
                         break;
 
-                    fileDownloaded = _comicsHandler.DownloadComic(comicLink, downloadDirectory);
+                    fileDownloaded = _comicsHandler.DownloadComic(comicLink, downloadDirectory, proxy);
                     if (!fileDownloaded && comicsToDownload == ComicsProvider.AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
                         break;
 

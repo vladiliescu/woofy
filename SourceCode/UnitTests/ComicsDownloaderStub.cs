@@ -19,8 +19,13 @@ namespace UnitTests
 
         public bool DownloadComic(string comicLink, string downloadDirectory)
         {
+            return DownloadComic(comicLink, downloadDirectory, null);
+        }
+
+        public bool DownloadComic(string comicLink, string downloadDirectory, System.Net.WebProxy proxy)
+        {
             _comicLinks.Add(comicLink);
-            
+
             return true;
         }
 

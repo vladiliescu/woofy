@@ -12,10 +12,27 @@ namespace Woofy.Gui
 {
     public partial class SettingsForm : Form
     {
+        #region .ctor
         public SettingsForm()
         {
             InitializeComponent();
-        }
+
+            InitControls();
+        } 
+        #endregion
+
+        #region Helper Methods
+        private void InitControls()
+        {
+            if (!string.IsNullOrEmpty(Settings.Default.ProxyAddress))
+            {
+                txtProxyAddress.Text = Settings.Default.ProxyAddress;
+                txtProxyPort.Text = Settings.Default.ProxyPort.ToString();
+
+                chkUseProxy.Checked = true;
+            }
+        } 
+        #endregion
 
         #region Events - clicks
         private void btnCancel_Click(object sender, EventArgs e)
@@ -26,7 +43,22 @@ namespace Woofy.Gui
 
         private void btnOK_Click(object sender, EventArgs e)
         {
+            if (!string.IsNullOrEmpty(errorProvider.GetError(txtProxyPort)))
+                return;
+
+            if (chkUseProxy.Checked)
+            {
+                Settings.Default.ProxyAddress = txtProxyAddress.Text;
+                Settings.Default.ProxyPort = int.Parse(txtProxyPort.Text);
+            }
+            else
+            {
+                Settings.Default.ProxyAddress = string.Empty;
+                Settings.Default.ProxyPort = -1;
+            }
+
             Settings.Default.Save();
+
             this.DialogResult = DialogResult.OK;
         }
 
@@ -37,6 +69,27 @@ namespace Woofy.Gui
 
             if (folderBrowser.ShowDialog() == DialogResult.OK)
                 txtDefaultDownloadFolder.Text = folderBrowser.SelectedPath;
+        } 
+        #endregion
+
+        #region Events - chkUseProxy
+        private void chkUseProxy_CheckedChanged(object sender, EventArgs e)
+        {
+            lblAddress.Enabled = 
+                lblPort.Enabled = 
+                txtProxyAddress.Enabled =
+                txtProxyPort.Enabled = chkUseProxy.Checked;
+        } 
+        #endregion
+
+        #region Events - Validation
+        private void txtProxyPort_Validating(object sender, CancelEventArgs e)
+        {
+            int tempValue;
+            if (!int.TryParse(txtProxyPort.Text, out tempValue))
+                errorProvider.SetError(txtProxyPort, "The proxy port must be a valid integer value.");
+            else
+                errorProvider.SetError(txtProxyPort, null);
         } 
         #endregion
     }

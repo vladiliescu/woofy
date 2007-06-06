@@ -53,6 +53,17 @@ namespace Woofy.Core
         /// <returns>True if the comic was downloaded, false otherwise. A comic may not be downloaded when a file with the same name exists in the same location.</returns>
         public bool DownloadComic(string comicLink, string downloadDirectory)
         {
+            return DownloadComic(comicLink, downloadDirectory, null);
+        }
+
+        /// <summary>
+        /// Downloads the comics to the specified directory, creating it if it doesn't exist.
+        /// </summary>
+        /// <param name="comics">List of comics to handle.</param>
+        /// <param name="downloadDirectory">A string representing the name of the directory to which to download the comics. If it doesn't exist, it will be created.</param>
+        /// <returns>True if the comic was downloaded, false otherwise. A comic may not be downloaded when a file with the same name exists in the same location.</returns>
+        public bool DownloadComic(string comicLink, string downloadDirectory, WebProxy proxy)
+        {
             if (string.IsNullOrEmpty(downloadDirectory))
                 throw new ArgumentNullException("downloadDirectory", "The <downloadDirectory> parameter must be used to specify the name of the directory to which to download the comics.");
 
@@ -67,7 +78,8 @@ namespace Woofy.Core
 
             using (WebClient client = new WebClient())
             {
-                client.Credentials = CredentialCache.DefaultNetworkCredentials;               
+                client.Credentials = CredentialCache.DefaultNetworkCredentials;
+                client.Proxy = proxy;                
                 
                 try
                 {

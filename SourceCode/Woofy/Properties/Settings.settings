@@ -23,5 +23,11 @@
     <Setting Name="ContentToBeMerged" Type="System.String" Scope="Application">
       <Value Profile="(Default)">contentToBeMerged</Value>
     </Setting>
+    <Setting Name="ProxyAddress" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ProxyPort" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">-1</Value>
+    </Setting>
   </Settings>
 </SettingsFile>
