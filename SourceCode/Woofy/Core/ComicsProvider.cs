@@ -11,55 +11,7 @@ namespace Woofy.Core
 {
     public class ComicsProvider
     {
-        #region DownloadThreadData Class
-        private class DownloadThreadData
-        {
-            private int _comicsToDownload;
-            /// <summary>
-            /// Number of comics to download. Pass <see cref="AllAvailableComics"/> in order to download all the available comics.
-            /// </summary>
-            public int ComicsToDownload
-            {
-                get { return _comicsToDownload; }
-            }
-
-            private string _downloadDirectory;
-            /// <summary>
-            /// A string representing the name of the directory to which to download the comics. If it doesn't exist, it will be created.
-            /// </summary>
-            public string DownloadDirectory
-            {
-                get { return _downloadDirectory; }
-            }
-
-            private string _startUrl;
-            /// <summary>
-            /// The url at which to start the downloading process.
-            /// </summary>
-            public string StartUrl
-            {
-                get { return _startUrl; }
-            }
-
-            public DownloadThreadData(int comicsToDownload, string downloadDirectory, string startUrl)
-            {
-                _comicsToDownload = comicsToDownload;
-                _downloadDirectory = downloadDirectory;
-                _startUrl = startUrl;
-            }
-        }
-        #endregion
-
         #region Public Properties
-        private ComicInfo _comicInfo;
-        /// <summary>
-        /// Gets the <see cref="ComicInfo"/> instance used.
-        /// </summary>
-        public ComicInfo ComicInfo
-        {
-            get { return _comicInfo; }
-        }
-
         /// <summary>
         /// Causes the <see cref="ComicsProvider"/> to get all available comics, instead of a fixed number.
         /// </summary>
@@ -70,8 +22,13 @@ namespace Woofy.Core
         #endregion
 
         #region Instance Members
-        private Thread _downloadThread;
-        private IComicsDownloader _comicsHandler;
+        private IComicsDownloader _comicsDownloader;
+        private ComicInfo _comicInfo;
+        private WebClient _client;
+        private bool _isDownloadCancelled;
+        private int _comicsToDownload;
+        private int _comicsDownloaded;
+        private string _backButtonLink;
         #endregion
 
         #region .ctor
@@ -79,104 +36,112 @@ namespace Woofy.Core
         /// Initializes a new instance of the <see cref="ComicsProvider"/> class.
         /// </summary>
         /// <param name="comicInfo">An instance of the <see cref="ComicInfo"/> class, used to determine how to get the comic links.</param>
-        public ComicsProvider(ComicInfo comicInfo)
-            : this(comicInfo, new ComicsDownloader())
+        /// <param name="downloadFolder">The folder to which the comics should be downloaded.</param>
+        public ComicsProvider(ComicInfo comicInfo, string downloadFolder)
         {
-        }
+            WebProxy proxy = null;
+            if (!string.IsNullOrEmpty(Settings.Default.ProxyAddress))
+            {
+                proxy = new WebProxy(Settings.Default.ProxyAddress, Settings.Default.ProxyPort);
+                proxy.Credentials = CredentialCache.DefaultNetworkCredentials;
+            }
 
+            InitInstanceMembers(comicInfo, new ComicsDownloader(downloadFolder, proxy), proxy);
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ComicsProvider"/> class.
         /// </summary>
         /// <param name="comicInfo">An instance of the <see cref="ComicInfo"/> class, used to determine how to get the comic links.</param>
-        public ComicsProvider(ComicInfo comicInfo, IComicsDownloader comicsHandler)
+        public ComicsProvider(ComicInfo comicInfo, IComicsDownloader comicsDownloader)
         {
-            _comicInfo = comicInfo;
-            _comicsHandler = comicsHandler;
+            InitInstanceMembers(comicInfo, comicsDownloader, null);
         }
         #endregion
 
         #region Public Methods
-
-        public void StartDownloadComicsRecursive(int comicsToDownload, string downloadDirectory)
+        
+        /// <summary>
+        /// Downloads the specified number of comic strips.
+        /// </summary>
+        /// <param name="comicsToDownload">Number of comics to download. Pass <see cref="AllAvailableComics"/> in order to download all the available comics.</param>
+        public void DownloadComics(int comicsToDownload)
         {
-            StartDownloadComicsRecursive(comicsToDownload, downloadDirectory, _comicInfo.StartUrl);
-        }
-
-        public void StartDownloadComicsRecursive(int comicsToDownload, string downloadDirectory, string startUrl)
-        {
-            _downloadThread = new Thread(new ParameterizedThreadStart(DownloadComicsRecursiveFromThread));
-            _downloadThread.IsBackground = true;
-            _downloadThread.Start(new DownloadThreadData(comicsToDownload, downloadDirectory, startUrl));
+            DownloadComics(comicsToDownload, _comicInfo.StartUrl);
         }
 
         /// <summary>
-        /// Downloads the first <see cref="comicsToDownload"/> comic links.
+        /// Downloads the specified number of comic strips.
         /// </summary>
         /// <param name="comicsToDownload">Number of comics to download. Pass <see cref="AllAvailableComics"/> in order to download all the available comics.</param>
-        /// <param name="downloadDirectory">A string representing the name of the directory to which to download the comics. If it doesn't exist, it will be created.</param>
-        public void DownloadComicsRecursive(int comicsToDownload, string downloadDirectory)
+        /// <param name="startUrl">Url at which the download should start.</param>
+        public void DownloadComics(int comicsToDownload, string startUrl)
         {
-            DownloadComicsRecursive(comicsToDownload, downloadDirectory, _comicInfo.StartUrl);
+            string currentUrl = startUrl;
+            bool fileAlreadyDownloaded;
+            for (int i = 0; i < comicsToDownload || comicsToDownload == ComicsProvider.AllAvailableComics; i++)
+            {
+                if (_isDownloadCancelled)
+                    return;
+
+                string pageContent = _client.DownloadString(currentUrl);
+
+                string comicLink = RetrieveComicLinkFromPage(pageContent, _comicInfo);
+                string backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, _comicInfo);
+
+                if (string.IsNullOrEmpty(comicLink))
+                    break;
+
+                _comicsDownloader.DownloadComic(comicLink, out fileAlreadyDownloaded);
+                
+                OnDownloadComicCompleted(new DownloadSingleComicCompletedEventArgs(i + 1, currentUrl));
+
+                if (fileAlreadyDownloaded && comicsToDownload == ComicsProvider.AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
+                    break;                
+                if (string.IsNullOrEmpty(backButtonLink))
+                    break;
+
+                currentUrl = backButtonLink;
+            }
+
+            OnDownloadCompleted();
         }
 
         /// <summary>
-        /// Downloads the first <see cref="comicsToDownload"/> comic links.
+        /// Downloads the specified number of comic strips asynchronously.
         /// </summary>
         /// <param name="comicsToDownload">Number of comics to download. Pass <see cref="AllAvailableComics"/> in order to download all the available comics.</param>
-        /// <param name="downloadDirectory">A string representing the name of the directory to which to download the comics. If it doesn't exist, it will be created.</param>
-        /// <param name="startUrl">The url at which to start the download.</param>
-        public void DownloadComicsRecursive(int comicsToDownload, string downloadDirectory, string startUrl)
+        public void DownloadComicsAsync(int comicsToDownload)
+        {
+            DownloadComicsAsync(comicsToDownload, _comicInfo.StartUrl);
+        }
+
+        /// <summary>
+        /// Downloads the specified number of comic strips asynchronously.
+        /// </summary>
+        /// <param name="comicsToDownload">Number of comics to download. Pass <see cref="AllAvailableComics"/> in order to download all the available comics.</param>
+        /// <param name="startUrl">Url at which the download should start.</param>
+        public void DownloadComicsAsync(int comicsToDownload, string startUrl)
         {
             if (comicsToDownload != ComicsProvider.AllAvailableComics && comicsToDownload <= 0)
                 throw new ArgumentOutOfRangeException("comicsToDownload", "Number of comics to download must be greater than zero or equal to ComicsProvider.AllAvailableComics.");
 
+            if (string.IsNullOrEmpty(startUrl))
+                throw new ArgumentNullException("startUrl");
 
-            using (WebClient client = new WebClient())
-            {
-                client.Credentials = CredentialCache.DefaultNetworkCredentials;
-
-                WebProxy proxy = null;
-                if (!string.IsNullOrEmpty(Settings.Default.ProxyAddress))
+            ThreadPool.UnsafeQueueUserWorkItem(
+                delegate
                 {
-                    proxy = new WebProxy(Settings.Default.ProxyAddress, Settings.Default.ProxyPort);
-                    proxy.Credentials = CredentialCache.DefaultNetworkCredentials;
-                    client.Proxy = proxy;
-                }
-
-                string currentUrl = startUrl;
-                bool fileDownloaded;
-                for (int i = 0; i < comicsToDownload || comicsToDownload == ComicsProvider.AllAvailableComics; i++)
-                {
-                    string pageContent = client.DownloadString(currentUrl);
-
-                    string comicLink = RetrieveComicLinkFromPage(pageContent, _comicInfo);
-                    string backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, _comicInfo);
-
-                    if (string.IsNullOrEmpty(comicLink))
-                        break;
-
-                    fileDownloaded = _comicsHandler.DownloadComic(comicLink, downloadDirectory, proxy);
-                    if (!fileDownloaded && comicsToDownload == ComicsProvider.AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
-                        break;
-
-                    if (string.IsNullOrEmpty(backButtonLink))
-                    {
-                        OnComicDownloaded(new ComicEventArgs(i + 1, string.Empty));
-                        break;
-                    }
-
-                    currentUrl = backButtonLink;
-                    OnComicDownloaded(new ComicEventArgs(i + 1, currentUrl));
-                }
-
-                OnAllComicsDownloaded(EventArgs.Empty);
-            }
+                    DownloadComicsInternal(comicsToDownload, startUrl);
+                }, null);
         }
 
-        public void PauseDownload()
+        /// <summary>
+        /// Stops the current download.
+        /// </summary>
+        public void StopDownload()
         {
-            _downloadThread.Abort();
+            _isDownloadCancelled = true;
         }
         #endregion
 
@@ -261,72 +226,160 @@ namespace Woofy.Core
             return backButtonLinks.ToArray();
         }
 
-        private void DownloadComicsRecursiveFromThread(object state)
+        /// <summary>
+        /// Does the actual job of asynchronously downloading the comic strips.
+        /// </summary>
+        /// <param name="comicsToDownload">Number of comics to download. Pass <see cref="AllAvailableComics"/> in order to download all the available comics.</param>
+        /// <param name="startUrl">Url at which the download should start.</param>
+        private void DownloadComicsAsyncInternal(int comicsToDownload, string startUrl)
         {
-            DownloadThreadData threadData = (DownloadThreadData)state;
-            DownloadComicsRecursive(threadData.ComicsToDownload, threadData.DownloadDirectory, threadData.StartUrl);
+            string currentUrl = startUrl;
+            string pageContent = _client.DownloadString(currentUrl);
+
+            string comicLink = RetrieveComicLinkFromPage(pageContent, _comicInfo);
+            string backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, _comicInfo);
+
+            if (string.IsNullOrEmpty(comicLink))
+            {
+                OnDownloadCompleted();
+                return;
+            }
+
+            _comicsToDownload = comicsToDownload;
+            _comicsDownloaded = 0;
+            _backButtonLink = backButtonLink;
+
+            _comicsDownloader.DownloadComicAsync(comicLink);
+        }
+
+        /// <summary>
+        /// Initializes the instance members using the specified arguments.
+        /// </summary>
+        /// <param name="comicInfo">The comic information file to be used.</param>
+        /// <param name="comicsDownloader">An instance of <see cref="IComicsDownloader"/>.</param>
+        /// <param name="proxy">The proxy used to connect to the web site. Can be null.</param>
+        private void InitInstanceMembers(ComicInfo comicInfo, IComicsDownloader comicsDownloader, WebProxy proxy)
+        {
+            _comicInfo = comicInfo;
+            _comicsDownloader = comicsDownloader;
+
+            _client = new WebClient();
+            _client.Credentials = CredentialCache.DefaultNetworkCredentials;
+            _client.Proxy = proxy;
+
+            _comicsDownloader.DownloadComicCompleted += new EventHandler<DownloadComicCompletedEventArgs>(DownloadComicCompletedCallback);
         }
         #endregion
 
-        #region ComicDownloaded Event
-        private object _comicDownloadedLock = new object();
-        private event EventHandler<ComicEventArgs> _comicDownloaded;
-        public event EventHandler<ComicEventArgs> ComicDownloaded
+        #region Callbacks
+        /// <summary>
+        /// Called when a comic is downloaded in async mode.
+        /// </summary>
+        private void DownloadComicCompletedCallback(object sender, DownloadComicCompletedEventArgs e)
+        {
+            _comicsDownloaded++;
+            string currentUrl = _backButtonLink;
+
+            if (e.ComicAlreadyDownloaded && _comicsToDownload == ComicsProvider.AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
+            {
+                OnDownloadCompleted();
+                return;
+            }
+
+            OnDownloadComicCompleted(new DownloadSingleComicCompletedEventArgs(_comicsDownloaded, currentUrl));
+
+            if (string.IsNullOrEmpty(currentUrl))
+            {
+                OnDownloadCompleted();
+                return;
+            }
+
+            if (_comicsDownloaded == _comicsToDownload)
+            {
+                OnDownloadCompleted();
+                return;
+            }
+
+            string pageContent = _client.DownloadString(currentUrl);
+
+            string comicLink = RetrieveComicLinkFromPage(pageContent, _comicInfo);
+            _backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, _comicInfo);
+
+            if (string.IsNullOrEmpty(comicLink))
+            {
+                OnDownloadCompleted();
+                return;
+            }
+            _comicsDownloader.DownloadComicAsync(comicLink);
+        }
+        #endregion
+
+        #region DownloadComicCompleted Event
+        private object _downloadComicCompletedLock = new object();
+        private event EventHandler<DownloadSingleComicCompletedEventArgs> _downloadComicCompleted;
+        /// <summary>
+        /// Occurs when a single comic is downloaded.
+        /// </summary>
+        public event EventHandler<DownloadSingleComicCompletedEventArgs> DownloadComicCompleted
         {
             add
             {
-                lock (_comicDownloadedLock)
+                lock (_downloadComicCompletedLock)
                 {
-                    _comicDownloaded += value;
+                    _downloadComicCompleted += value;
                 }
             }
             remove
             {
-                lock (_comicDownloadedLock)
+                lock (_downloadComicCompletedLock)
                 {
-                    _comicDownloaded -= value;
+                    _downloadComicCompleted -= value;
                 }
             }
         }
 
-        private void OnComicDownloaded(ComicEventArgs e)
+        protected virtual void OnDownloadComicCompleted(DownloadSingleComicCompletedEventArgs e)
         {
-            EventHandler<ComicEventArgs> eventReference = _comicDownloaded;
+            EventHandler<DownloadSingleComicCompletedEventArgs> eventReference = _downloadComicCompleted;
 
             if (eventReference != null)
                 eventReference(this, e);
         }
         #endregion
 
-        #region AllComicsDownloaded Event
-        private object _allComicsDownloadedLock = new object();
-        private event EventHandler _allComicsDownloaded;
-        public event EventHandler AllComicsDownloaded
+        #region DownloadCompleted Event
+        private object _downloadCompletedLock = new object();
+        private event EventHandler _downloadCompleted;
+        /// <summary>
+        /// Occurs when the entire download is completed.
+        /// </summary>
+        public event EventHandler DownloadCompleted
         {
             add
             {
-                lock (_allComicsDownloadedLock)
+                lock (_downloadCompletedLock)
                 {
-                    _allComicsDownloaded += value;
+                    _downloadCompleted += value;
                 }
             }
             remove
             {
-                lock (_allComicsDownloadedLock)
+                lock (_downloadCompletedLock)
                 {
-                    _allComicsDownloaded -= value;
+                    _downloadCompleted -= value;
                 }
             }
         }
 
-        protected virtual void OnAllComicsDownloaded(EventArgs e)
+        protected virtual void OnDownloadCompleted()
         {
-            EventHandler eventReference = _allComicsDownloaded;
+            _client.Dispose();
+
+            EventHandler eventReference = _downloadCompleted;
 
             if (eventReference != null)
-                eventReference(this, e);
+                eventReference(this, EventArgs.Empty);
         }
-
         #endregion
     }
 }

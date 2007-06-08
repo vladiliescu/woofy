@@ -7,8 +7,10 @@ namespace Woofy.Core
 {
     public interface IComicsDownloader
     {
-        bool DownloadComic(string comicLink, string downloadDirectory);
+        void DownloadComic(string comicLink, out bool comicAlreadyDownloaded);
 
-        bool DownloadComic(string comicLink, string downloadDirectory, WebProxy proxy);
+        void DownloadComicAsync(string comicLink);
+
+        event EventHandler<DownloadComicCompletedEventArgs> DownloadComicCompleted;
     }
 }

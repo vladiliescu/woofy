@@ -70,7 +70,7 @@ namespace Woofy.Core
             int index = _tasks.IndexOf(task);
             ComicsProvider comicsProvider = _comicProviders[index];
             if (task.Status == TaskStatus.Running)
-                comicsProvider.PauseDownload();
+                comicsProvider.StopDownload();
 
             task.Delete();
 
@@ -91,11 +91,11 @@ namespace Woofy.Core
                 case TaskStatus.Paused:
                     task.Status = TaskStatus.Running;
                     int comicsToDownload = task.ComicsToDownload.HasValue ? (int)(task.ComicsToDownload.Value - task.DownloadedComics) : ComicsProvider.AllAvailableComics;
-                    comicsProvider.StartDownloadComicsRecursive(comicsToDownload, task.DownloadFolder, task.CurrentUrl);
+                    comicsProvider.DownloadComicsAsync(comicsToDownload, task.CurrentUrl);
                     break;
                 case TaskStatus.Running:
                     task.Status = TaskStatus.Paused;
-                    comicsProvider.PauseDownload();
+                    comicsProvider.StopDownload();
                     break;
             }
 
@@ -124,42 +124,24 @@ namespace Woofy.Core
         private void AddComicsProviderAndStartDownload(ComicTask task)
         {
             ComicInfo comicInfo = new ComicInfo(task.ComicInfoFile);
-            ComicsProvider comicsProvider = new ComicsProvider(comicInfo);
+
+            ComicsProvider comicsProvider = new ComicsProvider(comicInfo, task.DownloadFolder);
             _comicProviders.Add(comicsProvider);
 
-            comicsProvider.ComicDownloaded += new EventHandler<ComicEventArgs>(comicsProvider_ComicDownloaded);
-            comicsProvider.AllComicsDownloaded += new EventHandler(comicsProvider_AllComicsDownloaded);
+            comicsProvider.DownloadComicCompleted += new EventHandler<DownloadSingleComicCompletedEventArgs>(DownloadComicCompletedCallback);
+            comicsProvider.DownloadCompleted += new EventHandler(DownloadComicsCompletedCallback);
 
             if (task.Status == TaskStatus.Running)
             {
                 int comicsToDownload = task.ComicsToDownload.HasValue ? (int)(task.ComicsToDownload.Value - task.DownloadedComics) : ComicsProvider.AllAvailableComics;
                 if (string.IsNullOrEmpty(task.CurrentUrl))
-                    comicsProvider.StartDownloadComicsRecursive(comicsToDownload, task.DownloadFolder);
+                    comicsProvider.DownloadComicsAsync(comicsToDownload);
                 else
-                    comicsProvider.StartDownloadComicsRecursive(comicsToDownload, task.DownloadFolder, task.CurrentUrl);
+                    comicsProvider.DownloadComicsAsync(comicsToDownload, task.CurrentUrl);
             }
         }
-        #endregion
 
-        #region Events - comicsProvider
-        private void comicsProvider_AllComicsDownloaded(object sender, EventArgs e)
-        {
-            _tasksGrid.Invoke(new MethodInvoker(
-                delegate()
-                {
-                    ComicsProvider comicsProvider = (ComicsProvider)sender;
-
-                    int index = _comicProviders.IndexOf(comicsProvider);
-                    ComicTask task = (ComicTask)_tasks[index];
-                    task.Status = TaskStatus.Finished;                    
-                    task.Delete();
-
-                    ResetTasksBindings();
-                }
-            ));
-        }
-
-        private void comicsProvider_ComicDownloaded(object sender, ComicEventArgs e)
+        private void DownloadComicCompletedCallback(object sender, DownloadSingleComicCompletedEventArgs e)
         {
             _tasksGrid.Invoke(new MethodInvoker(
                 delegate()
@@ -175,8 +157,23 @@ namespace Woofy.Core
                     ResetTasksBindings();
                 }
             ));
+        }
 
-            
+        private void DownloadComicsCompletedCallback(object sender, EventArgs e)
+        {
+            _tasksGrid.Invoke(new MethodInvoker(
+                delegate()
+                {
+                    ComicsProvider comicsProvider = (ComicsProvider)sender;
+
+                    int index = _comicProviders.IndexOf(comicsProvider);
+                    ComicTask task = (ComicTask)_tasks[index];
+                    task.Status = TaskStatus.Finished;
+                    task.Delete();
+
+                    ResetTasksBindings();
+                }
+            ));
         }
         #endregion
     }

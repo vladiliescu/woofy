@@ -11,104 +11,266 @@ namespace Woofy.Core
     /// </summary>
     public class ComicsDownloader : IComicsDownloader
     {
-        #region .ctor
+        #region Instance Members
+        private string _downloadDirectory;
         /// <summary>
-        /// Creates a new instance of the <see cref="ComicsHandler"/>.
+        /// Gets the directory in which the comics will be downloaded.
         /// </summary>
-        public ComicsDownloader()
+        public string DownloadDirectory
         {
+            get { return _downloadDirectory; }
         }
 
+        private WebProxy _proxy;
+        /// <summary>
+        /// Gets or sets the proxy to be used by the downloader.
+        /// </summary>
+        public WebProxy Proxy
+        {
+            get { return _proxy; }
+            set { _proxy = value; }
+        }
         #endregion
 
-        #region Public Methods
+        #region Constants
         /// <summary>
-        /// Downloads the comics to the specified directory, creating it if it doesn't exist.
+        /// Specifies the maximum size, in bytes, of the download buffer.
         /// </summary>
-        /// <param name="comics">List of comics to handle.</param>
-        /// <param name="downloadDirectory">A string representing the name of the directory to which to download the comics. If it doesn't exist, it will be created.</param>
-        /// <returns>Returns the number of comics actually downloaded (in case some comics were already downloaded).</returns>
-        public int DownloadComics(string[] comicLinks, string downloadDirectory)
+        private const int MaxBufferSize = 16384;
+        #endregion
+
+        #region .ctor
+        /// <summary>
+        /// Creates a new instance of the <see cref="ComicsDownloader"/>.
+        /// </summary>
+        /// <param name="downloadDirectory">The directory in which the comics will be downloaded.</param>
+        public ComicsDownloader(string downloadDirectory)
+            : this(downloadDirectory, null)
         {
-            int downloadedComicsCount = 0;
-            using (WebClient client = new WebClient())
-            {
-                client.Credentials = CredentialCache.DefaultNetworkCredentials;
-
-                foreach (string comicLink in comicLinks)
-                {
-                    if (DownloadComic(comicLink, downloadDirectory))
-                        downloadedComicsCount++;
-                }
-            }
-
-            return downloadedComicsCount;
         }
 
         /// <summary>
-        /// Downloads the comics to the specified directory, creating it if it doesn't exist.
+        /// Creates a new instance of the <see cref="ComicsDownloader"/>.
         /// </summary>
-        /// <param name="comics">List of comics to handle.</param>
-        /// <param name="downloadDirectory">A string representing the name of the directory to which to download the comics. If it doesn't exist, it will be created.</param>
-        /// <returns>True if the comic was downloaded, false otherwise. A comic may not be downloaded when a file with the same name exists in the same location.</returns>
-        public bool DownloadComic(string comicLink, string downloadDirectory)
-        {
-            return DownloadComic(comicLink, downloadDirectory, null);
-        }
-
-        /// <summary>
-        /// Downloads the comics to the specified directory, creating it if it doesn't exist.
-        /// </summary>
-        /// <param name="comics">List of comics to handle.</param>
-        /// <param name="downloadDirectory">A string representing the name of the directory to which to download the comics. If it doesn't exist, it will be created.</param>
-        /// <returns>True if the comic was downloaded, false otherwise. A comic may not be downloaded when a file with the same name exists in the same location.</returns>
-        public bool DownloadComic(string comicLink, string downloadDirectory, WebProxy proxy)
+        /// <param name="downloadDirectory">The directory in which the comics will be downloaded. If it doesn't exist, it is created.</param>
+        /// <param name="proxy">The proxy to be used by the downloader.</param>
+        public ComicsDownloader(string downloadDirectory, WebProxy proxy)
         {
             if (string.IsNullOrEmpty(downloadDirectory))
                 throw new ArgumentNullException("downloadDirectory", "The <downloadDirectory> parameter must be used to specify the name of the directory to which to download the comics.");
 
             if (!Directory.Exists(downloadDirectory))
                 Directory.CreateDirectory(downloadDirectory);
-            
-            string fullFileName = GetFullFileName(comicLink, downloadDirectory);
-            string tempFileName = fullFileName + ".!wf";
-            
-            if (File.Exists(fullFileName))
-                return false;
 
-            using (WebClient client = new WebClient())
+            _downloadDirectory = downloadDirectory;
+            _proxy = proxy;
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Downloads the specified comic. If the comic was already downloaded, then it is not downloaded again.
+        /// </summary>
+        /// <param name="comicLink">Link to the comic to be downloaded.</param>
+        /// <param name="comicAlreadyDownloaded">True if the comic was already downloaded, false otherwise.</param>
+        public void DownloadComic(string comicLink, out bool comicAlreadyDownloaded)
+        {
+            string filePath = GetFilePath(comicLink, _downloadDirectory);
+            if (File.Exists(filePath))
             {
-                client.Credentials = CredentialCache.DefaultNetworkCredentials;
-                client.Proxy = proxy;                
-                
+                comicAlreadyDownloaded = true;
+                return;
+            }
+
+            WebRequest request = GetWebRequest(comicLink);
+            WebResponse response = request.GetResponse();
+            Stream stream = response.GetResponseStream();
+
+            string tempFilePath = filePath + ".!wf";            
+            BinaryWriter writer = new BinaryWriter(File.Create(tempFilePath));
+            byte[] buffer = new byte[MaxBufferSize];
+
+            try
+            {
                 try
                 {
-                    client.DownloadFile(comicLink, tempFileName);
+                    int bytesRead;
+                    do
+                    {
+                        bytesRead = stream.Read(buffer, 0, MaxBufferSize);
 
-                    File.Move(tempFileName, fullFileName);
+                        writer.Write(buffer, 0, bytesRead);
+                    }
+                    while (bytesRead > 0);
                 }
-                catch
+                finally
                 {
-                    File.Delete(tempFileName);
-                    throw;
+                    stream.Close();
+                    writer.Close();
                 }
 
-                return true;
+                File.Move(tempFilePath, filePath);
+            }
+            catch
+            {
+                File.Delete(tempFilePath);
+                throw;
+            }
+
+            comicAlreadyDownloaded = false;
+        }
+
+        /// <summary>
+        /// Downloads the specified comic asynchronously. If the comic was already downloaded, then it is not downloaded again.
+        /// </summary>
+        /// <remarks>Use the <see cref="ComicsDownloader.DownloadComicCompleted"/> event to know when the download completes.</remarks>
+        /// <seealso cref="ComicsDownloader.DownloadComicCompleted"/>
+        /// <param name="comicLink">Link to the comic to be downloaded.</param>
+        public void DownloadComicAsync(string comicLink)
+        {
+            string filePath = GetFilePath(comicLink, _downloadDirectory);
+            if (File.Exists(filePath))
+            {
+                OnDownloadComicCompleted(new DownloadComicCompletedEventArgs(true));
+                return;
+            }
+
+            WebRequest request = GetWebRequest(comicLink);
+
+            request.BeginGetResponse(
+                delegate(IAsyncResult result)
+                {
+                    GetResponseCallback(result,filePath);
+                }, request);
+        }
+        #endregion
+
+        #region Callbacks
+        /// <summary>
+        /// Called when the application receives the response for the comic request.
+        /// </summary>
+        /// <param name="result">The standard <see cref="IAsyncResult"/>.</param>
+        /// <param name="filePath">Path to the file where the comic will be downloaded.</param>
+        private void GetResponseCallback(IAsyncResult result, string filePath)
+        {
+            WebRequest request = (WebRequest)result.AsyncState;
+            WebResponse response = request.EndGetResponse(result);
+            Stream stream = response.GetResponseStream();
+
+            string tempFilePath = filePath + ".!wf";
+            BinaryWriter writer = new BinaryWriter(File.Create(tempFilePath));
+            byte[] buffer = new byte[MaxBufferSize];
+
+            stream.BeginRead(buffer, 0, MaxBufferSize,
+                delegate(IAsyncResult innerResult)
+                {
+                    ReadBytesCallback(innerResult, buffer, writer, filePath, tempFilePath);
+                }, stream);
+        }
+
+        /// <summary>
+        /// Called when the application receives a series of bytes from the comic.
+        /// </summary>
+        /// <param name="result">The standard <see cref="IAsyncResult"/>.</param>
+        /// <param name="buffer">The buffer in which the bytes are read into.</param>
+        /// <param name="writer">The <see cref="BinaryWriter"/> used to create the comic file on disk.</param>
+        /// <param name="filePath">Path to the file where the comic will be downloaded.</param>
+        /// <param name="tempFilePath"></param>
+        private void ReadBytesCallback(IAsyncResult result, byte[] buffer, BinaryWriter writer, string filePath, string tempFilePath)
+        {
+            Stream stream = (Stream)result.AsyncState;
+            try
+            {
+                int bytesRead = stream.EndRead(result);
+
+                if (bytesRead == 0)
+                {
+                    writer.Close();
+                    stream.Close();
+
+                    File.Move(tempFilePath, filePath);
+
+                    OnDownloadComicCompleted(new DownloadComicCompletedEventArgs(false));
+                    return;
+                }
+
+                writer.Write(buffer, 0, bytesRead);
+
+                stream.BeginRead(buffer, 0, MaxBufferSize,
+                        delegate(IAsyncResult innerResult)
+                        {
+                            ReadBytesCallback(innerResult, buffer, writer, filePath, tempFilePath);
+                        }, stream);
+            }
+            catch
+            {
+                stream.Close();
+                writer.Close();
+
+                throw;
             }
         }
         #endregion
 
         #region Helper Methods
         /// <summary>
-        /// Returns the full file name for a given comic link, and the directory to which the comic must be downloaded.
+        /// Returns the full file path for a given comic link, and the directory to which the comic must be downloaded.
         /// </summary>
-        /// <param name="comicLink"></param>
-        /// <param name="directoryName"></param>
-        /// <returns></returns>
-        private string GetFullFileName(string comicLink, string directoryName)
+        /// <param name="comicLink">A link to the comic to be downloaded.</param>
+        /// <param name="directoryName">The directory in which the comic should be downloaded.</param>
+        /// <returns>The full path of the file to be downloaded.</returns>
+        private string GetFilePath(string comicLink, string directoryName)
         {
             string comicName = comicLink.Substring(comicLink.LastIndexOf('/') + 1);
             return Path.Combine(directoryName, comicName);
+        }
+
+        /// <summary>
+        /// Builds a web request based on the specified comic link.
+        /// </summary>
+        /// <param name="comicLink">Link to the comic to be downloaded.</param>
+        /// <returns>A <see cref="WebRequest"/> for the specified comic link.</returns>
+        private WebRequest GetWebRequest(string comicLink)
+        {
+            WebRequest request = WebRequest.Create(comicLink);
+            request.Credentials = CredentialCache.DefaultNetworkCredentials;
+            request.Proxy = _proxy;
+            return request;
+        }
+        #endregion
+
+        #region DownloadComicCompleted Event
+        private object _downloadComicCompletedLock = new object();
+        private event EventHandler<DownloadComicCompletedEventArgs> _downloadComicCompleted;
+        /// <summary>
+        /// Occurs when an asynchronous download operation completes.
+        /// </summary>
+        public event EventHandler<DownloadComicCompletedEventArgs> DownloadComicCompleted
+        {
+            add
+            {
+                lock (_downloadComicCompletedLock)
+                {
+                    _downloadComicCompleted += value;
+                }
+            }
+            remove
+            {
+                lock (_downloadComicCompletedLock)
+                {
+                    _downloadComicCompleted -= value;
+                }
+            }
+        }
+
+        protected virtual void OnDownloadComicCompleted(DownloadComicCompletedEventArgs e)
+        {
+            EventHandler<DownloadComicCompletedEventArgs> eventReference = _downloadComicCompleted;
+
+            if (eventReference != null)
+                eventReference(this, e);
         }
         #endregion
     }

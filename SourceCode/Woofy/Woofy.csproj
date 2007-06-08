@@ -41,8 +41,9 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\DownloadComicCompletedEventArgs.cs" />
+    <Compile Include="Core\DownloadSingleComicCompletedEventArgs.cs" />
     <Compile Include="Core\IComicsDownloader.cs" />
-    <Compile Include="Core\ComicEventArgs.cs" />
     <Compile Include="Core\ComicsDownloader.cs" />
     <Compile Include="Core\ComicInfo.cs" />
     <Compile Include="Core\ComicsProvider.cs" />
