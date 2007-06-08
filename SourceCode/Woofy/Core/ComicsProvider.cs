@@ -77,6 +77,8 @@ namespace Woofy.Core
         /// <param name="startUrl">Url at which the download should start.</param>
         public void DownloadComics(int comicsToDownload, string startUrl)
         {
+            _isDownloadCancelled = false;
+
             string currentUrl = startUrl;
             bool fileAlreadyDownloaded;
             for (int i = 0; i < comicsToDownload || comicsToDownload == ComicsProvider.AllAvailableComics; i++)
@@ -123,6 +125,8 @@ namespace Woofy.Core
         /// <param name="startUrl">Url at which the download should start.</param>
         public void DownloadComicsAsync(int comicsToDownload, string startUrl)
         {
+            _isDownloadCancelled = false;
+
             if (comicsToDownload != ComicsProvider.AllAvailableComics && comicsToDownload <= 0)
                 throw new ArgumentOutOfRangeException("comicsToDownload", "Number of comics to download must be greater than zero or equal to ComicsProvider.AllAvailableComics.");
 
@@ -236,6 +240,9 @@ namespace Woofy.Core
             _comicsToDownload = comicsToDownload;
             _comicsDownloaded = 0;
 
+            if (_isDownloadCancelled)
+                return;
+
             _client.DownloadStringAsync(new Uri(startUrl));
         }
 
@@ -256,7 +263,8 @@ namespace Woofy.Core
             _client.DownloadStringCompleted += new DownloadStringCompletedEventHandler(DownloadPageCompletedCallback);
 
             _comicsDownloader.DownloadComicCompleted += new EventHandler<DownloadComicCompletedEventArgs>(DownloadComicCompletedCallback);
-        }
+            _comicsDownloader.DownloadedComicChunk += new EventHandler<DownloadedComicChunkEventArgs>(DownloadedComicChunkCallback);
+        }        
         #endregion
 
         #region Callbacks
@@ -275,6 +283,9 @@ namespace Woofy.Core
                 OnDownloadCompleted();
                 return;
             }
+
+            if (_isDownloadCancelled)
+                return;
 
             _comicsDownloader.DownloadComicAsync(comicLink);
         }
@@ -307,7 +318,20 @@ namespace Woofy.Core
                 return;
             }
 
+            if (_isDownloadCancelled)
+                return;
+
             _client.DownloadStringAsync(new Uri(currentUrl));
+        }
+
+        /// <summary>
+        /// Called when a comic chunk has been downloaded.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DownloadedComicChunkCallback(object sender, DownloadedComicChunkEventArgs e)
+        {
+            e.Cancel = _isDownloadCancelled;
         }
         #endregion
 

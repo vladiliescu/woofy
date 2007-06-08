@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\DownloadComicCompletedEventArgs.cs" />
+    <Compile Include="Core\DownloadedComicChunkEventArgs.cs" />
     <Compile Include="Core\DownloadSingleComicCompletedEventArgs.cs" />
     <Compile Include="Core\IComicsDownloader.cs" />
     <Compile Include="Core\ComicsDownloader.cs" />

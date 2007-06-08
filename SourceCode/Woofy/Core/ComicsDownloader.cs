@@ -88,7 +88,7 @@ namespace Woofy.Core
             WebResponse response = request.GetResponse();
             Stream stream = response.GetResponseStream();
 
-            string tempFilePath = filePath + ".!wf";            
+            string tempFilePath = filePath + ".!wf";
             BinaryWriter writer = new BinaryWriter(File.Create(tempFilePath));
             byte[] buffer = new byte[MaxBufferSize];
 
@@ -142,7 +142,7 @@ namespace Woofy.Core
             request.BeginGetResponse(
                 delegate(IAsyncResult result)
                 {
-                    GetResponseCallback(result,filePath);
+                    GetResponseCallback(result, filePath);
                 }, request);
         }
         #endregion
@@ -163,12 +163,19 @@ namespace Woofy.Core
             BinaryWriter writer = new BinaryWriter(File.Create(tempFilePath));
             byte[] buffer = new byte[MaxBufferSize];
 
+
+            if (IsDownloadCancelled())
+            {
+                File.Delete(tempFilePath);
+                return;
+            }            
+            
             stream.BeginRead(buffer, 0, MaxBufferSize,
                 delegate(IAsyncResult innerResult)
                 {
                     ReadBytesCallback(innerResult, buffer, writer, filePath, tempFilePath);
                 }, stream);
-        }
+        }        
 
         /// <summary>
         /// Called when the application receives a series of bytes from the comic.
@@ -198,6 +205,15 @@ namespace Woofy.Core
 
                 writer.Write(buffer, 0, bytesRead);
 
+                if (IsDownloadCancelled())
+                {
+                    writer.Close();
+                    stream.Close();
+
+                    File.Delete(tempFilePath);
+                    return;
+                }
+
                 stream.BeginRead(buffer, 0, MaxBufferSize,
                         delegate(IAsyncResult innerResult)
                         {
@@ -208,6 +224,8 @@ namespace Woofy.Core
             {
                 stream.Close();
                 writer.Close();
+
+                File.Delete(tempFilePath);
 
                 throw;
             }
@@ -239,10 +257,21 @@ namespace Woofy.Core
             request.Proxy = _proxy;
             return request;
         }
+
+        /// <summary>
+        /// Determines whether the user decided to stop the download.
+        /// </summary>
+        /// <returns>True if the user has decided to stop the download, false otherwise.</returns>
+        private bool IsDownloadCancelled()
+        {
+            DownloadedComicChunkEventArgs e = new DownloadedComicChunkEventArgs();
+            OnDownloadedComicChunk(e);
+            return e.Cancel;
+        }
         #endregion
 
         #region DownloadComicCompleted Event
-        private object _downloadComicCompletedLock = new object();
+
         private event EventHandler<DownloadComicCompletedEventArgs> _downloadComicCompleted;
         /// <summary>
         /// Occurs when an asynchronous download operation completes.
@@ -251,17 +280,11 @@ namespace Woofy.Core
         {
             add
             {
-                lock (_downloadComicCompletedLock)
-                {
-                    _downloadComicCompleted += value;
-                }
+                _downloadComicCompleted += value;
             }
             remove
             {
-                lock (_downloadComicCompletedLock)
-                {
-                    _downloadComicCompleted -= value;
-                }
+                _downloadComicCompleted -= value;
             }
         }
 
@@ -272,6 +295,34 @@ namespace Woofy.Core
             if (eventReference != null)
                 eventReference(this, e);
         }
+        #endregion
+
+        #region DownloadedComicChunk Event
+
+        private event EventHandler<DownloadedComicChunkEventArgs> _downloadedComicChunk;
+        /// <summary>
+        /// Occurs when a comic chunk is downloaded. Can be used to cancel the download of the current strip.
+        /// </summary>
+        public event EventHandler<DownloadedComicChunkEventArgs> DownloadedComicChunk
+        {
+            add
+            {
+                _downloadedComicChunk += value;
+            }
+            remove
+            {
+                _downloadedComicChunk -= value;
+            }
+        }
+
+        protected virtual void OnDownloadedComicChunk(DownloadedComicChunkEventArgs e)
+        {
+            EventHandler<DownloadedComicChunkEventArgs> eventReference = _downloadedComicChunk;
+
+            if (eventReference != null)
+                eventReference(this, e);
+        }
+
         #endregion
     }
 }
