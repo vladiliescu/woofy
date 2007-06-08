@@ -132,7 +132,7 @@ namespace Woofy.Core
             ThreadPool.UnsafeQueueUserWorkItem(
                 delegate
                 {
-                    DownloadComicsInternal(comicsToDownload, startUrl);
+                    DownloadComicsAsyncInternal(comicsToDownload, startUrl);
                 }, null);
         }
 
@@ -233,23 +233,10 @@ namespace Woofy.Core
         /// <param name="startUrl">Url at which the download should start.</param>
         private void DownloadComicsAsyncInternal(int comicsToDownload, string startUrl)
         {
-            string currentUrl = startUrl;
-            string pageContent = _client.DownloadString(currentUrl);
-
-            string comicLink = RetrieveComicLinkFromPage(pageContent, _comicInfo);
-            string backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, _comicInfo);
-
-            if (string.IsNullOrEmpty(comicLink))
-            {
-                OnDownloadCompleted();
-                return;
-            }
-
             _comicsToDownload = comicsToDownload;
             _comicsDownloaded = 0;
-            _backButtonLink = backButtonLink;
 
-            _comicsDownloader.DownloadComicAsync(comicLink);
+            _client.DownloadStringAsync(new Uri(startUrl));
         }
 
         /// <summary>
@@ -266,6 +253,7 @@ namespace Woofy.Core
             _client = new WebClient();
             _client.Credentials = CredentialCache.DefaultNetworkCredentials;
             _client.Proxy = proxy;
+            _client.DownloadStringCompleted += new DownloadStringCompletedEventHandler(DownloadPageCompletedCallback);
 
             _comicsDownloader.DownloadComicCompleted += new EventHandler<DownloadComicCompletedEventArgs>(DownloadComicCompletedCallback);
         }
@@ -273,7 +261,26 @@ namespace Woofy.Core
 
         #region Callbacks
         /// <summary>
-        /// Called when a comic is downloaded in async mode.
+        /// Called when a page has been downloaded in async mode.
+        /// </summary>
+        private void DownloadPageCompletedCallback(object sender, DownloadStringCompletedEventArgs e)
+        {
+            string pageContent = e.Result;
+
+            string comicLink = RetrieveComicLinkFromPage(pageContent, _comicInfo);
+            _backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, _comicInfo);
+
+            if (string.IsNullOrEmpty(comicLink))
+            {
+                OnDownloadCompleted();
+                return;
+            }
+
+            _comicsDownloader.DownloadComicAsync(comicLink);
+        }
+
+        /// <summary>
+        /// Called when a comic has been downloaded in async mode.
         /// </summary>
         private void DownloadComicCompletedCallback(object sender, DownloadComicCompletedEventArgs e)
         {
@@ -300,17 +307,7 @@ namespace Woofy.Core
                 return;
             }
 
-            string pageContent = _client.DownloadString(currentUrl);
-
-            string comicLink = RetrieveComicLinkFromPage(pageContent, _comicInfo);
-            _backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, _comicInfo);
-
-            if (string.IsNullOrEmpty(comicLink))
-            {
-                OnDownloadCompleted();
-                return;
-            }
-            _comicsDownloader.DownloadComicAsync(comicLink);
+            _client.DownloadStringAsync(new Uri(currentUrl));
         }
         #endregion
 
