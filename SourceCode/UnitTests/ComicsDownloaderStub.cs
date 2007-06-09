@@ -17,16 +17,41 @@ namespace UnitTests
 
         #region IComicsDownloader Members
 
-        public bool DownloadComic(string comicLink, string downloadDirectory)
-        {
-            return DownloadComic(comicLink, downloadDirectory, null);
-        }
-
-        public bool DownloadComic(string comicLink, string downloadDirectory, System.Net.WebProxy proxy)
+        public void DownloadComic(string comicLink, out bool comicAlreadyDownloaded)
         {
             _comicLinks.Add(comicLink);
 
-            return true;
+            comicAlreadyDownloaded = false;
+        }
+
+        public void DownloadComicAsync(string comicLink)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        public event EventHandler<DownloadComicCompletedEventArgs> DownloadComicCompleted
+        {
+            add
+            {
+                //TODO: properly implement this.
+                //throw new Exception("The method or operation is not implemented.");
+            }
+            remove
+            {
+                throw new Exception("The method or operation is not implemented.");
+            }
+        }
+
+        public event EventHandler<DownloadedComicChunkEventArgs> DownloadedComicChunk
+        {
+            add
+            {
+                //throw new Exception("The method or operation is not implemented.");
+            }
+            remove
+            {
+                throw new Exception("The method or operation is not implemented.");
+            }
         }
 
         #endregion

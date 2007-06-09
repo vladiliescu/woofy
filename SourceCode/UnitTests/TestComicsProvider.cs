@@ -38,8 +38,8 @@ namespace UnitTests
             ComicsDownloaderStub comicsDownloaderStub = new ComicsDownloaderStub();
             ComicsProvider comicsProvider = new ComicsProvider(comicInfo, comicsDownloaderStub);
             
-            int comicsToDownload = 3;
-            comicsProvider.DownloadComicsRecursive(comicsToDownload, ComicsDirectory);
+            int comicsToDownload = 5;
+            comicsProvider.DownloadComics(comicsToDownload);
 
             string[] comics = comicsDownloaderStub.ComicLinks;
             Assert.AreEqual(comicsToDownload, comics.Length, "number of comics to download");
@@ -55,7 +55,7 @@ namespace UnitTests
             )
         {
             ComicInfo comicInfo = new ComicInfo(comicInfoFile);
-            ComicsProvider comicsProvider = new ComicsProvider(comicInfo);
+            ComicsProvider comicsProvider = new ComicsProvider(comicInfo, ComicsDirectory);
 
             using (WebClient client = new WebClient())
             {

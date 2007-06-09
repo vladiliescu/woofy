@@ -29,32 +29,6 @@ namespace UnitTests
             if (Directory.Exists(ComicsDirectory))
                 Directory.Delete(ComicsDirectory, true);
         }
-
-        [Test]
-        public void TestDownloadsXComics()
-        {
-            string[] comics = new string[] {
-                "http://www.pvponline.com/images/3018.gif",
-                "http://www.pvponline.com/images/3017.gif"
-            };
-
-            
-            ComicsDownloader downloadComicHandler = new ComicsDownloader();
-            int downloadedComicsCount = downloadComicHandler.DownloadComics(comics, ComicsDirectory);
-
-            string[] downloadedComics = Directory.GetFiles(ComicsDirectory);
-
-            Array.Sort(comics);
-            Assert.AreEqual(comics.Length, downloadedComics.Length, "downloaded files count");
-            Assert.AreEqual(comics.Length, downloadedComicsCount, "reported downloaded files count");
-
-            for (int i = 0; i < comics.Length; i++)
-            {
-                string comicName = comics[i].Substring(comics[i].LastIndexOf('/') + 1);
-                string downloadedComicName = Path.GetFileName(downloadedComics[i]);
-                Assert.AreEqual(comicName, downloadedComicName, "comic name");
-            }
-        }
         
         [CombinatorialTest]
         public void TestRecursiveDownloadStopsWhenExistingComicFound(
@@ -62,8 +36,8 @@ namespace UnitTests
             )
         {
             ComicInfo comicInfo = new ComicInfo(comicInfoFile);
-            ComicsProvider comicsProvider = new ComicsProvider(comicInfo);
-            ComicsDownloader comicsHandler = new ComicsDownloader();
+            ComicsProvider comicsProvider = new ComicsProvider(comicInfo, ComicsDirectory);
+            ComicsDownloader comicsHandler = new ComicsDownloader(ComicsDirectory);
 
             using (WebClient client = new WebClient())
             {
@@ -76,12 +50,13 @@ namespace UnitTests
                 string existingFileName = Path.Combine(ComicsDirectory, comicLink.Substring(comicLink.LastIndexOf('/') + 1));
                 File.AppendAllText(existingFileName, string.Empty);
                 
-                bool comicDownloaded = comicsHandler.DownloadComic(comicLink, ComicsDirectory);
+                bool comicAlreadyDownloaded;
+                comicsHandler.DownloadComic(comicLink, out comicAlreadyDownloaded);
 
                 FileInfo existingFileInfo = new FileInfo(existingFileName);
                 
                 Assert.AreEqual(0, existingFileInfo.Length, "file length");
-                Assert.AreEqual(comicDownloaded, false);
+                Assert.AreEqual(comicAlreadyDownloaded, true);
             }
         }
 
