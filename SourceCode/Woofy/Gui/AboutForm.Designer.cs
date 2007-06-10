@@ -33,30 +33,32 @@ namespace Woofy.Gui
             this.lnkWebAddress = new System.Windows.Forms.LinkLabel();
             this.lblFullProductName = new System.Windows.Forms.Label();
             this.lblAuthorInfo = new System.Windows.Forms.Label();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lnkIconCredits = new System.Windows.Forms.LinkLabel();
+            this.lblIconCredit = new System.Windows.Forms.Label();
             this.lnkFamFamFam = new System.Windows.Forms.LinkLabel();
             this.lnkMailto = new System.Windows.Forms.LinkLabel();
+            this.pbWoofyLogo = new System.Windows.Forms.PictureBox();
             label1 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbWoofyLogo)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(16, 23);
+            label1.Location = new System.Drawing.Point(13, 69);
             label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(172, 13);
+            label1.Size = new System.Drawing.Size(190, 13);
             label1.TabIndex = 1;
-            label1.Text = "Mark James for his wonderful icons";
+            label1.Text = "Mark James for his wonderful silk icons";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(16, 60);
+            label2.Location = new System.Drawing.Point(13, 108);
             label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(201, 13);
@@ -67,7 +69,7 @@ namespace Woofy.Gui
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnOK.Location = new System.Drawing.Point(166, 153);
+            this.btnOK.Location = new System.Drawing.Point(223, 235);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 24;
@@ -75,9 +77,9 @@ namespace Woofy.Gui
             // 
             // lnkWebAddress
             // 
-            this.lnkWebAddress.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.lnkWebAddress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lnkWebAddress.AutoSize = true;
-            this.lnkWebAddress.Location = new System.Drawing.Point(2, 156);
+            this.lnkWebAddress.Location = new System.Drawing.Point(9, 240);
             this.lnkWebAddress.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lnkWebAddress.Name = "lnkWebAddress";
             this.lnkWebAddress.Size = new System.Drawing.Size(143, 13);
@@ -89,74 +91,70 @@ namespace Woofy.Gui
             // 
             // lblFullProductName
             // 
-            this.lblFullProductName.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblFullProductName.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(this.lblFullProductName, 2);
-            this.lblFullProductName.Font = new System.Drawing.Font("Book Antiqua", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblFullProductName.ForeColor = System.Drawing.Color.Teal;
-            this.lblFullProductName.Location = new System.Drawing.Point(48, 0);
+            this.lblFullProductName.Font = new System.Drawing.Font("Book Antiqua", 16F, System.Drawing.FontStyle.Bold);
+            this.lblFullProductName.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lblFullProductName.Location = new System.Drawing.Point(172, 12);
             this.lblFullProductName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblFullProductName.Name = "lblFullProductName";
-            this.lblFullProductName.Size = new System.Drawing.Size(147, 21);
+            this.lblFullProductName.Size = new System.Drawing.Size(200, 27);
             this.lblFullProductName.TabIndex = 26;
             this.lblFullProductName.Text = "Full Product Name";
             // 
             // lblAuthorInfo
             // 
-            this.lblAuthorInfo.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblAuthorInfo.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(this.lblAuthorInfo, 2);
-            this.lblAuthorInfo.Location = new System.Drawing.Point(92, 24);
+            this.lblAuthorInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.lblAuthorInfo.Location = new System.Drawing.Point(174, 49);
             this.lblAuthorInfo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lblAuthorInfo.Name = "lblAuthorInfo";
-            this.lblAuthorInfo.Size = new System.Drawing.Size(59, 13);
+            this.lblAuthorInfo.Size = new System.Drawing.Size(58, 15);
             this.lblAuthorInfo.TabIndex = 27;
-            this.lblAuthorInfo.Text = "Author Info";
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60.62992F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 39.37008F));
-            this.tableLayoutPanel1.Controls.Add(this.btnOK, 1, 4);
-            this.tableLayoutPanel1.Controls.Add(this.lblAuthorInfo, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.lnkWebAddress, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.lblFullProductName, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.groupBox1, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.lnkMailto, 0, 2);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(9, 9);
-            this.tableLayoutPanel1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 5;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 24F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 16F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(244, 179);
-            this.tableLayoutPanel1.TabIndex = 28;
+            this.lblAuthorInfo.Text = "Copyright";
             // 
             // groupBox1
             // 
-            this.tableLayoutPanel1.SetColumnSpan(this.groupBox1, 2);
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.lnkIconCredits);
+            this.groupBox1.Controls.Add(this.lblIconCredit);
             this.groupBox1.Controls.Add(label2);
             this.groupBox1.Controls.Add(label1);
             this.groupBox1.Controls.Add(this.lnkFamFamFam);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox1.Location = new System.Drawing.Point(2, 58);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.groupBox1.Location = new System.Drawing.Point(12, 95);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.groupBox1.Size = new System.Drawing.Size(240, 87);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox1.Size = new System.Drawing.Size(286, 131);
             this.groupBox1.TabIndex = 28;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Thanks to";
             // 
+            // lnkIconCredits
+            // 
+            this.lnkIconCredits.AutoSize = true;
+            this.lnkIconCredits.Location = new System.Drawing.Point(34, 45);
+            this.lnkIconCredits.Name = "lnkIconCredits";
+            this.lnkIconCredits.Size = new System.Drawing.Size(169, 13);
+            this.lnkIconCredits.TabIndex = 4;
+            this.lnkIconCredits.TabStop = true;
+            this.lnkIconCredits.Text = "http://hobbit1978.deviantart.com/";
+            this.lnkIconCredits.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkIconCredits_LinkClicked);
+            // 
+            // lblIconCredit
+            // 
+            this.lblIconCredit.AutoSize = true;
+            this.lblIconCredit.Location = new System.Drawing.Point(19, 19);
+            this.lblIconCredit.Name = "lblIconCredit";
+            this.lblIconCredit.Size = new System.Drawing.Size(261, 26);
+            this.lblIconCredit.TabIndex = 3;
+            this.lblIconCredit.Text = "Jeremy James for the permission to use his creation as\nWoofy\'s icon";
+            // 
             // lnkFamFamFam
             // 
             this.lnkFamFamFam.AutoSize = true;
-            this.lnkFamFamFam.Location = new System.Drawing.Point(31, 37);
+            this.lnkFamFamFam.Location = new System.Drawing.Point(28, 83);
             this.lnkFamFamFam.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lnkFamFamFam.Name = "lnkFamFamFam";
             this.lnkFamFamFam.Size = new System.Drawing.Size(213, 13);
@@ -168,40 +166,54 @@ namespace Woofy.Gui
             // 
             // lnkMailto
             // 
-            this.lnkMailto.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lnkMailto.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(this.lnkMailto, 2);
-            this.lnkMailto.Location = new System.Drawing.Point(63, 40);
+            this.lnkMailto.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.lnkMailto.Location = new System.Drawing.Point(174, 64);
             this.lnkMailto.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lnkMailto.Name = "lnkMailto";
-            this.lnkMailto.Size = new System.Drawing.Size(117, 13);
+            this.lnkMailto.Size = new System.Drawing.Size(79, 15);
             this.lnkMailto.TabIndex = 29;
             this.lnkMailto.TabStop = true;
-            this.lnkMailto.Text = "vlad.iliescu@gmail.com";
+            this.lnkMailto.Text = "Author Name";
             this.lnkMailto.VisitedLinkColor = System.Drawing.Color.Blue;
             this.lnkMailto.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkMailto_LinkClicked);
+            // 
+            // pbWoofyLogo
+            // 
+            this.pbWoofyLogo.Image = global::Woofy.Properties.Resources.Woofy128x128;
+            this.pbWoofyLogo.Location = new System.Drawing.Point(12, 12);
+            this.pbWoofyLogo.Name = "pbWoofyLogo";
+            this.pbWoofyLogo.Size = new System.Drawing.Size(141, 67);
+            this.pbWoofyLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pbWoofyLogo.TabIndex = 30;
+            this.pbWoofyLogo.TabStop = false;
             // 
             // AboutForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.btnOK;
-            this.ClientSize = new System.Drawing.Size(262, 197);
-            this.Controls.Add(this.tableLayoutPanel1);
+            this.ClientSize = new System.Drawing.Size(310, 262);
+            this.Controls.Add(this.lnkWebAddress);
+            this.Controls.Add(this.btnOK);
+            this.Controls.Add(this.lblAuthorInfo);
+            this.Controls.Add(this.pbWoofyLogo);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.lblFullProductName);
+            this.Controls.Add(this.lnkMailto);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "AboutForm";
-            this.Padding = new System.Windows.Forms.Padding(9, 9, 9, 9);
+            this.Padding = new System.Windows.Forms.Padding(9);
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "About";
-            this.tableLayoutPanel1.ResumeLayout(false);
-            this.tableLayoutPanel1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pbWoofyLogo)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -211,9 +223,11 @@ namespace Woofy.Gui
         private System.Windows.Forms.LinkLabel lnkWebAddress;
         private System.Windows.Forms.Label lblFullProductName;
         private System.Windows.Forms.Label lblAuthorInfo;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.LinkLabel lnkFamFamFam;
         private System.Windows.Forms.LinkLabel lnkMailto;
+        private System.Windows.Forms.Label lblIconCredit;
+        private System.Windows.Forms.LinkLabel lnkIconCredits;
+        private System.Windows.Forms.PictureBox pbWoofyLogo;
     }
 }

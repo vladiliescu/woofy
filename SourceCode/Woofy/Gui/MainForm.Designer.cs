@@ -29,15 +29,15 @@ namespace Woofy.Gui
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem(new string[] {
             "",
             "All ({0})"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem(new string[] {
             "",
             "Active ({0})"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem(new string[] {
             "",
             "Finished ({0})"}, -1);
             this.dgvwTasks = new System.Windows.Forms.DataGridView();
@@ -82,7 +82,7 @@ namespace Woofy.Gui
             this.ComicsColumn});
             this.dgvwTasks.ContextMenuStrip = this.contextMenuStrip;
             this.dgvwTasks.Location = new System.Drawing.Point(9, 23);
-            this.dgvwTasks.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dgvwTasks.Margin = new System.Windows.Forms.Padding(2);
             this.dgvwTasks.Name = "dgvwTasks";
             this.dgvwTasks.ReadOnly = true;
             this.dgvwTasks.RowHeadersVisible = false;
@@ -96,11 +96,11 @@ namespace Woofy.Gui
             // 
             // TaskStatusColumn
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.NullValue = null;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Menu;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.MenuText;
-            this.TaskStatusColumn.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.NullValue = null;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Menu;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.MenuText;
+            this.TaskStatusColumn.DefaultCellStyle = dataGridViewCellStyle3;
             this.TaskStatusColumn.HeaderText = "";
             this.TaskStatusColumn.MinimumWidth = 20;
             this.TaskStatusColumn.Name = "TaskStatusColumn";
@@ -134,14 +134,14 @@ namespace Woofy.Gui
             this.toolStripMenuItemOpenTaskFolder});
             this.contextMenuStrip.Name = "contextMenuStrip";
             this.contextMenuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.contextMenuStrip.Size = new System.Drawing.Size(202, 98);
+            this.contextMenuStrip.Size = new System.Drawing.Size(189, 98);
             // 
             // toolStripMenuItemNewTask
             // 
             this.toolStripMenuItemNewTask.Image = global::Woofy.Properties.Resources.New;
             this.toolStripMenuItemNewTask.Name = "toolStripMenuItemNewTask";
             this.toolStripMenuItemNewTask.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.toolStripMenuItemNewTask.Size = new System.Drawing.Size(201, 22);
+            this.toolStripMenuItemNewTask.Size = new System.Drawing.Size(188, 22);
             this.toolStripMenuItemNewTask.Text = "New";
             this.toolStripMenuItemNewTask.Click += new System.EventHandler(this.toolStripMenuItemNewTask_Click);
             // 
@@ -150,7 +150,7 @@ namespace Woofy.Gui
             this.toolStripMenuItemPauseTask.Image = global::Woofy.Properties.Resources.Paused;
             this.toolStripMenuItemPauseTask.Name = "toolStripMenuItemPauseTask";
             this.toolStripMenuItemPauseTask.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-            this.toolStripMenuItemPauseTask.Size = new System.Drawing.Size(201, 22);
+            this.toolStripMenuItemPauseTask.Size = new System.Drawing.Size(188, 22);
             this.toolStripMenuItemPauseTask.Text = "Pause";
             this.toolStripMenuItemPauseTask.Click += new System.EventHandler(this.toolStripMenuItemPauseTask_Click);
             // 
@@ -159,21 +159,21 @@ namespace Woofy.Gui
             this.toolStripMenuItemDeleteTask.Image = global::Woofy.Properties.Resources.Delete;
             this.toolStripMenuItemDeleteTask.Name = "toolStripMenuItemDeleteTask";
             this.toolStripMenuItemDeleteTask.ShortcutKeys = System.Windows.Forms.Keys.Delete;
-            this.toolStripMenuItemDeleteTask.Size = new System.Drawing.Size(201, 22);
+            this.toolStripMenuItemDeleteTask.Size = new System.Drawing.Size(188, 22);
             this.toolStripMenuItemDeleteTask.Text = "Delete";
             this.toolStripMenuItemDeleteTask.Click += new System.EventHandler(this.toolStripMenuItemDeleteTask_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(198, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(185, 6);
             // 
             // toolStripMenuItemOpenTaskFolder
             // 
             this.toolStripMenuItemOpenTaskFolder.Image = global::Woofy.Properties.Resources.OpenFolder;
             this.toolStripMenuItemOpenTaskFolder.Name = "toolStripMenuItemOpenTaskFolder";
             this.toolStripMenuItemOpenTaskFolder.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.toolStripMenuItemOpenTaskFolder.Size = new System.Drawing.Size(201, 22);
+            this.toolStripMenuItemOpenTaskFolder.Size = new System.Drawing.Size(188, 22);
             this.toolStripMenuItemOpenTaskFolder.Text = "Open folder";
             this.toolStripMenuItemOpenTaskFolder.Click += new System.EventHandler(this.toolStripMenuItemOpenTaskFolder_Click);
             // 
@@ -271,7 +271,7 @@ namespace Woofy.Gui
             this.toolStripButtonSettings.Image = global::Woofy.Properties.Resources.Settings;
             this.toolStripButtonSettings.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonSettings.Name = "toolStripButtonSettings";
-            this.toolStripButtonSettings.Size = new System.Drawing.Size(74, 20);
+            this.toolStripButtonSettings.Size = new System.Drawing.Size(74, 22);
             this.toolStripButtonSettings.Text = "Settings";
             this.toolStripButtonSettings.ToolTipText = "Displays the settings form";
             this.toolStripButtonSettings.Click += new System.EventHandler(this.toolStripButtonSettings_Click);
@@ -284,14 +284,14 @@ namespace Woofy.Gui
             this.text});
             this.lvwCategories.FullRowSelect = true;
             this.lvwCategories.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            listViewItem2.StateImageIndex = 0;
-            listViewItem3.StateImageIndex = 0;
+            listViewItem8.StateImageIndex = 0;
+            listViewItem9.StateImageIndex = 0;
             this.lvwCategories.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3});
+            listViewItem7,
+            listViewItem8,
+            listViewItem9});
             this.lvwCategories.Location = new System.Drawing.Point(9, 152);
-            this.lvwCategories.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.lvwCategories.Margin = new System.Windows.Forms.Padding(2);
             this.lvwCategories.Name = "lvwCategories";
             this.lvwCategories.Size = new System.Drawing.Size(101, 366);
             this.lvwCategories.TabIndex = 9;
@@ -315,7 +315,8 @@ namespace Woofy.Gui
             this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.dgvwTasks);
             this.Controls.Add(this.lvwCategories);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainForm";
             this.Text = "Woofy";
             this.Load += new System.EventHandler(this.MainForm_Load);

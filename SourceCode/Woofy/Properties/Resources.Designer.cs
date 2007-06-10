@@ -129,5 +129,12 @@ namespace Woofy.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        internal static System.Drawing.Bitmap Woofy128x128 {
+            get {
+                object obj = ResourceManager.GetObject("Woofy128x128", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

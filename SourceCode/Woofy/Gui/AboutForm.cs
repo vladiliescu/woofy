@@ -17,7 +17,9 @@ namespace Woofy.Gui
 
             this.Text = string.Format("About {0}", AssemblyTitle);
             this.lblFullProductName.Text = string.Format("{0} {1}", AssemblyTitle, AssemblyShortVersion);
-            this.lblAuthorInfo.Text = string.Format("{0} {1}", AssemblyCopyright, AssemblyCompany);
+            this.lblAuthorInfo.Text = string.Format("Copyright {0}", AssemblyCopyright);
+            this.lnkMailto.Text = AssemblyCompany;
+            this.lblIconCredit.Text = "Jeremy James for the permission to use his creation as\n\t\t Woofy's icon";
         } 
         #endregion
 
@@ -110,6 +112,11 @@ namespace Woofy.Gui
         {
             Process.Start("http://woofy.sourceforge.net");
         }
-        #endregion        
+
+        private void lnkIconCredits_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start("http://hobbit1978.deviantart.com/");
+        }
+        #endregion
     }
 }

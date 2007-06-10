@@ -9,6 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Woofy</RootNamespace>
     <AssemblyName>Woofy</AssemblyName>
+    <ApplicationIcon>Woofy.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -158,6 +159,8 @@
     <Content Include="license.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\Woofy128x128.png" />
+    <Content Include="Woofy.ico" />
     <None Include="Resources\folder.png" />
     <None Include="Resources\pencil.png" />
     <None Include="Resources\page_white_edit.png" />
@@ -171,10 +174,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!--Prepare the files to be included in the setup kit-->
-  <ItemGroup Condition="'$(Configuration)' == 'Release'">
-    <ApplicationFiles Include="bin\$(Configuration)\*.*" Exclude="bin\$(Configuration)\*.vshost.*;" />
-    <ComicInfos Include="bin\$(Configuration)\ComicInfos\*.xml" />
-  </ItemGroup>
   <Target Name="AfterBuild" Condition="'$(Configuration)' == 'Release'">
     <!--<Copy Condition="$(Configuration)=='Release'" SourceFiles="@(ApplicationFiles)"  DestinationFolder="$(SolutionDir)\..\SetupKit\Files"/>-->
     <Copy SourceFiles="@(ComicInfos)" DestinationFolder="..\..\SetupKit\Files\ComicInfos" />
