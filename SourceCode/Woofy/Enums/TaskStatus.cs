@@ -6,7 +6,7 @@ namespace Woofy.Enums
 {
     public enum TaskStatus : long
     {
-        Paused = 0,
+        Stopped = 0,
         Running = 1,
         Finished = 2
     }

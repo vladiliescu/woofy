@@ -29,15 +29,15 @@ namespace Woofy.Gui
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.ListViewItem listViewItem7 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem31 = new System.Windows.Forms.ListViewItem(new string[] {
             "",
             "All ({0})"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem8 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem32 = new System.Windows.Forms.ListViewItem(new string[] {
             "",
             "Active ({0})"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem9 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem33 = new System.Windows.Forms.ListViewItem(new string[] {
             "",
             "Finished ({0})"}, -1);
             this.dgvwTasks = new System.Windows.Forms.DataGridView();
@@ -62,9 +62,18 @@ namespace Woofy.Gui
             this.lvwCategories = new System.Windows.Forms.ListView();
             this.icon = new System.Windows.Forms.ColumnHeader();
             this.text = new System.Windows.Forms.ColumnHeader();
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
+            this.trayMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.hideShowWoofyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.startAllTasksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stopAllTasksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgvwTasks)).BeginInit();
             this.contextMenuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
+            this.trayMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvwTasks
@@ -96,11 +105,11 @@ namespace Woofy.Gui
             // 
             // TaskStatusColumn
             // 
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.NullValue = null;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Menu;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.MenuText;
-            this.TaskStatusColumn.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle11.NullValue = null;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Menu;
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.MenuText;
+            this.TaskStatusColumn.DefaultCellStyle = dataGridViewCellStyle11;
             this.TaskStatusColumn.HeaderText = "";
             this.TaskStatusColumn.MinimumWidth = 20;
             this.TaskStatusColumn.Name = "TaskStatusColumn";
@@ -284,12 +293,12 @@ namespace Woofy.Gui
             this.text});
             this.lvwCategories.FullRowSelect = true;
             this.lvwCategories.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            listViewItem8.StateImageIndex = 0;
-            listViewItem9.StateImageIndex = 0;
+            listViewItem32.StateImageIndex = 0;
+            listViewItem33.StateImageIndex = 0;
             this.lvwCategories.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem7,
-            listViewItem8,
-            listViewItem9});
+            listViewItem31,
+            listViewItem32,
+            listViewItem33});
             this.lvwCategories.Location = new System.Drawing.Point(9, 152);
             this.lvwCategories.Margin = new System.Windows.Forms.Padding(2);
             this.lvwCategories.Name = "lvwCategories";
@@ -307,6 +316,63 @@ namespace Woofy.Gui
             // 
             this.text.Width = 99;
             // 
+            // notifyIcon
+            // 
+            this.notifyIcon.ContextMenuStrip = this.trayMenuStrip;
+            this.notifyIcon.Visible = true;
+            this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseDoubleClick);
+            // 
+            // trayMenuStrip
+            // 
+            this.trayMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.hideShowWoofyToolStripMenuItem,
+            this.toolStripSeparator3,
+            this.stopAllTasksToolStripMenuItem,
+            this.startAllTasksToolStripMenuItem,
+            this.toolStripSeparator4,
+            this.exitToolStripMenuItem});
+            this.trayMenuStrip.Name = "trayMenuStrip";
+            this.trayMenuStrip.ShowImageMargin = false;
+            this.trayMenuStrip.Size = new System.Drawing.Size(154, 104);
+            // 
+            // hideShowWoofyToolStripMenuItem
+            // 
+            this.hideShowWoofyToolStripMenuItem.Name = "hideShowWoofyToolStripMenuItem";
+            this.hideShowWoofyToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.hideShowWoofyToolStripMenuItem.Text = "&Hide/Show Woofy";
+            this.hideShowWoofyToolStripMenuItem.Click += new System.EventHandler(this.hideShowWoofyToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(175, 6);
+            // 
+            // startAllTasksToolStripMenuItem
+            // 
+            this.startAllTasksToolStripMenuItem.Name = "startAllTasksToolStripMenuItem";
+            this.startAllTasksToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.startAllTasksToolStripMenuItem.Text = "&Resume all tasks";
+            this.startAllTasksToolStripMenuItem.Click += new System.EventHandler(this.startAllTasksToolStripMenuItem_Click);
+            // 
+            // stopAllTasksToolStripMenuItem
+            // 
+            this.stopAllTasksToolStripMenuItem.Name = "stopAllTasksToolStripMenuItem";
+            this.stopAllTasksToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.stopAllTasksToolStripMenuItem.Text = "&Pause all tasks";
+            this.stopAllTasksToolStripMenuItem.Click += new System.EventHandler(this.stopAllTasksToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(175, 6);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(178, 22);
+            this.exitToolStripMenuItem.Text = "E&xit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -315,15 +381,16 @@ namespace Woofy.Gui
             this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.dgvwTasks);
             this.Controls.Add(this.lvwCategories);
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainForm";
             this.Text = "Woofy";
+            this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.Load += new System.EventHandler(this.MainForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvwTasks)).EndInit();
             this.contextMenuStrip.ResumeLayout(false);
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
+            this.trayMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -353,5 +420,13 @@ namespace Woofy.Gui
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton toolStripButtonAbout;
         private System.Windows.Forms.ToolStripButton toolStripButtonSettings;
+        private System.Windows.Forms.NotifyIcon notifyIcon;
+        private System.Windows.Forms.ContextMenuStrip trayMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem hideShowWoofyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem stopAllTasksToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem startAllTasksToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
     }
 }

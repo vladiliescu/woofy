@@ -33,6 +33,15 @@ namespace Woofy.Gui
         {
             InitControls();
         }
+
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            if (!Settings.Default.MinimizeToTray)
+                return;
+
+            if (this.WindowState == FormWindowState.Minimized)
+                this.Hide();
+        }
         #endregion
 
         #region Events - dgvwTasks
@@ -48,7 +57,7 @@ namespace Woofy.Gui
 
                 switch (task.Status)
                 {
-                    case TaskStatus.Paused:
+                    case TaskStatus.Stopped:
                         row.Cells["TaskStatusColumn"].Value = Properties.Resources.Paused;
                         break;
                     case TaskStatus.Running:
@@ -93,7 +102,7 @@ namespace Woofy.Gui
 
             switch (task.Status)
             {
-                case TaskStatus.Paused:
+                case TaskStatus.Stopped:
                     toolStripButtonPauseTask.Enabled = true;
                     toolStripButtonPauseTask.Image = Resources.Running;
                     toolStripButtonPauseTask.Text = "Unpause";
@@ -113,6 +122,11 @@ namespace Woofy.Gui
         #region Initialization Methods
         private void InitControls()
         {
+            Icon appIcon = new Icon(typeof(Program), "Woofy.ico");
+
+            this.Icon = 
+                notifyIcon.Icon = appIcon;
+
             _tasksController.Initialize();
 
             dgvwTasks.AutoGenerateColumns = false;
@@ -168,6 +182,34 @@ namespace Woofy.Gui
             ComicTask task = (ComicTask)dgvwTasks.SelectedRows[0].DataBoundItem;
 
             _tasksController.OpenTaskFolder(task);
+        }
+
+        /// <summary>
+        /// Starts all the existing tasks.
+        /// </summary>
+        private void StartAllTasks()
+        {
+            foreach (DataGridViewRow row in dgvwTasks.Rows)
+            {
+                ComicTask task = (ComicTask)row.DataBoundItem;
+                _tasksController.StartTask(task);
+            }
+
+            _tasksController.ResetTasksBindings();
+        }
+
+        /// <summary>
+        /// Stops all the existing tasks.
+        /// </summary>
+        private void StopAllTasks()
+        {
+            foreach (DataGridViewRow row in dgvwTasks.Rows)
+            {
+                ComicTask task = (ComicTask)row.DataBoundItem;
+                _tasksController.StopTask(task);
+            }
+
+            _tasksController.ResetTasksBindings();
         }
         #endregion
 
@@ -232,6 +274,45 @@ namespace Woofy.Gui
             SettingsForm settingsForm = new SettingsForm();
             settingsForm.ShowDialog();
         }
+        #endregion        
+
+        #region Events - Tray Tool Strip Menus
+        private void hideShowWoofyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.Visible)
+            {
+                this.WindowState = FormWindowState.Minimized;
+                this.Visible = false;
+            }
+            else
+            {
+                this.Visible = true;
+                this.WindowState = FormWindowState.Normal;
+            }
+        }
+
+        private void stopAllTasksToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            StopAllTasks();
+        }
+
+        private void startAllTasksToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            StartAllTasks();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        } 
+        #endregion
+
+        #region Events - notifyIcon
+        private void notifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            this.Visible = true;
+            this.WindowState = FormWindowState.Normal;
+        } 
         #endregion
     }
 }

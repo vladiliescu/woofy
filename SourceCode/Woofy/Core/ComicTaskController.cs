@@ -83,26 +83,55 @@ namespace Woofy.Core
         /// </summary>
         public void ToggleTaskState(ComicTask task, bool resetTasksBindings)
         {
-            int index = _tasks.IndexOf(task);
-            ComicsProvider comicsProvider = _comicProviders[index];
-
             switch (task.Status)
             {
-                case TaskStatus.Paused:
-                    task.Status = TaskStatus.Running;
-                    int comicsToDownload = task.ComicsToDownload.HasValue ? (int)(task.ComicsToDownload.Value - task.DownloadedComics) : ComicsProvider.AllAvailableComics;
-                    comicsProvider.DownloadComicsAsync(comicsToDownload, task.CurrentUrl);
+                case TaskStatus.Stopped:
+                    StartTask(task);
                     break;
                 case TaskStatus.Running:
-                    task.Status = TaskStatus.Paused;
-                    comicsProvider.StopDownload();
+                    StopTask(task);
                     break;
             }
 
-            task.Update();
-
             if (resetTasksBindings)
                 ResetTasksBindings();
+        }
+
+        /// <summary>
+        /// Stops the specified comic task.
+        /// </summary>
+        /// <param name="task">Comic task to stop.</param>
+        public void StopTask(ComicTask task)
+        {
+            if (task.Status != TaskStatus.Running)
+                return;
+
+            int index = _tasks.IndexOf(task);
+            ComicsProvider comicsProvider = _comicProviders[index];
+
+            task.Status = TaskStatus.Stopped;
+            comicsProvider.StopDownload();
+
+            task.Update();
+        }
+
+        /// <summary>
+        /// Start the specified comic task.
+        /// </summary>
+        /// <param name="task">Comic task to start.</param>
+        public void StartTask(ComicTask task)
+        {
+            if (task.Status != TaskStatus.Stopped)
+                return;
+
+            int index = _tasks.IndexOf(task);
+            ComicsProvider comicsProvider = _comicProviders[index];
+
+            task.Status = TaskStatus.Running;
+            int comicsToDownload = task.ComicsToDownload.HasValue ? (int)(task.ComicsToDownload.Value - task.DownloadedComics) : ComicsProvider.AllAvailableComics;
+            comicsProvider.DownloadComicsAsync(comicsToDownload, task.CurrentUrl);
+
+            task.Update();
         }
 
         /// <summary>

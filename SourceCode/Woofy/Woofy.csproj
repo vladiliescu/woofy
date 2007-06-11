@@ -160,7 +160,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\Woofy128x128.png" />
-    <Content Include="Woofy.ico" />
+    <EmbeddedResource Include="Woofy.ico" />
     <None Include="Resources\folder.png" />
     <None Include="Resources\pencil.png" />
     <None Include="Resources\page_white_edit.png" />

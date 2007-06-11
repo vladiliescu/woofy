@@ -40,12 +40,13 @@ namespace Woofy.Gui
             this.txtDefaultDownloadFolder = new System.Windows.Forms.TextBox();
             this.txtProxyPort = new System.Windows.Forms.TextBox();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.chkMinimizeToTray = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
             this.SuspendLayout();
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(271, 128);
+            this.btnOK.Location = new System.Drawing.Point(271, 134);
             this.btnOK.Margin = new System.Windows.Forms.Padding(2);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
@@ -57,7 +58,7 @@ namespace Woofy.Gui
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(350, 128);
+            this.btnCancel.Location = new System.Drawing.Point(350, 134);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
@@ -148,13 +149,27 @@ namespace Woofy.Gui
             // 
             this.errorProvider.ContainerControl = this;
             // 
+            // chkMinimizeToTray
+            // 
+            this.chkMinimizeToTray.AutoSize = true;
+            this.chkMinimizeToTray.Checked = global::Woofy.Properties.Settings.Default.MinimizeToTray;
+            this.chkMinimizeToTray.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkMinimizeToTray.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Woofy.Properties.Settings.Default, "MinimizeToTray", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkMinimizeToTray.Location = new System.Drawing.Point(11, 134);
+            this.chkMinimizeToTray.Name = "chkMinimizeToTray";
+            this.chkMinimizeToTray.Size = new System.Drawing.Size(98, 17);
+            this.chkMinimizeToTray.TabIndex = 11;
+            this.chkMinimizeToTray.Text = "Minimize to tray";
+            this.chkMinimizeToTray.UseVisualStyleBackColor = true;
+            // 
             // SettingsForm
             // 
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(445, 163);
+            this.ClientSize = new System.Drawing.Size(445, 172);
+            this.Controls.Add(this.chkMinimizeToTray);
             this.Controls.Add(this.txtProxyPort);
             this.Controls.Add(this.lblPort);
             this.Controls.Add(this.lblAddress);
@@ -192,5 +207,6 @@ namespace Woofy.Gui
         private System.Windows.Forms.Label lblPort;
         private System.Windows.Forms.TextBox txtProxyPort;
         private System.Windows.Forms.ErrorProvider errorProvider;
+        private System.Windows.Forms.CheckBox chkMinimizeToTray;
     }
 }
