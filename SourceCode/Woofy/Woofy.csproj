@@ -159,7 +159,7 @@
     <Content Include="license.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Resources\Woofy128x128.png" />
+    <None Include="Resources\WoofyLogo.png" />
     <EmbeddedResource Include="Woofy.ico" />
     <None Include="Resources\folder.png" />
     <None Include="Resources\pencil.png" />

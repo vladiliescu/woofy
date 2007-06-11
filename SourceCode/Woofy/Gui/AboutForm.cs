@@ -16,10 +16,10 @@ namespace Woofy.Gui
             InitializeComponent();
 
             this.Text = string.Format("About {0}", AssemblyTitle);
-            this.lblFullProductName.Text = string.Format("{0} {1}", AssemblyTitle, AssemblyShortVersion);
-            this.lblAuthorInfo.Text = string.Format("Copyright {0}", AssemblyCopyright);
-            this.lnkMailto.Text = AssemblyCompany;
-            this.lblIconCredit.Text = "Jeremy James for the permission to use his creation as\n\t\t Woofy's icon";
+            this.lblProductInfo.Text = string.Format("{0} {1} Copyright {2} {3}", AssemblyTitle, AssemblyShortVersion, AssemblyCopyright, AssemblyCompany);
+            this.lblIconCredit.Text = "Jeremy James for the permission to use his creation as Woofy's icon";
+
+            this.btnOK.Focus();
         } 
         #endregion
 

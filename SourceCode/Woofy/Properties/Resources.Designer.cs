@@ -130,9 +130,9 @@ namespace Woofy.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap Woofy128x128 {
+        internal static System.Drawing.Bitmap WoofyLogo {
             get {
-                object obj = ResourceManager.GetObject("Woofy128x128", resourceCulture);
+                object obj = ResourceManager.GetObject("WoofyLogo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

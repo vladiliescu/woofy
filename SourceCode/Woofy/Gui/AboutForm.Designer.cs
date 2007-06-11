@@ -31,24 +31,22 @@ namespace Woofy.Gui
             System.Windows.Forms.Label label2;
             this.btnOK = new System.Windows.Forms.Button();
             this.lnkWebAddress = new System.Windows.Forms.LinkLabel();
-            this.lblFullProductName = new System.Windows.Forms.Label();
-            this.lblAuthorInfo = new System.Windows.Forms.Label();
+            this.lblProductInfo = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.lnkIconCredits = new System.Windows.Forms.LinkLabel();
             this.lblIconCredit = new System.Windows.Forms.Label();
             this.lnkFamFamFam = new System.Windows.Forms.LinkLabel();
-            this.lnkMailto = new System.Windows.Forms.LinkLabel();
-            this.pbWoofyLogo = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             label1 = new System.Windows.Forms.Label();
             label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbWoofyLogo)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(13, 69);
+            label1.Location = new System.Drawing.Point(13, 58);
             label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(190, 13);
@@ -58,18 +56,18 @@ namespace Woofy.Gui
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(13, 108);
+            label2.Location = new System.Drawing.Point(13, 97);
             label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(201, 13);
+            label2.Size = new System.Drawing.Size(142, 13);
             label2.TabIndex = 2;
-            label2.Text = "My girlfriend Mihaela for some great ideas\n";
+            label2.Text = "Mihaela for some great ideas\n";
             // 
             // btnOK
             // 
             this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOK.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnOK.Location = new System.Drawing.Point(223, 235);
+            this.btnOK.Location = new System.Drawing.Point(283, 275);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
             this.btnOK.TabIndex = 24;
@@ -79,7 +77,7 @@ namespace Woofy.Gui
             // 
             this.lnkWebAddress.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lnkWebAddress.AutoSize = true;
-            this.lnkWebAddress.Location = new System.Drawing.Point(9, 240);
+            this.lnkWebAddress.Location = new System.Drawing.Point(9, 280);
             this.lnkWebAddress.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lnkWebAddress.Name = "lnkWebAddress";
             this.lnkWebAddress.Size = new System.Drawing.Size(143, 13);
@@ -89,28 +87,17 @@ namespace Woofy.Gui
             this.lnkWebAddress.VisitedLinkColor = System.Drawing.Color.Blue;
             this.lnkWebAddress.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkWebAddress_LinkClicked);
             // 
-            // lblFullProductName
+            // lblProductInfo
             // 
-            this.lblFullProductName.AutoSize = true;
-            this.lblFullProductName.Font = new System.Drawing.Font("Book Antiqua", 16F, System.Drawing.FontStyle.Bold);
-            this.lblFullProductName.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblFullProductName.Location = new System.Drawing.Point(172, 12);
-            this.lblFullProductName.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblFullProductName.Name = "lblFullProductName";
-            this.lblFullProductName.Size = new System.Drawing.Size(200, 27);
-            this.lblFullProductName.TabIndex = 26;
-            this.lblFullProductName.Text = "Full Product Name";
-            // 
-            // lblAuthorInfo
-            // 
-            this.lblAuthorInfo.AutoSize = true;
-            this.lblAuthorInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.lblAuthorInfo.Location = new System.Drawing.Point(174, 49);
-            this.lblAuthorInfo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lblAuthorInfo.Name = "lblAuthorInfo";
-            this.lblAuthorInfo.Size = new System.Drawing.Size(58, 15);
-            this.lblAuthorInfo.TabIndex = 27;
-            this.lblAuthorInfo.Text = "Copyright";
+            this.lblProductInfo.AutoSize = true;
+            this.lblProductInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblProductInfo.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lblProductInfo.Location = new System.Drawing.Point(9, 119);
+            this.lblProductInfo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblProductInfo.Name = "lblProductInfo";
+            this.lblProductInfo.Size = new System.Drawing.Size(72, 15);
+            this.lblProductInfo.TabIndex = 26;
+            this.lblProductInfo.Text = "Product Info";
             // 
             // groupBox1
             // 
@@ -122,11 +109,11 @@ namespace Woofy.Gui
             this.groupBox1.Controls.Add(label2);
             this.groupBox1.Controls.Add(label1);
             this.groupBox1.Controls.Add(this.lnkFamFamFam);
-            this.groupBox1.Location = new System.Drawing.Point(12, 95);
+            this.groupBox1.Location = new System.Drawing.Point(12, 148);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox1.Size = new System.Drawing.Size(286, 131);
+            this.groupBox1.Size = new System.Drawing.Size(346, 122);
             this.groupBox1.TabIndex = 28;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Thanks to";
@@ -134,7 +121,7 @@ namespace Woofy.Gui
             // lnkIconCredits
             // 
             this.lnkIconCredits.AutoSize = true;
-            this.lnkIconCredits.Location = new System.Drawing.Point(34, 45);
+            this.lnkIconCredits.Location = new System.Drawing.Point(34, 32);
             this.lnkIconCredits.Name = "lnkIconCredits";
             this.lnkIconCredits.Size = new System.Drawing.Size(169, 13);
             this.lnkIconCredits.TabIndex = 4;
@@ -147,14 +134,14 @@ namespace Woofy.Gui
             this.lblIconCredit.AutoSize = true;
             this.lblIconCredit.Location = new System.Drawing.Point(19, 19);
             this.lblIconCredit.Name = "lblIconCredit";
-            this.lblIconCredit.Size = new System.Drawing.Size(261, 26);
+            this.lblIconCredit.Size = new System.Drawing.Size(325, 13);
             this.lblIconCredit.TabIndex = 3;
-            this.lblIconCredit.Text = "Jeremy James for the permission to use his creation as\nWoofy\'s icon";
+            this.lblIconCredit.Text = "Jeremy James for the permission to use his creation as Woofy\'s icon";
             // 
             // lnkFamFamFam
             // 
             this.lnkFamFamFam.AutoSize = true;
-            this.lnkFamFamFam.Location = new System.Drawing.Point(28, 83);
+            this.lnkFamFamFam.Location = new System.Drawing.Point(28, 72);
             this.lnkFamFamFam.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lnkFamFamFam.Name = "lnkFamFamFam";
             this.lnkFamFamFam.Size = new System.Drawing.Size(213, 13);
@@ -164,42 +151,26 @@ namespace Woofy.Gui
             this.lnkFamFamFam.VisitedLinkColor = System.Drawing.Color.Blue;
             this.lnkFamFamFam.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkFamFamFam_LinkClicked);
             // 
-            // lnkMailto
+            // pictureBox1
             // 
-            this.lnkMailto.AutoSize = true;
-            this.lnkMailto.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.lnkMailto.Location = new System.Drawing.Point(174, 64);
-            this.lnkMailto.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.lnkMailto.Name = "lnkMailto";
-            this.lnkMailto.Size = new System.Drawing.Size(79, 15);
-            this.lnkMailto.TabIndex = 29;
-            this.lnkMailto.TabStop = true;
-            this.lnkMailto.Text = "Author Name";
-            this.lnkMailto.VisitedLinkColor = System.Drawing.Color.Blue;
-            this.lnkMailto.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.lnkMailto_LinkClicked);
-            // 
-            // pbWoofyLogo
-            // 
-            this.pbWoofyLogo.Image = global::Woofy.Properties.Resources.Woofy128x128;
-            this.pbWoofyLogo.Location = new System.Drawing.Point(12, 12);
-            this.pbWoofyLogo.Name = "pbWoofyLogo";
-            this.pbWoofyLogo.Size = new System.Drawing.Size(141, 67);
-            this.pbWoofyLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
-            this.pbWoofyLogo.TabIndex = 30;
-            this.pbWoofyLogo.TabStop = false;
+            this.pictureBox1.Image = global::Woofy.Properties.Resources.WoofyLogo;
+            this.pictureBox1.Location = new System.Drawing.Point(0, -1);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(369, 120);
+            this.pictureBox1.TabIndex = 31;
+            this.pictureBox1.TabStop = false;
             // 
             // AboutForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(310, 262);
+            this.ClientSize = new System.Drawing.Size(370, 302);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.lnkWebAddress);
             this.Controls.Add(this.btnOK);
-            this.Controls.Add(this.lblAuthorInfo);
-            this.Controls.Add(this.pbWoofyLogo);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.lblFullProductName);
-            this.Controls.Add(this.lnkMailto);
+            this.Controls.Add(this.lblProductInfo);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
@@ -211,7 +182,7 @@ namespace Woofy.Gui
             this.Text = "About";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbWoofyLogo)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -221,13 +192,11 @@ namespace Woofy.Gui
 
         private System.Windows.Forms.Button btnOK;
         private System.Windows.Forms.LinkLabel lnkWebAddress;
-        private System.Windows.Forms.Label lblFullProductName;
-        private System.Windows.Forms.Label lblAuthorInfo;
+        private System.Windows.Forms.Label lblProductInfo;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.LinkLabel lnkFamFamFam;
-        private System.Windows.Forms.LinkLabel lnkMailto;
         private System.Windows.Forms.Label lblIconCredit;
         private System.Windows.Forms.LinkLabel lnkIconCredits;
-        private System.Windows.Forms.PictureBox pbWoofyLogo;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }
