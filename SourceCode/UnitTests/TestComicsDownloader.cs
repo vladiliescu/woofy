@@ -37,7 +37,7 @@ namespace UnitTests
         {
             ComicInfo comicInfo = new ComicInfo(comicInfoFile);
             ComicsProvider comicsProvider = new ComicsProvider(comicInfo, ComicsDirectory);
-            ComicsDownloader comicsHandler = new ComicsDownloader(ComicsDirectory);
+            FileDownloader comicsHandler = new FileDownloader(ComicsDirectory);
 
             using (WebClient client = new WebClient())
             {
@@ -51,7 +51,7 @@ namespace UnitTests
                 File.AppendAllText(existingFileName, string.Empty);
                 
                 bool comicAlreadyDownloaded;
-                comicsHandler.DownloadComic(comicLink, out comicAlreadyDownloaded);
+                comicsHandler.DownloadFile(comicLink, out comicAlreadyDownloaded);
 
                 FileInfo existingFileInfo = new FileInfo(existingFileName);
                 

@@ -7,28 +7,18 @@ using System.Net;
 namespace Woofy.Core
 {
     /// <summary>
-    /// Downloads the desired comics.
+    /// Downloads one or more files to a specified directory.
     /// </summary>
-    public class ComicsDownloader : IComicsDownloader
+    public class FileDownloader : IFileDownloader
     {
         #region Instance Members
         private string _downloadDirectory;
         /// <summary>
-        /// Gets the directory in which the comics will be downloaded.
+        /// Gets the directory in which the files will be downloaded.
         /// </summary>
         public string DownloadDirectory
         {
             get { return _downloadDirectory; }
-        }
-
-        private WebProxy _proxy;
-        /// <summary>
-        /// Gets or sets the proxy to be used by the downloader.
-        /// </summary>
-        public WebProxy Proxy
-        {
-            get { return _proxy; }
-            set { _proxy = value; }
         }
         #endregion
 
@@ -41,29 +31,18 @@ namespace Woofy.Core
 
         #region .ctor
         /// <summary>
-        /// Creates a new instance of the <see cref="ComicsDownloader"/>.
+        /// Creates a new instance of the <see cref="FileDownloader"/>.
         /// </summary>
-        /// <param name="downloadDirectory">The directory in which the comics will be downloaded.</param>
-        public ComicsDownloader(string downloadDirectory)
-            : this(downloadDirectory, null)
-        {
-        }
-
-        /// <summary>
-        /// Creates a new instance of the <see cref="ComicsDownloader"/>.
-        /// </summary>
-        /// <param name="downloadDirectory">The directory in which the comics will be downloaded. If it doesn't exist, it is created.</param>
-        /// <param name="proxy">The proxy to be used by the downloader.</param>
-        public ComicsDownloader(string downloadDirectory, WebProxy proxy)
+        /// <param name="downloadDirectory">The directory in which the files will be downloaded. If it doesn't exist, it is created.</param>
+        public FileDownloader(string downloadDirectory)
         {
             if (string.IsNullOrEmpty(downloadDirectory))
-                throw new ArgumentNullException("downloadDirectory", "The <downloadDirectory> parameter must be used to specify the name of the directory to which to download the comics.");
+                throw new ArgumentNullException("downloadDirectory", "The <downloadDirectory> parameter must be used to specify the name of the directory to which to download the files.");
 
             if (!Directory.Exists(downloadDirectory))
                 Directory.CreateDirectory(downloadDirectory);
 
             _downloadDirectory = downloadDirectory;
-            _proxy = proxy;
         }
 
         #endregion
@@ -71,20 +50,20 @@ namespace Woofy.Core
         #region Public Methods
 
         /// <summary>
-        /// Downloads the specified comic. If the comic was already downloaded, then it is not downloaded again.
+        /// Downloads the specified file. If the file exists, then it is not downloaded again.
         /// </summary>
-        /// <param name="comicLink">Link to the comic to be downloaded.</param>
-        /// <param name="comicAlreadyDownloaded">True if the comic was already downloaded, false otherwise.</param>
-        public void DownloadComic(string comicLink, out bool comicAlreadyDownloaded)
+        /// <param name="fileLink">Link to the file to be downloaded.</param>
+        /// <param name="fileAlreadyDownloaded">True if the file was already downloaded, false otherwise.</param>
+        public void DownloadFile(string fileLink, out bool fileAlreadyDownloaded)
         {
-            string filePath = GetFilePath(comicLink, _downloadDirectory);
+            string filePath = GetFilePath(fileLink, _downloadDirectory);
             if (File.Exists(filePath))
             {
-                comicAlreadyDownloaded = true;
+                fileAlreadyDownloaded = true;
                 return;
             }
 
-            WebRequest request = GetWebRequest(comicLink);
+            WebRequest request = WebConnectionFactory.GetNewWebRequestInstance(fileLink);
             WebResponse response = request.GetResponse();
             Stream stream = response.GetResponseStream();
 
@@ -119,25 +98,25 @@ namespace Woofy.Core
                 throw;
             }
 
-            comicAlreadyDownloaded = false;
+            fileAlreadyDownloaded = false;
         }
 
         /// <summary>
-        /// Downloads the specified comic asynchronously. If the comic was already downloaded, then it is not downloaded again.
+        /// Downloads the specified file asynchronously. If the file exists, then it is not downloaded again.
         /// </summary>
-        /// <remarks>Use the <see cref="ComicsDownloader.DownloadComicCompleted"/> event to know when the download completes.</remarks>
-        /// <seealso cref="ComicsDownloader.DownloadComicCompleted"/>
-        /// <param name="comicLink">Link to the comic to be downloaded.</param>
-        public void DownloadComicAsync(string comicLink)
+        /// <remarks>Use the <see cref="FileDownloader.DownloadFileCompleted"/> event to know when the download completes.</remarks>
+        /// <seealso cref="FileDownloader.DownloadFileCompleted"/>
+        /// <param name="link">Link to the file to be downloaded.</param>
+        public void DownloadFileAsync(string fileLink)
         {
-            string filePath = GetFilePath(comicLink, _downloadDirectory);
+            string filePath = GetFilePath(fileLink, _downloadDirectory);
             if (File.Exists(filePath))
             {
-                OnDownloadComicCompleted(new DownloadComicCompletedEventArgs(true));
+                OnDownloadFileCompleted(new DownloadFileCompletedEventArgs(true));
                 return;
             }
 
-            WebRequest request = GetWebRequest(comicLink);
+            WebRequest request = WebConnectionFactory.GetNewWebRequestInstance(fileLink);
 
             request.BeginGetResponse(
                 delegate(IAsyncResult result)
@@ -149,10 +128,10 @@ namespace Woofy.Core
 
         #region Callbacks
         /// <summary>
-        /// Called when the application receives the response for the comic request.
+        /// Called when the application receives the response for the file request.
         /// </summary>
         /// <param name="result">The standard <see cref="IAsyncResult"/>.</param>
-        /// <param name="filePath">Path to the file where the comic will be downloaded.</param>
+        /// <param name="filePath">Path where the file will be downloaded.</param>
         private void GetResponseCallback(IAsyncResult result, string filePath)
         {
             WebRequest request = (WebRequest)result.AsyncState;
@@ -178,13 +157,13 @@ namespace Woofy.Core
         }        
 
         /// <summary>
-        /// Called when the application receives a series of bytes from the comic.
+        /// Called when the application receives a series of bytes from the file download.
         /// </summary>
         /// <param name="result">The standard <see cref="IAsyncResult"/>.</param>
         /// <param name="buffer">The buffer in which the bytes are read into.</param>
-        /// <param name="writer">The <see cref="BinaryWriter"/> used to create the comic file on disk.</param>
-        /// <param name="filePath">Path to the file where the comic will be downloaded.</param>
-        /// <param name="tempFilePath"></param>
+        /// <param name="writer">The <see cref="BinaryWriter"/> used to create the file on disk.</param>
+        /// <param name="filePath">Path where the file will be downloaded.</param>
+        /// <param name="tempFilePath">Path to the temporary file.</param>
         private void ReadBytesCallback(IAsyncResult result, byte[] buffer, BinaryWriter writer, string filePath, string tempFilePath)
         {
             Stream stream = (Stream)result.AsyncState;
@@ -199,7 +178,7 @@ namespace Woofy.Core
 
                     File.Move(tempFilePath, filePath);
 
-                    OnDownloadComicCompleted(new DownloadComicCompletedEventArgs(false));
+                    OnDownloadFileCompleted(new DownloadFileCompletedEventArgs(false));
                     return;
                 }
 
@@ -234,28 +213,15 @@ namespace Woofy.Core
 
         #region Helper Methods
         /// <summary>
-        /// Returns the full file path for a given comic link, and the directory to which the comic must be downloaded.
+        /// Returns the full file path for a given file link, and the directory to which the file must be downloaded.
         /// </summary>
-        /// <param name="comicLink">A link to the comic to be downloaded.</param>
-        /// <param name="directoryName">The directory in which the comic should be downloaded.</param>
+        /// <param name="fileLink">A link to the file to be downloaded.</param>
+        /// <param name="directoryName">The directory in which the file should be downloaded.</param>
         /// <returns>The full path of the file to be downloaded.</returns>
-        private string GetFilePath(string comicLink, string directoryName)
+        private string GetFilePath(string fileLink, string directoryName)
         {
-            string comicName = comicLink.Substring(comicLink.LastIndexOf('/') + 1);
-            return Path.Combine(directoryName, comicName);
-        }
-
-        /// <summary>
-        /// Builds a web request based on the specified comic link.
-        /// </summary>
-        /// <param name="comicLink">Link to the comic to be downloaded.</param>
-        /// <returns>A <see cref="WebRequest"/> for the specified comic link.</returns>
-        private WebRequest GetWebRequest(string comicLink)
-        {
-            WebRequest request = WebRequest.Create(comicLink);
-            request.Credentials = CredentialCache.DefaultNetworkCredentials;
-            request.Proxy = _proxy;
-            return request;
+            string fileName = fileLink.Substring(fileLink.LastIndexOf('/') + 1);
+            return Path.Combine(directoryName, fileName);
         }
 
         /// <summary>
@@ -264,60 +230,60 @@ namespace Woofy.Core
         /// <returns>True if the user has decided to stop the download, false otherwise.</returns>
         private bool IsDownloadCancelled()
         {
-            DownloadedComicChunkEventArgs e = new DownloadedComicChunkEventArgs();
-            OnDownloadedComicChunk(e);
+            DownloadedFileChunkEventArgs e = new DownloadedFileChunkEventArgs();
+            OnDownloadedFileChunk(e);
             return e.Cancel;
         }
         #endregion
 
-        #region DownloadComicCompleted Event
+        #region DownloadFileCompleted Event
 
-        private event EventHandler<DownloadComicCompletedEventArgs> _downloadComicCompleted;
+        private event EventHandler<DownloadFileCompletedEventArgs> _downloadFileCompleted;
         /// <summary>
         /// Occurs when an asynchronous download operation completes.
         /// </summary>
-        public event EventHandler<DownloadComicCompletedEventArgs> DownloadComicCompleted
+        public event EventHandler<DownloadFileCompletedEventArgs> DownloadFileCompleted
         {
             add
             {
-                _downloadComicCompleted += value;
+                _downloadFileCompleted += value;
             }
             remove
             {
-                _downloadComicCompleted -= value;
+                _downloadFileCompleted -= value;
             }
         }
 
-        protected virtual void OnDownloadComicCompleted(DownloadComicCompletedEventArgs e)
+        protected virtual void OnDownloadFileCompleted(DownloadFileCompletedEventArgs e)
         {
-            EventHandler<DownloadComicCompletedEventArgs> eventReference = _downloadComicCompleted;
+            EventHandler<DownloadFileCompletedEventArgs> eventReference = _downloadFileCompleted;
 
             if (eventReference != null)
                 eventReference(this, e);
         }
         #endregion
 
-        #region DownloadedComicChunk Event
+        #region DownloadedFileChunk Event
 
-        private event EventHandler<DownloadedComicChunkEventArgs> _downloadedComicChunk;
+        private event EventHandler<DownloadedFileChunkEventArgs> _downloadedFileChunk;
         /// <summary>
         /// Occurs when a comic chunk is downloaded. Can be used to cancel the download of the current strip.
         /// </summary>
-        public event EventHandler<DownloadedComicChunkEventArgs> DownloadedComicChunk
+        public event EventHandler<DownloadedFileChunkEventArgs> DownloadedFileChunk
         {
             add
             {
-                _downloadedComicChunk += value;
+                _downloadedFileChunk += value;
             }
             remove
             {
-                _downloadedComicChunk -= value;
+                _downloadedFileChunk -= value;
             }
         }
 
-        protected virtual void OnDownloadedComicChunk(DownloadedComicChunkEventArgs e)
+        protected virtual void OnDownloadedFileChunk(DownloadedFileChunkEventArgs e)
         {
-            EventHandler<DownloadedComicChunkEventArgs> eventReference = _downloadedComicChunk;
+            EventHandler<DownloadedFileChunkEventArgs> eventReference = _downloadedFileChunk;
 
             if (eventReference != null)
                 eventReference(this, e);

@@ -6,7 +6,7 @@ using Woofy.Core;
 
 namespace UnitTests
 {
-    internal class ComicsDownloaderStub : IComicsDownloader
+    internal class ComicsDownloaderStub : IFileDownloader
     {
         private List<string> _comicLinks = new List<string>();
         public string[] ComicLinks
@@ -17,19 +17,19 @@ namespace UnitTests
 
         #region IComicsDownloader Members
 
-        public void DownloadComic(string comicLink, out bool comicAlreadyDownloaded)
+        public void DownloadFile(string comicLink, out bool comicAlreadyDownloaded)
         {
             _comicLinks.Add(comicLink);
 
             comicAlreadyDownloaded = false;
         }
 
-        public void DownloadComicAsync(string comicLink)
+        public void DownloadFileAsync(string comicLink)
         {
             throw new Exception("The method or operation is not implemented.");
         }
 
-        public event EventHandler<DownloadComicCompletedEventArgs> DownloadComicCompleted
+        public event EventHandler<DownloadFileCompletedEventArgs> DownloadFileCompleted
         {
             add
             {
@@ -42,7 +42,7 @@ namespace UnitTests
             }
         }
 
-        public event EventHandler<DownloadedComicChunkEventArgs> DownloadedComicChunk
+        public event EventHandler<DownloadedFileChunkEventArgs> DownloadedFileChunk
         {
             add
             {

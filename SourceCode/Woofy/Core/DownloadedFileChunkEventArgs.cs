@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Woofy.Core
 {
-    public class DownloadedComicChunkEventArgs : EventArgs
+    public class DownloadedFileChunkEventArgs : EventArgs
     {
         private bool _cancel = false;
         /// <summary>

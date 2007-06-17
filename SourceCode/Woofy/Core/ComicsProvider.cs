@@ -22,7 +22,7 @@ namespace Woofy.Core
         #endregion
 
         #region Instance Members
-        private IComicsDownloader _comicsDownloader;
+        private IFileDownloader _comicsDownloader;
         private ComicInfo _comicInfo;
         private WebClient _client;
         private bool _isDownloadCancelled;
@@ -38,24 +38,24 @@ namespace Woofy.Core
         /// <param name="comicInfo">An instance of the <see cref="ComicInfo"/> class, used to determine how to get the comic links.</param>
         /// <param name="downloadFolder">The folder to which the comics should be downloaded.</param>
         public ComicsProvider(ComicInfo comicInfo, string downloadFolder)
+            : this(comicInfo, new FileDownloader(downloadFolder))
         {
-            WebProxy proxy = null;
-            if (!string.IsNullOrEmpty(Settings.Default.ProxyAddress))
-            {
-                proxy = new WebProxy(Settings.Default.ProxyAddress, Settings.Default.ProxyPort);
-                proxy.Credentials = CredentialCache.DefaultNetworkCredentials;
-            }
-
-            InitInstanceMembers(comicInfo, new ComicsDownloader(downloadFolder, proxy), proxy);
         }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ComicsProvider"/> class.
         /// </summary>
         /// <param name="comicInfo">An instance of the <see cref="ComicInfo"/> class, used to determine how to get the comic links.</param>
-        public ComicsProvider(ComicInfo comicInfo, IComicsDownloader comicsDownloader)
+        public ComicsProvider(ComicInfo comicInfo, IFileDownloader comicsDownloader)
         {
-            InitInstanceMembers(comicInfo, comicsDownloader, null);
+            _comicInfo = comicInfo;
+            _comicsDownloader = comicsDownloader;
+
+            _client = WebConnectionFactory.GetNewWebClientInstance();
+            _client.DownloadStringCompleted += new DownloadStringCompletedEventHandler(DownloadPageCompletedCallback);
+
+            _comicsDownloader.DownloadFileCompleted += new EventHandler<DownloadFileCompletedEventArgs>(DownloadComicCompletedCallback);
+            _comicsDownloader.DownloadedFileChunk += new EventHandler<DownloadedFileChunkEventArgs>(DownloadedComicChunkCallback);
         }
         #endregion
 
@@ -94,7 +94,7 @@ namespace Woofy.Core
                 if (string.IsNullOrEmpty(comicLink))
                     break;
 
-                _comicsDownloader.DownloadComic(comicLink, out fileAlreadyDownloaded);
+                _comicsDownloader.DownloadFile(comicLink, out fileAlreadyDownloaded);
                 
                 OnDownloadComicCompleted(new DownloadSingleComicCompletedEventArgs(i + 1, currentUrl));
 
@@ -244,27 +244,7 @@ namespace Woofy.Core
                 return;
 
             _client.DownloadStringAsync(new Uri(startUrl));
-        }
-
-        /// <summary>
-        /// Initializes the instance members using the specified arguments.
-        /// </summary>
-        /// <param name="comicInfo">The comic information file to be used.</param>
-        /// <param name="comicsDownloader">An instance of <see cref="IComicsDownloader"/>.</param>
-        /// <param name="proxy">The proxy used to connect to the web site. Can be null.</param>
-        private void InitInstanceMembers(ComicInfo comicInfo, IComicsDownloader comicsDownloader, WebProxy proxy)
-        {
-            _comicInfo = comicInfo;
-            _comicsDownloader = comicsDownloader;
-
-            _client = new WebClient();
-            _client.Credentials = CredentialCache.DefaultNetworkCredentials;
-            _client.Proxy = proxy;
-            _client.DownloadStringCompleted += new DownloadStringCompletedEventHandler(DownloadPageCompletedCallback);
-
-            _comicsDownloader.DownloadComicCompleted += new EventHandler<DownloadComicCompletedEventArgs>(DownloadComicCompletedCallback);
-            _comicsDownloader.DownloadedComicChunk += new EventHandler<DownloadedComicChunkEventArgs>(DownloadedComicChunkCallback);
-        }        
+        }    
         #endregion
 
         #region Callbacks
@@ -287,18 +267,18 @@ namespace Woofy.Core
             if (_isDownloadCancelled)
                 return;
 
-            _comicsDownloader.DownloadComicAsync(comicLink);
+            _comicsDownloader.DownloadFileAsync(comicLink);
         }
 
         /// <summary>
         /// Called when a comic has been downloaded in async mode.
         /// </summary>
-        private void DownloadComicCompletedCallback(object sender, DownloadComicCompletedEventArgs e)
+        private void DownloadComicCompletedCallback(object sender, DownloadFileCompletedEventArgs e)
         {
             _comicsDownloaded++;
             string currentUrl = _backButtonLink;
 
-            if (e.ComicAlreadyDownloaded && _comicsToDownload == ComicsProvider.AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
+            if (e.FileAlreadyDownloaded && _comicsToDownload == ComicsProvider.AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
             {
                 OnDownloadCompleted();
                 return;
@@ -329,7 +309,7 @@ namespace Woofy.Core
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DownloadedComicChunkCallback(object sender, DownloadedComicChunkEventArgs e)
+        private void DownloadedComicChunkCallback(object sender, DownloadedFileChunkEventArgs e)
         {
             e.Cancel = _isDownloadCancelled;
         }

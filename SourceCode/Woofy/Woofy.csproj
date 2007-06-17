@@ -42,17 +42,19 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\DownloadComicCompletedEventArgs.cs" />
-    <Compile Include="Core\DownloadedComicChunkEventArgs.cs" />
+    <Compile Include="Core\DownloadedFileChunkEventArgs.cs" />
+    <Compile Include="Core\DownloadFileCompletedEventArgs.cs" />
     <Compile Include="Core\DownloadSingleComicCompletedEventArgs.cs" />
-    <Compile Include="Core\IComicsDownloader.cs" />
-    <Compile Include="Core\ComicsDownloader.cs" />
+    <Compile Include="Core\IFileDownloader.cs" />
+    <Compile Include="Core\FileDownloader.cs" />
     <Compile Include="Core\ComicInfo.cs" />
     <Compile Include="Core\ComicsProvider.cs" />
     <Compile Include="Core\ComicTasksComparer.cs" />
     <Compile Include="Core\ComicTasksList.cs" />
     <Compile Include="Core\ComicTask.cs" />
     <Compile Include="Core\ComicTaskController.cs" />
+    <Compile Include="Core\UpdateController.cs" />
+    <Compile Include="Core\WebConnectionFactory.cs" />
     <Compile Include="Enums\TaskStatus.cs" />
     <Compile Include="Exceptions\MissingFriendlyNameException.cs" />
     <Compile Include="Gui\AboutForm.cs">
