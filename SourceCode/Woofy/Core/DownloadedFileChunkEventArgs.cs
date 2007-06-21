@@ -15,5 +15,23 @@ namespace Woofy.Core
             get { return _cancel; }
             set { _cancel = value; }
         }
+
+        private int _bytesDownloaded;
+        /// <summary>
+        /// The number of downloaded bytes.
+        /// </summary>
+        public int BytesDownloaded
+        {
+            get { return _bytesDownloaded; }
+        }
+
+        /// <summary>
+        /// Creates a new instance of the <see cref="DownloadedFileChunkEventArgs"/>.
+        /// </summary>
+        /// <param name="bytesDownloaded">Number of downloaded bytes.</param>
+        public DownloadedFileChunkEventArgs(int bytesDownloaded)
+        {
+            _bytesDownloaded = bytesDownloaded;
+        }
     }
 }

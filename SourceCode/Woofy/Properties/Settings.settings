@@ -32,5 +32,11 @@
     <Setting Name="MinimizeToTray" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="PadFileUrl" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">http://localhost/pad_file.xml</Value>
+    </Setting>
+    <Setting Name="LatestApplicationVersion" Type="System.String" Scope="User">
+      <Value Profile="(Default)">0.0.0.0</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

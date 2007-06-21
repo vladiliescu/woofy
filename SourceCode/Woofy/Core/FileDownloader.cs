@@ -56,7 +56,18 @@ namespace Woofy.Core
         /// <param name="fileAlreadyDownloaded">True if the file was already downloaded, false otherwise.</param>
         public void DownloadFile(string fileLink, out bool fileAlreadyDownloaded)
         {
-            string filePath = GetFilePath(fileLink, _downloadDirectory);
+            DownloadFile(fileLink, null, out fileAlreadyDownloaded);
+        }
+
+        /// <summary>
+        /// Downloads the specified file. If the file exists, then it is not downloaded again.
+        /// </summary>
+        /// <param name="fileLink">Link to the file to be downloaded.</param>
+        /// <param name="fileAlreadyDownloaded">True if the file was already downloaded, false otherwise.</param>
+        /// <param name="downloadedFileName">Specify this if you want to override the original file name. Can be null.</param>
+        public void DownloadFile(string fileLink, string downloadedFileName, out bool fileAlreadyDownloaded)
+        {
+            string filePath = GetFilePath(fileLink, downloadedFileName, _downloadDirectory);
             if (File.Exists(filePath))
             {
                 fileAlreadyDownloaded = true;
@@ -106,13 +117,25 @@ namespace Woofy.Core
         /// </summary>
         /// <remarks>Use the <see cref="FileDownloader.DownloadFileCompleted"/> event to know when the download completes.</remarks>
         /// <seealso cref="FileDownloader.DownloadFileCompleted"/>
-        /// <param name="link">Link to the file to be downloaded.</param>
+        /// <param name="fileLink">Link to the file to be downloaded.</param>
         public void DownloadFileAsync(string fileLink)
         {
-            string filePath = GetFilePath(fileLink, _downloadDirectory);
+            DownloadFileAsync(fileLink, null);
+        }
+
+        /// <summary>
+        /// Downloads the specified file asynchronously. If the file exists, then it is not downloaded again.
+        /// </summary>
+        /// <remarks>Use the <see cref="FileDownloader.DownloadFileCompleted"/> event to know when the download completes.</remarks>
+        /// <seealso cref="FileDownloader.DownloadFileCompleted"/>
+        /// <param name="fileLink">Link to the file to be downloaded.</param>
+        /// <param name="downloadedFileName">Specify this if you want to override the original file name. Can be null.</param>
+        public void DownloadFileAsync(string fileLink, string downloadedFileName)
+        {
+            string filePath = GetFilePath(fileLink, downloadedFileName, _downloadDirectory);
             if (File.Exists(filePath))
             {
-                OnDownloadFileCompleted(new DownloadFileCompletedEventArgs(true));
+                OnDownloadFileCompleted(new DownloadFileCompletedEventArgs(filePath, true));
                 return;
             }
 
@@ -143,7 +166,7 @@ namespace Woofy.Core
             byte[] buffer = new byte[MaxBufferSize];
 
 
-            if (IsDownloadCancelled())
+            if (IsDownloadCancelled(0))
             {
                 File.Delete(tempFilePath);
                 return;
@@ -166,6 +189,7 @@ namespace Woofy.Core
         /// <param name="tempFilePath">Path to the temporary file.</param>
         private void ReadBytesCallback(IAsyncResult result, byte[] buffer, BinaryWriter writer, string filePath, string tempFilePath)
         {
+            System.Threading.Thread.Sleep(250);
             Stream stream = (Stream)result.AsyncState;
             try
             {
@@ -178,13 +202,13 @@ namespace Woofy.Core
 
                     File.Move(tempFilePath, filePath);
 
-                    OnDownloadFileCompleted(new DownloadFileCompletedEventArgs(false));
+                    OnDownloadFileCompleted(new DownloadFileCompletedEventArgs(filePath, false));
                     return;
                 }
 
                 writer.Write(buffer, 0, bytesRead);
 
-                if (IsDownloadCancelled())
+                if (IsDownloadCancelled(bytesRead))
                 {
                     writer.Close();
                     stream.Close();
@@ -217,20 +241,29 @@ namespace Woofy.Core
         /// </summary>
         /// <param name="fileLink">A link to the file to be downloaded.</param>
         /// <param name="directoryName">The directory in which the file should be downloaded.</param>
+        /// <param name="downloadedFileName">Specify this if you want to override the original file name. Can be null.</param>
         /// <returns>The full path of the file to be downloaded.</returns>
-        private string GetFilePath(string fileLink, string directoryName)
+        private string GetFilePath(string fileLink, string downloadedFileName, string directoryName)
         {
-            string fileName = fileLink.Substring(fileLink.LastIndexOf('/') + 1);
-            return Path.Combine(directoryName, fileName);
+            if (string.IsNullOrEmpty(downloadedFileName))
+            {
+                string fileName = fileLink.Substring(fileLink.LastIndexOf('/') + 1);
+                return Path.Combine(directoryName, fileName);
+            }
+            else
+            {
+                return Path.Combine(directoryName, downloadedFileName);
+            }
         }
 
         /// <summary>
         /// Determines whether the user decided to stop the download.
         /// </summary>
+        /// <param name="bytesDownloaded">Number of downloaded bytes.</param>
         /// <returns>True if the user has decided to stop the download, false otherwise.</returns>
-        private bool IsDownloadCancelled()
+        private bool IsDownloadCancelled(int bytesDownloaded)
         {
-            DownloadedFileChunkEventArgs e = new DownloadedFileChunkEventArgs();
+            DownloadedFileChunkEventArgs e = new DownloadedFileChunkEventArgs(bytesDownloaded);
             OnDownloadedFileChunk(e);
             return e.Cancel;
         }

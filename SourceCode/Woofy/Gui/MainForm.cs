@@ -32,6 +32,7 @@ namespace Woofy.Gui
         private void MainForm_Load(object sender, EventArgs e)
         {
             InitControls();
+            UpdateController.CheckForUpdatesAsync();
         }
 
         private void MainForm_Resize(object sender, EventArgs e)

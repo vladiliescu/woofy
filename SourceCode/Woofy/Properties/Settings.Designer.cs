@@ -130,5 +130,26 @@ namespace Woofy.Properties {
                 this["MinimizeToTray"] = value;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost/pad_file.xml")]
+        public string PadFileUrl {
+            get {
+                return ((string)(this["PadFileUrl"]));
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.0.0.0")]
+        public string LatestApplicationVersion {
+            get {
+                return ((string)(this["LatestApplicationVersion"]));
+            }
+            set {
+                this["LatestApplicationVersion"] = value;
+            }
+        }
     }
 }

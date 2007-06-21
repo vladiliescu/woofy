@@ -18,15 +18,18 @@ namespace Woofy.Core
         /// </summary>
         public static WebProxy Proxy
         {
-            get
-            {
-                if (_proxy == null && !string.IsNullOrEmpty(Settings.Default.ProxyAddress))
-                {
-                    _proxy = new WebProxy(Settings.Default.ProxyAddress, Settings.Default.ProxyPort);
-                    _proxy.Credentials = CredentialCache.DefaultNetworkCredentials;
-                }
+            get { return _proxy; }
+        }
 
-                return _proxy;
+        /// <summary>
+        /// Builds the default proxy instance.
+        /// </summary>
+        static WebConnectionFactory()
+        {
+            if (!string.IsNullOrEmpty(Settings.Default.ProxyAddress))
+            {
+                _proxy = new WebProxy(Settings.Default.ProxyAddress, Settings.Default.ProxyPort);
+                _proxy.Credentials = CredentialCache.DefaultNetworkCredentials;
             }
         }
 
