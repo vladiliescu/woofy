@@ -15,6 +15,10 @@ namespace Woofy
         [STAThread]
         static void Main()
         {
+            //if we have just upgraded the application, then get its settings up to date
+            if (Properties.Settings.Default.GetPreviousVersion("MinimizeToTray") != null)
+                Properties.Settings.Default.Upgrade();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());

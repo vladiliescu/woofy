@@ -32,7 +32,7 @@ namespace Woofy.Gui
         private void MainForm_Load(object sender, EventArgs e)
         {
             InitControls();
-            UpdateController.CheckForUpdatesAsync();
+            UpdateController.CheckForUpdatesAsync(this, false);
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
@@ -132,6 +132,14 @@ namespace Woofy.Gui
 
             dgvwTasks.AutoGenerateColumns = false;
             dgvwTasks.DataSource = _tasksController.Tasks;
+
+            ToolStripSplitButton splitButton = new ToolStripSplitButton("Check for updates", Resources.CheckForUpdates);
+            splitButton.DropDown.Items.Add("Check for updates", Resources.CheckForUpdates, new EventHandler(CheckForUpdates_Click));
+            splitButton.DropDown.Items.Add("About...", Resources.About, new EventHandler(About_Click));
+            splitButton.Alignment = ToolStripItemAlignment.Right;
+            splitButton.ButtonClick += new EventHandler(CheckForUpdates_Click);
+
+            toolStrip.Items.Insert(0, splitButton);
         }
         #endregion
 
@@ -264,7 +272,7 @@ namespace Woofy.Gui
             OpenSelectedTaskFolder();
         }
 
-        private void toolStripButtonAbout_Click(object sender, EventArgs e)
+        private void About_Click(object sender, EventArgs e)
         {
             AboutForm aboutForm = new AboutForm();
             aboutForm.ShowDialog();
@@ -274,6 +282,11 @@ namespace Woofy.Gui
         {
             SettingsForm settingsForm = new SettingsForm();
             settingsForm.ShowDialog();
+        }
+
+        private void CheckForUpdates_Click(object sender, EventArgs e)
+        {
+            UpdateController.CheckForUpdatesAsync(this, true);
         }
         #endregion        
 
@@ -314,6 +327,25 @@ namespace Woofy.Gui
             this.Visible = true;
             this.WindowState = FormWindowState.Normal;
         } 
+        #endregion
+
+        #region Public Threading Methods
+        /// <summary>
+        /// Initializes the download progress form for downloading updates, on the UI thread. Also, hides itself.
+        /// </summary>
+        /// <param name="downloadFileSize">The size of the file to download. Needed for initializing the download progress form.</param>
+        public void InitializeUpdatesDownloadProgressForm(int downloadFileSize)
+        {
+            this.Invoke(new MethodInvoker(
+                delegate
+                {
+                    DownloadProgressForm downloadProgressForm = new DownloadProgressForm(downloadFileSize);
+                    downloadProgressForm.Show();
+
+                    this.Hide();
+                }
+            ));            
+        }
         #endregion
     }
 }

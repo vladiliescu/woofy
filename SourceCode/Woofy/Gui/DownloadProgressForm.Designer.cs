@@ -60,7 +60,7 @@ namespace Woofy.Gui
             this.Controls.Add(this.pbDownloadProgress);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "DownloadProgressForm";
-            this.Text = "Downloading...";
+            this.Text = "Downloading updates...";
             this.Load += new System.EventHandler(this.DownloadProgressForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

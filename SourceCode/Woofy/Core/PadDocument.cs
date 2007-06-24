@@ -21,6 +21,9 @@ namespace Woofy.Core
         }
 
         private Version _version;
+        /// <summary>
+        /// Program's version.
+        /// </summary>
         public Version Version
         {
             get { return _version; }
@@ -75,7 +78,6 @@ namespace Woofy.Core
                     switch (reader.Name)
                     {
                         case "Program_Version":
-                            //ParseProgramVersion(reader.Value, out _programMajorVersion, out _programMinorVersion, out _programBuildNumber);
                             _version = new Version(reader.ReadElementContentAsString());
                             break;
                         case "Program_Release_Year":
@@ -99,30 +101,6 @@ namespace Woofy.Core
 
             _programReleaseDate = new DateTime(year, month, day);
         } 
-        #endregion
-
-        #region Helper Methods
-        /// <summary>
-        /// Parses a program version (e.g. 1.2.3), and extracts component parts.
-        /// </summary>
-        /// <param name="version">Original version.</param>
-        /// <param name="programMajorVersion">Major version.</param>
-        /// <param name="programMinorVersion">Minor version.</param>
-        /// <param name="programBuildNumber">Build number.</param>
-        [Obsolete]
-        private void ParseProgramVersion(string version, out int programMajorVersion, out int programMinorVersion, out int programBuildNumber)
-        {
-            string[] tokens = version.Split(new char[] { '.' }, StringSplitOptions.RemoveEmptyEntries);
-
-            programMajorVersion = int.Parse(tokens[0]);
-            programMinorVersion = int.Parse(tokens[1]);
-            programBuildNumber = 0;
-
-            if (tokens.Length == 2)
-                return;
-
-            programBuildNumber = int.Parse(tokens[2]);
-        }
         #endregion
     }
 }

@@ -132,12 +132,28 @@ namespace Woofy.Core
         /// <param name="downloadedFileName">Specify this if you want to override the original file name. Can be null.</param>
         public void DownloadFileAsync(string fileLink, string downloadedFileName)
         {
+            DownloadFileAsync(fileLink, downloadedFileName, false);
+        }
+
+        /// <summary>
+        /// Downloads the specified file asynchronously.
+        /// </summary>
+        /// <remarks>Use the <see cref="FileDownloader.DownloadFileCompleted"/> event to know when the download completes.</remarks>
+        /// <seealso cref="FileDownloader.DownloadFileCompleted"/>
+        /// <param name="fileLink">Link to the file to be downloaded.</param>
+        /// <param name="downloadedFileName">Specify this if you want to override the original file name. Can be null.</param>
+        /// <param name="overwriteExisting">True to overwrite the existing file, false otherwise.</param>
+        public void DownloadFileAsync(string fileLink, string downloadedFileName, bool overwriteExisting)
+        {
             string filePath = GetFilePath(fileLink, downloadedFileName, _downloadDirectory);
-            if (File.Exists(filePath))
+            if (!overwriteExisting && File.Exists(filePath))
             {
                 OnDownloadFileCompleted(new DownloadFileCompletedEventArgs(filePath, true));
                 return;
             }
+
+            if (overwriteExisting)
+                File.Delete(filePath);
 
             WebRequest request = WebConnectionFactory.GetNewWebRequestInstance(fileLink);
 
@@ -189,7 +205,6 @@ namespace Woofy.Core
         /// <param name="tempFilePath">Path to the temporary file.</param>
         private void ReadBytesCallback(IAsyncResult result, byte[] buffer, BinaryWriter writer, string filePath, string tempFilePath)
         {
-            System.Threading.Thread.Sleep(250);
             Stream stream = (Stream)result.AsyncState;
             try
             {

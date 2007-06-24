@@ -143,12 +143,24 @@ namespace Woofy.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0.0.0.0")]
-        public string LatestApplicationVersion {
+        public string PreviouslyRefusedApplicationVersion {
             get {
-                return ((string)(this["LatestApplicationVersion"]));
+                return ((string)(this["PreviouslyRefusedApplicationVersion"]));
             }
             set {
-                this["LatestApplicationVersion"] = value;
+                this["PreviouslyRefusedApplicationVersion"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool AutomaticallyCheckForUpdates {
+            get {
+                return ((bool)(this["AutomaticallyCheckForUpdates"]));
+            }
+            set {
+                this["AutomaticallyCheckForUpdates"] = value;
             }
         }
     }

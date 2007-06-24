@@ -29,6 +29,8 @@ namespace Woofy.Gui
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.GroupBox groupBox1;
+            System.Windows.Forms.GroupBox groupBox2;
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
@@ -37,16 +39,21 @@ namespace Woofy.Gui
             this.lblAddress = new System.Windows.Forms.Label();
             this.lblPort = new System.Windows.Forms.Label();
             this.txtProxyAddress = new System.Windows.Forms.TextBox();
-            this.txtDefaultDownloadFolder = new System.Windows.Forms.TextBox();
             this.txtProxyPort = new System.Windows.Forms.TextBox();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+            this.chkAutomaticallyCheckForUpdates = new System.Windows.Forms.CheckBox();
             this.chkMinimizeToTray = new System.Windows.Forms.CheckBox();
+            this.txtDefaultDownloadFolder = new System.Windows.Forms.TextBox();
+            groupBox1 = new System.Windows.Forms.GroupBox();
+            groupBox2 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
+            groupBox1.SuspendLayout();
+            groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(271, 134);
+            this.btnOK.Location = new System.Drawing.Point(313, 207);
             this.btnOK.Margin = new System.Windows.Forms.Padding(2);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
@@ -58,7 +65,7 @@ namespace Woofy.Gui
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(350, 134);
+            this.btnCancel.Location = new System.Drawing.Point(392, 207);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
@@ -70,7 +77,7 @@ namespace Woofy.Gui
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(9, 15);
+            this.label1.Location = new System.Drawing.Point(18, 16);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(119, 13);
@@ -79,7 +86,7 @@ namespace Woofy.Gui
             // 
             // btnBrowse
             // 
-            this.btnBrowse.Location = new System.Drawing.Point(350, 31);
+            this.btnBrowse.Location = new System.Drawing.Point(359, 32);
             this.btnBrowse.Margin = new System.Windows.Forms.Padding(2);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new System.Drawing.Size(75, 23);
@@ -91,7 +98,7 @@ namespace Woofy.Gui
             // chkUseProxy
             // 
             this.chkUseProxy.AutoSize = true;
-            this.chkUseProxy.Location = new System.Drawing.Point(13, 68);
+            this.chkUseProxy.Location = new System.Drawing.Point(20, 19);
             this.chkUseProxy.Name = "chkUseProxy";
             this.chkUseProxy.Size = new System.Drawing.Size(114, 17);
             this.chkUseProxy.TabIndex = 3;
@@ -102,7 +109,7 @@ namespace Woofy.Gui
             // lblAddress
             // 
             this.lblAddress.AutoSize = true;
-            this.lblAddress.Location = new System.Drawing.Point(35, 94);
+            this.lblAddress.Location = new System.Drawing.Point(42, 45);
             this.lblAddress.Name = "lblAddress";
             this.lblAddress.Size = new System.Drawing.Size(48, 13);
             this.lblAddress.TabIndex = 4;
@@ -111,7 +118,7 @@ namespace Woofy.Gui
             // lblPort
             // 
             this.lblPort.AutoSize = true;
-            this.lblPort.Location = new System.Drawing.Point(290, 94);
+            this.lblPort.Location = new System.Drawing.Point(297, 45);
             this.lblPort.Name = "lblPort";
             this.lblPort.Size = new System.Drawing.Size(29, 13);
             this.lblPort.TabIndex = 6;
@@ -120,26 +127,16 @@ namespace Woofy.Gui
             // txtProxyAddress
             // 
             this.txtProxyAddress.Enabled = false;
-            this.txtProxyAddress.Location = new System.Drawing.Point(88, 91);
+            this.txtProxyAddress.Location = new System.Drawing.Point(95, 42);
             this.txtProxyAddress.Name = "txtProxyAddress";
-            this.txtProxyAddress.Size = new System.Drawing.Size(183, 20);
+            this.txtProxyAddress.Size = new System.Drawing.Size(196, 20);
             this.txtProxyAddress.TabIndex = 5;
-            // 
-            // txtDefaultDownloadFolder
-            // 
-            this.txtDefaultDownloadFolder.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::Woofy.Properties.Settings.Default, "DefaultDownloadFolder", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.txtDefaultDownloadFolder.Location = new System.Drawing.Point(11, 32);
-            this.txtDefaultDownloadFolder.Margin = new System.Windows.Forms.Padding(2);
-            this.txtDefaultDownloadFolder.Name = "txtDefaultDownloadFolder";
-            this.txtDefaultDownloadFolder.Size = new System.Drawing.Size(335, 20);
-            this.txtDefaultDownloadFolder.TabIndex = 1;
-            this.txtDefaultDownloadFolder.Text = global::Woofy.Properties.Settings.Default.DefaultDownloadFolder;
             // 
             // txtProxyPort
             // 
             this.txtProxyPort.Enabled = false;
             this.errorProvider.SetIconPadding(this.txtProxyPort, 2);
-            this.txtProxyPort.Location = new System.Drawing.Point(326, 91);
+            this.txtProxyPort.Location = new System.Drawing.Point(333, 42);
             this.txtProxyPort.Name = "txtProxyPort";
             this.txtProxyPort.Size = new System.Drawing.Size(99, 20);
             this.txtProxyPort.TabIndex = 10;
@@ -149,35 +146,77 @@ namespace Woofy.Gui
             // 
             this.errorProvider.ContainerControl = this;
             // 
+            // chkAutomaticallyCheckForUpdates
+            // 
+            this.chkAutomaticallyCheckForUpdates.AutoSize = true;
+            this.chkAutomaticallyCheckForUpdates.Checked = global::Woofy.Properties.Settings.Default.AutomaticallyCheckForUpdates;
+            this.chkAutomaticallyCheckForUpdates.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkAutomaticallyCheckForUpdates.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Woofy.Properties.Settings.Default, "AutomaticallyCheckForUpdates", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.chkAutomaticallyCheckForUpdates.Location = new System.Drawing.Point(257, 60);
+            this.chkAutomaticallyCheckForUpdates.Name = "chkAutomaticallyCheckForUpdates";
+            this.chkAutomaticallyCheckForUpdates.Size = new System.Drawing.Size(177, 17);
+            this.chkAutomaticallyCheckForUpdates.TabIndex = 12;
+            this.chkAutomaticallyCheckForUpdates.Text = "Automatically check for updates";
+            this.chkAutomaticallyCheckForUpdates.UseVisualStyleBackColor = true;
+            // 
             // chkMinimizeToTray
             // 
             this.chkMinimizeToTray.AutoSize = true;
             this.chkMinimizeToTray.Checked = global::Woofy.Properties.Settings.Default.MinimizeToTray;
             this.chkMinimizeToTray.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkMinimizeToTray.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Woofy.Properties.Settings.Default, "MinimizeToTray", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
-            this.chkMinimizeToTray.Location = new System.Drawing.Point(11, 134);
+            this.chkMinimizeToTray.Location = new System.Drawing.Point(20, 58);
             this.chkMinimizeToTray.Name = "chkMinimizeToTray";
             this.chkMinimizeToTray.Size = new System.Drawing.Size(98, 17);
             this.chkMinimizeToTray.TabIndex = 11;
             this.chkMinimizeToTray.Text = "Minimize to tray";
             this.chkMinimizeToTray.UseVisualStyleBackColor = true;
             // 
+            // txtDefaultDownloadFolder
+            // 
+            this.txtDefaultDownloadFolder.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::Woofy.Properties.Settings.Default, "DefaultDownloadFolder", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
+            this.txtDefaultDownloadFolder.Location = new System.Drawing.Point(20, 33);
+            this.txtDefaultDownloadFolder.Margin = new System.Windows.Forms.Padding(2);
+            this.txtDefaultDownloadFolder.Name = "txtDefaultDownloadFolder";
+            this.txtDefaultDownloadFolder.Size = new System.Drawing.Size(335, 20);
+            this.txtDefaultDownloadFolder.TabIndex = 1;
+            this.txtDefaultDownloadFolder.Text = global::Woofy.Properties.Settings.Default.DefaultDownloadFolder;
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(this.label1);
+            groupBox1.Controls.Add(this.txtDefaultDownloadFolder);
+            groupBox1.Controls.Add(this.chkAutomaticallyCheckForUpdates);
+            groupBox1.Controls.Add(this.btnBrowse);
+            groupBox1.Controls.Add(this.chkMinimizeToTray);
+            groupBox1.Location = new System.Drawing.Point(12, 12);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new System.Drawing.Size(455, 88);
+            groupBox1.TabIndex = 13;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "General Settings";
+            // 
+            // groupBox2
+            // 
+            groupBox2.Controls.Add(this.chkUseProxy);
+            groupBox2.Controls.Add(this.txtProxyAddress);
+            groupBox2.Controls.Add(this.txtProxyPort);
+            groupBox2.Controls.Add(this.lblAddress);
+            groupBox2.Controls.Add(this.lblPort);
+            groupBox2.Location = new System.Drawing.Point(12, 106);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new System.Drawing.Size(455, 82);
+            groupBox2.TabIndex = 14;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Proxy Settings";
+            // 
             // SettingsForm
             // 
-            this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(445, 172);
-            this.Controls.Add(this.chkMinimizeToTray);
-            this.Controls.Add(this.txtProxyPort);
-            this.Controls.Add(this.lblPort);
-            this.Controls.Add(this.lblAddress);
-            this.Controls.Add(this.txtProxyAddress);
-            this.Controls.Add(this.chkUseProxy);
-            this.Controls.Add(this.btnBrowse);
-            this.Controls.Add(this.txtDefaultDownloadFolder);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(478, 241);
+            this.Controls.Add(groupBox2);
+            this.Controls.Add(groupBox1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -189,8 +228,11 @@ namespace Woofy.Gui
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Settings";
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
+            groupBox2.ResumeLayout(false);
+            groupBox2.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -208,5 +250,6 @@ namespace Woofy.Gui
         private System.Windows.Forms.TextBox txtProxyPort;
         private System.Windows.Forms.ErrorProvider errorProvider;
         private System.Windows.Forms.CheckBox chkMinimizeToTray;
+        private System.Windows.Forms.CheckBox chkAutomaticallyCheckForUpdates;
     }
 }

@@ -121,7 +121,7 @@ namespace Woofy.Gui
             // lnkIconCredits
             // 
             this.lnkIconCredits.AutoSize = true;
-            this.lnkIconCredits.Location = new System.Drawing.Point(34, 32);
+            this.lnkIconCredits.Location = new System.Drawing.Point(28, 28);
             this.lnkIconCredits.Name = "lnkIconCredits";
             this.lnkIconCredits.Size = new System.Drawing.Size(169, 13);
             this.lnkIconCredits.TabIndex = 4;
@@ -132,7 +132,7 @@ namespace Woofy.Gui
             // lblIconCredit
             // 
             this.lblIconCredit.AutoSize = true;
-            this.lblIconCredit.Location = new System.Drawing.Point(19, 19);
+            this.lblIconCredit.Location = new System.Drawing.Point(13, 15);
             this.lblIconCredit.Name = "lblIconCredit";
             this.lblIconCredit.Size = new System.Drawing.Size(325, 13);
             this.lblIconCredit.TabIndex = 3;
@@ -155,7 +155,7 @@ namespace Woofy.Gui
             // 
             this.pictureBox1.Image = global::Woofy.Properties.Resources.WoofyLogo;
             this.pictureBox1.Location = new System.Drawing.Point(0, -1);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(0, 0, 0, 0);
+            this.pictureBox1.Margin = new System.Windows.Forms.Padding(0);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(369, 120);
             this.pictureBox1.TabIndex = 31;

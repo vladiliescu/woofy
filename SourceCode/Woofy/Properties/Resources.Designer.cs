@@ -67,6 +67,13 @@ namespace Woofy.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap CheckForUpdates {
+            get {
+                object obj = ResourceManager.GetObject("CheckForUpdates", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Delete {
             get {
                 object obj = ResourceManager.GetObject("Delete", resourceCulture);

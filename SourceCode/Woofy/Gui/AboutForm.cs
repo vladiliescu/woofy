@@ -50,7 +50,7 @@ namespace Woofy.Gui
             get
             {
                 AssemblyName assemblyName = Assembly.GetExecutingAssembly().GetName();
-                return string.Format("{0}.{1}", assemblyName.Version.Major.ToString(), assemblyName.Version.Minor.ToString());
+                return assemblyName.Version.ToString();
             }
         }
 
