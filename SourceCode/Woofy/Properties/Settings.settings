@@ -33,7 +33,7 @@
       <Value Profile="(Default)">True</Value>
     </Setting>
     <Setting Name="PadFileUrl" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">http://localhost/pad_file.xml</Value>
+      <Value Profile="(Default)">http://woofy.sourceforge.net/pad_file.xml</Value>
     </Setting>
     <Setting Name="PreviouslyRefusedApplicationVersion" Type="System.String" Scope="User">
       <Value Profile="(Default)">0.0.0.0</Value>

@@ -133,7 +133,7 @@ namespace Woofy.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost/pad_file.xml")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://woofy.sourceforge.net/pad_file.xml")]
         public string PadFileUrl {
             get {
                 return ((string)(this["PadFileUrl"]));

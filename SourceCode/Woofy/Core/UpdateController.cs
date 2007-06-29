@@ -1,12 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
-using System.Windows.Forms;
 using System.Threading;
-using System.Diagnostics;
-
+using System.Windows.Forms;
 using Woofy.Gui;
 using Woofy.Properties;
 
@@ -89,6 +86,7 @@ namespace Woofy.Core
             }
 
             string text = string.Format("A newer version of Woofy ({0}) has been released.\n Would you like to download and install it?", padDocument.Version.ToString());
+
             if (MessageBox.Show(text, "Woofy", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
             {
                 Settings.Default.PreviouslyRefusedApplicationVersion = padDocument.Version.ToString();
@@ -134,10 +132,9 @@ namespace Woofy.Core
             _mainForm.InitializeUpdatesDownloadProgressForm(padDocument.FileSizeInBytes / 1024);
 
             //get a reference to the download progress form, in order to be able to update the download progress
-            DownloadProgressForm downloadProgressForm;
             foreach (Form form in Application.OpenForms)
             {
-                downloadProgressForm = form as DownloadProgressForm;
+                DownloadProgressForm downloadProgressForm = form as DownloadProgressForm;
                 if (downloadProgressForm != null)
                 {
                     _downloadProgressForm = downloadProgressForm;

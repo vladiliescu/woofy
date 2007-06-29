@@ -10,6 +10,8 @@
     <RootNamespace>Woofy</RootNamespace>
     <AssemblyName>Woofy</AssemblyName>
     <ApplicationIcon>Woofy.ico</ApplicationIcon>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,6 +33,10 @@
     <CodeAnalysisRules>-Microsoft.Globalization#CA1301;-Microsoft.Globalization#CA1302;-Microsoft.Globalization#CA1303;-Microsoft.Globalization#CA1306;-Microsoft.Globalization#CA1304;-Microsoft.Globalization#CA1305;-Microsoft.Globalization#CA1300;-Microsoft.Interoperability#CA1403;-Microsoft.Interoperability#CA1406;-Microsoft.Interoperability#CA1413;-Microsoft.Interoperability#CA1402;-Microsoft.Interoperability#CA1407;-Microsoft.Interoperability#CA1404;-Microsoft.Interoperability#CA1410;-Microsoft.Interoperability#CA1411;-Microsoft.Interoperability#CA1405;-Microsoft.Interoperability#CA1409;-Microsoft.Interoperability#CA1415;-Microsoft.Interoperability#CA1408;-Microsoft.Interoperability#CA1414;-Microsoft.Interoperability#CA1412;-Microsoft.Interoperability#CA1400;-Microsoft.Interoperability#CA1401;-Microsoft.Mobility#CA1600;-Microsoft.Mobility#CA1601</CodeAnalysisRules>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Libraries\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.SQLite, Version=1.0.40.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
@@ -53,6 +59,7 @@
     <Compile Include="Core\ComicTasksList.cs" />
     <Compile Include="Core\ComicTask.cs" />
     <Compile Include="Core\ComicTaskController.cs" />
+    <Compile Include="Core\Logger.cs" />
     <Compile Include="Core\PadDocument.cs" />
     <Compile Include="Core\UpdateController.cs" />
     <Compile Include="Core\WebConnectionFactory.cs" />
