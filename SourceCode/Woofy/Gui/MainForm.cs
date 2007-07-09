@@ -1,11 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Text;
-using System.IO;
-using System.Threading;
 using System.Windows.Forms;
 
 using Woofy.Core;
@@ -33,7 +27,9 @@ namespace Woofy.Gui
         private void MainForm_Load(object sender, EventArgs e)
         {
             InitControls();
-            UpdateController.CheckForUpdatesAsync(this, false);
+
+            if (Settings.Default.AutomaticallyCheckForUpdates)
+                UpdateController.CheckForUpdatesAsync(this, false);
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
@@ -60,13 +56,13 @@ namespace Woofy.Gui
                 switch (task.Status)
                 {
                     case TaskStatus.Stopped:
-                        row.Cells["TaskStatusColumn"].Value = Properties.Resources.Paused;
+                        row.Cells["TaskStatusColumn"].Value = Resources.Paused;
                         break;
                     case TaskStatus.Running:
-                        row.Cells["TaskStatusColumn"].Value = Properties.Resources.Running;
+                        row.Cells["TaskStatusColumn"].Value = Resources.Running;
                         break;
                     case TaskStatus.Finished:
-                        row.Cells["TaskStatusColumn"].Value = Properties.Resources.Finished;
+                        row.Cells["TaskStatusColumn"].Value = Resources.Finished;
                         break;
                     default:
                         break;
@@ -243,12 +239,6 @@ namespace Woofy.Gui
         private void toolStripMenuItemOpenTaskFolder_Click(object sender, EventArgs e)
         {
             OpenSelectedTaskFolder();
-        }
-
-        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SettingsForm settingsForm = new SettingsForm();
-            settingsForm.ShowDialog();
         }
         #endregion
 

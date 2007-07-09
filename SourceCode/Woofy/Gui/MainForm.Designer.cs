@@ -29,15 +29,15 @@ namespace Woofy.Gui
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.ListViewItem listViewItem4 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
             "",
             "All ({0})"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem5 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
             "",
             "Active ({0})"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem6 = new System.Windows.Forms.ListViewItem(new string[] {
+            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
             "",
             "Finished ({0})"}, -1);
             this.dgvwTasks = new System.Windows.Forms.DataGridView();
@@ -103,11 +103,11 @@ namespace Woofy.Gui
             // 
             // TaskStatusColumn
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.NullValue = null;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Menu;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.MenuText;
-            this.TaskStatusColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.NullValue = null;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Menu;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.MenuText;
+            this.TaskStatusColumn.DefaultCellStyle = dataGridViewCellStyle1;
             this.TaskStatusColumn.HeaderText = "";
             this.TaskStatusColumn.MinimumWidth = 20;
             this.TaskStatusColumn.Name = "TaskStatusColumn";
@@ -134,14 +134,14 @@ namespace Woofy.Gui
             // contextMenuStrip
             // 
             this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItemOpenTaskFolder,
+            this.toolStripSeparator1,
             this.toolStripMenuItemNewTask,
             this.toolStripMenuItemPauseTask,
-            this.toolStripMenuItemDeleteTask,
-            this.toolStripSeparator1,
-            this.toolStripMenuItemOpenTaskFolder});
+            this.toolStripMenuItemDeleteTask});
             this.contextMenuStrip.Name = "contextMenuStrip";
             this.contextMenuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.contextMenuStrip.Size = new System.Drawing.Size(189, 98);
+            this.contextMenuStrip.Size = new System.Drawing.Size(189, 120);
             // 
             // toolStripMenuItemNewTask
             // 
@@ -268,12 +268,12 @@ namespace Woofy.Gui
             this.text});
             this.lvwCategories.FullRowSelect = true;
             this.lvwCategories.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            listViewItem5.StateImageIndex = 0;
-            listViewItem6.StateImageIndex = 0;
+            listViewItem2.StateImageIndex = 0;
+            listViewItem3.StateImageIndex = 0;
             this.lvwCategories.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem4,
-            listViewItem5,
-            listViewItem6});
+            listViewItem1,
+            listViewItem2,
+            listViewItem3});
             this.lvwCategories.Location = new System.Drawing.Point(9, 152);
             this.lvwCategories.Margin = new System.Windows.Forms.Padding(2);
             this.lvwCategories.Name = "lvwCategories";
