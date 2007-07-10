@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <comicInfo friendlyName="Wally and Osborne">
     <startUrl><![CDATA[http://wallyandosborne.com]]></startUrl>
-    <firstIssue><![CDATA[http://wallyandosborne.com/2005/06/27/welcome-to-antarctica/]]></firstIssue>
-    <comicRegex><![CDATA[http://wallyandosborne\.com/comics/[0-9]{4}-[0-9]{2}-[0-9]{2}\.(gif|jpg|jpeg|png)]]></comicRegex>
+    <firstIssue><![CDATA[http://wallyandosborne.com/comics/2005-06-27.gif]]></firstIssue>
+    <comicRegex><![CDATA[http://wallyandosborne\.com/comics/[0-9]{4}-[0-9]{2}-[0-9]{2}-?[0-9]*\.(gif|jpg|jpeg|png)]]></comicRegex>
     <backButtonRegex><![CDATA[<a\shref="(?<content>http://wallyandosborne\.com/[0-9]{4}/[0-9]{2}/[0-9]{2}/[^/]*/)">&laquo;\sPrevious</a>]]></backButtonRegex>
 </comicInfo>

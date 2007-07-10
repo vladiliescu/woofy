@@ -54,6 +54,16 @@ namespace UnitTests
             [UsingFactories("ComicInfos")] string comicInfoFile
             )
         {
+            comicInfoFile = Path.Combine(ComicInfosDirectory, comicInfoFile);
+
+            ComicInfo comicInfo = new ComicInfo(comicInfoFile);
+            ComicsDownloaderStub comicsDownloaderStub = new ComicsDownloaderStub();
+            ComicsProvider comicsProvider = new ComicsProvider(comicInfo, comicsDownloaderStub);
+
+            comicsProvider.DownloadComics(ComicsProvider.AllAvailableComics);
+            
+            string[] comics = comicsDownloaderStub.ComicLinks;
+            Assert.AreEqual(comics[comics.Length - 1], comicInfo.FirstIssue);
         }
 
         [CombinatorialTest]
