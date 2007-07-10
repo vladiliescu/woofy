@@ -21,6 +21,15 @@ namespace Woofy.Core
             get { return _startUrl; }
         }
 
+        private string _firstIssue;
+        /// <summary>
+        /// Gets the url of the comic's first issue.
+        /// </summary>
+        public string FirstIssue
+        {
+            get { return _firstIssue; }
+        }
+
         private string _comicRegex;
         /// <summary>
         /// Gets the regular expression that will find the comic.
@@ -65,17 +74,17 @@ namespace Woofy.Core
         {
             _comicInfoFile = comicInfoFile;
 
-            XmlReaderSettings readerSettings = new XmlReaderSettings();
-            readerSettings.IgnoreWhitespace = true;
+            //XmlReaderSettings readerSettings = new XmlReaderSettings();
+            //readerSettings.IgnoreWhitespace = true;
 
-            using (XmlReader reader = XmlReader.Create(comicInfoFile, readerSettings))
+            using (XmlReader reader = XmlReader.Create(comicInfoFile))
             {
                 reader.Read();  //<?xml..
+                reader.Read();  //Whitespace..
                 reader.Read();  //<comicInfo..
                 _friendlyName = reader.GetAttribute("friendlyName");
-                reader.Read();  //<startUrl..
 
-                while (reader.NodeType != XmlNodeType.EndElement)
+                while (reader.Read())
                 {
                     switch (reader.Name)
                     {
@@ -87,6 +96,9 @@ namespace Woofy.Core
                             break;
                         case "backButtonRegex":
                             _backButtonRegex = reader.ReadElementContentAsString();
+                            break;
+                        case "firstIssue":
+                            _firstIssue = reader.ReadElementContentAsString();
                             break;
                     }
                 }

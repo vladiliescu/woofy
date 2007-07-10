@@ -1,11 +1,11 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.IO;
 
 using MbUnit.Framework;
 
 using Woofy.Core;
 using Woofy.Exceptions;
+
 
 namespace UnitTests
 {
@@ -15,9 +15,10 @@ namespace UnitTests
         [Test]
         public void TestInitializesCorrectly()
         {
-            ComicInfo comicInfo = new ComicInfo(@"Files\TestComicInfo\basicComicInfo.xml");
+            ComicInfo comicInfo = new ComicInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files\TestComicInfo\basicComicInfo.xml"));
             Assert.AreEqual("some friendly name", comicInfo.FriendlyName);
             Assert.AreEqual("some base url", comicInfo.StartUrl);
+            Assert.AreEqual("some first issue url", comicInfo.FirstIssue);
             Assert.AreEqual("some comic regex", comicInfo.ComicRegex);
             Assert.AreEqual("some back button regex", comicInfo.BackButtonRegex);
         }
@@ -26,14 +27,14 @@ namespace UnitTests
         [ExpectedException(typeof(MissingFriendlyNameException))]
         public void TestThrowsExceptionOnMissingFriendlyName()
         {
-            ComicInfo comicInfo = new ComicInfo(@"Files\TestComicInfo\missingFriendlyName.xml");
+            new ComicInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files\TestComicInfo\missingFriendlyName.xml"));
         }
 
         [Test]
         [ExpectedException(typeof(MissingFriendlyNameException))]
         public void TestThrowsExceptionOnEmptyFriendlyName()
         {
-            ComicInfo comicInfo = new ComicInfo(@"Files\TestComicInfo\emptyFriendlyName.xml");
+            new ComicInfo(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Files\TestComicInfo\emptyFriendlyName.xml"));
         }
     }
 }

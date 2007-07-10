@@ -14,7 +14,8 @@ namespace UnitTests
     [TestFixture]
     public class TestComicsDownloader
     {
-        private const string ComicsDirectory = "Comics";
+        private static readonly string ComicsDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Comics");
+        private static readonly string ComicInfosDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ComicInfos");
 
         [SetUp]
         public void SetUpCreateComicsDirectory()
@@ -35,6 +36,8 @@ namespace UnitTests
             [UsingFactories("ComicInfos")] string comicInfoFile
             )
         {
+            comicInfoFile = Path.Combine(ComicInfosDirectory, comicInfoFile);
+
             ComicInfo comicInfo = new ComicInfo(comicInfoFile);
             ComicsProvider comicsProvider = new ComicsProvider(comicInfo, ComicsDirectory);
             FileDownloader comicsHandler = new FileDownloader(ComicsDirectory);
@@ -63,8 +66,8 @@ namespace UnitTests
         [Factory(typeof(string))]
         public IEnumerable<string> ComicInfos()
         {
-            foreach (string comicInfoFile in Directory.GetFiles("ComicInfos", "*.*"))
-                yield return comicInfoFile;
+            foreach (string comicInfoFile in Directory.GetFiles(ComicInfosDirectory, "*.*"))
+                yield return Path.GetFileName(comicInfoFile);
         }
     }
 }

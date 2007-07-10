@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <comicInfo friendlyName="Diesel Sweeties - Print">
     <startUrl><![CDATA[http://www.dieselsweeties.com/print/]]></startUrl>
+    <firstIssue><![CDATA[http://www.dieselsweeties.com/print/?date=10070624]]></firstIssue>
     <comicRegex><![CDATA[(?<contentToBeMerged>strips/ds[0-9]{8}\.(gif|jpg|jpeg|png))]]></comicRegex>
     <backButtonRegex><![CDATA[<a\shref="(?<contentToBeMerged>\?date=[0-9]{8})"><img\ssrc="previous\.gif"\sborder=0\sAlt="Previous"></a>]]></backButtonRegex>
 </comicInfo>

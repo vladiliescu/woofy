@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Net;
 using System.IO;
-
+using System.Net;
 using MbUnit.Framework;
-
 using Woofy.Core;
 
 namespace UnitTests
@@ -14,7 +11,8 @@ namespace UnitTests
     [TestFixture]
     public class TestComicsProvider
     {
-        private const string ComicsDirectory = "Comics";
+        private static readonly string ComicsDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Comics");
+        private static readonly string ComicInfosDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ComicInfos");
         [SetUp]
         public void SetUpCreateComicsDirectory()
         {
@@ -34,6 +32,8 @@ namespace UnitTests
             [UsingFactories("ComicInfos")] string comicInfoFile
             )
         {
+            comicInfoFile = Path.Combine(ComicInfosDirectory, comicInfoFile);
+
             ComicInfo comicInfo = new ComicInfo(comicInfoFile);
             ComicsDownloaderStub comicsDownloaderStub = new ComicsDownloaderStub();
             ComicsProvider comicsProvider = new ComicsProvider(comicInfo, comicsDownloaderStub);
@@ -48,12 +48,21 @@ namespace UnitTests
                 for (int j = i + 1; j < comics.Length; j++)
                     Assert.AreNotEqual(comics[i], comics[j], "individual comics");
         }
-                
+
+        [CombinatorialTest]
+        public void TestReachesFirstComic(
+            [UsingFactories("ComicInfos")] string comicInfoFile
+            )
+        {
+        }
+
         [CombinatorialTest]
         public void TestReturnsOnlyOneComicLinkAndOneBackButtonLink(
             [UsingFactories("ComicInfos")] string comicInfoFile
             )
         {
+            comicInfoFile = Path.Combine(ComicInfosDirectory, comicInfoFile);
+
             ComicInfo comicInfo = new ComicInfo(comicInfoFile);
             ComicsProvider comicsProvider = new ComicsProvider(comicInfo, ComicsDirectory);
 
@@ -82,8 +91,8 @@ namespace UnitTests
         [Factory(typeof(string))]
         public IEnumerable<string> ComicInfos()
         {
-            foreach (string comicInfoFile in Directory.GetFiles("ComicInfos", "*.*"))
-                yield return comicInfoFile;
-        }        
+            foreach (string comicInfoFile in Directory.GetFiles(ComicInfosDirectory, "*.*"))
+                yield return Path.GetFileName(comicInfoFile);
+        }
     }
 }
