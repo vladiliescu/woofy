@@ -53,7 +53,8 @@
 		* rewrote most of the download logic, in order for it to be more CPU friendly;
 		* added an option to minimize to the system tray;
 		* added support for automatic update checks;
-		* implemented error logging.
+		* implemented error logging;
+		* updated the definitions for PvPOnline and Wally and Osborne.
 		</Program_Change_Info>
 		<Program_Specific_Category>Home/Hobby</Program_Specific_Category>
 		<Program_Category_Class>Home &amp; Hobby::Recreation</Program_Category_Class>
@@ -99,8 +100,8 @@ Its main features are:
 			<Application_XML_File_URL>http://woofy.sourceforge.net/pad_file.xml</Application_XML_File_URL>
 		</Application_URLs>
 		<Download_URLs>
-			<Primary_Download_URL>http://downloads.sourceforge.net/woofy/WoofySetup.exe</Primary_Download_URL>
-			<Secondary_Download_URL>http://heanet.dl.sourceforge.net/sourceforge/woofy/WoofySetup.exe</Secondary_Download_URL>
+			<Primary_Download_URL>http://downloads.sourceforge.net/woofy/Woofy-0.2.5-setup.exe</Primary_Download_URL>
+			<Secondary_Download_URL>http://heanet.dl.sourceforge.net/sourceforge/woofy/Woofy-0.2.5-setup.exe</Secondary_Download_URL>
 			<Additional_Download_URL_1 />
 			<Additional_Download_URL_2 />
 		</Download_URLs>
