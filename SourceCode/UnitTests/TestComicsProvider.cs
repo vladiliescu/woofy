@@ -8,7 +8,7 @@ using Woofy.Core;
 namespace UnitTests
 {
     [FixtureCategory("ComicInfo")]
-    [TestFixture]
+    [TestFixture(TimeOut = 30)]
     public class TestComicsProvider
     {
         private static readonly string ComicsDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Comics");
