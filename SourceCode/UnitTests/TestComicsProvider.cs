@@ -10,7 +10,7 @@ namespace UnitTests
     [FixtureCategory("ComicInfo")]
     [TestFixture(TimeOut = 30)]
     public class TestComicsProvider
-    {
+    {  
         private static readonly string ComicsDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Comics");
         private static readonly string ComicInfosDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ComicInfos");
         [SetUp]
