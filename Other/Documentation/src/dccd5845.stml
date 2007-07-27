@@ -2,17 +2,14 @@
 
 A comic definition consists of a single xml file, describing how Woofy should visit and download the comic, and it looks kinda like the following fragment:
 
-::<comicInfo friendlyName="...">
- 
-<startUrl><![CDATA[...]]></startUrl>
- 
-<firstIssue><![CDATA[...]]></firstIssue>
- 
-<comicRegex><![CDATA[...]]></comicRegex>
- 
-<backButtonRegex><![CDATA[...]]></backButtonRegex>
- 
-</comicInfo>::
+:div code
+<comicInfo friendlyName="...">~~ 
+____<startUrl><![CDATA[...]]></startUrl>~~ 
+____<firstIssue><![CDATA[...]]></firstIssue>~~ 
+____<comicRegex><![CDATA[...]]></comicRegex>~~ 
+____<backButtonRegex><![CDATA[...]]></backButtonRegex>~~ 
+</comicInfo>
+:/div
 
 Note that each xml element wraps its content in a [[http://en.wikipedia.org/wiki/Cdata|CDATA]] region. This is because the content might contain angle brackets, and those would break the xml markup.
 
@@ -24,6 +21,8 @@ Anyways, let's take each of these elements (and the one attribute) for a spin an
 * comicRegex - this is where it gets interesting; in order to be able to retrieve a strip's link from a page, Woofy needs to know how the link looks like, so we describe it, using .NET [[http://en.wikipedia.org/wiki/Regular_expressions|regular expressions]];
 * backButtonRegex - a regular expression describing how the link to the previous page looks like.
 
-Important - the **comicRegex** and **backButtonRegex** elements allow the use of two grouping constructs: 
-* content - 
-* contentToBeMerged
+Note that the **comicRegex** and **backButtonRegex** elements allow the use of two grouping constructs: 
+* content - used to wrap the actual link in a wider expression;
+* contentToBeMerged - used to wrap a fragment of the desired link; the fragment will be merged with the **startUrl** attribute, in order to obtain the full link.
+
+You should use both grouping constructs in the same expression.

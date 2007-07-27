@@ -1,1 +1,89 @@
 :title Building a comic definition from scratch
+
+Ok, now that we know how Woofy behaves and how a comic definition should look like, let's build our own, shall we? Let's build a definition for [[http://www.uglyhill.com/|Ugly Hill]].
+
+For this, let's start with an empty template, like the one below:
+:div code
+<?xml version="1.0" encoding="utf-8" ?>~~
+<comicInfo friendlyName="">~~
+____<startUrl><![CDATA[]]></startUrl>~~
+____<firstIssue><![CDATA[]]></firstIssue>~~
+____<comicRegex><![CDATA[]]></comicRegex>~~
+____<backButtonRegex><![CDATA[]]></backButtonRegex>~~
+</comicInfo>
+:/div
+
+Since the comic's name is "Ugly Hill", we should let Woofy know about that.
+:div code
+<comicInfo friendlyName="Ugly Hill">
+:/div
+
+We should also specify the address at which Woofy should start looking for strips. Note that this is not necessarily the comic's home page, but a web page containing the most recent comic strip AND a link to the previous strip (that links to the strip before it, and so on).
+
+:div code
+<startUrl><![CDATA[http:\//www.uglyhill.com]]></startUrl>
+:/div
+
+Now, in order to make the developer's life easier, fill in the address of the first comic issue, so that submitted comics will considered for automated tests. In order to to this, you'll have to visit Ugly Hill's first strip, and get it's link (not the page's link, the strip's link).
+
+:div code
+<firstIssue><![CDATA[http:\//www.uglyhill.com/comics/20050523.jpg]]></firstIssue>
+:/div
+
+And now, let's do the interesting part - the regular expressions.
+For this, we will need a regular expressions tester. I personally use [[http://www.ultrapico.com/Expresso.htm|Expresso]], so the tutorial will use its concepts, but you should be ok with any other regex tester. In case you need it, an introduction to regular expressions is available at [[http://www.codeproject.com/dotnet/regextutorial.asp]].
+
+Anyways, let's get the source of the start page ([[http://www.uglyhill.com]]), and paste it in Expresso's **Sample Text** area. Right. 
+
+Once we have done this, we need to search it for the current strip link. I prefer looking at the image's properties and getting the filename from there - in our case it's **20070726\_luggage.jpg**. If we search the source code for it, we find something like
+
+:div code
+<img border=0 src="/comics/20070726\_luggage.jpg" >
+:/div
+, of which we are only interested in **/comics/20070726\_luggage.jpg**. All we need to do now is convert what we found into a .NET regular expression. Easy!
+
+We do this by analyzing the desired fragment. Notice that it can be described as 
+:div code
+/comics/<eight digits>\_<some text, maybe even some digits>.<an image extension, may be jpg, may be something else>
+:/div
+A regular expression describing this could be
+:div code
+/comics/[0-9]{8}\_[^.]*\\.(gif|jpg|jpeg|png)
+:/div
+
+We test it in Expresso, and see that it actually matches the text we wanted. A question remains though, how do we tell Woofy that this is only a fragment of the strip's link, and not all of it? Well, we can wrap the expression in a **contentToBeMerged** capturing group, so Woofy will combine the text with the comic's **startUrl**.
+
+:div code
+<comicRegex><![CDATA[(?<contentToBeMerged>/comics/[0-9]{8}\_[^.]*\\.(gif|jpg|jpeg|png\))]]></comicRegex>
+:/div
+
+Don't forget to test the regular expression you come up with on several of the comic's pages, to make sure it retrieves one and only one link. Otherwise, Woofy will assume it has finished downloading the comic, and it will stop.
+
+Now, for the link to the previous page. We notice the back button is represented by the **back\_button.gif** image, so we search the source code and find something like this:
+
+:div code
+<a href="/d/20070725.html" target="\_self"><img border=0 src="/images/back\_button.gif"></a>
+:/div
+
+This time we need to find an expression for the whole fragment, in order to avoid retrieving the forward button instead of the back button. Long story short, the regular expression is as follows:
+
+:div code
+<backButtonRegex><![CDATA[<a\\shref="(?<contentToBeMerged>/d/[0-9]{8}\\.html)"\\starget="\_self"><img\\sborder=0\\ssrc="/images/back\_button\\.gif"></a>]]></backButtonRegex>
+:/div
+
+Note that even though we're trying to match a larger text fragment, wich we're only interested in a tiny fragment inside, so we wrap it in a **contentToBeMerged** capturing group. If it were an entire link, instead of a link fragment, we would use **content** instead of **contentToBeMerged**.
+
+The full comic definition should look like this:
+
+:div code
+<?xml version="1.0" encoding="utf-8" ?>~~
+<comicInfo friendlyName="Ugly Hill">~~ ____<startUrl><![CDATA[http:\//www.uglyhill.com]]></startUrl>~~
+____<firstIssue><![CDATA[http:\//www.uglyhill.com/comics/20050523.jpg]]></firstIssue>~~
+____<comicRegex><![CDATA[(?<contentToBeMerged>/comics/[0-9]{8}\_[^.]*\\.(gif|jpg|jpeg|png\))]]></comicRegex>~~
+____<backButtonRegex><![CDATA[<a\\shref="(?<contentToBeMerged>/d/[0-9]{8}\\.html)"\\starget="\_self"><img\\sborder=0\\ssrc="/images/back\_button\\.gif"></a>]]></backButtonRegex>~~
+</comicInfo>
+:/div
+
+Now that the new comic definition is finished, you can try it out, by saving it as an xml file in the **ComicInfos** folder, inside Woofy's install folder. After doing this, start Woofy and try to download all the latest comics. If it reaches the first comic strip ever, then it's a success.
+
+Enjoy.

@@ -77,11 +77,11 @@
 	<Program_Descriptions>
 		<English>
 			<Keywords>woofy webcomic webcomics downloader download online comics comix comic web</Keywords>
-			<Char_Desc_45>Woofy is a free webcomics downloader</Char_Desc_45>
-			<Char_Desc_80>Woofy is a free webcomics downloader, designed for simplicity and ease of use.</Char_Desc_80>
-			<Char_Desc_250>Woofy is a free webcomics downloader, designed for simplicity and ease of use. Its purpose is to help you download and keep an archive of your favorite online comics, while not getting in your way too much.</Char_Desc_250>
-			<Char_Desc_450>Woofy is a free webcomics downloader, designed for simplicity and ease of use. Its purpose is to help you download and keep an archive of your favorite online comics, while not getting in your way too much. It can download a fixed number of comics, or all the comics published since the last time it was run. Also, it uses comic information files in order to know how to download a certain comic, so it can be easily extended to support new comics.</Char_Desc_450>
-			<Char_Desc_2000>Woofy is a free webcomics downloader, designed for simplicity and ease of use. Its purpose is to help you download and keep an archive of your favorite online comics, while not getting in your way too much. 
+			<Char_Desc_45>Woofy is a free webcomic downloader</Char_Desc_45>
+			<Char_Desc_80>Woofy is a free webcomic downloader, designed for simplicity and ease of use.</Char_Desc_80>
+			<Char_Desc_250>Woofy is a free webcomic downloader, designed for simplicity and ease of use. Its purpose is to help you download and keep an archive of your favorite online comics, while not getting in your way too much.</Char_Desc_250>
+			<Char_Desc_450>Woofy is a free webcomic downloader, designed for simplicity and ease of use. Its purpose is to help you download and keep an archive of your favorite online comics, while not getting in your way too much. It can download a fixed number of comics, or all the comics published since the last time it was run. Also, it uses comic information files in order to know how to download a certain comic, so it can be easily extended to support new comics.</Char_Desc_450>
+			<Char_Desc_2000>Woofy is a free webcomic downloader, designed for simplicity and ease of use. Its purpose is to help you download and keep an archive of your favorite online comics, while not getting in your way too much. 
 
 Its main features are:
 * It can download a fixed number of comics, or all the comics that have been published since the last time it was run. 
