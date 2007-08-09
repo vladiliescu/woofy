@@ -50,7 +50,7 @@ namespace Woofy.Core
 
                     FileDownloader fileDownloader = new FileDownloader(UpdatesDirectory);
                     fileDownloader.DownloadFileCompleted += new EventHandler<DownloadFileCompletedEventArgs>(DownloadPadCompleted);
-                    fileDownloader.DownloadFileAsync(padUrl, null, true);
+                    fileDownloader.DownloadFileAsync(padUrl, null, true, null);
                 }
             ));
         }
@@ -142,7 +142,7 @@ namespace Woofy.Core
                 }
             }
 
-            _updateDownloader.DownloadFileAsync(padDocument.PrimaryDownloadUrl, null, true);
+            _updateDownloader.DownloadFileAsync(padDocument.PrimaryDownloadUrl, null, true, null);
         }
         #endregion
     }

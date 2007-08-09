@@ -129,10 +129,9 @@ namespace Woofy.Core
         /// <remarks>Use the <see cref="FileDownloader.DownloadFileCompleted"/> event to know when the download completes.</remarks>
         /// <seealso cref="FileDownloader.DownloadFileCompleted"/>
         /// <param name="fileLink">Link to the file to be downloaded.</param>
-        /// <param name="downloadedFileName">Specify this if you want to override the original file name. Can be null.</param>
-        public void DownloadFileAsync(string fileLink, string downloadedFileName)
+        public void DownloadFileAsync(string fileLink, string referrer)
         {
-            DownloadFileAsync(fileLink, downloadedFileName, false);
+            DownloadFileAsync(fileLink, null, false, referrer);
         }
 
         /// <summary>
@@ -143,7 +142,7 @@ namespace Woofy.Core
         /// <param name="fileLink">Link to the file to be downloaded.</param>
         /// <param name="downloadedFileName">Specify this if you want to override the original file name. Can be null.</param>
         /// <param name="overwriteExisting">True to overwrite the existing file, false otherwise.</param>
-        public void DownloadFileAsync(string fileLink, string downloadedFileName, bool overwriteExisting)
+        public void DownloadFileAsync(string fileLink, string downloadedFileName, bool overwriteExisting, string referrer)
         {
             string filePath = GetFilePath(fileLink, downloadedFileName, _downloadDirectory);
             if (!overwriteExisting && File.Exists(filePath))
@@ -155,8 +154,10 @@ namespace Woofy.Core
             if (overwriteExisting)
                 File.Delete(filePath);
 
-            WebRequest request = WebConnectionFactory.GetNewWebRequestInstance(fileLink);
-
+            HttpWebRequest request = (HttpWebRequest)WebConnectionFactory.GetNewWebRequestInstance(fileLink);
+            if (!string.IsNullOrEmpty(referrer))
+                request.Referer = referrer;
+            
             request.BeginGetResponse(
                 delegate(IAsyncResult result)
                 {

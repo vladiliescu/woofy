@@ -163,7 +163,7 @@ namespace Woofy.Core
             if (task.Status == TaskStatus.Running)
             {
                 int comicsToDownload = task.ComicsToDownload.HasValue ? (int)(task.ComicsToDownload.Value - task.DownloadedComics) : ComicsProvider.AllAvailableComics;
-                if (string.IsNullOrEmpty(task.CurrentUrl))
+                if (string.IsNullOrEmpty(task.CurrentUrl))//TODO: intra vreodata pe ramura asta?
                     comicsProvider.DownloadComicsAsync(comicsToDownload);
                 else
                     comicsProvider.DownloadComicsAsync(comicsToDownload, task.CurrentUrl);

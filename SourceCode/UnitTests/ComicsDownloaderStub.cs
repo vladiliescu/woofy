@@ -53,6 +53,11 @@ namespace UnitTests
             }
         }
 
+        public void DownloadFileAsync(string fileLink, string referrer)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
         #endregion
     }
 }

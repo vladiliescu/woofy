@@ -29,6 +29,7 @@ namespace Woofy.Core
         private int _comicsToDownload;
         private int _comicsDownloaded;
         private string _backButtonLink;
+        private string _url;
         #endregion
 
         #region .ctor
@@ -60,7 +61,7 @@ namespace Woofy.Core
         #endregion
 
         #region Public Methods
-        
+
         /// <summary>
         /// Downloads the specified number of comic strips.
         /// </summary>
@@ -95,11 +96,11 @@ namespace Woofy.Core
                     break;
 
                 _comicsDownloader.DownloadFile(comicLink, out fileAlreadyDownloaded);
-                
+
                 OnDownloadComicCompleted(new DownloadSingleComicCompletedEventArgs(i + 1, currentUrl));
 
                 if (fileAlreadyDownloaded && comicsToDownload == ComicsProvider.AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
-                    break;                
+                    break;
                 if (string.IsNullOrEmpty(backButtonLink))
                     break;
 
@@ -181,7 +182,7 @@ namespace Woofy.Core
                     comicLinks.Add(comicMatch.Groups[Settings.Default.ContentGroupName].Value);
                 else if (comicMatch.Groups[Settings.Default.ContentToBeMerged].Success)
                     comicLinks.Add(
-                        comicInfo.StartUrl + comicMatch.Groups[Settings.Default.ContentToBeMerged].Value
+                         WebPath.Combine(WebPath.GetDirectory(comicInfo.StartUrl), comicMatch.Groups[Settings.Default.ContentToBeMerged].Value)
                         );
                 else
                     comicLinks.Add(comicMatch.Value);
@@ -221,7 +222,7 @@ namespace Woofy.Core
                     backButtonLinks.Add(backButtonMatch.Groups[Settings.Default.ContentGroupName].Value);
                 else if (backButtonMatch.Groups[Settings.Default.ContentToBeMerged].Success)
                     backButtonLinks.Add(
-                        comicInfo.StartUrl + backButtonMatch.Groups[Settings.Default.ContentToBeMerged].Value
+                        WebPath.Combine(WebPath.GetDirectory(comicInfo.StartUrl), backButtonMatch.Groups[Settings.Default.ContentToBeMerged].Value)
                         );
                 else
                     backButtonLinks.Add(backButtonMatch.Value);
@@ -243,8 +244,9 @@ namespace Woofy.Core
             if (_isDownloadCancelled)
                 return;
 
+            _url = startUrl;
             _client.DownloadStringAsync(new Uri(startUrl));
-        }    
+        }
         #endregion
 
         #region Callbacks
@@ -267,7 +269,7 @@ namespace Woofy.Core
             if (_isDownloadCancelled)
                 return;
 
-            _comicsDownloader.DownloadFileAsync(comicLink);
+            _comicsDownloader.DownloadFileAsync(comicLink, _url);
         }
 
         /// <summary>
@@ -301,6 +303,7 @@ namespace Woofy.Core
             if (_isDownloadCancelled)
                 return;
 
+            _url = currentUrl;
             _client.DownloadStringAsync(new Uri(currentUrl));
         }
 

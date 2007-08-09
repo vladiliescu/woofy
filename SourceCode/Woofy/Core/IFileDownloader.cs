@@ -11,6 +11,8 @@ namespace Woofy.Core
 
         void DownloadFileAsync(string comicLink);
 
+        void DownloadFileAsync(string fileLink, string referrer);
+
         event EventHandler<DownloadFileCompletedEventArgs> DownloadFileCompleted;
 
         event EventHandler<DownloadedFileChunkEventArgs> DownloadedFileChunk;
