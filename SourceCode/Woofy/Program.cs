@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using Woofy.Core;
 using Woofy.Gui;
 using Woofy.Properties;
+using System.Net;
 
 namespace Woofy
 {
@@ -16,9 +17,10 @@ namespace Woofy
         static void Main()
         {
             //if we have just upgraded the application, then get its settings up to date
-            if (Settings.Default.GetPreviousVersion("MinimizeToTray") != null)
-                Settings.Default.Upgrade();
-
+            //TODO:conditia e gresita
+            //if (Settings.Default.GetPreviousVersion("MinimizeToTray") != null)
+            //    Settings.Default.Upgrade();
+            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
@@ -35,7 +37,7 @@ namespace Woofy
         /// <param name="e"></param>
         static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            Logger.LogException((Exception) e.ExceptionObject);
+            Logger.LogException((Exception)e.ExceptionObject);
         }
 
         /// <summary>

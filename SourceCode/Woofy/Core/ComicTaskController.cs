@@ -176,8 +176,11 @@ namespace Woofy.Core
                 delegate()
                 {
                     ComicsProvider provider = (ComicsProvider)sender;
-
+                    
                     int index = _comicProviders.IndexOf(provider);
+                    if (index == -1)    //in case the task has already been deleted.
+                        return;
+
                     ComicTask task = (ComicTask)_tasks[index];
                     task.DownloadedComics++;
                     task.CurrentUrl = e.CurrentUrl;

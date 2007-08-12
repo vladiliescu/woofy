@@ -53,10 +53,6 @@ namespace Woofy.Core
             _comicsDownloader = comicsDownloader;
 
             _client = WebConnectionFactory.GetNewWebClientInstance();
-            _client.DownloadStringCompleted += new DownloadStringCompletedEventHandler(DownloadPageCompletedCallback);
-
-            _comicsDownloader.DownloadFileCompleted += new EventHandler<DownloadFileCompletedEventArgs>(DownloadComicCompletedCallback);
-            _comicsDownloader.DownloadedFileChunk += new EventHandler<DownloadedFileChunkEventArgs>(DownloadedComicChunkCallback);
         }
         #endregion
 
@@ -97,7 +93,7 @@ namespace Woofy.Core
 
                 _comicsDownloader.DownloadFile(comicLink, out fileAlreadyDownloaded);
 
-                OnDownloadComicCompleted(new DownloadSingleComicCompletedEventArgs(i + 1, currentUrl));
+                OnDownloadComicCompleted(new DownloadSingleComicCompletedEventArgs(i + 1, backButtonLink));
 
                 if (fileAlreadyDownloaded && comicsToDownload == ComicsProvider.AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
                     break;
@@ -119,27 +115,15 @@ namespace Woofy.Core
             DownloadComicsAsync(comicsToDownload, _comicInfo.StartUrl);
         }
 
-        /// <summary>
-        /// Downloads the specified number of comic strips asynchronously.
-        /// </summary>
-        /// <param name="comicsToDownload">Number of comics to download. Pass <see cref="AllAvailableComics"/> in order to download all the available comics.</param>
-        /// <param name="startUrl">Url at which the download should start.</param>
         public void DownloadComicsAsync(int comicsToDownload, string startUrl)
         {
-            _isDownloadCancelled = false;
-
-            if (comicsToDownload != ComicsProvider.AllAvailableComics && comicsToDownload <= 0)
-                throw new ArgumentOutOfRangeException("comicsToDownload", "Number of comics to download must be greater than zero or equal to ComicsProvider.AllAvailableComics.");
-
-            if (string.IsNullOrEmpty(startUrl))
-                throw new ArgumentNullException("startUrl");
-
             ThreadPool.UnsafeQueueUserWorkItem(
                 delegate
                 {
-                    DownloadComicsAsyncInternal(comicsToDownload, startUrl);
-                }, null);
-        }
+                    DownloadComics(comicsToDownload, startUrl);
+                }, null
+            );
+        }       
 
         /// <summary>
         /// Stops the current download.
@@ -247,76 +231,7 @@ namespace Woofy.Core
             _url = startUrl;
             _client.DownloadStringAsync(new Uri(startUrl));
         }
-        #endregion
-
-        #region Callbacks
-        /// <summary>
-        /// Called when a page has been downloaded in async mode.
-        /// </summary>
-        private void DownloadPageCompletedCallback(object sender, DownloadStringCompletedEventArgs e)
-        {
-            string pageContent = e.Result;
-
-            string comicLink = RetrieveComicLinkFromPage(pageContent, _comicInfo);
-            _backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, _comicInfo);
-
-            if (string.IsNullOrEmpty(comicLink))
-            {
-                OnDownloadCompleted();
-                return;
-            }
-
-            if (_isDownloadCancelled)
-                return;
-
-            _comicsDownloader.DownloadFileAsync(comicLink, _url);
-        }
-
-        /// <summary>
-        /// Called when a comic has been downloaded in async mode.
-        /// </summary>
-        private void DownloadComicCompletedCallback(object sender, DownloadFileCompletedEventArgs e)
-        {
-            _comicsDownloaded++;
-            string currentUrl = _backButtonLink;
-
-            if (e.FileAlreadyDownloaded && _comicsToDownload == ComicsProvider.AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
-            {
-                OnDownloadCompleted();
-                return;
-            }
-
-            OnDownloadComicCompleted(new DownloadSingleComicCompletedEventArgs(_comicsDownloaded, currentUrl));
-
-            if (string.IsNullOrEmpty(currentUrl))
-            {
-                OnDownloadCompleted();
-                return;
-            }
-
-            if (_comicsDownloaded == _comicsToDownload)
-            {
-                OnDownloadCompleted();
-                return;
-            }
-
-            if (_isDownloadCancelled)
-                return;
-
-            _url = currentUrl;
-            _client.DownloadStringAsync(new Uri(currentUrl));
-        }
-
-        /// <summary>
-        /// Called when a comic chunk has been downloaded.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void DownloadedComicChunkCallback(object sender, DownloadedFileChunkEventArgs e)
-        {
-            e.Cancel = _isDownloadCancelled;
-        }
-        #endregion
+        #endregion        
 
         #region DownloadComicCompleted Event
         private object _downloadComicCompletedLock = new object();
