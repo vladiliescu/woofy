@@ -3,8 +3,6 @@ using System.Data;
 using System.Data.SQLite;
 using System.Diagnostics;
 
-
-using Woofy.Enums;
 using Woofy.Properties;
 
 namespace Woofy.Core
@@ -20,6 +18,13 @@ namespace Woofy.Core
         public long Id
         {
             get { return _id; }
+        }
+
+        private DownloadOutcome downloadOutcome;
+        public DownloadOutcome DownloadOutcome
+        {
+            get { return downloadOutcome; }
+            set { downloadOutcome = value; }
         }
 
         private string _name;
@@ -52,7 +57,6 @@ namespace Woofy.Core
         {
             get { return _downloadFolder; }
         }
-
 
         private long _orderNumber;
         public long OrderNumber

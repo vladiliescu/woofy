@@ -31,25 +31,16 @@ namespace Woofy.Gui
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem(new string[] {
-            "",
-            "All ({0})"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem2 = new System.Windows.Forms.ListViewItem(new string[] {
-            "",
-            "Active ({0})"}, -1);
-            System.Windows.Forms.ListViewItem listViewItem3 = new System.Windows.Forms.ListViewItem(new string[] {
-            "",
-            "Finished ({0})"}, -1);
             this.dgvwTasks = new System.Windows.Forms.DataGridView();
             this.TaskStatusColumn = new System.Windows.Forms.DataGridViewImageColumn();
             this.TaskNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ComicsColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItemOpenTaskFolder = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemNewTask = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemPauseTask = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemDeleteTask = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItemOpenTaskFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonAddTask = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonPauseTask = new System.Windows.Forms.ToolStripButton();
@@ -57,9 +48,6 @@ namespace Woofy.Gui
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButtonOpenFolder = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonSettings = new System.Windows.Forms.ToolStripButton();
-            this.lvwCategories = new System.Windows.Forms.ListView();
-            this.icon = new System.Windows.Forms.ColumnHeader();
-            this.text = new System.Windows.Forms.ColumnHeader();
             this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.trayMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.hideShowWoofyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -141,7 +129,21 @@ namespace Woofy.Gui
             this.toolStripMenuItemDeleteTask});
             this.contextMenuStrip.Name = "contextMenuStrip";
             this.contextMenuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.contextMenuStrip.Size = new System.Drawing.Size(189, 120);
+            this.contextMenuStrip.Size = new System.Drawing.Size(189, 98);
+            // 
+            // toolStripMenuItemOpenTaskFolder
+            // 
+            this.toolStripMenuItemOpenTaskFolder.Image = global::Woofy.Properties.Resources.OpenFolder;
+            this.toolStripMenuItemOpenTaskFolder.Name = "toolStripMenuItemOpenTaskFolder";
+            this.toolStripMenuItemOpenTaskFolder.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.toolStripMenuItemOpenTaskFolder.Size = new System.Drawing.Size(188, 22);
+            this.toolStripMenuItemOpenTaskFolder.Text = "Open folder";
+            this.toolStripMenuItemOpenTaskFolder.Click += new System.EventHandler(this.toolStripMenuItemOpenTaskFolder_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(185, 6);
             // 
             // toolStripMenuItemNewTask
             // 
@@ -169,20 +171,6 @@ namespace Woofy.Gui
             this.toolStripMenuItemDeleteTask.Size = new System.Drawing.Size(188, 22);
             this.toolStripMenuItemDeleteTask.Text = "Delete";
             this.toolStripMenuItemDeleteTask.Click += new System.EventHandler(this.toolStripMenuItemDeleteTask_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(185, 6);
-            // 
-            // toolStripMenuItemOpenTaskFolder
-            // 
-            this.toolStripMenuItemOpenTaskFolder.Image = global::Woofy.Properties.Resources.OpenFolder;
-            this.toolStripMenuItemOpenTaskFolder.Name = "toolStripMenuItemOpenTaskFolder";
-            this.toolStripMenuItemOpenTaskFolder.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.toolStripMenuItemOpenTaskFolder.Size = new System.Drawing.Size(188, 22);
-            this.toolStripMenuItemOpenTaskFolder.Text = "Open folder";
-            this.toolStripMenuItemOpenTaskFolder.Click += new System.EventHandler(this.toolStripMenuItemOpenTaskFolder_Click);
             // 
             // toolStrip
             // 
@@ -260,37 +248,6 @@ namespace Woofy.Gui
             this.toolStripButtonSettings.ToolTipText = "Displays the settings form";
             this.toolStripButtonSettings.Click += new System.EventHandler(this.toolStripButtonSettings_Click);
             // 
-            // lvwCategories
-            // 
-            this.lvwCategories.BackColor = System.Drawing.Color.Red;
-            this.lvwCategories.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.icon,
-            this.text});
-            this.lvwCategories.FullRowSelect = true;
-            this.lvwCategories.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-            listViewItem2.StateImageIndex = 0;
-            listViewItem3.StateImageIndex = 0;
-            this.lvwCategories.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
-            listViewItem1,
-            listViewItem2,
-            listViewItem3});
-            this.lvwCategories.Location = new System.Drawing.Point(9, 152);
-            this.lvwCategories.Margin = new System.Windows.Forms.Padding(2);
-            this.lvwCategories.Name = "lvwCategories";
-            this.lvwCategories.Size = new System.Drawing.Size(101, 366);
-            this.lvwCategories.TabIndex = 9;
-            this.lvwCategories.UseCompatibleStateImageBehavior = false;
-            this.lvwCategories.View = System.Windows.Forms.View.Details;
-            this.lvwCategories.Visible = false;
-            // 
-            // icon
-            // 
-            this.icon.Width = 30;
-            // 
-            // text
-            // 
-            this.text.Width = 99;
-            // 
             // notifyIcon
             // 
             this.notifyIcon.ContextMenuStrip = this.trayMenuStrip;
@@ -355,7 +312,6 @@ namespace Woofy.Gui
             this.ClientSize = new System.Drawing.Size(632, 442);
             this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.dgvwTasks);
-            this.Controls.Add(this.lvwCategories);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainForm";
             this.Text = "Woofy";
@@ -377,9 +333,6 @@ namespace Woofy.Gui
         private System.Windows.Forms.ToolStrip toolStrip;
         private System.Windows.Forms.ToolStripButton toolStripButtonAddTask;
         private System.Windows.Forms.ToolStripButton toolStripButtonDeleteTask;
-        private System.Windows.Forms.ListView lvwCategories;
-        private System.Windows.Forms.ColumnHeader icon;
-        private System.Windows.Forms.ColumnHeader text;
         private System.Windows.Forms.ToolStripButton toolStripButtonPauseTask;
         private System.Windows.Forms.DataGridViewImageColumn TaskStatusColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn TaskNameColumn;

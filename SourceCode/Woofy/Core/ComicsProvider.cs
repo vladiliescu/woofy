@@ -62,9 +62,9 @@ namespace Woofy.Core
         /// Downloads the specified number of comic strips.
         /// </summary>
         /// <param name="comicsToDownload">Number of comics to download. Pass <see cref="AllAvailableComics"/> in order to download all the available comics.</param>
-        public void DownloadComics(int comicsToDownload)
+        public DownloadOutcome DownloadComics(int comicsToDownload)
         {
-            DownloadComics(comicsToDownload, _comicInfo.StartUrl);
+            return DownloadComics(comicsToDownload, _comicInfo.StartUrl);
         }
 
         /// <summary>
@@ -72,28 +72,40 @@ namespace Woofy.Core
         /// </summary>
         /// <param name="comicsToDownload">Number of comics to download. Pass <see cref="AllAvailableComics"/> in order to download all the available comics.</param>
         /// <param name="startUrl">Url at which the download should start.</param>
-        public void DownloadComics(int comicsToDownload, string startUrl)
+        public DownloadOutcome DownloadComics(int comicsToDownload, string startUrl)
         {
             _isDownloadCancelled = false;
+            DownloadOutcome downloadOutcome = DownloadOutcome.Successful;
 
             string currentUrl = startUrl;
             bool fileAlreadyDownloaded;
             for (int i = 0; i < comicsToDownload || comicsToDownload == ComicsProvider.AllAvailableComics; i++)
             {
                 if (_isDownloadCancelled)
-                    return;
+                {
+                    downloadOutcome = DownloadOutcome.Cancelled;
+                    break;
+                }
 
                 string pageContent = _client.DownloadString(currentUrl);
 
-                string comicLink = RetrieveComicLinkFromPage(pageContent, _comicInfo);
+                string[] comicLinks = RetrieveComicLinksFromPage(pageContent, _comicInfo);
                 string backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, _comicInfo);
 
-                if (string.IsNullOrEmpty(comicLink))
+                if (comicLinks.Length == 0)
+                {
+                    downloadOutcome = DownloadOutcome.NoStripMatches;
                     break;
+                }
+                else if (comicLinks.Length > 1)
+                {
+                    downloadOutcome = DownloadOutcome.MultipleStripMatches;
+                    break;
+                }
 
-                _comicsDownloader.DownloadFile(comicLink, out fileAlreadyDownloaded);
+                _comicsDownloader.DownloadFile(comicLinks[0], out fileAlreadyDownloaded);
 
-                OnDownloadComicCompleted(new DownloadSingleComicCompletedEventArgs(i + 1, backButtonLink));
+                OnDownloadComicCompleted(new DownloadStripCompletedEventArgs(i + 1, backButtonLink));
 
                 if (fileAlreadyDownloaded && comicsToDownload == ComicsProvider.AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
                     break;
@@ -103,7 +115,9 @@ namespace Woofy.Core
                 currentUrl = backButtonLink;
             }
 
-            OnDownloadCompleted();
+            OnDownloadCompleted(downloadOutcome);
+
+            return downloadOutcome;
         }
 
         /// <summary>
@@ -123,7 +137,7 @@ namespace Woofy.Core
                     DownloadComics(comicsToDownload, startUrl);
                 }, null
             );
-        }       
+        }
 
         /// <summary>
         /// Stops the current download.
@@ -231,35 +245,29 @@ namespace Woofy.Core
             _url = startUrl;
             _client.DownloadStringAsync(new Uri(startUrl));
         }
-        #endregion        
+        #endregion
 
         #region DownloadComicCompleted Event
         private object _downloadComicCompletedLock = new object();
-        private event EventHandler<DownloadSingleComicCompletedEventArgs> _downloadComicCompleted;
+        private event EventHandler<DownloadStripCompletedEventArgs> _downloadComicCompleted;
         /// <summary>
         /// Occurs when a single comic is downloaded.
         /// </summary>
-        public event EventHandler<DownloadSingleComicCompletedEventArgs> DownloadComicCompleted
+        public event EventHandler<DownloadStripCompletedEventArgs> DownloadComicCompleted
         {
             add
             {
-                lock (_downloadComicCompletedLock)
-                {
-                    _downloadComicCompleted += value;
-                }
+                _downloadComicCompleted += value;
             }
             remove
             {
-                lock (_downloadComicCompletedLock)
-                {
-                    _downloadComicCompleted -= value;
-                }
+                _downloadComicCompleted -= value;
             }
         }
 
-        protected virtual void OnDownloadComicCompleted(DownloadSingleComicCompletedEventArgs e)
+        protected virtual void OnDownloadComicCompleted(DownloadStripCompletedEventArgs e)
         {
-            EventHandler<DownloadSingleComicCompletedEventArgs> eventReference = _downloadComicCompleted;
+            EventHandler<DownloadStripCompletedEventArgs> eventReference = _downloadComicCompleted;
 
             if (eventReference != null)
                 eventReference(this, e);
@@ -267,37 +275,30 @@ namespace Woofy.Core
         #endregion
 
         #region DownloadCompleted Event
-        private object _downloadCompletedLock = new object();
-        private event EventHandler _downloadCompleted;
+        private event EventHandler<DownloadCompletedEventArgs> _downloadCompleted;
         /// <summary>
         /// Occurs when the entire download is completed.
         /// </summary>
-        public event EventHandler DownloadCompleted
+        public event EventHandler<DownloadCompletedEventArgs> DownloadCompleted
         {
             add
             {
-                lock (_downloadCompletedLock)
-                {
-                    _downloadCompleted += value;
-                }
+                _downloadCompleted += value;
             }
             remove
             {
-                lock (_downloadCompletedLock)
-                {
-                    _downloadCompleted -= value;
-                }
+                _downloadCompleted -= value;
             }
         }
 
-        protected virtual void OnDownloadCompleted()
+        protected virtual void OnDownloadCompleted(DownloadOutcome downloadOutcome)
         {
             _client.Dispose();
 
-            EventHandler eventReference = _downloadCompleted;
+            EventHandler<DownloadCompletedEventArgs> eventReference = _downloadCompleted;
 
             if (eventReference != null)
-                eventReference(this, EventArgs.Empty);
+                eventReference(this, new DownloadCompletedEventArgs(downloadOutcome));
         }
         #endregion
     }

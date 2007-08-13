@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Woofy.Enums
+namespace Woofy.Core
 {
     public enum TaskStatus : long
     {

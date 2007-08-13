@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 
-using Woofy.Enums;
 using Woofy.Properties;
 
 namespace Woofy.Core
@@ -157,8 +156,8 @@ namespace Woofy.Core
             ComicsProvider comicsProvider = new ComicsProvider(comicInfo, task.DownloadFolder);
             _comicProviders.Add(comicsProvider);
 
-            comicsProvider.DownloadComicCompleted += new EventHandler<DownloadSingleComicCompletedEventArgs>(DownloadComicCompletedCallback);
-            comicsProvider.DownloadCompleted += new EventHandler(DownloadComicsCompletedCallback);
+            comicsProvider.DownloadComicCompleted += new EventHandler<DownloadStripCompletedEventArgs>(DownloadComicCompletedCallback);
+            comicsProvider.DownloadCompleted += new EventHandler<DownloadCompletedEventArgs>(DownloadComicsCompletedCallback);
 
             if (task.Status == TaskStatus.Running)
             {
@@ -170,7 +169,7 @@ namespace Woofy.Core
             }
         }
 
-        private void DownloadComicCompletedCallback(object sender, DownloadSingleComicCompletedEventArgs e)
+        private void DownloadComicCompletedCallback(object sender, DownloadStripCompletedEventArgs e)
         {
             _tasksGrid.Invoke(new MethodInvoker(
                 delegate()
@@ -191,7 +190,7 @@ namespace Woofy.Core
             ));
         }
 
-        private void DownloadComicsCompletedCallback(object sender, EventArgs e)
+        private void DownloadComicsCompletedCallback(object sender, DownloadCompletedEventArgs e)
         {
             _tasksGrid.Invoke(new MethodInvoker(
                 delegate()
@@ -201,6 +200,7 @@ namespace Woofy.Core
                     int index = _comicProviders.IndexOf(comicsProvider);
                     ComicTask task = (ComicTask)_tasks[index];
                     task.Status = TaskStatus.Finished;
+                    task.DownloadOutcome = e.DownloadOutcome;
                     task.Delete();
 
                     ResetTasksBindings();

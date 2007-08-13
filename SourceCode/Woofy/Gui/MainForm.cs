@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Windows.Forms;
 
 using Woofy.Core;
-using Woofy.Enums;
 using Woofy.Properties;
 
 namespace Woofy.Gui
@@ -62,12 +61,42 @@ namespace Woofy.Gui
                         row.Cells["TaskStatusColumn"].Value = Resources.Running;
                         break;
                     case TaskStatus.Finished:
-                        row.Cells["TaskStatusColumn"].Value = Resources.Finished;
+                        DisplayDownloadOutcome(row, task.DownloadOutcome, task.CurrentUrl);
                         break;
                     default:
                         break;
                 }
 
+            }
+        }
+
+        //TODO: de testat.
+        private void DisplayDownloadOutcome(DataGridViewRow row, DownloadOutcome downloadOutcome, string url)
+        {
+            Bitmap icon;
+            string toolTip = "";
+
+            switch (downloadOutcome)
+            {
+                case DownloadOutcome.Successful:
+                    icon = Resources.Finished;
+                    break;
+                case DownloadOutcome.NoStripMatches:
+                    icon = Resources.Warning;
+                    toolTip = string.Format("No strips have been found on {0}. In order to allow missing strips, use the allowMissingStrips attribute in the comic definition.", url);
+                    break;
+                case DownloadOutcome.MultipleStripMatches:
+                    icon = Resources.Warning;
+                    toolTip = string.Format("Multiple strips have been found on {0}. In order to allow multiple strips, use the allowMultipleStrips attribute in the comic definition.", url);
+                    break;
+                default:
+                    throw new System.ComponentModel.InvalidEnumArgumentException("downloadOutcome", (int)downloadOutcome, typeof(DownloadOutcome));
+            }
+
+            row.Cells["TaskStatusColumn"].Value = icon;
+            foreach (DataGridViewCell cell in row.Cells)
+            {
+                cell.ToolTipText = toolTip;
             }
         }
 

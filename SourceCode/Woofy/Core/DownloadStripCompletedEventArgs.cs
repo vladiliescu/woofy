@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Woofy.Core
 {
-    public class DownloadSingleComicCompletedEventArgs : EventArgs
+    public class DownloadStripCompletedEventArgs : EventArgs
     {
         private int _downloadedComics;
         /// <summary>
@@ -29,7 +29,7 @@ namespace Woofy.Core
         /// </summary>
         /// <param name="downloadedComics">The number of downloaded comic strips.</param>
         /// <param name="currentUrl">The page containing the current strip.</param>
-        public DownloadSingleComicCompletedEventArgs(int downloadedComics, string currentUrl)
+        public DownloadStripCompletedEventArgs(int downloadedComics, string currentUrl)
         {
             _downloadedComics = downloadedComics;
             _currentUrl = currentUrl;
