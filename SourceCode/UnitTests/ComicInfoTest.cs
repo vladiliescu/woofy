@@ -10,7 +10,7 @@ using Woofy.Exceptions;
 namespace UnitTests
 {
     [TestFixture]
-    public class TestComicInfo
+    public class ComicInfoTest
     {
         [Test]
         public void TestInitializesCorrectly()
