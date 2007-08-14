@@ -6,10 +6,11 @@ namespace Woofy.Core
 {
     public enum DownloadOutcome
     {
-        None = 0,
-        Successful,
-        Cancelled,
+        None = 0,        
         NoStripMatches,
-        MultipleStripMatches
+        MultipleStripMatches,
+        Cancelled,
+        Error,
+        Successful
     }
 }

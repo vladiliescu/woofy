@@ -50,10 +50,11 @@ namespace Woofy.Core
 
                     FileDownloader fileDownloader = new FileDownloader(UpdatesDirectory);
                     fileDownloader.DownloadFileCompleted += new EventHandler<DownloadFileCompletedEventArgs>(DownloadPadCompleted);
+                    fileDownloader.DownloadError += new EventHandler<DownloadErrorEventArgs>(DownloadError);
                     fileDownloader.DownloadFileAsync(padUrl, null, true, null);
                 }
             ));
-        }
+        }        
         #endregion
 
         #region Callback Methods
@@ -119,6 +120,16 @@ namespace Woofy.Core
             Process.Start(e.DownloadedFilePath);
 
             Application.Exit();
+        }
+
+        private static void DownloadError(object sender, DownloadErrorEventArgs e)
+        {
+            Logger.LogException("An exception has occurred while downloading the updates.", e.Exception);
+            e.ExceptionHandled = true;
+            _updateCheckInProgress = false;
+
+            if (_initiatedByUser)
+                _mainForm.ReportError("Unable to contact server.");
         }
         #endregion
 

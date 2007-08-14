@@ -175,7 +175,24 @@ namespace Woofy.Core
         private void GetResponseCallback(IAsyncResult result, string filePath)
         {
             WebRequest request = (WebRequest)result.AsyncState;
-            WebResponse response = request.EndGetResponse(result);
+
+            WebResponse response = null;
+
+            try 
+            {
+                response = request.EndGetResponse(result); 
+            }
+            catch (Exception ex) 
+            { 
+                bool exceptionHandled;
+                OnDownloadError(ex, out exceptionHandled);
+
+                if (exceptionHandled)
+                    return;
+
+                throw;
+            }
+
             Stream stream = response.GetResponseStream();
 
             string tempFilePath = filePath + ".!wf";
@@ -209,7 +226,23 @@ namespace Woofy.Core
             Stream stream = (Stream)result.AsyncState;
             try
             {
-                int bytesRead = stream.EndRead(result);
+                int bytesRead = -1;
+
+                try
+                {
+                    bytesRead = stream.EndRead(result);
+                }
+                catch (Exception ex)
+                {
+                    bool exceptionHandled;
+                    OnDownloadError(ex, out exceptionHandled);
+
+                    if (exceptionHandled)
+                        return;
+
+                    throw;
+                }
+                
 
                 if (bytesRead == 0)
                 {
@@ -338,6 +371,35 @@ namespace Woofy.Core
                 eventReference(this, e);
         }
 
+        #endregion
+
+        #region DownloadError Event
+        private event EventHandler<DownloadErrorEventArgs> _downloadError;
+        /// <summary>
+        /// Use this to handle any exceptions that have occurred while downloading.
+        /// </summary>
+        public event EventHandler<DownloadErrorEventArgs> DownloadError
+        {
+            add
+            {
+                _downloadError += value;
+            }
+            remove
+            {
+                _downloadError -= value;
+            }
+        }
+
+        protected virtual void OnDownloadError(Exception exception, out bool exceptionHandled)
+        {
+            EventHandler<DownloadErrorEventArgs> eventReference = _downloadError;
+            DownloadErrorEventArgs e = new DownloadErrorEventArgs(exception);
+
+            if (eventReference != null)                
+                eventReference(this, e);
+
+            exceptionHandled = e.ExceptionHandled;
+        }
         #endregion
     }
 }

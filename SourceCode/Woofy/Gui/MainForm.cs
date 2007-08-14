@@ -89,6 +89,10 @@ namespace Woofy.Gui
                     icon = Resources.Warning;
                     toolTip = string.Format("Multiple strips have been found on {0}. In order to allow multiple strips, use the allowMultipleStrips attribute in the comic definition.", url);
                     break;
+                case DownloadOutcome.Error:
+                    icon = Resources.Error;
+                    toolTip = string.Format("An error has occurred when downloading the strip at {0}.", url);
+                    break;
                 default:
                     throw new System.ComponentModel.InvalidEnumArgumentException("downloadOutcome", (int)downloadOutcome, typeof(DownloadOutcome));
             }
@@ -366,6 +370,20 @@ namespace Woofy.Gui
                 }
             ));            
         }
-        #endregion
+
+        /// <summary>
+        /// Reports an error message to the user.
+        /// </summary>
+        /// <param name="errorMessage">The error message to report to the user.</param>
+        public void ReportError(string errorMessage)
+        {
+            this.Invoke(new MethodInvoker(
+                delegate
+                {
+                    MessageBox.Show(errorMessage, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            ));
+        }
+        #endregion        
     }
 }

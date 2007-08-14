@@ -77,43 +77,48 @@ namespace Woofy.Core
             _isDownloadCancelled = false;
             DownloadOutcome downloadOutcome = DownloadOutcome.Successful;
 
-            string currentUrl = startUrl;
-            bool fileAlreadyDownloaded;
-            for (int i = 0; i < comicsToDownload || comicsToDownload == ComicsProvider.AllAvailableComics; i++)
+            try
             {
-                if (_isDownloadCancelled)
+                string currentUrl = startUrl;
+                bool fileAlreadyDownloaded;
+                for (int i = 0; i < comicsToDownload || comicsToDownload == ComicsProvider.AllAvailableComics; i++)
                 {
-                    downloadOutcome = DownloadOutcome.Cancelled;
-                    break;
+                    if (_isDownloadCancelled)
+                    {
+                        downloadOutcome = DownloadOutcome.Cancelled;
+                        break;
+                    }
+
+                    string pageContent = _client.DownloadString(currentUrl);
+
+                    string[] comicLinks = RetrieveComicLinksFromPage(pageContent, _comicInfo);
+                    string backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, _comicInfo);
+
+                    if (comicLinks.Length == 0)
+                    {
+                        downloadOutcome = DownloadOutcome.NoStripMatches;
+                        break;
+                    }
+                    else if (comicLinks.Length > 1)
+                    {
+                        downloadOutcome = DownloadOutcome.MultipleStripMatches;
+                        break;
+                    }
+
+                    _comicsDownloader.DownloadFile(comicLinks[0], out fileAlreadyDownloaded);
+
+                    OnDownloadComicCompleted(new DownloadStripCompletedEventArgs(i + 1, backButtonLink));
+
+                    if (fileAlreadyDownloaded && comicsToDownload == ComicsProvider.AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
+                        break;
+                    if (string.IsNullOrEmpty(backButtonLink))
+                        break;
+
+                    currentUrl = backButtonLink;
                 }
-
-                string pageContent = _client.DownloadString(currentUrl);
-
-                string[] comicLinks = RetrieveComicLinksFromPage(pageContent, _comicInfo);
-                string backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, _comicInfo);
-
-                if (comicLinks.Length == 0)
-                {
-                    downloadOutcome = DownloadOutcome.NoStripMatches;
-                    break;
-                }
-                else if (comicLinks.Length > 1)
-                {
-                    downloadOutcome = DownloadOutcome.MultipleStripMatches;
-                    break;
-                }
-
-                _comicsDownloader.DownloadFile(comicLinks[0], out fileAlreadyDownloaded);
-
-                OnDownloadComicCompleted(new DownloadStripCompletedEventArgs(i + 1, backButtonLink));
-
-                if (fileAlreadyDownloaded && comicsToDownload == ComicsProvider.AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
-                    break;
-                if (string.IsNullOrEmpty(backButtonLink))
-                    break;
-
-                currentUrl = backButtonLink;
             }
+            catch (UriFormatException) { downloadOutcome = DownloadOutcome.Error; }
+            catch (WebException) { downloadOutcome = DownloadOutcome.Error; }
 
             OnDownloadCompleted(downloadOutcome);
 

@@ -48,10 +48,11 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\DownloadCompletedEventArgs.cs" />
-    <Compile Include="Core\DownloadedFileChunkEventArgs.cs" />
-    <Compile Include="Core\DownloadFileCompletedEventArgs.cs" />
-    <Compile Include="Core\DownloadStripCompletedEventArgs.cs" />
+    <Compile Include="EventArgs\DownloadCompletedEventArgs.cs" />
+    <Compile Include="EventArgs\DownloadedFileChunkEventArgs.cs" />
+    <Compile Include="EventArgs\DownloadErrorEventArgs.cs" />
+    <Compile Include="EventArgs\DownloadFileCompletedEventArgs.cs" />
+    <Compile Include="EventArgs\DownloadStripCompletedEventArgs.cs" />
     <Compile Include="Core\IFileDownloader.cs" />
     <Compile Include="Core\FileDownloader.cs" />
     <Compile Include="Core\ComicInfo.cs" />

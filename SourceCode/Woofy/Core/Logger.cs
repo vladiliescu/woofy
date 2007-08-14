@@ -48,5 +48,15 @@ namespace Woofy.Core
         {
             logger.Error("An exception has occured.", ex);
         }
+
+        /// <summary>
+        /// Logs an exception, and a message regarding it
+        /// </summary>
+        /// <param name="message">The message regarding the exception.</param>
+        /// <param name="ex">The exception to log.</param>
+        public static void LogException(string message, Exception ex)
+        {
+            logger.Error(message, ex);
+        }
     }
 }
