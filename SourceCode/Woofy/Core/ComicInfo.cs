@@ -57,6 +57,54 @@ namespace Woofy.Core
             get { return _friendlyName; }
         }
 
+        private string _latestPageRegex;
+        /// <summary>
+        /// Gets the regular expression that matches the link to the latest comic page. Can be null.
+        /// </summary>
+        public string LatestPageRegex
+        {
+            get { return _latestPageRegex; }
+        }
+
+        private string _authorEmail;
+        /// <summary>
+        /// Gets the comic definition's author email.
+        /// </summary>
+        public string AuthorEmail
+        {
+            get { return _authorEmail; }
+        }
+
+        private string _author;
+        /// <summary>
+        /// Gets the comic definition's author.
+        /// </summary>
+        public string Author
+        {
+            get { return _author; }
+        }
+
+        private bool _allowMissingStrips;
+        /// <summary>
+        /// Specifies whether the comic definition allows missing strips in a page or not.
+        /// </summary>
+        public bool AllowMissingStrips
+        {
+            get { return _allowMissingStrips; }
+        }
+
+        private bool _allowMultipleStrips;
+        /// <summary>
+        /// Specifies whether the comic definition allows multiple strips in a single page or not.
+        /// </summary>
+        public bool AllowMultipleStrips
+        {
+            get { return _allowMultipleStrips; }
+        }
+
+
+
+
         private string _comicInfoFile;
         public string ComicInfoFile
         {
@@ -69,15 +117,13 @@ namespace Woofy.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="ComicInfo"/> class.
         /// </summary>
-        /// <param name="comicInfoFile">Xml file containing the data necessary to create a new ComicInfo instance.</param>
-        public ComicInfo(string comicInfoFile)
+        /// <param name="comicInfoStream">Stream containing the data necessary to create a new instance.</param>
+        public ComicInfo(Stream comicInfoStream)
         {
-            _comicInfoFile = comicInfoFile;
-
             //XmlReaderSettings readerSettings = new XmlReaderSettings();
             //readerSettings.IgnoreWhitespace = true;
 
-            using (XmlReader reader = XmlReader.Create(comicInfoFile))
+            using (XmlReader reader = XmlReader.Create(comicInfoStream))
             {
                 reader.Read();  //<?xml..
                 reader.Read();  //Whitespace..
@@ -100,12 +146,26 @@ namespace Woofy.Core
                         case "firstIssue":
                             _firstIssue = reader.ReadElementContentAsString();
                             break;
+                        case "latestPageRegex":
+                            _latestPageRegex = reader.ReadElementContentAsString();
+                            break;
+
                     }
                 }
             }
 
             if (string.IsNullOrEmpty(_friendlyName))
                 throw new MissingFriendlyNameException();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ComicInfo"/> class.
+        /// </summary>
+        /// <param name="comicInfoFile">Path to an xml file containing the data necessary to create a new instance.</param>
+        public ComicInfo(string comicInfoFile)
+            : this (new FileStream(comicInfoFile, FileMode.Open, FileAccess.Read))
+        {
+            _comicInfoFile = comicInfoFile;
         }
         #endregion
 

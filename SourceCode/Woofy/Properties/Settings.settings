@@ -2,9 +2,6 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Woofy.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="ContentGroupName" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">content</Value>
-    </Setting>
     <Setting Name="ComicInfosFolderName" Type="System.String" Scope="Application">
       <Value Profile="(Default)">ComicInfos</Value>
     </Setting>
@@ -20,11 +17,8 @@
     <Setting Name="DefaultDownloadFolder" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="ContentToBeMerged" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">contentToBeMerged</Value>
-    </Setting>
     <Setting Name="ProxyAddress" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+      <Value Profile="(Default)">comics</Value>
     </Setting>
     <Setting Name="ProxyPort" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">-1</Value>

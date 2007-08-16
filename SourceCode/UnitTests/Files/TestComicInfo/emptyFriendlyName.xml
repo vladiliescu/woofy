@@ -1,6 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="" >
-    <startUrl><![CDATA[some base url]]></startUrl>
-    <comicRegex><![CDATA[some comic regex]]></comicRegex>
-    <backButtonRegex><![CDATA[some back button regex]]></backButtonRegex>
-</comicInfo>

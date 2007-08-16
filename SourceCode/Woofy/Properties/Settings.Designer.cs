@@ -25,15 +25,6 @@ namespace Woofy.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("content")]
-        public string ContentGroupName {
-            get {
-                return ((string)(this["ContentGroupName"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("ComicInfos")]
         public string ComicInfosFolderName {
             get {
@@ -86,18 +77,9 @@ namespace Woofy.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("contentToBeMerged")]
-        public string ContentToBeMerged {
-            get {
-                return ((string)(this["ContentToBeMerged"]));
-            }
-        }
-        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("comics")]
         public string ProxyAddress {
             get {
                 return ((string)(this["ProxyAddress"]));

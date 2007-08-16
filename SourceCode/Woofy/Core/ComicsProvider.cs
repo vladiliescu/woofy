@@ -32,6 +32,11 @@ namespace Woofy.Core
         private string _url;
         #endregion
 
+        #region Constants
+        private const string ContentGroup = "content";
+        private const string ContentToBeMerged = "contentToBeMerged";
+        #endregion
+
         #region .ctor
         /// <summary>
         /// Initializes a new instance of the <see cref="ComicsProvider"/> class.
@@ -80,7 +85,11 @@ namespace Woofy.Core
             try
             {
                 string currentUrl = startUrl;
-                bool fileAlreadyDownloaded;
+                bool fileAlreadyDownloaded = false;
+                string pageContent;
+                string[] comicLinks;
+                string backButtonLink;
+
                 for (int i = 0; i < comicsToDownload || comicsToDownload == ComicsProvider.AllAvailableComics; i++)
                 {
                     if (_isDownloadCancelled)
@@ -89,23 +98,18 @@ namespace Woofy.Core
                         break;
                     }
 
-                    string pageContent = _client.DownloadString(currentUrl);
+                    pageContent = _client.DownloadString(currentUrl);
 
-                    string[] comicLinks = RetrieveComicLinksFromPage(pageContent, _comicInfo);
-                    string backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, _comicInfo);
+                    comicLinks = RetrieveLinksFromPage(pageContent, currentUrl, _comicInfo.ComicRegex);
+                    backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, currentUrl, _comicInfo);
 
-                    if (comicLinks.Length == 0)
-                    {
-                        downloadOutcome = DownloadOutcome.NoStripMatches;
+                    if (!MatchedLinksObeyRules(comicLinks, _comicInfo.AllowMissingStrips, _comicInfo.AllowMultipleStrips, ref downloadOutcome))
                         break;
-                    }
-                    else if (comicLinks.Length > 1)
-                    {
-                        downloadOutcome = DownloadOutcome.MultipleStripMatches;
-                        break;
-                    }
 
-                    _comicsDownloader.DownloadFile(comicLinks[0], out fileAlreadyDownloaded);
+                    foreach (string comicLink in comicLinks)
+                    {
+                        _comicsDownloader.DownloadFile(comicLink, out fileAlreadyDownloaded);
+                    }
 
                     OnDownloadComicCompleted(new DownloadStripCompletedEventArgs(i + 1, backButtonLink));
 
@@ -123,7 +127,7 @@ namespace Woofy.Core
             OnDownloadCompleted(downloadOutcome);
 
             return downloadOutcome;
-        }
+        }            
 
         /// <summary>
         /// Downloads the specified number of comic strips asynchronously.
@@ -154,44 +158,67 @@ namespace Woofy.Core
         #endregion
 
         #region Helper Methods
-        /// <summary>
-        /// Returns the comic link from the specified page, or, if there are several comic links in the page, it returns null.
-        /// </summary>
-        /// <param name="pageContent">Page content.</param>
-        /// <returns></returns>
-        public string RetrieveComicLinkFromPage(string pageContent, ComicInfo comicInfo)
+        public static string[] RetrieveLinksFromPage(string pageContent, string currentUrl, string regex)
         {
-            string[] comicLinks = RetrieveComicLinksFromPage(pageContent, comicInfo);
+            List<string> links = new List<string>();
+            MatchCollection matches = Regex.Matches(pageContent, regex, RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace);
 
-            if (comicLinks.Length > 0)
-                return comicLinks[0];
-            else
-                return null;
+            foreach (Match match in matches)
+            {
+                if (match.Groups[ContentGroup].Success)
+                    links.Add(match.Groups[ContentGroup].Value);
+                else if (match.Groups[ContentToBeMerged].Success)
+                    links.Add(
+                         WebPath.Combine(WebPath.GetDirectory(currentUrl), match.Groups[ContentToBeMerged].Value)
+                        );
+                else
+                    links.Add(match.Value);
+            }
+
+            return links.ToArray();
         }
 
         /// <summary>
-        /// Returns all comic links found in the specified page.
+        /// Checks if the matched comic links obey the comic's download rules (i.e. no multiple strip matches).
         /// </summary>
-        /// <param name="pageContent">Page content.</param>
-        /// <returns></returns>
-        public string[] RetrieveComicLinksFromPage(string pageContent, ComicInfo comicInfo)
+        /// <param name="comicLinks">The list of matched comic links.</param>
+        /// <param name="downloadOutcome">If a rule is not obeyed, then this parameter will contain the respective outcome.</param>
+        /// <returns>True if the matched links obey the rules, false otherwise.</returns>
+        public static bool MatchedLinksObeyRules(string[] comicLinks, bool allowMissingStrips, bool allowMultipleStrips, ref DownloadOutcome downloadOutcome)
         {
-            List<string> comicLinks = new List<string>();
-            MatchCollection comicMatches = Regex.Matches(pageContent, _comicInfo.ComicRegex, RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace);
-
-            foreach (Match comicMatch in comicMatches)
+            if (comicLinks.Length == 0 && !allowMissingStrips)
             {
-                if (comicMatch.Groups[Settings.Default.ContentGroupName].Success)
-                    comicLinks.Add(comicMatch.Groups[Settings.Default.ContentGroupName].Value);
-                else if (comicMatch.Groups[Settings.Default.ContentToBeMerged].Success)
-                    comicLinks.Add(
-                         WebPath.Combine(WebPath.GetDirectory(comicInfo.StartUrl), comicMatch.Groups[Settings.Default.ContentToBeMerged].Value)
-                        );
-                else
-                    comicLinks.Add(comicMatch.Value);
+                downloadOutcome = DownloadOutcome.NoStripMatchesRuleBroken;
+                return false;
             }
 
-            return comicLinks.ToArray();
+            if (comicLinks.Length > 1 && !allowMultipleStrips)
+            {
+                downloadOutcome = DownloadOutcome.MultipleStripMatchesRuleBroken;
+                return false;
+            }
+
+            return true;
+        }
+
+        private string GetProperStartUrl(string startUrl, string latestPageRegex)
+        {
+            if (string.IsNullOrEmpty(latestPageRegex))
+                return startUrl;
+
+            string pageContent = _client.DownloadString(startUrl);
+
+            return GetProperStartUrlFromPage(pageContent, startUrl, latestPageRegex);
+        }
+
+        public static string GetProperStartUrlFromPage(string pageContent, string url, string latestPageRegex)
+        {
+            string[] links = RetrieveLinksFromPage(pageContent, url, latestPageRegex);
+
+            if (links.Length == 0)
+                return url;
+
+            return links[0];
         }
 
         /// <summary>
@@ -199,9 +226,9 @@ namespace Woofy.Core
         /// </summary>
         /// <param name="pageContent">Page content.</param>
         /// <returns></returns>
-        private string RetrieveBackButtonLinkFromPage(string pageContent, ComicInfo comicInfo)
+        private string RetrieveBackButtonLinkFromPage(string pageContent, string currentUrl, ComicInfo comicInfo)
         {
-            string[] backButtonLinks = RetrieveBackButtonLinksFromPage(pageContent, comicInfo);
+            string[] backButtonLinks = RetrieveLinksFromPage(pageContent, currentUrl, comicInfo.BackButtonRegex);
 
             if (backButtonLinks.Length > 0)
                 return backButtonLinks[0];
@@ -209,47 +236,6 @@ namespace Woofy.Core
                 return null;
         }
 
-        /// <summary>
-        /// Returns all back button links found in the specified page.
-        /// </summary>
-        /// <param name="pageContent">Page content.</param>
-        /// <returns></returns>
-        public string[] RetrieveBackButtonLinksFromPage(string pageContent, ComicInfo comicInfo)
-        {
-            List<string> backButtonLinks = new List<string>();
-            MatchCollection backButtonMatches = Regex.Matches(pageContent, _comicInfo.BackButtonRegex, RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace);
-
-            foreach (Match backButtonMatch in backButtonMatches)
-            {
-                if (backButtonMatch.Groups[Settings.Default.ContentGroupName].Success)
-                    backButtonLinks.Add(backButtonMatch.Groups[Settings.Default.ContentGroupName].Value);
-                else if (backButtonMatch.Groups[Settings.Default.ContentToBeMerged].Success)
-                    backButtonLinks.Add(
-                        WebPath.Combine(WebPath.GetDirectory(comicInfo.StartUrl), backButtonMatch.Groups[Settings.Default.ContentToBeMerged].Value)
-                        );
-                else
-                    backButtonLinks.Add(backButtonMatch.Value);
-            }
-
-            return backButtonLinks.ToArray();
-        }
-
-        /// <summary>
-        /// Does the actual job of asynchronously downloading the comic strips.
-        /// </summary>
-        /// <param name="comicsToDownload">Number of comics to download. Pass <see cref="AllAvailableComics"/> in order to download all the available comics.</param>
-        /// <param name="startUrl">Url at which the download should start.</param>
-        private void DownloadComicsAsyncInternal(int comicsToDownload, string startUrl)
-        {
-            _comicsToDownload = comicsToDownload;
-            _comicsDownloaded = 0;
-
-            if (_isDownloadCancelled)
-                return;
-
-            _url = startUrl;
-            _client.DownloadStringAsync(new Uri(startUrl));
-        }
         #endregion
 
         #region DownloadComicCompleted Event

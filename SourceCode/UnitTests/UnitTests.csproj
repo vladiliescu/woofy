@@ -36,6 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComicsDownloaderStub.cs" />
+    <Compile Include="ComicsProviderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ComicInfoTest.cs" />
     <Compile Include="ComicDefinitionsTest.cs" />
@@ -46,17 +47,6 @@
       <Project>{25F085AE-B31D-40E6-9546-0D357ECD18FE}</Project>
       <Name>Woofy</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Files\TestComicInfo\basicComicInfo.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Files\TestComicInfo\missingFriendlyName.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Files\TestComicInfo\emptyFriendlyName.xml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

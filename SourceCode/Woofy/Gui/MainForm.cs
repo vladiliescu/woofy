@@ -81,11 +81,11 @@ namespace Woofy.Gui
                 case DownloadOutcome.Successful:
                     icon = Resources.Finished;
                     break;
-                case DownloadOutcome.NoStripMatches:
+                case DownloadOutcome.NoStripMatchesRuleBroken:
                     icon = Resources.Warning;
                     toolTip = string.Format("No strips have been found on {0}. In order to allow missing strips, use the allowMissingStrips attribute in the comic definition.", url);
                     break;
-                case DownloadOutcome.MultipleStripMatches:
+                case DownloadOutcome.MultipleStripMatchesRuleBroken:
                     icon = Resources.Warning;
                     toolTip = string.Format("Multiple strips have been found on {0}. In order to allow multiple strips, use the allowMultipleStrips attribute in the comic definition.", url);
                     break;

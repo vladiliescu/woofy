@@ -7,8 +7,8 @@ namespace Woofy.Core
     public enum DownloadOutcome
     {
         None = 0,        
-        NoStripMatches,
-        MultipleStripMatches,
+        NoStripMatchesRuleBroken,
+        MultipleStripMatchesRuleBroken,
         Cancelled,
         Error,
         Successful
