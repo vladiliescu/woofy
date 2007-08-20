@@ -2,6 +2,6 @@
 <comicInfo friendlyName="Sheldon">
     <startUrl><![CDATA[http://www.sheldoncomics.com/]]></startUrl>
     <firstIssue><![CDATA[http://www.sheldoncomics.com/strips/sd011130.gif]]></firstIssue>
-    <comicRegex><![CDATA[(?<contentToBeMerged>/strips/sd[0-9]{6}\.(gif|jpg|jpeg|png))]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref="(?<contentToBeMerged>/archive/[0-9]{6}\.html)"><img\sborder="0"\ssrc="/images/navig_03\.gif"\swidth="42"\sheight="40"\salt="Previous\sStrip"></a>"></a>]]></backButtonRegex>
+    <comicRegex><![CDATA[(?<content>/strips/sd[0-9]{6}\.(gif|jpg|jpeg|png))]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>/archive/[0-9]{6}\.html)"><img\sborder="0"\ssrc="/images/navig_03\.gif"\swidth="42"\sheight="40"\salt="Previous\sStrip"></a>"></a>]]></backButtonRegex>
 </comicInfo>

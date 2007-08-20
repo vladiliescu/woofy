@@ -91,7 +91,7 @@ namespace Woofy.Gui
                     break;
                 case DownloadOutcome.Error:
                     icon = Resources.Error;
-                    toolTip = string.Format("An error has occurred when downloading the strip at {0}.", url);
+                    toolTip = string.Format("An error has occurred while downloading the strip at {0}.", url);
                     break;
                 default:
                     throw new System.ComponentModel.InvalidEnumArgumentException("downloadOutcome", (int)downloadOutcome, typeof(DownloadOutcome));

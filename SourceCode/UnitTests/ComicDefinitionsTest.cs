@@ -7,7 +7,7 @@ using Woofy.Core;
 
 namespace UnitTests
 {
-    [FixtureCategory("Slow")]
+    [FixtureCategory("Long-running")]
     [TestFixture(TimeOut = 30)]
     public class ComicDefinitionsTest
     {  

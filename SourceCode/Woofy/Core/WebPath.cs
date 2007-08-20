@@ -21,14 +21,21 @@ namespace Woofy.Core
         /// <returns></returns>
         public static string GetDirectory(string webPath)
         {
-            if (!webPath.StartsWith("http://") && !webPath.StartsWith("https://"))
+            if (!IsAbsolute(webPath))
                 throw new ArgumentException("The path has to start with either http:// or https://.", "webPath");
 
             int lastSeparatorIndex = webPath.LastIndexOf(DirectorySeparator);
             if (lastSeparatorIndex == HttpLength - 1 || lastSeparatorIndex == HttpsLength - 1)
-                return webPath;                
+                return webPath;
 
-            return webPath.Substring(0, lastSeparatorIndex);
+            int lastDotIndex = webPath.LastIndexOf(".");
+            if (lastDotIndex > lastSeparatorIndex)      //if it points to a file
+                return webPath.Substring(0, lastSeparatorIndex);
+
+            if (lastSeparatorIndex == webPath.Length - 1)
+                return webPath.Substring(0, lastSeparatorIndex);
+
+            return webPath;
         }
 
         /// <summary>
@@ -51,6 +58,17 @@ namespace Woofy.Core
                 path2 = path2.Substring(1);
 
             return string.Concat(path1, DirectorySeparator, path2);
+        }
+
+        /// <summary>
+        /// Returns true if the sent path is absolute, false if it's relative.
+        /// </summary>
+        /// <param name="path">The path to be checked.</param>
+        /// <returns></returns>
+        public static bool IsAbsolute(string path)
+        {
+            string uppercasePath = path.ToUpper();
+            return uppercasePath.StartsWith("HTTP://") || uppercasePath.StartsWith("HTTPS://");
         }
     }
 }

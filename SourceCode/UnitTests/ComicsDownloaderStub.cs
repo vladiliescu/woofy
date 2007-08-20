@@ -16,7 +16,7 @@ namespace UnitTests
 
         #region IComicsDownloader Members
 
-        public void DownloadFile(string comicLink, out bool comicAlreadyDownloaded)
+        public void DownloadFile(string comicLink, string referrer, out bool comicAlreadyDownloaded)
         {
             _comicLinks.Add(comicLink);
 

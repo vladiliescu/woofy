@@ -34,7 +34,6 @@ namespace Woofy.Core
 
         #region Constants
         private const string ContentGroup = "content";
-        private const string ContentToBeMerged = "contentToBeMerged";
         #endregion
 
         #region .ctor
@@ -84,7 +83,8 @@ namespace Woofy.Core
 
             try
             {
-                string currentUrl = startUrl;
+                string properStartUrl = GetProperStartUrl(startUrl, _comicInfo.LatestPageRegex);
+                string currentUrl = properStartUrl;
                 bool fileAlreadyDownloaded = false;
                 string pageContent;
                 string[] comicLinks;
@@ -100,21 +100,22 @@ namespace Woofy.Core
 
                     pageContent = _client.DownloadString(currentUrl);
 
-                    comicLinks = RetrieveLinksFromPage(pageContent, currentUrl, _comicInfo.ComicRegex);
-                    backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, currentUrl, _comicInfo);
+                    comicLinks = RetrieveLinksFromPage(pageContent, properStartUrl, _comicInfo.ComicRegex);
+                    backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, properStartUrl, _comicInfo);
 
                     if (!MatchedLinksObeyRules(comicLinks, _comicInfo.AllowMissingStrips, _comicInfo.AllowMultipleStrips, ref downloadOutcome))
                         break;
 
                     foreach (string comicLink in comicLinks)
                     {
-                        _comicsDownloader.DownloadFile(comicLink, out fileAlreadyDownloaded);
-                    }
-
-                    OnDownloadComicCompleted(new DownloadStripCompletedEventArgs(i + 1, backButtonLink));
+                        _comicsDownloader.DownloadFile(comicLink, currentUrl, out fileAlreadyDownloaded);
+                    }                    
 
                     if (fileAlreadyDownloaded && comicsToDownload == ComicsProvider.AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
                         break;
+
+                    OnDownloadComicCompleted(new DownloadStripCompletedEventArgs(i + 1, backButtonLink));
+
                     if (string.IsNullOrEmpty(backButtonLink))
                         break;
 
@@ -161,18 +162,21 @@ namespace Woofy.Core
         public static string[] RetrieveLinksFromPage(string pageContent, string currentUrl, string regex)
         {
             List<string> links = new List<string>();
+            string currentUrlDirectory = WebPath.GetDirectory(currentUrl);
+            string capturedContent;
             MatchCollection matches = Regex.Matches(pageContent, regex, RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace);
 
             foreach (Match match in matches)
             {
                 if (match.Groups[ContentGroup].Success)
-                    links.Add(match.Groups[ContentGroup].Value);
-                else if (match.Groups[ContentToBeMerged].Success)
-                    links.Add(
-                         WebPath.Combine(WebPath.GetDirectory(currentUrl), match.Groups[ContentToBeMerged].Value)
-                        );
+                    capturedContent = match.Groups[ContentGroup].Value;
                 else
-                    links.Add(match.Value);
+                    capturedContent = match.Value;
+
+                if (WebPath.IsAbsolute(capturedContent))
+                    links.Add(capturedContent);
+                else
+                    links.Add(WebPath.Combine(currentUrlDirectory, capturedContent));
             }
 
             return links.ToArray();
@@ -213,6 +217,9 @@ namespace Woofy.Core
 
         public static string GetProperStartUrlFromPage(string pageContent, string url, string latestPageRegex)
         {
+            if (string.IsNullOrEmpty(latestPageRegex))
+                return url;
+
             string[] links = RetrieveLinksFromPage(pageContent, url, latestPageRegex);
 
             if (links.Length == 0)

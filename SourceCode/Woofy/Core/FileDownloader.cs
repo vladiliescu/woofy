@@ -54,27 +54,18 @@ namespace Woofy.Core
         /// </summary>
         /// <param name="fileLink">Link to the file to be downloaded.</param>
         /// <param name="fileAlreadyDownloaded">True if the file was already downloaded, false otherwise.</param>
-        public void DownloadFile(string fileLink, out bool fileAlreadyDownloaded)
+        public void DownloadFile(string fileLink, string referrer, out bool fileAlreadyDownloaded)
         {
-            DownloadFile(fileLink, null, out fileAlreadyDownloaded);
-        }
-
-        /// <summary>
-        /// Downloads the specified file. If the file exists, then it is not downloaded again.
-        /// </summary>
-        /// <param name="fileLink">Link to the file to be downloaded.</param>
-        /// <param name="fileAlreadyDownloaded">True if the file was already downloaded, false otherwise.</param>
-        /// <param name="downloadedFileName">Specify this if you want to override the original file name. Can be null.</param>
-        public void DownloadFile(string fileLink, string downloadedFileName, out bool fileAlreadyDownloaded)
-        {
-            string filePath = GetFilePath(fileLink, downloadedFileName, _downloadDirectory);
+            string filePath = GetFilePath(fileLink, null, _downloadDirectory);
             if (File.Exists(filePath))
             {
                 fileAlreadyDownloaded = true;
                 return;
             }
 
-            WebRequest request = WebConnectionFactory.GetNewWebRequestInstance(fileLink);
+            HttpWebRequest request = (HttpWebRequest)WebConnectionFactory.GetNewWebRequestInstance(fileLink);
+            if (!string.IsNullOrEmpty(referrer))
+                request.Referer = referrer;
             WebResponse response = request.GetResponse();
             Stream stream = response.GetResponseStream();
 

@@ -20,14 +20,14 @@ namespace UnitTests
         }
 
         [Test]
-        public void TestWorksOnDirectories()
+        public void TestWorksOnSimpleDirectories()
         {
             string directory = WebPath.GetDirectory("http://woofy.sourceforge.net");
             Assert.AreEqual("http://woofy.sourceforge.net", directory);
         }
 
         [Test]
-        public void TestWorksOnDirectoriesThatEndWithSlash()
+        public void TestWorksOnSimpleDirectoriesThatEndWithSlash()
         {
             string directory = WebPath.GetDirectory("http://woofy.sourceforge.net/");
             Assert.AreEqual("http://woofy.sourceforge.net", directory);
@@ -51,6 +51,13 @@ namespace UnitTests
         public void TestWorksOnComplexDirectories()
         {
             string directory = WebPath.GetDirectory("https://woofy.sourceforge.net/dir1/dir2");
+            Assert.AreEqual("https://woofy.sourceforge.net/dir1/dir2", directory);
+        }
+
+        [Test]
+        public void TestWorksOnComplexDirectoriesEndingWithSlash()
+        {
+            string directory = WebPath.GetDirectory("https://woofy.sourceforge.net/dir1/dir2/");
             Assert.AreEqual("https://woofy.sourceforge.net/dir1/dir2", directory);
         }
 
@@ -108,6 +115,31 @@ namespace UnitTests
         {
             WebPath.Combine("http://woofy.sourceforge.net/favicon.ico", "favicon.ico");
         } 
+        #endregion
+
+        #region IsAbsolute
+
+        [Test]
+        public void TestWorksOnAbsolutePath()
+        {
+            bool isAbsolute = WebPath.IsAbsolute("http://woofy.sourceforge.net");
+            Assert.AreEqual(true, isAbsolute);
+        }
+
+        [Test]
+        public void TestWorksOnAbsoluteHttpsPath()
+        {
+            bool isAbsolute = WebPath.IsAbsolute("https://woofy.sourceforge.net");
+            Assert.AreEqual(true, isAbsolute);
+        }
+
+        [Test]
+        public void TestWorksOnRelativePath()
+        {
+            bool isAbsolute = WebPath.IsAbsolute("/comics/mycomic.png");
+            Assert.AreEqual(false, isAbsolute);
+        }
+
         #endregion
     }
 }

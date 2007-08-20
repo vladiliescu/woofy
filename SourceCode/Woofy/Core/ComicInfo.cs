@@ -102,9 +102,6 @@ namespace Woofy.Core
             get { return _allowMultipleStrips; }
         }
 
-
-
-
         private string _comicInfoFile;
         public string ComicInfoFile
         {
@@ -129,6 +126,13 @@ namespace Woofy.Core
                 reader.Read();  //Whitespace..
                 reader.Read();  //<comicInfo..
                 _friendlyName = reader.GetAttribute("friendlyName");
+                _author = reader.GetAttribute("author");
+                _authorEmail = reader.GetAttribute("authorEmail");
+
+                string allowMissingStrips = reader.GetAttribute("allowMissingStrips");
+                string allowMultipleStrips = reader.GetAttribute("allowMultipleStrips");
+                bool.TryParse(allowMissingStrips, out _allowMissingStrips);
+                bool.TryParse(allowMultipleStrips, out _allowMultipleStrips);
 
                 while (reader.Read())
                 {

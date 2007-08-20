@@ -149,22 +149,25 @@ namespace UnitTests
             string startUrl =
                 ComicsProvider.GetProperStartUrlFromPage(PageContent, "http://www.myurl.com/mycomicsdir", @"http://[^\n]*hair.html");
 
-            Assert.AreEqual("http://www.myurl.com/mycomicsdir", startUrl);
+            Assert.AreEqual("http://www.myurl.com/dir1/hair.html", startUrl);
         }
 
         [Test]
         public void TestReturnsProperStartUrlWithoutAnyRegexMatches()
         {
             string startUrl =
-                ComicsProvider.GetProperStartUrlFromPage(PageContent, "http://www.myurl.com/mycomicsdir", @"http://[^\n]*html");
+                ComicsProvider.GetProperStartUrlFromPage(PageContent, "http://www.myurl.com/mycomicsdir", @"jungle boogie");
 
-            Assert.AreEqual("http://www.myurl.com/dir1/hair.html", startUrl);
+            Assert.AreEqual("http://www.myurl.com/mycomicsdir", startUrl);
         }
 
         [Test]
         public void TestReturnsProperStartUrlWithMultipleRegexMatches()
         {
-            Assert.Fail();
+            string startUrl =
+                ComicsProvider.GetProperStartUrlFromPage(PageContent, "http://www.myurl.com/mycomicsdir", @"http://[^\n]*html");
+
+            Assert.AreEqual("http://www.myurl.com/dir1/hair.html", startUrl);
         } 
         #endregion
     }
