@@ -198,6 +198,9 @@ namespace Woofy.Core
                     ComicsProvider comicsProvider = (ComicsProvider)sender;
 
                     int index = _comicProviders.IndexOf(comicsProvider);
+                    if (index == -1)    //in case the task has already been deleted.
+                        return;
+
                     ComicTask task = (ComicTask)_tasks[index];
                     task.Status = TaskStatus.Finished;
                     task.DownloadOutcome = e.DownloadOutcome;

@@ -164,6 +164,9 @@
     <Content Include="ComicInfos\gunnerkriggcourt.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="ComicInfos\LeastICouldDo.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="ComicInfos\lookingforgroup.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -198,8 +201,6 @@
     <Content Include="license.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <None Include="Resources\ajax-loader.gif" />
-    <None Include="Resources\desmm_load_w.gif" />
     <None Include="Resources\warning.png" />
     <None Include="Resources\error.png" />
     <None Include="Resources\world_go.png" />

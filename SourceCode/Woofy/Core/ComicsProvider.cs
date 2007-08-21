@@ -83,7 +83,7 @@ namespace Woofy.Core
 
             try
             {
-                Logger.Debug("Began downloading comic.");
+                Logger.Debug("Downloading comic {0}.", _comicInfo.FriendlyName);
                 string properStartUrl = GetProperStartUrl(startUrl, _comicInfo.LatestPageRegex);
                 string currentUrl = properStartUrl;
                 bool fileAlreadyDownloaded = false;
@@ -105,8 +105,9 @@ namespace Woofy.Core
 
                     pageContent = _client.DownloadString(currentUrl);
 
-                    comicLinks = RetrieveComicLinksFromPage(pageContent, properStartUrl, _comicInfo);
-                    backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, properStartUrl, _comicInfo);
+                    //I pass startUrl instead of properStartUrl because properStartUrlMight be something like http://www.website.com/comic/20070820, and WebPath will think it's a folder (damn mod_rewrite) and combine it with the captured link (e.g. http://www.website.com/comic/20070820/comic/2007/08/18).
+                    comicLinks = RetrieveComicLinksFromPage(pageContent, startUrl, _comicInfo);
+                    backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, startUrl, _comicInfo);
 
                     if (!MatchedLinksObeyRules(comicLinks, _comicInfo.AllowMissingStrips, _comicInfo.AllowMultipleStrips, ref downloadOutcome))
                         break;
@@ -127,8 +128,18 @@ namespace Woofy.Core
                     currentUrl = backButtonLink;
                 }
             }
-            catch (UriFormatException) { downloadOutcome = DownloadOutcome.Error; }
-            catch (WebException) { downloadOutcome = DownloadOutcome.Error; }
+            catch (UriFormatException ex)
+            {
+                Logger.Debug("Encountered an exception while downloading: {0}.", ex.Message);
+
+                downloadOutcome = DownloadOutcome.Error; 
+            }
+            catch (WebException ex) 
+            {
+                Logger.Debug("Encountered an exception while downloading: {0}.", ex.Message);
+
+                downloadOutcome = DownloadOutcome.Error; 
+            }
 
             OnDownloadCompleted(downloadOutcome);
 
