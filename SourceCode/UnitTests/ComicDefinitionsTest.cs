@@ -37,7 +37,7 @@ namespace UnitTests
             comicInfoFile = Path.Combine(ComicInfosDirectory, comicInfoFile);
 
             ComicInfo comicInfo = new ComicInfo(comicInfoFile);
-            ComicsDownloaderStub comicsDownloaderStub = new ComicsDownloaderStub();
+            CountingFileDownloader comicsDownloaderStub = new CountingFileDownloader();
             ComicsProvider comicsProvider = new ComicsProvider(comicInfo, comicsDownloaderStub);
             
             comicsProvider.DownloadComics(ComicsToDownload);
@@ -58,7 +58,7 @@ namespace UnitTests
             comicInfoFile = Path.Combine(ComicInfosDirectory, comicInfoFile);
 
             ComicInfo comicInfo = new ComicInfo(comicInfoFile);
-            ComicsDownloaderStub comicsDownloaderStub = new ComicsDownloaderStub();
+            CountingFileDownloader comicsDownloaderStub = new CountingFileDownloader();
             ComicsProvider comicsProvider = new ComicsProvider(comicInfo, comicsDownloaderStub);
 
             comicsProvider.DownloadComics(ComicsProvider.AllAvailableComics);

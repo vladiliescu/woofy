@@ -76,7 +76,7 @@ namespace Woofy.Gui
             this.cbComics.FormattingEnabled = true;
             this.errorProvider.SetIconPadding(this.cbComics, 3);
             this.cbComics.Location = new System.Drawing.Point(9, 26);
-            this.cbComics.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cbComics.Margin = new System.Windows.Forms.Padding(2);
             this.cbComics.Name = "cbComics";
             this.cbComics.Size = new System.Drawing.Size(396, 21);
             this.cbComics.TabIndex = 1;
@@ -85,7 +85,7 @@ namespace Woofy.Gui
             // numComicsToDownload
             // 
             this.numComicsToDownload.Location = new System.Drawing.Point(315, 98);
-            this.numComicsToDownload.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.numComicsToDownload.Margin = new System.Windows.Forms.Padding(2);
             this.numComicsToDownload.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -110,7 +110,7 @@ namespace Woofy.Gui
             // btnOk
             // 
             this.btnOk.Location = new System.Drawing.Point(251, 167);
-            this.btnOk.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnOk.Margin = new System.Windows.Forms.Padding(2);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
             this.btnOk.TabIndex = 6;
@@ -122,7 +122,7 @@ namespace Woofy.Gui
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new System.Drawing.Point(330, 167);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
             this.btnCancel.TabIndex = 7;
@@ -135,7 +135,7 @@ namespace Woofy.Gui
             this.rbDownloadOnlyNew.AutoSize = true;
             this.rbDownloadOnlyNew.Checked = true;
             this.rbDownloadOnlyNew.Location = new System.Drawing.Point(9, 98);
-            this.rbDownloadOnlyNew.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.rbDownloadOnlyNew.Margin = new System.Windows.Forms.Padding(2);
             this.rbDownloadOnlyNew.Name = "rbDownloadOnlyNew";
             this.rbDownloadOnlyNew.Size = new System.Drawing.Size(137, 17);
             this.rbDownloadOnlyNew.TabIndex = 2;
@@ -147,7 +147,7 @@ namespace Woofy.Gui
             // 
             this.rbDownloadLast.AutoSize = true;
             this.rbDownloadLast.Location = new System.Drawing.Point(219, 98);
-            this.rbDownloadLast.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.rbDownloadLast.Margin = new System.Windows.Forms.Padding(2);
             this.rbDownloadLast.Name = "rbDownloadLast";
             this.rbDownloadLast.Size = new System.Drawing.Size(92, 17);
             this.rbDownloadLast.TabIndex = 3;
@@ -171,7 +171,7 @@ namespace Woofy.Gui
             // txtDownloadFolder
             // 
             this.txtDownloadFolder.Location = new System.Drawing.Point(6, 134);
-            this.txtDownloadFolder.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtDownloadFolder.Margin = new System.Windows.Forms.Padding(2);
             this.txtDownloadFolder.Name = "txtDownloadFolder";
             this.txtDownloadFolder.Size = new System.Drawing.Size(320, 20);
             this.txtDownloadFolder.TabIndex = 9;
@@ -179,7 +179,7 @@ namespace Woofy.Gui
             // btnBrowse
             // 
             this.btnBrowse.Location = new System.Drawing.Point(330, 132);
-            this.btnBrowse.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnBrowse.Margin = new System.Windows.Forms.Padding(2);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new System.Drawing.Size(75, 23);
             this.btnBrowse.TabIndex = 10;
@@ -191,7 +191,7 @@ namespace Woofy.Gui
             // 
             this.chkOverrideStartUrl.AutoSize = true;
             this.chkOverrideStartUrl.Location = new System.Drawing.Point(9, 50);
-            this.chkOverrideStartUrl.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.chkOverrideStartUrl.Margin = new System.Windows.Forms.Padding(2);
             this.chkOverrideStartUrl.Name = "chkOverrideStartUrl";
             this.chkOverrideStartUrl.Size = new System.Drawing.Size(103, 17);
             this.chkOverrideStartUrl.TabIndex = 11;
@@ -203,7 +203,7 @@ namespace Woofy.Gui
             // 
             this.txtOverrideStartUrl.Enabled = false;
             this.txtOverrideStartUrl.Location = new System.Drawing.Point(9, 72);
-            this.txtOverrideStartUrl.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtOverrideStartUrl.Margin = new System.Windows.Forms.Padding(2);
             this.txtOverrideStartUrl.Name = "txtOverrideStartUrl";
             this.txtOverrideStartUrl.Size = new System.Drawing.Size(396, 20);
             this.txtOverrideStartUrl.TabIndex = 12;
@@ -228,8 +228,8 @@ namespace Woofy.Gui
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.numComicsToDownload);
             this.Controls.Add(this.cbComics);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "TaskDetailsForm";

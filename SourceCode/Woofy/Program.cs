@@ -27,7 +27,8 @@ namespace Woofy
             Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(Application_ThreadException);
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
 
-            Application.Run(new MainForm());
+            //Application.Run(new MainForm());
+            Application.Run(new DefinitionsDebugForm());
         }
 
         /// <summary>

@@ -83,6 +83,7 @@ namespace Woofy.Core
 
             try
             {
+                Logger.Debug("Began downloading comic.");
                 string properStartUrl = GetProperStartUrl(startUrl, _comicInfo.LatestPageRegex);
                 string currentUrl = properStartUrl;
                 bool fileAlreadyDownloaded = false;
@@ -94,13 +95,17 @@ namespace Woofy.Core
                 {
                     if (_isDownloadCancelled)
                     {
-                        downloadOutcome = DownloadOutcome.Cancelled;
+                        Logger.Debug("Download cancelled");
+
+                        downloadOutcome = DownloadOutcome.Cancelled;                        
                         break;
                     }
 
+                    Logger.Debug("Visiting page {0}.", currentUrl);
+
                     pageContent = _client.DownloadString(currentUrl);
 
-                    comicLinks = RetrieveLinksFromPage(pageContent, properStartUrl, _comicInfo.ComicRegex);
+                    comicLinks = RetrieveComicLinksFromPage(pageContent, properStartUrl, _comicInfo);
                     backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, properStartUrl, _comicInfo);
 
                     if (!MatchedLinksObeyRules(comicLinks, _comicInfo.AllowMissingStrips, _comicInfo.AllowMultipleStrips, ref downloadOutcome))
@@ -128,7 +133,7 @@ namespace Woofy.Core
             OnDownloadCompleted(downloadOutcome);
 
             return downloadOutcome;
-        }            
+        }
 
         /// <summary>
         /// Downloads the specified number of comic strips asynchronously.
@@ -192,12 +197,16 @@ namespace Woofy.Core
         {
             if (comicLinks.Length == 0 && !allowMissingStrips)
             {
+                Logger.Debug("The comic definition doesn't allow pages with missing strips. Aborting download..");
+
                 downloadOutcome = DownloadOutcome.NoStripMatchesRuleBroken;
                 return false;
             }
 
             if (comicLinks.Length > 1 && !allowMultipleStrips)
             {
+                Logger.Debug("The comic definition doesn't allow pages with multiple strips. Aborting download..");
+
                 downloadOutcome = DownloadOutcome.MultipleStripMatchesRuleBroken;
                 return false;
             }
@@ -208,7 +217,10 @@ namespace Woofy.Core
         private string GetProperStartUrl(string startUrl, string latestPageRegex)
         {
             if (string.IsNullOrEmpty(latestPageRegex))
+            {
+                Logger.Debug("The latestPageRegex element is empty/missing. Using the startUrl element ({0}).", startUrl);
                 return startUrl;
+            }
 
             string pageContent = _client.DownloadString(startUrl);
 
@@ -223,8 +235,12 @@ namespace Woofy.Core
             string[] links = RetrieveLinksFromPage(pageContent, url, latestPageRegex);
 
             if (links.Length == 0)
+            {
+                Logger.Debug("No links match the latestPageRegex element. Using the startUrl element ({0}).", url);
                 return url;
+            }
 
+            Logger.Debug("{0} link(s) match the latestPageRegex element. Using the first one ({1}).", links.Length, links[0]);
             return links[0];
         }
 
@@ -238,11 +254,31 @@ namespace Woofy.Core
             string[] backButtonLinks = RetrieveLinksFromPage(pageContent, currentUrl, comicInfo.BackButtonRegex);
 
             if (backButtonLinks.Length > 0)
+            {
+                Logger.Debug("{0} link(s) match the backButtonRegex element. Using the first one ({1}).", backButtonLinks.Length, backButtonLinks[0]);
+
                 return backButtonLinks[0];
+            }
             else
+            {
+                Logger.Debug("No links match the backButtonRegex element. The comic has completed.");
+
                 return null;
+            }
         }
 
+
+        private string[] RetrieveComicLinksFromPage(string pageContent, string url, ComicInfo comicInfo)
+        {
+            string[] comicLinks = RetrieveLinksFromPage(pageContent, url, comicInfo.ComicRegex);
+            Logger.Debug("Found {0} strip(s):", comicLinks.Length);
+            foreach (string comicLink in comicLinks)
+            {
+                Logger.Debug("\t{0}.", comicLink);
+            }
+
+            return comicLinks;
+        }    
         #endregion
 
         #region DownloadComicCompleted Event

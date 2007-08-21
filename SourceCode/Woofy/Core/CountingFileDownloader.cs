@@ -1,24 +1,21 @@
 using System;
 using System.Collections.Generic;
 
-using Woofy.Core;
-
-namespace UnitTests
+namespace Woofy.Core
 {
-    internal class ComicsDownloaderStub : IFileDownloader
+    public class CountingFileDownloader : IFileDownloader
     {
-        private List<string> _comicLinks = new List<string>();
+        private List<string> comicLinks = new List<string>();
         public string[] ComicLinks
         {
-            get { return _comicLinks.ToArray(); }
+            get { return comicLinks.ToArray(); }
         }
 
-
-        #region IComicsDownloader Members
+        #region IFileDownloader Members
 
         public void DownloadFile(string comicLink, string referrer, out bool comicAlreadyDownloaded)
         {
-            _comicLinks.Add(comicLink);
+            comicLinks.Add(comicLink);
 
             comicAlreadyDownloaded = false;
         }

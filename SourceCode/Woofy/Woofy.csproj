@@ -48,6 +48,10 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\CountingFileDownloader.cs" />
+    <Compile Include="Core\ExRichTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="EventArgs\DownloadCompletedEventArgs.cs" />
     <Compile Include="EventArgs\DownloadedFileChunkEventArgs.cs" />
     <Compile Include="EventArgs\DownloadErrorEventArgs.cs" />
@@ -74,6 +78,12 @@
     </Compile>
     <Compile Include="Gui\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Gui\DefinitionsDebugForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Gui\DefinitionsDebugForm.Designer.cs">
+      <DependentUpon>DefinitionsDebugForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Gui\DownloadProgressForm.cs">
       <SubType>Form</SubType>
@@ -188,10 +198,16 @@
     <Content Include="license.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\ajax-loader.gif" />
+    <None Include="Resources\desmm_load_w.gif" />
     <None Include="Resources\warning.png" />
     <None Include="Resources\error.png" />
     <None Include="Resources\world_go.png" />
     <None Include="Resources\WoofyLogo.png" />
+    <EmbeddedResource Include="Gui\DefinitionsDebugForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>DefinitionsDebugForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Gui\DownloadProgressForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>DownloadProgressForm.cs</DependentUpon>
