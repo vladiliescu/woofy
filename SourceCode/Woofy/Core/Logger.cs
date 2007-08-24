@@ -5,6 +5,8 @@ using log4net.Core;
 using log4net.Config;
 using log4net.Appender;
 using log4net.Repository.Hierarchy;
+using System.IO;
+using System.Text;
 
 namespace Woofy.Core
 {
@@ -16,6 +18,7 @@ namespace Woofy.Core
         private static readonly ILog logger;
         private static readonly ILog debugLogger;
         private static readonly MemoryAppender memoryAppender;
+        private static readonly IAppender fileAppender;
 
         /// <summary>
         /// Initializes the internal logger.
@@ -30,6 +33,7 @@ namespace Woofy.Core
             memoryAppender.Name = "MemoryAppender";
             memoryAppender.ActivateOptions();
 
+            fileAppender = ((log4net.Repository.Hierarchy.Logger)debugLogger.Logger).Parent.GetAppender("appender");
             ((log4net.Repository.Hierarchy.Logger)debugLogger.Logger).AddAppender(memoryAppender);
         }
 
@@ -107,7 +111,15 @@ namespace Woofy.Core
         public static bool IsDebugging
         {
             get { return isDebugging; }
-            set { isDebugging = value; }
+            set
+            {
+                isDebugging = value;
+
+                if (isDebugging)
+                    ((log4net.Repository.Hierarchy.Logger)debugLogger.Logger).Parent.RemoveAppender(fileAppender);
+                else
+                    ((log4net.Repository.Hierarchy.Logger)debugLogger.Logger).Parent.AddAppender(fileAppender);
+            }
         }
     }
 }

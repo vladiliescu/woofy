@@ -3,7 +3,7 @@ SetCompressor bzip2
 # Defines
 !define NAME "Woofy"
 !define REGKEY "SOFTWARE\${NAME}"
-!define VERSION 0.2.5
+!define VERSION 0.4b
 !define COMPANY "Vlad Iliescu"
 !define URL "http://woofy.sourceforge.net"
 
@@ -80,6 +80,7 @@ Section Woofy SEC0000
     SetOverwrite on
     File Files\license.txt
     File Files\System.Data.SQLite.DLL
+    File Files\log4net.dll
     File Files\Woofy.exe
     File Files\Woofy.exe.config
 
@@ -91,6 +92,7 @@ Section Woofy SEC0000
     CreateShortcut "$SMPROGRAMS\$StartMenuGroup\$(^Name).lnk" $INSTDIR\Woofy.exe
     
     ExecWait '"$WINDIR\Microsoft.NET\Framework\v2.0.50727\ngen.exe" install "$INSTDIR\System.Data.SQLite.DLL"'
+    ExecWait '"$WINDIR\Microsoft.NET\Framework\v2.0.50727\ngen.exe" install "$INSTDIR\log4net.dll"'
     ExecWait '"$WINDIR\Microsoft.NET\Framework\v2.0.50727\ngen.exe" install "$INSTDIR\Woofy.exe"'
     
     WriteRegStr HKLM "${REGKEY}\Components" "Woofy" 1
@@ -148,6 +150,7 @@ SectionEnd
 
 Section /o un.Woofy UNSEC0000
     ExecWait '"$WINDIR\Microsoft.NET\Framework\v2.0.50727\ngen.exe" uninstall "$INSTDIR\Woofy.exe"'
+    ExecWait '"$WINDIR\Microsoft.NET\Framework\v2.0.50727\ngen.exe" uninstall "$INSTDIR\log4net.dll"'
     ExecWait '"$WINDIR\Microsoft.NET\Framework\v2.0.50727\ngen.exe" uninstall "$INSTDIR\System.Data.SQLite.DLL"'
 
     RMDir /r /REBOOTOK $INSTDIR
