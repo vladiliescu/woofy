@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Looking for Group">
+<comicInfo friendlyName="Looking for Group" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
     <startUrl><![CDATA[http://www.lfgcomic.com]]></startUrl>
     <firstIssue><![CDATA[http://archive.lfgcomic.com/lfg0001.gif]]></firstIssue>
     <comicRegex><![CDATA[http://archive\.lfgcomic\.com/lfg[0-9]{4}\.(gif|jpg|jpeg|png)]]></comicRegex>

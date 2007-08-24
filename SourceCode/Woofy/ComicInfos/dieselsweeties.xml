@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Diesel Sweeties">
+<comicInfo friendlyName="Diesel Sweeties" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
     <startUrl><![CDATA[http://www.dieselsweeties.com/]]></startUrl>
     <firstIssue><![CDATA[http://www.dieselsweeties.com/hstrips/0/0/0/0/00001.png]]></firstIssue>
     <comicRegex><![CDATA[(?<content>hstrips/[0-9]{1}/[0-9]{1}/[0-9]{1}/[0-9]{1}/[0-9]{5}\.(gif|jpg|jpeg|png))]]></comicRegex>

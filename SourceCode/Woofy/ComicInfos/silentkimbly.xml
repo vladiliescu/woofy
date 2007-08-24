@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Silent Kimbly">
+<comicInfo friendlyName="Silent Kimbly" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
     <startUrl><![CDATA[http://www.silentkimbly.com]]></startUrl>
     <firstIssue><![CDATA[http://www.silentkimbly.com/comics/2006-02-05-love_handles.jpg]]></firstIssue>
     <comicRegex><![CDATA[http://www\.silentkimbly\.com/comics/[0-9]{4}-[0-9]{2}-[0-9]{2}.*?.(gif|jpg|jpeg|png|swf)]]></comicRegex>

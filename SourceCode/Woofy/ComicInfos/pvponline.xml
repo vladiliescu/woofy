@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="PvP Online">
+<comicInfo friendlyName="PvP Online" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
     <startUrl><![CDATA[http://www.pvponline.com/article]]></startUrl>
     <firstIssue><![CDATA[http://www.pvponline.com/images/1.gif]]></firstIssue>
     <comicRegex><![CDATA[http://www\.pvponline\.com/images/[a-zA-Z0-9]*\.(gif|jpg|jpeg|png)]]></comicRegex>

@@ -228,11 +228,10 @@ namespace Woofy.Gui
             this.Controls.Add(this.btnOk);
             this.Controls.Add(this.numComicsToDownload);
             this.Controls.Add(this.cbComics);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Margin = new System.Windows.Forms.Padding(2);
-            this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "TaskDetailsForm";
+            this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Task Details";

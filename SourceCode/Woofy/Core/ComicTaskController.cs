@@ -167,15 +167,17 @@ namespace Woofy.Core
                 else
                     comicsProvider.DownloadComicsAsync(comicsToDownload, task.CurrentUrl);
             }
-        }
+        }        
+        #endregion
 
+        #region Callback Methods
         private void DownloadComicCompletedCallback(object sender, DownloadStripCompletedEventArgs e)
         {
             _tasksGrid.Invoke(new MethodInvoker(
                 delegate()
                 {
                     ComicsProvider provider = (ComicsProvider)sender;
-                    
+
                     int index = _comicProviders.IndexOf(provider);
                     if (index == -1)    //in case the task has already been deleted.
                         return;
@@ -202,7 +204,10 @@ namespace Woofy.Core
                         return;
 
                     ComicTask task = (ComicTask)_tasks[index];
-                    task.Status = TaskStatus.Finished;
+                    if (e.DownloadOutcome == DownloadOutcome.Cancelled)
+                        task.Status = TaskStatus.Stopped;
+                    else
+                        task.Status = TaskStatus.Finished;
                     task.DownloadOutcome = e.DownloadOutcome;
                     task.Delete();
 

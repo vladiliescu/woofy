@@ -15,24 +15,40 @@ namespace Woofy.Gui
 {
     public partial class DefinitionsDebugForm : Form
     {
+        #region Instance Members
+        private ComicsProvider comicsProvider;
+        private string currentUrl;
+        private TestMode currentMode = TestMode.StandBy;
+        #endregion
+
+        #region .ctor
         public DefinitionsDebugForm()
         {
-            InitializeComponent();            
-        }        
+            InitializeComponent();
+        }
+        #endregion
 
+        #region Events - Form
         private void DefinitionsDebugForm_Load(object sender, EventArgs e)
         {
             InitControls();
+            this.currentMode = TestMode.StandBy;
+            DisplayAppropriateControlsForCurrentMode();
+
+            Logger.ClearDebugMessages();
+            Logger.IsDebugging = true;            
         }
 
-        private void InitControls()
+        private void DefinitionsDebugForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            foreach (ComicInfo comicDefinition in ComicInfo.GetAvailableComicInfos())
-            {
-                comicDefinitionsSelector.Items.Add(comicDefinition);
-            }
-        }
+            AbortDebugging();
 
+            Logger.ClearDebugMessages();
+            Logger.IsDebugging = false;
+        }
+        #endregion
+
+        #region Events - clicks
         private void cancelButton_Click(object sender, EventArgs e)
         {
             this.Close();
@@ -40,7 +56,90 @@ namespace Woofy.Gui
 
         private void startDebugButton_Click(object sender, EventArgs e)
         {
+            StartDebugging();
+        }
+
+        private void comicDefinitionsList_DoubleClick(object sender, EventArgs e)
+        {
+            StartDebugging();
+        }
+
+        private void pauseButton_Click(object sender, EventArgs e)
+        {
+            if (this.currentMode == TestMode.Running)
+                PauseDebugging();
+            else
+                StartDebugging();
+        }
+
+        private void abortButton_Click(object sender, EventArgs e)
+        {
+            AbortDebugging();
+        }
+
+        #endregion
+
+        #region Helper Methods
+        private void InitControls()
+        {
+            foreach (ComicInfo comicDefinition in ComicInfo.GetAvailableComicInfos())
+            {
+                ListViewItem item = new ListViewItem(new string[] { comicDefinition.FriendlyName, comicDefinition.Author });
+                item.Tag = comicDefinition.ComicInfoFile;
+
+                comicDefinitionsList.Items.Add(item);
+            }
+            comicDefinitionsList.SelectedIndices.Add(0);
+        }
+
+        private void PauseDebugging()
+        {
+            this.currentMode = TestMode.Paused;
+            DisplayAppropriateControlsForCurrentMode();
+
+            this.comicsProvider.StopDownload();
+        }
+
+        private void AbortDebugging()
+        {
+            this.currentMode = TestMode.StandBy;
+            DisplayAppropriateControlsForCurrentMode();
+
+            if (this.comicsProvider != null)
+                this.comicsProvider.StopDownload();
+        }
+
+        private void StartDebugging()
+        {
+            if (comicDefinitionsList.SelectedItems.Count == 0)
+            {
+                MessageBox.Show("You have to select a comic definition.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (chkOverrideStartUrl.Checked && string.IsNullOrEmpty(txtOverrideStartUrl.Text))
+            {
+                MessageBox.Show("You have to specify a start url.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (this.currentMode == TestMode.StandBy)
+                eventsRichTextBox.Clear();
             eventsRichTextBox.Focus();
+
+            string selectedFile = (string)comicDefinitionsList.SelectedItems[0].Tag;
+            ComicInfo comicDefinition = new ComicInfo(selectedFile);
+
+            string startupUrl;
+            if (this.currentMode == TestMode.Paused)
+                startupUrl = this.currentUrl;
+            else if (chkOverrideStartUrl.Checked)
+                startupUrl = txtOverrideStartUrl.Text;
+            else
+                startupUrl = comicDefinition.StartUrl;
+
+            this.currentMode = TestMode.Running;
+            DisplayAppropriateControlsForCurrentMode();
 
             ThreadPool.UnsafeQueueUserWorkItem(
                 delegate
@@ -49,14 +148,62 @@ namespace Woofy.Gui
                 }
             , null);
 
-            RunComicTest((ComicInfo)comicDefinitionsSelector.Items[4]);            
+            RunComicTest(comicDefinition, startupUrl);
+        }
+
+        private void DisplayAppropriateControlsForCurrentMode()
+        {
+            switch (this.currentMode)
+            {
+                case TestMode.StandBy:
+                    startButton.Visible =
+                        closeButton.Visible = true;
+
+                    pauseButton.Visible =
+                        abortButton.Visible = false;
+
+                    chkOverrideStartUrl.Enabled =
+                        comicDefinitionsList.Enabled = true;
+
+                    txtOverrideStartUrl.Enabled = chkOverrideStartUrl.Checked;
+
+                    break;
+                case TestMode.Running:
+                    startButton.Visible =
+                        closeButton.Visible = false;
+
+                    pauseButton.Visible =
+                        abortButton.Visible = true;
+
+                    chkOverrideStartUrl.Enabled =
+                        txtOverrideStartUrl.Enabled = 
+                        comicDefinitionsList.Enabled = false;
+
+                    pauseButton.Text = "Pause";
+                    break;
+                case TestMode.Paused:
+                    startButton.Visible =
+                        closeButton.Visible = false;
+
+                    pauseButton.Visible =
+                        abortButton.Visible = true;
+
+                    chkOverrideStartUrl.Enabled = 
+                        txtOverrideStartUrl.Enabled = 
+                        comicDefinitionsList.Enabled = false;
+
+                    pauseButton.Text = "Resume";
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException();
+            }
         }
 
         private void MonitorDebugMessages()
         {
-            while (true)
+            while (this.currentMode == TestMode.Running)
             {
-                LoggingEvent[] latestEvents =  Logger.GetLatestDebugMessages();
+                LoggingEvent[] latestEvents = Logger.GetLatestDebugMessages();
                 this.Invoke(new MethodInvoker(
                     delegate
                     {
@@ -64,30 +211,78 @@ namespace Woofy.Gui
                             eventsRichTextBox.AppendText(string.Format("[{0:T}] {1}\n", loggingEvent.TimeStamp, loggingEvent.MessageObject));
                     }
                 ));
-                
+
 
                 Thread.Sleep(500);
             }
         }
 
-        private void RunComicTest(ComicInfo comicDefinition)
+        private void RunComicTest(ComicInfo comicDefinition, string startupUrl)
         {
             ThreadPool.UnsafeQueueUserWorkItem(
                 delegate
                 {
                     CountingFileDownloader countingFileDownloader = new CountingFileDownloader();
-                    ComicsProvider comicsProvider = new ComicsProvider(comicDefinition, countingFileDownloader);
+                    this.comicsProvider = new ComicsProvider(comicDefinition, countingFileDownloader);
+                    this.comicsProvider.DownloadComicCompleted += new EventHandler<DownloadStripCompletedEventArgs>(comicsProvider_DownloadComicCompleted);
 
-                    comicsProvider.DownloadComics(ComicsProvider.AllAvailableComics);
+                    DownloadOutcome downloadOutcome = this.comicsProvider.DownloadComics(ComicsProvider.AllAvailableComics, startupUrl);
 
                     string[] comics = countingFileDownloader.ComicLinks;
 
-                    if (comics[comics.Length - 1] == comicDefinition.FirstIssue)
-                        Logger.Debug("The first strip has been reached, so the comic definition works as expected.");
-                    else
-                        Logger.Debug("The first strip has not been reached, the definition needs some more work.");
+                    switch (downloadOutcome)
+                    {
+                        case DownloadOutcome.NoStripMatchesRuleBroken:
+                            Logger.Debug("The comic definition doesn't allow pages with missing strips. Download aborted.");
+                            break;
+                        case DownloadOutcome.MultipleStripMatchesRuleBroken:
+                            Logger.Debug("The comic definition doesn't allow pages with multiple strips. Download aborted.");
+                            break;
+                        case DownloadOutcome.Cancelled:
+                            break;
+                        case DownloadOutcome.Error:
+                            break;
+                        case DownloadOutcome.Successful:
+                            if (comics[comics.Length - 1] == comicDefinition.FirstIssue)
+                                Logger.Debug("The first strip has been reached, so the comic definition works as expected.");
+                            else
+                                Logger.Debug("The first strip has not been reached, the definition needs some more work.");
+                            break;
+                        default:
+                            throw new InvalidEnumArgumentException();
+                    }
+
+                    if (downloadOutcome != DownloadOutcome.Cancelled)
+                    {
+                        this.currentMode = TestMode.StandBy;
+                        DisplayAppropriateControlsForCurrentMode();
+                    }
                 }
-            , null);            
+            , null);
         }
+        #endregion
+
+        #region Events - comicsProvider
+        void comicsProvider_DownloadComicCompleted(object sender, DownloadStripCompletedEventArgs e)
+        {
+            this.currentUrl = e.CurrentUrl;
+        }
+        #endregion
+
+        #region Events - chkOverrideStartUrl
+        private void chkOverrideStartUrl_CheckedChanged(object sender, EventArgs e)
+        {
+            txtOverrideStartUrl.Enabled = chkOverrideStartUrl.Checked;
+        }
+        #endregion
+
+        #region Enum - TestMode
+        private enum TestMode
+        {
+            StandBy,
+            Running,
+            Paused
+        }
+        #endregion
     }
 }

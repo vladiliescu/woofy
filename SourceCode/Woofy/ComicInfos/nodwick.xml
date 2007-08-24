@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Nodwick">
+<comicInfo friendlyName="Nodwick" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
     <startUrl><![CDATA[http://nodwick.humor.gamespy.com/gamespyarchive/index.php]]></startUrl>
     <firstIssue><![CDATA[http://nodwick.humor.gamespy.com/gamespyarchive/strips/2001-03-27.jpg]]></firstIssue>
     <comicRegex><![CDATA[http://nodwick\.humor\.gamespy\.com/gamespyarchive/strips/[0-9]{4}-[0-9]{2}-[0-9]{2}.(gif|jpg|jpeg|png)]]></comicRegex>

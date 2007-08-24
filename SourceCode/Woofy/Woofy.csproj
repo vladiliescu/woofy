@@ -152,55 +152,56 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ComicInfos\dieselsweeties.xml">
+    <Content Include="ComicInfos\DieselSweeties.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="ComicInfos\dieselsweetiesprint.xml">
+    <Content Include="ComicInfos\DieselSweetiesPrint.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="ComicInfos\fullfrontalnerdity.xml">
+    <Content Include="ComicInfos\FullFrontalNerdity.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="ComicInfos\gunnerkriggcourt.xml">
+    <Content Include="ComicInfos\GunnerkriggCourt.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="ComicInfos\LeastICouldDo.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="ComicInfos\lookingforgroup.xml">
+    <Content Include="ComicInfos\LookingForGroup.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="ComicInfos\nodwick.xml">
+    <Content Include="ComicInfos\Nodwick.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="ComicInfos\ps238.xml">
+    <Content Include="ComicInfos\Ps238.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="ComicInfos\pvponline.xml">
+    <Content Include="ComicInfos\PvPOnline.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="ComicInfos\sheldon.xml" />
-    <Content Include="ComicInfos\silentkimbly.xml">
+    <Content Include="ComicInfos\Sheldon.xml" />
+    <Content Include="ComicInfos\SilentKimbly.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="ComicInfos\sinfest.xml">
+    <Content Include="ComicInfos\Sinfest.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="ComicInfos\thewotch.xml">
+    <Content Include="ComicInfos\TheWotch.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="ComicInfos\travellinggnome.xml">
+    <Content Include="ComicInfos\TalesOfTheTravellingGnome.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="ComicInfos\uglyhill.xml">
+    <Content Include="ComicInfos\UglyHill.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="ComicInfos\wallyandosborne.xml">
+    <Content Include="ComicInfos\WallyAndOsborne.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="license.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\bug_delete.png" />
     <None Include="Resources\warning.png" />
     <None Include="Resources\error.png" />
     <None Include="Resources\world_go.png" />

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Diesel Sweeties - Print">
+<comicInfo friendlyName="Diesel Sweeties - Print" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
     <startUrl><![CDATA[http://www.dieselsweeties.com/print/]]></startUrl>
     <firstIssue><![CDATA[http://www.dieselsweeties.com/print/strips/ds10070624.png]]></firstIssue>
     <comicRegex><![CDATA[(?<content>strips/ds[0-9]{8}\.(gif|jpg|jpeg|png))]]></comicRegex>

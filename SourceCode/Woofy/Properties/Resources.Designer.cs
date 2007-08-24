@@ -74,6 +74,13 @@ namespace Woofy.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap DebugDefinitions {
+            get {
+                object obj = ResourceManager.GetObject("DebugDefinitions", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Delete {
             get {
                 object obj = ResourceManager.GetObject("Delete", resourceCulture);

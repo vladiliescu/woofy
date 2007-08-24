@@ -75,6 +75,9 @@ namespace Woofy.Core
 
         public static void Debug(string message, params object[] args)
         {
+            if (!isDebugging)
+                return;
+
             lock (debugLock)
             {
                 debugLogger.DebugFormat(message, args);
@@ -90,6 +93,21 @@ namespace Woofy.Core
                 
                 return events;
             }
+        }
+
+        public static void ClearDebugMessages()
+        {
+            lock (debugLock)
+            {
+                memoryAppender.Clear();
+            }
+        }
+
+        private static bool isDebugging = false;
+        public static bool IsDebugging
+        {
+            get { return isDebugging; }
+            set { isDebugging = value; }
         }
     }
 }

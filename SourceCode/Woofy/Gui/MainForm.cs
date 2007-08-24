@@ -80,6 +80,7 @@ namespace Woofy.Gui
             {
                 case DownloadOutcome.Successful:
                     icon = Resources.Finished;
+                    toolTip = "";
                     break;
                 case DownloadOutcome.NoStripMatchesRuleBroken:
                     icon = Resources.Warning;
@@ -165,7 +166,8 @@ namespace Woofy.Gui
 
             ToolStripSplitButton splitButton = new ToolStripSplitButton("Check for updates", Resources.CheckForUpdates);
             splitButton.DropDown.Items.Add("Check for updates", Resources.CheckForUpdates, new EventHandler(CheckForUpdates_Click));
-            splitButton.DropDown.Items.Add("About...", Resources.About, new EventHandler(About_Click));
+            splitButton.DropDown.Items.Add("Debug comic definitions..", Resources.DebugDefinitions, new EventHandler(DebugDefinitions_Click));
+            splitButton.DropDown.Items.Add("About..", Resources.About, new EventHandler(About_Click));
             splitButton.Alignment = ToolStripItemAlignment.Right;
             splitButton.ButtonClick += new EventHandler(CheckForUpdates_Click);
 
@@ -311,6 +313,14 @@ namespace Woofy.Gui
         private void CheckForUpdates_Click(object sender, EventArgs e)
         {
             UpdateController.CheckForUpdatesAsync(this, true);
+        }
+
+        private void DebugDefinitions_Click(object sender, EventArgs e)
+        {
+            StopAllTasks();
+
+            DefinitionsDebugForm definitionsDebugForm = new DefinitionsDebugForm();            
+            definitionsDebugForm.ShowDialog();
         }
         #endregion        
 
