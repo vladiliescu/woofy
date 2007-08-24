@@ -61,6 +61,7 @@ namespace Woofy.Gui
             // 
             // label2
             // 
+            label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             label2.AutoSize = true;
             label2.Location = new System.Drawing.Point(365, 100);
             label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
@@ -71,6 +72,8 @@ namespace Woofy.Gui
             // 
             // cbComics
             // 
+            this.cbComics.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.cbComics.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
             this.cbComics.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbComics.FormattingEnabled = true;
@@ -84,6 +87,7 @@ namespace Woofy.Gui
             // 
             // numComicsToDownload
             // 
+            this.numComicsToDownload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.numComicsToDownload.Location = new System.Drawing.Point(315, 98);
             this.numComicsToDownload.Margin = new System.Windows.Forms.Padding(2);
             this.numComicsToDownload.Maximum = new decimal(new int[] {
@@ -109,6 +113,7 @@ namespace Woofy.Gui
             // 
             // btnOk
             // 
+            this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnOk.Location = new System.Drawing.Point(251, 167);
             this.btnOk.Margin = new System.Windows.Forms.Padding(2);
             this.btnOk.Name = "btnOk";
@@ -120,6 +125,7 @@ namespace Woofy.Gui
             // 
             // btnCancel
             // 
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btnCancel.Location = new System.Drawing.Point(330, 167);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
@@ -145,6 +151,7 @@ namespace Woofy.Gui
             // 
             // rbDownloadLast
             // 
+            this.rbDownloadLast.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.rbDownloadLast.AutoSize = true;
             this.rbDownloadLast.Location = new System.Drawing.Point(219, 98);
             this.rbDownloadLast.Margin = new System.Windows.Forms.Padding(2);
@@ -170,6 +177,8 @@ namespace Woofy.Gui
             // 
             // txtDownloadFolder
             // 
+            this.txtDownloadFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtDownloadFolder.Location = new System.Drawing.Point(6, 134);
             this.txtDownloadFolder.Margin = new System.Windows.Forms.Padding(2);
             this.txtDownloadFolder.Name = "txtDownloadFolder";
@@ -178,6 +187,7 @@ namespace Woofy.Gui
             // 
             // btnBrowse
             // 
+            this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.btnBrowse.Location = new System.Drawing.Point(330, 132);
             this.btnBrowse.Margin = new System.Windows.Forms.Padding(2);
             this.btnBrowse.Name = "btnBrowse";
@@ -201,6 +211,8 @@ namespace Woofy.Gui
             // 
             // txtOverrideStartUrl
             // 
+            this.txtOverrideStartUrl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
             this.txtOverrideStartUrl.Enabled = false;
             this.txtOverrideStartUrl.Location = new System.Drawing.Point(9, 72);
             this.txtOverrideStartUrl.Margin = new System.Windows.Forms.Padding(2);
@@ -229,6 +241,7 @@ namespace Woofy.Gui
             this.Controls.Add(this.numComicsToDownload);
             this.Controls.Add(this.cbComics);
             this.Margin = new System.Windows.Forms.Padding(2);
+            this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "TaskDetailsForm";
             this.ShowIcon = false;
