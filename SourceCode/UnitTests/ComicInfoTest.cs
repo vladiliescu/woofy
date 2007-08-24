@@ -29,7 +29,7 @@ namespace UnitTests
     <latestPageRegex><![CDATA[some latest page regex]]></latestPageRegex>
 </comicInfo>
 ";
-            ComicInfo comicInfo = new ComicInfo(new MemoryStream(Encoding.UTF8.GetBytes(comicInfoContent)));
+            ComicDefinition comicInfo = new ComicDefinition(new MemoryStream(Encoding.UTF8.GetBytes(comicInfoContent)));
             Assert.AreEqual("some friendly name", comicInfo.FriendlyName);
             Assert.AreEqual(true, comicInfo.AllowMultipleStrips);
             Assert.AreEqual(false, comicInfo.AllowMissingStrips);
@@ -53,7 +53,7 @@ namespace UnitTests
     <backButtonRegex><![CDATA[some back button regex]]></backButtonRegex>
 </comicInfo>
 ";
-            new ComicInfo(new MemoryStream(Encoding.UTF8.GetBytes(comicInfoContent)));
+            new ComicDefinition(new MemoryStream(Encoding.UTF8.GetBytes(comicInfoContent)));
         }
 
         [Test]
@@ -67,7 +67,7 @@ namespace UnitTests
     <backButtonRegex><![CDATA[some back button regex]]></backButtonRegex>
 </comicInfo>
 ";
-            new ComicInfo(new MemoryStream(Encoding.UTF8.GetBytes(comicInfoContent)));
+            new ComicDefinition(new MemoryStream(Encoding.UTF8.GetBytes(comicInfoContent)));
         }
     }
 }

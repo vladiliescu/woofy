@@ -82,7 +82,7 @@ namespace Woofy.Gui
         #region Helper Methods
         private void InitControls()
         {
-            foreach (ComicInfo comicDefinition in ComicInfo.GetAvailableComicInfos())
+            foreach (ComicDefinition comicDefinition in ComicDefinition.GetAvailableComicDefinitions())
             {
                 ListViewItem item = new ListViewItem(new string[] { comicDefinition.FriendlyName, comicDefinition.Author });
                 item.Tag = comicDefinition.ComicInfoFile;
@@ -128,7 +128,7 @@ namespace Woofy.Gui
             eventsRichTextBox.Focus();
 
             string selectedFile = (string)comicDefinitionsList.SelectedItems[0].Tag;
-            ComicInfo comicDefinition = new ComicInfo(selectedFile);
+            ComicDefinition comicDefinition = new ComicDefinition(selectedFile);
 
             string startupUrl;
             if (this.currentMode == TestMode.Paused)
@@ -217,7 +217,7 @@ namespace Woofy.Gui
             }
         }
 
-        private void RunComicTest(ComicInfo comicDefinition, string startupUrl)
+        private void RunComicTest(ComicDefinition comicDefinition, string startupUrl)
         {
             ThreadPool.UnsafeQueueUserWorkItem(
                 delegate

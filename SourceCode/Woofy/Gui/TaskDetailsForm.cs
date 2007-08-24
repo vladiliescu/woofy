@@ -30,12 +30,12 @@ namespace Woofy.Gui
         #region Events - Form
         private void TaskDetails_Load(object sender, EventArgs e)
         {
-            cbComics.DataSource = ComicInfo.GetAvailableComicInfos();
+            cbComics.DataSource = ComicDefinition.GetAvailableComicDefinitions();
 
             if (!string.IsNullOrEmpty(Settings.Default.LastUsedComicInfoFile))
             {
                 int i = 0;
-                foreach (ComicInfo comicInfo in cbComics.Items)
+                foreach (ComicDefinition comicInfo in cbComics.Items)
                 {
                     if (comicInfo.ComicInfoFile.Equals(Settings.Default.LastUsedComicInfoFile, StringComparison.OrdinalIgnoreCase))
                     {
@@ -67,7 +67,7 @@ namespace Woofy.Gui
             if (cbComics.SelectedItem == null)
                 return;
 
-            ComicInfo comicInfo = (ComicInfo)cbComics.SelectedItem;
+            ComicDefinition comicInfo = (ComicDefinition)cbComics.SelectedItem;
             long? comicsToDownload;
             if (rbDownloadLast.Checked)
                 comicsToDownload = (long)numComicsToDownload.Value;
@@ -111,7 +111,7 @@ namespace Woofy.Gui
         #region Helper Methods
         private void UpdateUserSettings()
         {
-            Settings.Default.LastUsedComicInfoFile = ((ComicInfo)cbComics.SelectedValue).ComicInfoFile;
+            Settings.Default.LastUsedComicInfoFile = ((ComicDefinition)cbComics.SelectedValue).ComicInfoFile;
 
             if (rbDownloadOnlyNew.Checked)
                 Settings.Default.LastNumberOfComicsToDownload = -1;
@@ -123,7 +123,7 @@ namespace Woofy.Gui
 
         private void UpdateDownloadFolder()
         {
-            ComicInfo comicInfo = (ComicInfo)cbComics.SelectedValue;
+            ComicDefinition comicInfo = (ComicDefinition)cbComics.SelectedValue;
             txtDownloadFolder.Text = Path.Combine(Settings.Default.DefaultDownloadFolder, comicInfo.FriendlyName);
         }
         #endregion

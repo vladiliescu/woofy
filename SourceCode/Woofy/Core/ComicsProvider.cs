@@ -23,7 +23,7 @@ namespace Woofy.Core
 
         #region Instance Members
         private IFileDownloader _comicsDownloader;
-        private ComicInfo _comicInfo;
+        private ComicDefinition _comicInfo;
         private WebClient _client;
         private bool _isDownloadCancelled;
         #endregion
@@ -38,7 +38,7 @@ namespace Woofy.Core
         /// </summary>
         /// <param name="comicInfo">An instance of the <see cref="ComicInfo"/> class, used to determine how to get the comic links.</param>
         /// <param name="downloadFolder">The folder to which the comics should be downloaded.</param>
-        public ComicsProvider(ComicInfo comicInfo, string downloadFolder)
+        public ComicsProvider(ComicDefinition comicInfo, string downloadFolder)
             : this(comicInfo, new FileDownloader(downloadFolder))
         {
         }
@@ -47,7 +47,7 @@ namespace Woofy.Core
         /// Initializes a new instance of the <see cref="ComicsProvider"/> class.
         /// </summary>
         /// <param name="comicInfo">An instance of the <see cref="ComicInfo"/> class, used to determine how to get the comic links.</param>
-        public ComicsProvider(ComicInfo comicInfo, IFileDownloader comicsDownloader)
+        public ComicsProvider(ComicDefinition comicInfo, IFileDownloader comicsDownloader)
         {
             _comicInfo = comicInfo;
             _comicsDownloader = comicsDownloader;
@@ -269,7 +269,7 @@ namespace Woofy.Core
         /// </summary>
         /// <param name="pageContent">Page content.</param>
         /// <returns></returns>
-        private string RetrieveBackButtonLinkFromPage(string pageContent, string currentUrl, ComicInfo comicInfo)
+        private string RetrieveBackButtonLinkFromPage(string pageContent, string currentUrl, ComicDefinition comicInfo)
         {
             string[] backButtonLinks = RetrieveLinksFromPage(pageContent, currentUrl, comicInfo.BackButtonRegex);
 
@@ -300,7 +300,7 @@ namespace Woofy.Core
             }
         }
 
-        private string[] RetrieveComicLinksFromPage(string pageContent, string url, ComicInfo comicInfo)
+        private string[] RetrieveComicLinksFromPage(string pageContent, string url, ComicDefinition comicInfo)
         {
             string[] comicLinks = RetrieveLinksFromPage(pageContent, url, comicInfo.ComicRegex);
             Logger.Debug("Found {0} strip(s):", comicLinks.Length);

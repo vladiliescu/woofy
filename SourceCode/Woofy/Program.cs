@@ -28,7 +28,7 @@ namespace Woofy
             AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
 
             Application.Run(new MainForm());
-            //Application.Run(new DefinitionsDebugForm());
+            //Application.Run(new AboutForm());
         }
 
         /// <summary>

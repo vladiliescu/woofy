@@ -151,7 +151,7 @@ namespace Woofy.Core
         #region Helper Methods
         private void AddComicsProviderAndStartDownload(ComicTask task)
         {
-            ComicInfo comicInfo = new ComicInfo(task.ComicInfoFile);
+            ComicDefinition comicInfo = new ComicDefinition(task.ComicInfoFile);
 
             ComicsProvider comicsProvider = new ComicsProvider(comicInfo, task.DownloadFolder);
             _comicProviders.Add(comicsProvider);

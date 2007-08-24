@@ -9,7 +9,7 @@ using Woofy.Properties;
 
 namespace Woofy.Core
 {
-    public class ComicInfo
+    public class ComicDefinition
     {
         #region Public Properties
         private string _startUrl;
@@ -115,7 +115,7 @@ namespace Woofy.Core
         /// Initializes a new instance of the <see cref="ComicInfo"/> class.
         /// </summary>
         /// <param name="comicInfoStream">Stream containing the data necessary to create a new instance.</param>
-        public ComicInfo(Stream comicInfoStream)
+        public ComicDefinition(Stream comicInfoStream)
         {
             //XmlReaderSettings readerSettings = new XmlReaderSettings();
             //readerSettings.IgnoreWhitespace = true;
@@ -166,7 +166,7 @@ namespace Woofy.Core
         /// Initializes a new instance of the <see cref="ComicInfo"/> class.
         /// </summary>
         /// <param name="comicInfoFile">Path to an xml file containing the data necessary to create a new instance.</param>
-        public ComicInfo(string comicInfoFile)
+        public ComicDefinition(string comicInfoFile)
             : this (new FileStream(comicInfoFile, FileMode.Open, FileAccess.Read))
         {
             _comicInfoFile = comicInfoFile;
@@ -177,14 +177,14 @@ namespace Woofy.Core
         /// <summary>
         /// Returns the available comic info files.
         /// </summary>
-        public static ComicInfo[] GetAvailableComicInfos()
+        public static ComicDefinition[] GetAvailableComicDefinitions()
         {
-            List<ComicInfo> availableComicInfos = new List<ComicInfo>();
+            List<ComicDefinition> availableComicInfos = new List<ComicDefinition>();
 
             string comicInfosFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Settings.Default.ComicInfosFolderName);
             foreach (string comicInfoFile in Directory.GetFiles(comicInfosFolder, "*.xml"))
             {
-                availableComicInfos.Add(new ComicInfo(comicInfoFile));
+                availableComicInfos.Add(new ComicDefinition(comicInfoFile));
             }
 
             return availableComicInfos.ToArray();

@@ -36,7 +36,7 @@ namespace UnitTests
         {
             comicInfoFile = Path.Combine(ComicInfosDirectory, comicInfoFile);
 
-            ComicInfo comicInfo = new ComicInfo(comicInfoFile);
+            ComicDefinition comicInfo = new ComicDefinition(comicInfoFile);
             CountingFileDownloader comicsDownloaderStub = new CountingFileDownloader();
             ComicsProvider comicsProvider = new ComicsProvider(comicInfo, comicsDownloaderStub);
             
@@ -57,7 +57,7 @@ namespace UnitTests
         {
             comicInfoFile = Path.Combine(ComicInfosDirectory, comicInfoFile);
 
-            ComicInfo comicInfo = new ComicInfo(comicInfoFile);
+            ComicDefinition comicInfo = new ComicDefinition(comicInfoFile);
             CountingFileDownloader comicsDownloaderStub = new CountingFileDownloader();
             ComicsProvider comicsProvider = new ComicsProvider(comicInfo, comicsDownloaderStub);
 

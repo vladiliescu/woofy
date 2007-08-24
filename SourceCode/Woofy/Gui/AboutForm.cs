@@ -6,6 +6,8 @@ using System.Windows.Forms;
 using System.Reflection;
 using System.Diagnostics;
 
+using Woofy.Core;
+
 namespace Woofy.Gui
 {
     partial class AboutForm : Form
@@ -17,10 +19,23 @@ namespace Woofy.Gui
 
             this.Text = string.Format("About {0}", AssemblyTitle);
             this.lblProductInfo.Text = string.Format("{0} {1} Copyright {2} {3}", AssemblyTitle, AssemblyShortVersion, AssemblyCopyright, AssemblyCompany);
-            this.lblIconCredit.Text = "Jeremy James for the permission to use his creation as Woofy's icon";
 
             this.btnOK.Focus();
-        } 
+
+            InitComicDefinitionsList();
+        }
+
+        private void InitComicDefinitionsList()
+        {
+            ComicDefinition[] comicDefinitions = ComicDefinition.GetAvailableComicDefinitions();
+            foreach (ComicDefinition comicDefinition in comicDefinitions)
+            {
+                if (string.IsNullOrEmpty(comicDefinition.Author))
+                    continue;
+                ListViewGroup authorGroup = ObtainAuthorGroup(comicDefinition.Author);
+                AddComicDefinitionToAuthor(comicDefinition, authorGroup);                    
+            }
+        }
         #endregion
 
         #region Assembly Attribute Accessors
@@ -117,6 +132,44 @@ namespace Woofy.Gui
         {
             Process.Start("http://hobbit1978.deviantart.com/");
         }
+
+        private void btnOK_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
         #endregion
+
+        #region Helper Methods
+        private void AddComicDefinitionToAuthor(ComicDefinition comicDefinition, ListViewGroup authorGroup)
+        {
+            ListViewItem definition = new ListViewItem(comicDefinition.FriendlyName, authorGroup);
+            definition.Tag = comicDefinition.StartUrl;
+            this.definitionAuthors.Items.Add(definition);
+        }
+
+        private ListViewGroup ObtainAuthorGroup(string author)
+        {
+            string trimmedAuthor = author.Trim();
+            foreach (ListViewGroup group in this.definitionAuthors.Groups)
+            {
+                if (group.Name.Equals(trimmedAuthor, StringComparison.OrdinalIgnoreCase))
+                    return group;
+            }
+
+            ListViewGroup authorGroup = new ListViewGroup(trimmedAuthor, trimmedAuthor);
+            this.definitionAuthors.Groups.Add(authorGroup);
+
+            return authorGroup;
+        } 
+        #endregion
+
+        private void definitionAuthors_DoubleClick(object sender, EventArgs e)
+        {
+            if (this.definitionAuthors.SelectedItems.Count == 0)
+                return;
+
+
+            System.Diagnostics.Process.Start((string)this.definitionAuthors.SelectedItems[0].Tag);
+        }
     }
 }

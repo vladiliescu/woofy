@@ -59,7 +59,7 @@
     <Compile Include="EventArgs\DownloadStripCompletedEventArgs.cs" />
     <Compile Include="Core\IFileDownloader.cs" />
     <Compile Include="Core\FileDownloader.cs" />
-    <Compile Include="Core\ComicInfo.cs" />
+    <Compile Include="Core\ComicDefinition.cs" />
     <Compile Include="Core\ComicsProvider.cs" />
     <Compile Include="Core\ComicTasksComparer.cs" />
     <Compile Include="Core\ComicTasksList.cs" />
