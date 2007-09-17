@@ -39,6 +39,9 @@ namespace Woofy.Core
             if (string.IsNullOrEmpty(downloadDirectory))
                 throw new ArgumentNullException("downloadDirectory", "The <downloadDirectory> parameter must be used to specify the name of the directory to which to download the files.");
 
+            if (!Path.IsPathRooted(downloadDirectory))
+                downloadDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, downloadDirectory);
+
             if (!Directory.Exists(downloadDirectory))
                 Directory.CreateDirectory(downloadDirectory);
 
@@ -53,6 +56,7 @@ namespace Woofy.Core
         /// Downloads the specified file. If the file exists, then it is not downloaded again.
         /// </summary>
         /// <param name="fileLink">Link to the file to be downloaded.</param>
+        /// <param name="referrer">The page that refers the file. Used to prevent hotlink protection mechanisms.</param>
         /// <param name="fileAlreadyDownloaded">True if the file was already downloaded, false otherwise.</param>
         public void DownloadFile(string fileLink, string referrer, out bool fileAlreadyDownloaded)
         {

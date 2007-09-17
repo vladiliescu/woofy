@@ -47,7 +47,7 @@ namespace Woofy.Core
             return client;
         }
 
-        // <summary>
+        /// <summary>
         /// Builds a web request for a given uri string.
         /// </summary>
         /// <param name="requestUriString">Uri of the request.</param>
