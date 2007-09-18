@@ -4,7 +4,6 @@ using System.Windows.Forms;
 using Woofy.Core;
 using Woofy.Gui;
 using Woofy.Properties;
-using System.Net;
 
 namespace Woofy
 {

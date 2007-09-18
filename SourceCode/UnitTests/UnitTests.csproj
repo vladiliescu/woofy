@@ -39,6 +39,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ComicInfoTest.cs" />
     <Compile Include="ComicDefinitionsTest.cs" />
+    <Compile Include="UpdateDescriptionTest.cs" />
     <Compile Include="WebPathTest.cs" />
   </ItemGroup>
   <ItemGroup>

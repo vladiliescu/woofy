@@ -5,7 +5,7 @@
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{25F085AE-B31D-40E6-9546-0D357ECD18FE}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Woofy</RootNamespace>
     <AssemblyName>Woofy</AssemblyName>
@@ -52,6 +52,11 @@
     <Compile Include="Core\ExRichTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Updates\ChangeCollection.cs" />
+    <Compile Include="Updates\Release.cs" />
+    <Compile Include="Updates\ReleaseCollection.cs" />
+    <Compile Include="Updates\UpdateDescription.cs" />
+    <Compile Include="Updates\UpdateManager.cs" />
     <Compile Include="EventArgs\DownloadCompletedEventArgs.cs" />
     <Compile Include="EventArgs\DownloadedFileChunkEventArgs.cs" />
     <Compile Include="EventArgs\DownloadErrorEventArgs.cs" />
