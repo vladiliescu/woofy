@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Penny Arcade" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
+    <startUrl><![CDATA[http://www.penny-arcade.com/comic]]></startUrl>
+    <firstIssue><![CDATA[http://www.penny-arcade.com/images/1998/19981118h.jpg]]></firstIssue>
+    <comicRegex><![CDATA[/images/[0-9]{4}/[0-9a-zA-Z]*.(gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>http://www.penny-arcade.com/comic/2007/09/19)"><img\salt="Back"]]></backButtonRegex>
+</comicInfo>
