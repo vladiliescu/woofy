@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Ctrl+Alt+Del" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
+    <startUrl><![CDATA[http://www.ctrlaltdel-online.com/comic.php]]></startUrl>
+    <firstIssue><![CDATA[http://www.ctrlaltdel-online.com/comics/20021023.jpg]]></firstIssue>
+    <comicRegex><![CDATA[/comics/[0-9]{8}.(gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>/comic.php\?d=20070919)"><img\ssrc="/_common/images/comicnav/back2.jpg"]]></backButtonRegex>
+</comicInfo>
