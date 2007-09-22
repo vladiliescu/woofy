@@ -101,7 +101,7 @@ namespace Woofy.Core
 
         static ComicTask()
         {
-            SQLiteConnectionStringBuilder connectionStringBuilder = new SQLiteConnectionStringBuilder(Settings.Default.ConnectionString);
+            SQLiteConnectionStringBuilder connectionStringBuilder = new SQLiteConnectionStringBuilder(Woofy.Properties.Settings.Default.ConnectionString);
             connectionStringBuilder.DataSource = AppDomain.CurrentDomain.BaseDirectory + connectionStringBuilder.DataSource;
             ConnectionString = connectionStringBuilder.ConnectionString;
         }

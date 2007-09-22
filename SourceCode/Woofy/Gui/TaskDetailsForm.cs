@@ -32,12 +32,12 @@ namespace Woofy.Gui
         {
             cbComics.DataSource = ComicDefinition.GetAvailableComicDefinitions();
 
-            if (!string.IsNullOrEmpty(Settings.Default.LastUsedComicInfoFile))
+            if (!string.IsNullOrEmpty(Woofy.Properties.Settings.Default.LastUsedComicInfoFile))
             {
                 int i = 0;
                 foreach (ComicDefinition comicInfo in cbComics.Items)
                 {
-                    if (comicInfo.ComicInfoFile.Equals(Settings.Default.LastUsedComicInfoFile, StringComparison.OrdinalIgnoreCase))
+                    if (comicInfo.ComicInfoFile.Equals(Woofy.Properties.Settings.Default.LastUsedComicInfoFile, StringComparison.OrdinalIgnoreCase))
                     {
                         cbComics.SelectedIndex = i;
                         break;
@@ -47,10 +47,10 @@ namespace Woofy.Gui
                 }
             }
 
-            if (Settings.Default.LastNumberOfComicsToDownload > 0)
+            if (Woofy.Properties.Settings.Default.LastNumberOfComicsToDownload > 0)
             {
                 rbDownloadLast.Checked = true;
-                numComicsToDownload.Value = Settings.Default.LastNumberOfComicsToDownload;
+                numComicsToDownload.Value = Woofy.Properties.Settings.Default.LastNumberOfComicsToDownload;
             }
             else
             {
@@ -96,7 +96,7 @@ namespace Woofy.Gui
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            Settings.Default.Reload();
+            Woofy.Properties.Settings.Default.Reload();
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)
@@ -111,20 +111,20 @@ namespace Woofy.Gui
         #region Helper Methods
         private void UpdateUserSettings()
         {
-            Settings.Default.LastUsedComicInfoFile = ((ComicDefinition)cbComics.SelectedValue).ComicInfoFile;
+            Woofy.Properties.Settings.Default.LastUsedComicInfoFile = ((ComicDefinition)cbComics.SelectedValue).ComicInfoFile;
 
             if (rbDownloadOnlyNew.Checked)
-                Settings.Default.LastNumberOfComicsToDownload = -1;
+                Woofy.Properties.Settings.Default.LastNumberOfComicsToDownload = -1;
             else
-                Settings.Default.LastNumberOfComicsToDownload = (long)numComicsToDownload.Value;
+                Woofy.Properties.Settings.Default.LastNumberOfComicsToDownload = (long)numComicsToDownload.Value;
 
-            Settings.Default.Save();
+            Woofy.Properties.Settings.Default.Save();
         }
 
         private void UpdateDownloadFolder()
         {
             ComicDefinition comicInfo = (ComicDefinition)cbComics.SelectedValue;
-            txtDownloadFolder.Text = Path.Combine(Settings.Default.DefaultDownloadFolder, comicInfo.FriendlyName);
+            txtDownloadFolder.Text = Path.Combine(Woofy.Properties.Settings.Default.DefaultDownloadFolder, comicInfo.FriendlyName);
         }
         #endregion
 

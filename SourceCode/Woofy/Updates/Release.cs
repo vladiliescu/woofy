@@ -19,6 +19,31 @@ namespace Woofy.Updates
             get { return versionNumber; }
         }
 
+        private string downloadAddress;
+        /// <summary>
+        /// Gets the download address for this version.
+        /// </summary>
+        public string DownloadAddress
+        {
+            get { return downloadAddress; }
+        }
+
+        private DateTime? releaseDate;
+        /// <summary>
+        /// Gets the release date for this version.
+        /// </summary>
+        public DateTime? ReleaseDate
+        {
+            get { return releaseDate; }
+        }
+
+        private int size;
+        public int Size
+        {
+            get { return size; }
+        }
+
+
         private ChangeCollection changes;
         /// <summary>
         /// A list of changes in this release.
@@ -36,7 +61,26 @@ namespace Woofy.Updates
         {
             reader.Read();
             this.versionNumber = reader.GetAttribute("versionNumber");
+            this.downloadAddress = reader.GetAttribute("downloadAddress");
+            this.size = int.Parse(reader.GetAttribute("size"));
+            string releaseDateString = reader.GetAttribute("releaseDate");            
+            DateTime tempReleaseDate;
+            if (DateTime.TryParseExact(releaseDateString, "yyyy-MM-dd", null, System.Globalization.DateTimeStyles.None, out tempReleaseDate))
+                this.releaseDate = tempReleaseDate;
+            else
+                this.releaseDate = null;
+
             this.changes = new ChangeCollection(reader.ReadSubtree());
+        }
+        #endregion
+
+        #region Public Methods
+        public bool IsNewerThanVersion(string versionNumber)
+        {
+            if (string.Compare(this.versionNumber, versionNumber, StringComparison.OrdinalIgnoreCase) > 0)
+                return true;
+            else
+                return false;
         }
         #endregion
     }    

@@ -1,12 +1,11 @@
 using System;
 using System.IO;
+using System.Text;
 
 using MbUnit.Framework;
 
 using Woofy.Core;
 using Woofy.Exceptions;
-using System.Text;
-
 
 namespace UnitTests
 {

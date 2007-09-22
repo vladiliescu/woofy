@@ -4,6 +4,7 @@ using System.Windows.Forms;
 
 using Woofy.Core;
 using Woofy.Properties;
+using Woofy.Updates;
 
 namespace Woofy.Gui
 {
@@ -27,13 +28,14 @@ namespace Woofy.Gui
         {
             InitControls();
 
-            if (Settings.Default.AutomaticallyCheckForUpdates)
-                UpdateController.CheckForUpdatesAsync(this, false);
+            if (Woofy.Properties.Settings.Default.AutomaticallyCheckForUpdates)
+                //UpdateController.CheckForUpdatesAsync(this, false);
+                UpdateManager.CheckForUpdatesAsync(false, this);
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
         {
-            if (!Settings.Default.MinimizeToTray)
+            if (!Woofy.Properties.Settings.Default.MinimizeToTray)
                 return;
 
             if (this.WindowState == FormWindowState.Minimized)
@@ -312,7 +314,7 @@ namespace Woofy.Gui
 
         private void CheckForUpdates_Click(object sender, EventArgs e)
         {
-            UpdateController.CheckForUpdatesAsync(this, true);
+            UpdateManager.CheckForUpdatesAsync(true, this);
         }
 
         private void DebugDefinitions_Click(object sender, EventArgs e)
@@ -393,6 +395,20 @@ namespace Woofy.Gui
                     MessageBox.Show(errorMessage, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             ));
+        }
+
+        public DialogResult DisplayMessageBox(string message, MessageBoxButtons buttons, MessageBoxIcon icon)
+        {
+            DialogResult result = DialogResult.None;
+            
+            this.Invoke(new MethodInvoker(
+                delegate
+                {
+                    result = MessageBox.Show(message, Application.ProductName, buttons, icon);
+                }
+            ));
+
+            return result;
         }
         #endregion        
     }

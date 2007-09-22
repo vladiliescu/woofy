@@ -170,7 +170,6 @@ namespace Woofy.Core
         private void GetResponseCallback(IAsyncResult result, string filePath)
         {
             WebRequest request = (WebRequest)result.AsyncState;
-
             WebResponse response = null;
 
             try 
@@ -187,6 +186,8 @@ namespace Woofy.Core
 
                 throw;
             }
+
+            OnResponseReceived(response);
 
             Stream stream = response.GetResponseStream();
 
@@ -394,6 +395,33 @@ namespace Woofy.Core
                 eventReference(this, e);
 
             exceptionHandled = e.ExceptionHandled;
+        }
+        #endregion
+
+        #region OnResponseReceived Event
+        private event EventHandler<ResponseReceivedEventArgs> responseReceived;
+        /// <summary>
+        /// Occurs when the site containing the file has responded to our request (right before downloading the file).
+        /// </summary>
+        public event EventHandler<ResponseReceivedEventArgs> ResponseReceived
+        {
+            add
+            {
+                this.responseReceived += value;
+            }
+            remove
+            {
+                this.responseReceived -= value;
+            }
+        }
+
+        protected virtual void OnResponseReceived(WebResponse response)
+        {
+            EventHandler<ResponseReceivedEventArgs> eventReference = this.responseReceived;
+            ResponseReceivedEventArgs e = new ResponseReceivedEventArgs(response);
+
+            if (eventReference != null)
+                eventReference(this, e);
         }
         #endregion
     }

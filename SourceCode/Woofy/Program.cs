@@ -17,8 +17,8 @@ namespace Woofy
         {
             //if we have just upgraded the application, then get its settings up to date
             //TODO:conditia e gresita
-            //if (Settings.Default.GetPreviousVersion("MinimizeToTray") != null)
-            //    Settings.Default.Upgrade();
+            //if (Woofy.Properties.Settings.Default.GetPreviousVersion("MinimizeToTray") != null)
+            //    Woofy.Properties.Settings.Default.Upgrade();
             
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

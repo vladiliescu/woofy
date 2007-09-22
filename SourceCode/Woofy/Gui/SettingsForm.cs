@@ -24,10 +24,10 @@ namespace Woofy.Gui
         #region Helper Methods
         private void InitControls()
         {
-            if (!string.IsNullOrEmpty(Settings.Default.ProxyAddress))
+            if (!string.IsNullOrEmpty(Woofy.Properties.Settings.Default.ProxyAddress))
             {
-                txtProxyAddress.Text = Settings.Default.ProxyAddress;
-                txtProxyPort.Text = Settings.Default.ProxyPort.ToString();
+                txtProxyAddress.Text = Woofy.Properties.Settings.Default.ProxyAddress;
+                txtProxyPort.Text = Woofy.Properties.Settings.Default.ProxyPort.ToString();
 
                 chkUseProxy.Checked = true;
             }
@@ -37,7 +37,7 @@ namespace Woofy.Gui
         #region Events - clicks
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            Settings.Default.Reload();
+            Woofy.Properties.Settings.Default.Reload();
             this.DialogResult = DialogResult.Cancel;
         }
 
@@ -48,16 +48,16 @@ namespace Woofy.Gui
 
             if (chkUseProxy.Checked)
             {
-                Settings.Default.ProxyAddress = txtProxyAddress.Text;
-                Settings.Default.ProxyPort = int.Parse(txtProxyPort.Text);
+                Woofy.Properties.Settings.Default.ProxyAddress = txtProxyAddress.Text;
+                Woofy.Properties.Settings.Default.ProxyPort = int.Parse(txtProxyPort.Text);
             }
             else
             {
-                Settings.Default.ProxyAddress = string.Empty;
-                Settings.Default.ProxyPort = -1;
+                Woofy.Properties.Settings.Default.ProxyAddress = string.Empty;
+                Woofy.Properties.Settings.Default.ProxyPort = -1;
             }
 
-            Settings.Default.Save();
+            Woofy.Properties.Settings.Default.Save();
 
             this.DialogResult = DialogResult.OK;
         }

@@ -181,7 +181,7 @@ namespace Woofy.Core
         {
             List<ComicDefinition> availableComicInfos = new List<ComicDefinition>();
 
-            string comicInfosFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Settings.Default.ComicInfosFolderName);
+            string comicInfosFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Woofy.Properties.Settings.Default.ComicInfosFolderName);
             foreach (string comicInfoFile in Directory.GetFiles(comicInfosFolder, "*.xml"))
             {
                 availableComicInfos.Add(new ComicDefinition(comicInfoFile));

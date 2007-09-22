@@ -26,9 +26,9 @@ namespace Woofy.Core
         /// </summary>
         static WebConnectionFactory()
         {
-            if (!string.IsNullOrEmpty(Settings.Default.ProxyAddress))
+            if (!string.IsNullOrEmpty(Woofy.Properties.Settings.Default.ProxyAddress))
             {
-                _proxy = new WebProxy(Settings.Default.ProxyAddress, Settings.Default.ProxyPort);
+                _proxy = new WebProxy(Woofy.Properties.Settings.Default.ProxyAddress, Woofy.Properties.Settings.Default.ProxyPort);
                 _proxy.Credentials = CredentialCache.DefaultNetworkCredentials;
             }
         }

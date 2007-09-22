@@ -98,6 +98,7 @@ namespace Woofy.Gui
             DisplayAppropriateControlsForCurrentMode();
 
             this.comicsProvider.StopDownload();
+            CheckForLatestDebugMessages();
         }
 
         private void AbortDebugging()
@@ -107,6 +108,7 @@ namespace Woofy.Gui
 
             if (this.comicsProvider != null)
                 this.comicsProvider.StopDownload();
+            CheckForLatestDebugMessages();
         }
 
         private void StartDebugging()
@@ -203,18 +205,22 @@ namespace Woofy.Gui
         {
             while (this.currentMode == TestMode.Running)
             {
-                LoggingEvent[] latestEvents = Logger.GetLatestDebugMessages();
-                this.Invoke(new MethodInvoker(
-                    delegate
-                    {
-                        foreach (LoggingEvent loggingEvent in latestEvents)
-                            eventsRichTextBox.AppendText(string.Format("[{0:T}] {1}\n", loggingEvent.TimeStamp, loggingEvent.MessageObject));
-                    }
-                ));
-
+                CheckForLatestDebugMessages();
 
                 Thread.Sleep(500);
             }
+        }
+
+        private void CheckForLatestDebugMessages()
+        {
+            LoggingEvent[] latestEvents = Logger.GetLatestDebugMessages();
+            this.Invoke(new MethodInvoker(
+                delegate
+                {
+                    foreach (LoggingEvent loggingEvent in latestEvents)
+                        eventsRichTextBox.AppendText(string.Format("[{0:T}] {1}\n", loggingEvent.TimeStamp, loggingEvent.MessageObject));
+                }
+            ));
         }
 
         private void RunComicTest(ComicDefinition comicDefinition, string startupUrl)

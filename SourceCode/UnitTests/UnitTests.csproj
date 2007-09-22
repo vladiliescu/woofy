@@ -40,6 +40,7 @@
     <Compile Include="ComicInfoTest.cs" />
     <Compile Include="ComicDefinitionsTest.cs" />
     <Compile Include="UpdateDescriptionTest.cs" />
+    <Compile Include="UserSettingsTest.cs" />
     <Compile Include="WebPathTest.cs" />
   </ItemGroup>
   <ItemGroup>
