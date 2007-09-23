@@ -3,5 +3,5 @@
     <startUrl><![CDATA[http://megatokyo.com/]]></startUrl>
     <firstIssue><![CDATA[http://megatokyo.com/strips/0001.gif]]></firstIssue>
     <comicRegex><![CDATA[/strips/[0-9]*.(gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref='(?<content>index.php\?strip_id=1044)'><img\sborder=0\ssrc='http://www.megatokyo.com/parts/mt-bottom-prev\.gif']]></backButtonRegex>
+    <backButtonRegex><![CDATA[<a\shref='(?<content>index.php\?strip_id=[0-9]*)'><img\sborder=0\ssrc='http://www.megatokyo.com/parts/mt-bottom-prev\.gif']]></backButtonRegex>
 </comicInfo>
