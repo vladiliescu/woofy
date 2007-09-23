@@ -70,5 +70,24 @@ namespace Woofy.Core
             string uppercasePath = path.ToUpper();
             return uppercasePath.StartsWith("HTTP://") || uppercasePath.StartsWith("HTTPS://");
         }
+
+        /// <summary>
+        /// Returns the root path of a web address.
+        /// </summary>
+        /// <param name="webPath"></param>
+        /// <returns></returns>
+        public static string GetRootPath(string webPath)
+        {
+            if (!IsAbsolute(webPath))
+                throw new ArgumentException("The path has to start with either http:// or https://.", "webPath");
+                
+            int lastDotIndex = webPath.LastIndexOf(".");
+            int separatorIndex = webPath.IndexOf(DirectorySeparator, lastDotIndex);
+
+            if (separatorIndex == -1)
+                return webPath;
+
+            return webPath.Substring(0, separatorIndex);
+        }
     }
 }

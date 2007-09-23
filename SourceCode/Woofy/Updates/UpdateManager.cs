@@ -48,7 +48,21 @@ namespace Woofy.Updates
         private static void CheckForUpdates()
         {
             WebRequest request = WebConnectionFactory.GetNewWebRequestInstance(ApplicationSettings.UpdateDescriptionFileAddress);
-            UpdateDescription updateDescription = new UpdateDescription(request.GetResponse().GetResponseStream());
+            Stream responseStream = null;
+
+            try
+            {
+                responseStream = request.GetResponse().GetResponseStream();
+            }
+            catch (WebException ex)
+            {
+                Logger.LogException(ex);
+                if (initiatedByUser)
+                    mainForm.DisplayMessageBox("Unable to connect.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            UpdateDescription updateDescription = new UpdateDescription(responseStream);
 
             Release release = GetReleaseToUpgradeTo(updateDescription);
             if (release == null)

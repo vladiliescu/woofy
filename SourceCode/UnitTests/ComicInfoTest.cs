@@ -19,6 +19,7 @@ namespace UnitTests
 <comicInfo friendlyName=""some friendly name"" 
             allowMultipleStrips=""true"" 
             allowMissingStrips=""false"" 
+            useRootUrl = ""false""
             author=""some author""
             authorEmail=""some author email"">
     <comicRegex><![CDATA[some comic regex]]></comicRegex>
@@ -32,6 +33,7 @@ namespace UnitTests
             Assert.AreEqual("some friendly name", comicInfo.FriendlyName);
             Assert.AreEqual(true, comicInfo.AllowMultipleStrips);
             Assert.AreEqual(false, comicInfo.AllowMissingStrips);
+            Assert.AreEqual(false, comicInfo.UseRootUrl);
             Assert.AreEqual("some author", comicInfo.Author);
             Assert.AreEqual("some author email", comicInfo.AuthorEmail);
             Assert.AreEqual("some base url", comicInfo.StartUrl);

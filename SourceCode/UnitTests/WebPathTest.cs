@@ -141,5 +141,21 @@ namespace UnitTests
         }
 
         #endregion
+
+        #region GetRootPath
+        [Test]
+        public void TestWorksOnRootPath()
+        {
+            string rootPath = WebPath.GetRootPath("http://woofy.sourceforge.net");
+            Assert.AreEqual("http://woofy.sourceforge.net", rootPath);
+        }
+
+        [Test]
+        public void TestWorksOnComplexPath()
+        {
+            string rootPath = WebPath.GetRootPath("http://woofy.sourceforge.net/comics/mycomic");
+            Assert.AreEqual("http://woofy.sourceforge.net", rootPath);
+        }
+        #endregion
     }
 }
