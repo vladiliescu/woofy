@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="VG Cats" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
+    <startUrl><![CDATA[http://www.vgcats.com/comics/]]></startUrl>
+    <firstIssue><![CDATA[http://www.vgcats.com/comics/images/010901.gif]]></firstIssue>
+    <comicRegex><![CDATA[images/[0-9]{6}.(gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>\?strip_id=[0-9]*)"><img\ssrc="back.gif"\sborder="0"></a>]]></backButtonRegex>
+</comicInfo>
