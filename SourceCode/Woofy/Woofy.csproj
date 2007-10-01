@@ -52,7 +52,7 @@
     <Compile Include="Core\ExRichTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Core\UserSettingsBase.cs" />
+    <Compile Include="Settings\UserSettingsBase.cs" />
     <Compile Include="EventArgs\DownloadCompletedEventArgs.cs" />
     <Compile Include="EventArgs\DownloadedFileChunkEventArgs.cs" />
     <Compile Include="EventArgs\DownloadErrorEventArgs.cs" />
@@ -152,6 +152,7 @@
     </Compile>
     <Compile Include="Settings\ApplicationSettings.cs" />
     <Compile Include="Settings\UserSettings.cs" />
+    <Compile Include="Settings\UserSettingsMemory.cs" />
     <Compile Include="Updates\ChangeCollection.cs" />
     <Compile Include="Updates\Release.cs" />
     <Compile Include="Updates\ReleaseCollection.cs" />

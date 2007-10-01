@@ -4,6 +4,7 @@ using Microsoft.Win32;
 using Woofy.Core;
 using Woofy.Gui;
 using Woofy.Properties;
+using Woofy.Settings;
 
 namespace Woofy
 {
@@ -15,6 +16,8 @@ namespace Woofy
         [STAThread]
         static void Main()
         {
+            //UserSettingsMemory.LastNumberOfComicsToDownload = 1;
+
             //if we have just upgraded the application, then get its settings up to date
             //TODO:conditia e gresita
             //if (Woofy.Properties.Settings.Default.GetPreviousVersion("MinimizeToTray") != null)
