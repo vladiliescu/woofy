@@ -1,7 +1,6 @@
 using System;
 using System.ComponentModel;
 using System.IO;
-using System.Xml;
 using System.Xml.Serialization;
 using System.Reflection;
 
@@ -51,7 +50,7 @@ namespace Woofy.Settings
             set { Settings.MinimizeToTray = value; }
         }
 
-        [DefaultValue(null)]
+        [DefaultValue("")]
         public static string DefaultDownloadFolder
         {
             get { return Settings.DefaultDownloadFolder; }
