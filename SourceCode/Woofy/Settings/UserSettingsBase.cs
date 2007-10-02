@@ -1,6 +1,8 @@
 using System;
+using System.ComponentModel;
 using System.IO;
 using System.Xml.Serialization;
+using System.Reflection;
 
 namespace Woofy.Settings
 {
@@ -13,30 +15,35 @@ namespace Woofy.Settings
         #endregion
 
         #region Public Properties
+        [DefaultValue(null)]
         public static string LastUsedComicDefinitionFile
         {
             get { return Settings.LastUsedComicDefinitionFile; }
             set { Settings.LastUsedComicDefinitionFile = value; }
         }
 
+        [DefaultValue(null)]
         public static long? LastNumberOfComicsToDownload
         {
             get { return Settings.LastNumberOfComicsToDownload; }
             set { Settings.LastNumberOfComicsToDownload = value; }
         }
 
+        [DefaultValue(null)]
         public static string ProxyAddress
         {
             get { return Settings.ProxyAddress; }
             set { Settings.ProxyAddress = value; }
         }
 
-        public static int ProxyPort
+        [DefaultValue(null)]
+        public static int? ProxyPort
         {
             get { return Settings.ProxyPort; }
             set { Settings.ProxyPort = value; }
         }
 
+        [DefaultValue(true)]
         public static bool MinimizeToTray
         {
             get { return Settings.MinimizeToTray; }
@@ -53,10 +60,14 @@ namespace Woofy.Settings
             Serializer.Serialize(TargetStream, Settings);
         }
 
-        //public static void Reset()
-        //{
-        //    ThrowIfPreconditionsNotFulfilled();
-        //}
+        public static void Reset()
+        {
+            foreach (PropertyInfo property in typeof(UserSettingsBase).GetProperties())
+            {
+                DefaultValueAttribute defaultValue = (DefaultValueAttribute)property.GetCustomAttributes(typeof(DefaultValueAttribute), false)[0];
+                property.SetValue(null, defaultValue.Value, null);
+            }
+        }
 
         public static void Load()
         {
@@ -65,11 +76,6 @@ namespace Woofy.Settings
             TargetStream.Position = 0;
             Settings = (SettingsContainer)Serializer.Deserialize(TargetStream);
         }
-
-        //public static void Upgrade(Stream stream)
-        //{
-        //    ThrowIfPreconditionsNotFulfilled();
-        //}
 
         #endregion
 
@@ -85,6 +91,7 @@ namespace Woofy.Settings
         protected static void InitializeTargetStream(Stream stream)
         {
             TargetStream = stream;
+            Reset();
         } 
         #endregion
 
@@ -113,8 +120,8 @@ namespace Woofy.Settings
                 set { this.proxyAddress = value; }
             }
 
-            private int proxyPort;
-            public int ProxyPort
+            private int? proxyPort;
+            public int? ProxyPort
             {
                 get { return this.proxyPort; }
                 set { this.proxyPort = value; }
