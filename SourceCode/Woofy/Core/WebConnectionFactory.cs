@@ -4,6 +4,7 @@ using System.Text;
 using System.Net;
 
 using Woofy.Properties;
+using Woofy.Settings;
 
 namespace Woofy.Core
 {
@@ -26,9 +27,12 @@ namespace Woofy.Core
         /// </summary>
         static WebConnectionFactory()
         {
-            if (!string.IsNullOrEmpty(Woofy.Properties.Settings.Default.ProxyAddress))
+            if (!string.IsNullOrEmpty(UserSettings.ProxyAddress))
             {
-                _proxy = new WebProxy(Woofy.Properties.Settings.Default.ProxyAddress, Woofy.Properties.Settings.Default.ProxyPort);
+                if (UserSettings.ProxyPort.HasValue)
+                    _proxy = new WebProxy(UserSettings.ProxyAddress, UserSettings.ProxyPort.Value);
+                else 
+                    _proxy = new WebProxy(UserSettings.ProxyAddress);
                 _proxy.Credentials = CredentialCache.DefaultNetworkCredentials;
             }
         }

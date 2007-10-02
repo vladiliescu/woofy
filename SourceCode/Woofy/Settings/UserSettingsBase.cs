@@ -1,6 +1,7 @@
 using System;
 using System.ComponentModel;
 using System.IO;
+using System.Xml;
 using System.Xml.Serialization;
 using System.Reflection;
 
@@ -49,15 +50,47 @@ namespace Woofy.Settings
             get { return Settings.MinimizeToTray; }
             set { Settings.MinimizeToTray = value; }
         }
+
+        [DefaultValue(null)]
+        public static string DefaultDownloadFolder
+        {
+            get { return Settings.DefaultDownloadFolder; }
+            set { Settings.DefaultDownloadFolder = value; }
+        }
+
+        [DefaultValue(true)]
+        public static bool AutomaticallyCheckForUpdates
+        {
+            get { return Settings.AutomaticallyCheckForUpdates; }
+            set { Settings.AutomaticallyCheckForUpdates = value; }
+        }
+
+        [DefaultValue(null)]
+        public static string LastReportedWoofyVersion
+        {
+            get { return Settings.LastReportedWoofyVersion; }
+            set { Settings.LastReportedWoofyVersion = value; }
+        }
+
+        [DefaultValue(null)]
+        public static string LastReportedComicPackVersion
+        {
+            get { return Settings.LastReportedComicPackVersion; }
+            set { Settings.LastReportedComicPackVersion = value; }
+        }
         #endregion
 
         #region Public Methods
-        public static void Save()
+        protected static void Save()
         {
             ThrowIfPreconditionsNotFulfilled();
-
-            TargetStream.Position = 0;
             Serializer.Serialize(TargetStream, Settings);
+        }
+        
+        protected static void Load()
+        {
+            ThrowIfPreconditionsNotFulfilled();
+            Settings = (SettingsContainer)Serializer.Deserialize(TargetStream);
         }
 
         public static void Reset()
@@ -67,14 +100,6 @@ namespace Woofy.Settings
                 DefaultValueAttribute defaultValue = (DefaultValueAttribute)property.GetCustomAttributes(typeof(DefaultValueAttribute), false)[0];
                 property.SetValue(null, defaultValue.Value, null);
             }
-        }
-
-        public static void Load()
-        {
-            ThrowIfPreconditionsNotFulfilled();
-
-            TargetStream.Position = 0;
-            Settings = (SettingsContainer)Serializer.Deserialize(TargetStream);
         }
 
         #endregion
@@ -91,7 +116,6 @@ namespace Woofy.Settings
         protected static void InitializeTargetStream(Stream stream)
         {
             TargetStream = stream;
-            Reset();
         } 
         #endregion
 
@@ -132,6 +156,34 @@ namespace Woofy.Settings
             {
                 get { return this.minimizeToTray; }
                 set { this.minimizeToTray = value; }
+            }
+
+            private string defaultDownloadFolder;
+            public string DefaultDownloadFolder
+            {
+                get { return this.defaultDownloadFolder; }
+                set { this.defaultDownloadFolder = value; }
+            }
+
+            private bool automaticallyCheckForUpdates;
+            public bool AutomaticallyCheckForUpdates
+            {
+                get { return this.automaticallyCheckForUpdates; }
+                set { this.automaticallyCheckForUpdates = value; }
+            }
+
+            private string lastReportedWoofyVersion;
+            public string LastReportedWoofyVersion
+            {
+                get { return this.lastReportedWoofyVersion; }
+                set { this.lastReportedWoofyVersion = value; }
+            }
+
+            private string lastReportedComicPackVersion;
+            public string LastReportedComicPackVersion
+            {
+                get { return this.lastReportedComicPackVersion; }
+                set { this.lastReportedComicPackVersion = value; }
             }
 
         }

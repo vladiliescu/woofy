@@ -1,12 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 
-using Woofy.Properties;
+using Woofy.Settings;
 
 namespace Woofy.Gui
 {
@@ -18,26 +14,31 @@ namespace Woofy.Gui
             InitializeComponent();
 
             InitControls();
-        } 
+        }
         #endregion
 
         #region Helper Methods
         private void InitControls()
         {
-            if (!string.IsNullOrEmpty(Woofy.Properties.Settings.Default.ProxyAddress))
-            {
-                txtProxyAddress.Text = Woofy.Properties.Settings.Default.ProxyAddress;
-                txtProxyPort.Text = Woofy.Properties.Settings.Default.ProxyPort.ToString();
+            txtDefaultDownloadFolder.Text = UserSettings.DefaultDownloadFolder;
+            chkAutomaticallyCheckForUpdates.Checked = UserSettings.AutomaticallyCheckForUpdates;
+            chkMinimizeToTray.Checked = UserSettings.MinimizeToTray;
 
-                chkUseProxy.Checked = true;
-            }
-        } 
+            if (string.IsNullOrEmpty(UserSettings.ProxyAddress))
+                return;
+
+            txtProxyAddress.Text = UserSettings.ProxyAddress;
+            txtProxyPort.Text = UserSettings.ProxyPort.ToString();
+
+            chkUseProxy.Checked = true;
+
+        }
         #endregion
 
         #region Events - clicks
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            Woofy.Properties.Settings.Default.Reload();
+            UserSettings.LoadData();
             this.DialogResult = DialogResult.Cancel;
         }
 
@@ -48,16 +49,25 @@ namespace Woofy.Gui
 
             if (chkUseProxy.Checked)
             {
-                Woofy.Properties.Settings.Default.ProxyAddress = txtProxyAddress.Text;
-                Woofy.Properties.Settings.Default.ProxyPort = int.Parse(txtProxyPort.Text);
+                UserSettings.ProxyAddress = txtProxyAddress.Text;
+                
+                int tempProxyPort;
+                if (int.TryParse(txtProxyPort.Text, out tempProxyPort))
+                    UserSettings.ProxyPort = tempProxyPort;
+                else 
+                    UserSettings.ProxyPort = null;
             }
             else
             {
-                Woofy.Properties.Settings.Default.ProxyAddress = string.Empty;
-                Woofy.Properties.Settings.Default.ProxyPort = -1;
+                UserSettings.ProxyAddress = string.Empty;
+                UserSettings.ProxyPort = null;
             }
 
-            Woofy.Properties.Settings.Default.Save();
+            UserSettings.DefaultDownloadFolder = txtDefaultDownloadFolder.Text;
+            UserSettings.AutomaticallyCheckForUpdates = chkAutomaticallyCheckForUpdates.Checked;
+            UserSettings.MinimizeToTray = chkMinimizeToTray.Checked;
+
+            UserSettings.SaveData();
 
             this.DialogResult = DialogResult.OK;
         }
@@ -69,17 +79,17 @@ namespace Woofy.Gui
 
             if (folderBrowser.ShowDialog() == DialogResult.OK)
                 txtDefaultDownloadFolder.Text = folderBrowser.SelectedPath;
-        } 
+        }
         #endregion
 
         #region Events - chkUseProxy
         private void chkUseProxy_CheckedChanged(object sender, EventArgs e)
         {
-            lblAddress.Enabled = 
-                lblPort.Enabled = 
+            lblAddress.Enabled =
+                lblPort.Enabled =
                 txtProxyAddress.Enabled =
                 txtProxyPort.Enabled = chkUseProxy.Checked;
-        } 
+        }
         #endregion
 
         #region Events - Validation
@@ -90,7 +100,7 @@ namespace Woofy.Gui
                 errorProvider.SetError(txtProxyPort, "The proxy port must be a valid integer value.");
             else
                 errorProvider.SetError(txtProxyPort, null);
-        } 
+        }
         #endregion
     }
 }

@@ -1,21 +1,16 @@
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.IO;
 
 using Woofy.Core;
-using Woofy.Properties;
+using Woofy.Settings;
 
 namespace Woofy.Gui
 {
     public partial class TaskDetailsForm : Form
     {
         #region Instance Members
-        private ComicTasksController _tasksController;
+        private readonly ComicTasksController _tasksController;
         #endregion
 
         #region .ctor
@@ -32,12 +27,12 @@ namespace Woofy.Gui
         {
             cbComics.DataSource = ComicDefinition.GetAvailableComicDefinitions();
 
-            if (!string.IsNullOrEmpty(Woofy.Properties.Settings.Default.LastUsedComicInfoFile))
+            if (!string.IsNullOrEmpty(UserSettings.LastUsedComicDefinitionFile))
             {
                 int i = 0;
                 foreach (ComicDefinition comicInfo in cbComics.Items)
                 {
-                    if (comicInfo.ComicInfoFile.Equals(Woofy.Properties.Settings.Default.LastUsedComicInfoFile, StringComparison.OrdinalIgnoreCase))
+                    if (comicInfo.ComicInfoFile.Equals(UserSettings.LastUsedComicDefinitionFile, StringComparison.OrdinalIgnoreCase))
                     {
                         cbComics.SelectedIndex = i;
                         break;
@@ -47,10 +42,10 @@ namespace Woofy.Gui
                 }
             }
 
-            if (Woofy.Properties.Settings.Default.LastNumberOfComicsToDownload > 0)
+            if (UserSettings.LastNumberOfComicsToDownload.HasValue)
             {
                 rbDownloadLast.Checked = true;
-                numComicsToDownload.Value = Woofy.Properties.Settings.Default.LastNumberOfComicsToDownload;
+                numComicsToDownload.Value = (decimal)UserSettings.LastNumberOfComicsToDownload;
             }
             else
             {
@@ -96,7 +91,7 @@ namespace Woofy.Gui
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            Woofy.Properties.Settings.Default.Reload();
+            UserSettings.LoadData();
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)
@@ -111,20 +106,20 @@ namespace Woofy.Gui
         #region Helper Methods
         private void UpdateUserSettings()
         {
-            Woofy.Properties.Settings.Default.LastUsedComicInfoFile = ((ComicDefinition)cbComics.SelectedValue).ComicInfoFile;
+            UserSettings.LastUsedComicDefinitionFile = ((ComicDefinition)cbComics.SelectedValue).ComicInfoFile;
 
             if (rbDownloadOnlyNew.Checked)
-                Woofy.Properties.Settings.Default.LastNumberOfComicsToDownload = -1;
+                UserSettings.LastNumberOfComicsToDownload = null;
             else
-                Woofy.Properties.Settings.Default.LastNumberOfComicsToDownload = (long)numComicsToDownload.Value;
+                UserSettings.LastNumberOfComicsToDownload = (long)numComicsToDownload.Value;
 
-            Woofy.Properties.Settings.Default.Save();
+            UserSettings.SaveData();
         }
 
         private void UpdateDownloadFolder()
         {
             ComicDefinition comicInfo = (ComicDefinition)cbComics.SelectedValue;
-            txtDownloadFolder.Text = Path.Combine(Woofy.Properties.Settings.Default.DefaultDownloadFolder, comicInfo.FriendlyName);
+            txtDownloadFolder.Text = Path.Combine(UserSettings.DefaultDownloadFolder, comicInfo.FriendlyName);
         }
         #endregion
 

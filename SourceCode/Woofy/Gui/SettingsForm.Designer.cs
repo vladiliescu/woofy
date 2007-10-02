@@ -77,20 +77,16 @@ namespace Woofy.Gui
             // 
             // txtDefaultDownloadFolder
             // 
-            this.txtDefaultDownloadFolder.DataBindings.Add(new System.Windows.Forms.Binding("Text", global::Woofy.Properties.Settings.Default, "DefaultDownloadFolder", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.txtDefaultDownloadFolder.Location = new System.Drawing.Point(20, 33);
             this.txtDefaultDownloadFolder.Margin = new System.Windows.Forms.Padding(2);
             this.txtDefaultDownloadFolder.Name = "txtDefaultDownloadFolder";
             this.txtDefaultDownloadFolder.Size = new System.Drawing.Size(335, 20);
             this.txtDefaultDownloadFolder.TabIndex = 1;
-            this.txtDefaultDownloadFolder.Text = global::Woofy.Properties.Settings.Default.DefaultDownloadFolder;
             // 
             // chkAutomaticallyCheckForUpdates
             // 
             this.chkAutomaticallyCheckForUpdates.AutoSize = true;
-            this.chkAutomaticallyCheckForUpdates.Checked = global::Woofy.Properties.Settings.Default.AutomaticallyCheckForUpdates;
             this.chkAutomaticallyCheckForUpdates.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkAutomaticallyCheckForUpdates.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Woofy.Properties.Settings.Default, "AutomaticallyCheckForUpdates", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.chkAutomaticallyCheckForUpdates.Location = new System.Drawing.Point(257, 60);
             this.chkAutomaticallyCheckForUpdates.Name = "chkAutomaticallyCheckForUpdates";
             this.chkAutomaticallyCheckForUpdates.Size = new System.Drawing.Size(177, 17);
@@ -112,9 +108,7 @@ namespace Woofy.Gui
             // chkMinimizeToTray
             // 
             this.chkMinimizeToTray.AutoSize = true;
-            this.chkMinimizeToTray.Checked = global::Woofy.Properties.Settings.Default.MinimizeToTray;
             this.chkMinimizeToTray.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkMinimizeToTray.DataBindings.Add(new System.Windows.Forms.Binding("Checked", global::Woofy.Properties.Settings.Default, "MinimizeToTray", true, System.Windows.Forms.DataSourceUpdateMode.OnPropertyChanged));
             this.chkMinimizeToTray.Location = new System.Drawing.Point(20, 58);
             this.chkMinimizeToTray.Name = "chkMinimizeToTray";
             this.chkMinimizeToTray.Size = new System.Drawing.Size(98, 17);

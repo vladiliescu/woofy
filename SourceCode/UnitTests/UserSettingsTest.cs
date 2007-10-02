@@ -20,9 +20,11 @@ namespace UnitTests
         public void TestProperlySavesAndLoadsAllSettings()
         {
             string proxyAddress = "proxy address";
-            int proxyPort = 2090;
+            int? proxyPort = 2090;
             bool minimizeToTray = true;
             long? lastNumberOfComicsToDownload = 5;
+            string defaultDownloadFolder = "default download folder";
+            bool automaticallyCheckForUpdates = false;
 
             MemoryStream stream = new MemoryStream();
             UserSettingsMemory.InitializeStream(stream);
@@ -31,22 +33,28 @@ namespace UnitTests
             UserSettingsMemory.ProxyPort = proxyPort;
             UserSettingsMemory.MinimizeToTray = minimizeToTray;
             UserSettingsMemory.LastNumberOfComicsToDownload = lastNumberOfComicsToDownload;
+            UserSettingsMemory.DefaultDownloadFolder = defaultDownloadFolder;
+            UserSettingsMemory.AutomaticallyCheckForUpdates = automaticallyCheckForUpdates;
 
             stream.Position = 0;
-            UserSettingsMemory.Save();
+            UserSettingsMemory.SaveData();
 
             UserSettingsMemory.ProxyAddress = "seriously";
             UserSettingsMemory.ProxyPort = 12;
             UserSettingsMemory.MinimizeToTray = false;
             UserSettingsMemory.LastNumberOfComicsToDownload = 1;
+            UserSettingsMemory.DefaultDownloadFolder = "aaaa";
+            UserSettingsMemory.AutomaticallyCheckForUpdates = true;
 
             stream.Position = 0;
-            UserSettingsMemory.Load();
+            UserSettingsMemory.LoadData();
 
             Assert.AreEqual(proxyAddress, UserSettingsMemory.ProxyAddress);
             Assert.AreEqual(proxyPort, UserSettingsMemory.ProxyPort);
             Assert.AreEqual(minimizeToTray, UserSettingsMemory.MinimizeToTray);
             Assert.AreEqual(lastNumberOfComicsToDownload, UserSettingsMemory.LastNumberOfComicsToDownload);
+            Assert.AreEqual(defaultDownloadFolder, UserSettingsMemory.DefaultDownloadFolder);
+            Assert.AreEqual(automaticallyCheckForUpdates, UserSettingsMemory.AutomaticallyCheckForUpdates);
         }
 
         [Test]
@@ -72,18 +80,6 @@ namespace UnitTests
         }
 
         [Test]
-        public void TestInitializeStreamResetsMembers()
-        {
-            MemoryStream stream = new MemoryStream();
-            UserSettingsMemory.InitializeStream(stream);
-
-            Assert.IsNull(UserSettingsMemory.LastNumberOfComicsToDownload);
-            Assert.IsNull(UserSettingsMemory.ProxyAddress);
-            Assert.IsNull(UserSettingsMemory.ProxyPort);
-            Assert.IsTrue(UserSettingsMemory.MinimizeToTray);
-        }
-
-        [Test]
         public void TestDoesntCrashOnMissingMember()
         {
             string savedSettings = @"<?xml version=""1.0""?>
@@ -95,7 +91,7 @@ namespace UnitTests
 
             MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(savedSettings));
             UserSettingsMemory.InitializeStream(stream);
-            UserSettingsBase.Load();
+            UserSettingsMemory.LoadData();
 
             Assert.AreEqual(5, UserSettingsMemory.LastNumberOfComicsToDownload);
             Assert.AreEqual("proxy address", UserSettingsMemory.ProxyAddress);
@@ -116,7 +112,7 @@ namespace UnitTests
 
             MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(savedSettings));
             UserSettingsMemory.InitializeStream(stream);
-            UserSettingsMemory.Load();
+            UserSettingsMemory.LoadData();
 
             Assert.AreEqual(5, UserSettingsMemory.LastNumberOfComicsToDownload);
             Assert.AreEqual("proxy address", UserSettingsMemory.ProxyAddress);

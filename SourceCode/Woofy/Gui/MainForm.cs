@@ -4,6 +4,7 @@ using System.Windows.Forms;
 
 using Woofy.Core;
 using Woofy.Properties;
+using Woofy.Settings;
 using Woofy.Updates;
 
 namespace Woofy.Gui
@@ -28,14 +29,14 @@ namespace Woofy.Gui
         {
             InitControls();
 
-            if (Woofy.Properties.Settings.Default.AutomaticallyCheckForUpdates)
+            if (UserSettings.AutomaticallyCheckForUpdates)
                 //UpdateController.CheckForUpdatesAsync(this, false);
                 UpdateManager.CheckForUpdatesAsync(false, this);
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
         {
-            if (!Woofy.Properties.Settings.Default.MinimizeToTray)
+            if (!UserSettings.MinimizeToTray)
                 return;
 
             if (this.WindowState == FormWindowState.Minimized)
@@ -76,7 +77,7 @@ namespace Woofy.Gui
         private void DisplayDownloadOutcome(DataGridViewRow row, DownloadOutcome downloadOutcome, string url)
         {
             Bitmap icon;
-            string toolTip = "";
+            string toolTip;
 
             switch (downloadOutcome)
             {

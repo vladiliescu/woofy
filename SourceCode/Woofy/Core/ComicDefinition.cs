@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Xml;
 using System.IO;
 
 using Woofy.Exceptions;
-using Woofy.Properties;
+using Woofy.Settings;
 
 namespace Woofy.Core
 {
@@ -175,7 +174,7 @@ namespace Woofy.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ComicInfo"/> class.
+        /// Initializes a new instance of the <see cref="ComicDefinition"/> class.
         /// </summary>
         /// <param name="comicInfoFile">Path to an xml file containing the data necessary to create a new instance.</param>
         public ComicDefinition(string comicInfoFile)
@@ -193,8 +192,7 @@ namespace Woofy.Core
         {
             List<ComicDefinition> availableComicInfos = new List<ComicDefinition>();
 
-            string comicInfosFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Woofy.Properties.Settings.Default.ComicInfosFolderName);
-            foreach (string comicInfoFile in Directory.GetFiles(comicInfosFolder, "*.xml"))
+            foreach (string comicInfoFile in Directory.GetFiles(ApplicationSettings.ComicDefinitionsFolder, "*.xml"))
             {
                 availableComicInfos.Add(new ComicDefinition(comicInfoFile));
             }

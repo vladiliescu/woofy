@@ -16,6 +16,7 @@ namespace Woofy
         [STAThread]
         static void Main()
         {
+            UserSettings.Initialize();
             //UserSettingsMemory.LastNumberOfComicsToDownload = 1;
 
             //if we have just upgraded the application, then get its settings up to date

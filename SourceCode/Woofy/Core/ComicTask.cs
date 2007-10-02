@@ -4,6 +4,7 @@ using System.Data.SQLite;
 using System.Diagnostics;
 
 using Woofy.Properties;
+using Woofy.Settings;
 
 namespace Woofy.Core
 {
@@ -101,7 +102,7 @@ namespace Woofy.Core
 
         static ComicTask()
         {
-            SQLiteConnectionStringBuilder connectionStringBuilder = new SQLiteConnectionStringBuilder(Woofy.Properties.Settings.Default.ConnectionString);
+            SQLiteConnectionStringBuilder connectionStringBuilder = new SQLiteConnectionStringBuilder(ApplicationSettings.DatabaseConnectionString);
             connectionStringBuilder.DataSource = AppDomain.CurrentDomain.BaseDirectory + connectionStringBuilder.DataSource;
             ConnectionString = connectionStringBuilder.ConnectionString;
         }

@@ -1,15 +1,13 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Net;
 using System.Windows.Forms;
+using System.IO;
+using System.Diagnostics;
 
 using Woofy.Core;
 using Woofy.Settings;
 using Woofy.Gui;
-using System.IO;
-using System.Diagnostics;
 
 namespace Woofy.Updates
 {
@@ -19,7 +17,7 @@ namespace Woofy.Updates
         private static bool initiatedByUser;
         private static MainForm mainForm;
         private static DownloadProgressForm downloadProgressForm;
-        private static FileDownloader fileDownloader = new FileDownloader(Path.GetTempPath());
+        private static readonly FileDownloader fileDownloader = new FileDownloader(Path.GetTempPath());
 
         #region .ctor
         static UpdateManager()
@@ -48,7 +46,7 @@ namespace Woofy.Updates
         private static void CheckForUpdates()
         {
             WebRequest request = WebConnectionFactory.GetNewWebRequestInstance(ApplicationSettings.UpdateDescriptionFileAddress);
-            Stream responseStream = null;
+            Stream responseStream;
 
             try
             {
@@ -58,7 +56,7 @@ namespace Woofy.Updates
             {
                 Logger.LogException(ex);
                 if (initiatedByUser)
-                    mainForm.DisplayMessageBox("Unable to connect.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    mainForm.DisplayMessageBox("Unable to retrieve update information.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -92,7 +90,7 @@ namespace Woofy.Updates
                     return;
                 }
             }
-            UserSettings.Save();
+            UserSettings.SaveData();
 
             UpgradeToRelease(release);
         }
