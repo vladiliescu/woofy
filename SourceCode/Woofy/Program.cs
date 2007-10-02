@@ -17,20 +17,10 @@ namespace Woofy
         static void Main()
         {
             UserSettings.Initialize();
-            //UserSettingsMemory.LastNumberOfComicsToDownload = 1;
 
-            //if we have just upgraded the application, then get its settings up to date
             //TODO:conditia e gresita
-            //if (Woofy.Properties.Settings.Default.GetPreviousVersion("MinimizeToTray") != null)
-            //    Woofy.Properties.Settings.Default.Upgrade();
 
-            RegistryKey internetSettings = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Internet Settings");
-            int proxyEnabled = (int)internetSettings.GetValue("ProxyEnable", 0);
-            if (proxyEnabled == 1)
-            {
-                string proxyAddress = (string)internetSettings.GetValue("ProxyServer");
-                //(?<proxyAddress>[\w]*(://)?[\w.]*):?(?<proxyPort>[0-9]*)
-            }
+            
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
