@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<comicInfo friendlyName="Past Expiry" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
+    <startUrl><![CDATA[http://pastexpiry.blogspot.com/]]></startUrl>
+    <firstIssue><![CDATA[http://photos1.blogger.com/blogger/1837/3090/1600/toon329.jpg]]></firstIssue>
+    <comicRegex><![CDATA[http\://[\w]*?\.blogger\.com/[\w_/-]*?toon[0-9]*.(gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\sclass='blog\-pager\-older\-link'\shref='http\://pastexpiry\.blogspot\.com/search\?updated\-max=[0-9]{4}\-[0-9]{2}\-[0-9]{2}[\w_%-]*&max\-results=[0-9]*']]></backButtonRegex>
+</comicInfo>
