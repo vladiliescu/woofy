@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net;
+
 using MbUnit.Framework;
+
 using Woofy.Core;
+using Woofy.Settings;
 
 namespace UnitTests
 {
@@ -12,7 +14,6 @@ namespace UnitTests
     public class ComicDefinitionsTest
     {  
         private static readonly string ComicsDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Comics");
-        private static readonly string ComicInfosDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ComicInfos");
         private const int ComicsToDownload = 5;
 
         [SetUp]
@@ -34,7 +35,7 @@ namespace UnitTests
             [UsingFactories("ComicInfos")] string comicInfoFile
             )
         {
-            comicInfoFile = Path.Combine(ComicInfosDirectory, comicInfoFile);
+            comicInfoFile = Path.Combine(ApplicationSettings.ComicDefinitionsFolder, comicInfoFile);
 
             ComicDefinition comicInfo = new ComicDefinition(comicInfoFile);
             CountingFileDownloader comicsDownloaderStub = new CountingFileDownloader();
@@ -55,7 +56,7 @@ namespace UnitTests
             [UsingFactories("ComicInfos")] string comicInfoFile
             )
         {
-            comicInfoFile = Path.Combine(ComicInfosDirectory, comicInfoFile);
+            comicInfoFile = Path.Combine(ApplicationSettings.ComicDefinitionsFolder, comicInfoFile);
 
             ComicDefinition comicInfo = new ComicDefinition(comicInfoFile);
             CountingFileDownloader comicsDownloaderStub = new CountingFileDownloader();
@@ -70,7 +71,7 @@ namespace UnitTests
         [Factory(typeof(string))]
         public IEnumerable<string> ComicInfos()
         {
-            foreach (string comicInfoFile in Directory.GetFiles(ComicInfosDirectory, "*.*"))
+            foreach (string comicInfoFile in Directory.GetFiles(ApplicationSettings.ComicDefinitionsFolder, "*.*"))
                 yield return Path.GetFileName(comicInfoFile);
         }
     }

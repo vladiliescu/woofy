@@ -184,18 +184,18 @@
     <!--Prepare the files to be included in the setup kit-->
     <ItemGroup Condition="'$(Configuration)' == 'Release'">
         <ApplicationFiles Include="bin\$(Configuration)\*.*" Exclude="bin\$(Configuration)\*.vshost.*;" />
-        <ComicInfos Include="bin\$(Configuration)\ComicInfos\*.xml" />
+        <ComicDefinitions Include="bin\$(Configuration)\ComicDefinitions\*.xml" />
         <AllFiles Include="bin\$(Configuration)\**\*.*" />
     </ItemGroup>
     <ItemGroup>
         <ComicDefinitionFiles Include="..\ComicDefinitions\*.xml" />
     </ItemGroup>
-    
+
     <Target Name="BeforeBuild">
-        <Copy SourceFiles="@(ComicDefinitionFiles)" DestinationFolder="bin\$(Configuration)\ComicInfos" />
+        <Copy SourceFiles="@(ComicDefinitionFiles)" DestinationFolder="bin\$(Configuration)\ComicDefinitions" />
     </Target>
     <Target Name="AfterBuild" Condition="'$(Configuration)' == 'Release'">
-        <Copy SourceFiles="@(ComicInfos)" DestinationFolder="..\..\SetupKit\Files\ComicInfos" />
+        <Copy SourceFiles="@(ComicDefinitions)" DestinationFolder="..\..\SetupKit\Files\ComicDefinitions" />
         <Copy SourceFiles="@(ApplicationFiles)" DestinationFolder="..\..\SetupKit\Files" />
         <Zip Files="@(AllFiles)" ZipFileName="..\..\SetupKit\Woofy-version.zip" WorkingDirectory="bin\$(Configuration)" />
         <Exec Command="d:\programming\nsis\makensis.exe ..\..\SetupKit\setup.nsi" />
