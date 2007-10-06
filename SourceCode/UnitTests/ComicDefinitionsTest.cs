@@ -71,8 +71,13 @@ namespace UnitTests
         [Factory(typeof(string))]
         public IEnumerable<string> ComicInfos()
         {
+            //int i = 0;
             foreach (string comicInfoFile in Directory.GetFiles(ApplicationSettings.ComicDefinitionsFolder, "*.*"))
-                yield return Path.GetFileName(comicInfoFile);
+            {
+                //i++;
+                //if (i > 14)
+                    yield return Path.GetFileName(comicInfoFile);
+            }
         }
     }
 }

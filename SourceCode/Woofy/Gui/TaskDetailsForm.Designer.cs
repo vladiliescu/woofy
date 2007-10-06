@@ -67,7 +67,7 @@ namespace Woofy.Gui
             label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(40, 13);
-            label2.TabIndex = 5;
+            label2.TabIndex = 7;
             label2.Text = "comics";
             // 
             // cbComics
@@ -102,7 +102,7 @@ namespace Woofy.Gui
             0});
             this.numComicsToDownload.Name = "numComicsToDownload";
             this.numComicsToDownload.Size = new System.Drawing.Size(46, 20);
-            this.numComicsToDownload.TabIndex = 4;
+            this.numComicsToDownload.TabIndex = 6;
             this.numComicsToDownload.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numComicsToDownload.Value = new decimal(new int[] {
             1,
@@ -118,7 +118,7 @@ namespace Woofy.Gui
             this.btnOk.Margin = new System.Windows.Forms.Padding(2);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
-            this.btnOk.TabIndex = 6;
+            this.btnOk.TabIndex = 11;
             this.btnOk.Text = "Ok";
             this.btnOk.UseVisualStyleBackColor = true;
             this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
@@ -131,7 +131,7 @@ namespace Woofy.Gui
             this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 7;
+            this.btnCancel.TabIndex = 12;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
@@ -144,7 +144,7 @@ namespace Woofy.Gui
             this.rbDownloadOnlyNew.Margin = new System.Windows.Forms.Padding(2);
             this.rbDownloadOnlyNew.Name = "rbDownloadOnlyNew";
             this.rbDownloadOnlyNew.Size = new System.Drawing.Size(137, 17);
-            this.rbDownloadOnlyNew.TabIndex = 2;
+            this.rbDownloadOnlyNew.TabIndex = 4;
             this.rbDownloadOnlyNew.TabStop = true;
             this.rbDownloadOnlyNew.Text = "Download latest comics";
             this.rbDownloadOnlyNew.UseVisualStyleBackColor = true;
@@ -157,7 +157,7 @@ namespace Woofy.Gui
             this.rbDownloadLast.Margin = new System.Windows.Forms.Padding(2);
             this.rbDownloadLast.Name = "rbDownloadLast";
             this.rbDownloadLast.Size = new System.Drawing.Size(92, 17);
-            this.rbDownloadLast.TabIndex = 3;
+            this.rbDownloadLast.TabIndex = 5;
             this.rbDownloadLast.Text = "Download last";
             this.rbDownloadLast.UseVisualStyleBackColor = true;
             // 
@@ -204,7 +204,7 @@ namespace Woofy.Gui
             this.chkOverrideStartUrl.Margin = new System.Windows.Forms.Padding(2);
             this.chkOverrideStartUrl.Name = "chkOverrideStartUrl";
             this.chkOverrideStartUrl.Size = new System.Drawing.Size(103, 17);
-            this.chkOverrideStartUrl.TabIndex = 11;
+            this.chkOverrideStartUrl.TabIndex = 2;
             this.chkOverrideStartUrl.Text = "Override start url";
             this.chkOverrideStartUrl.UseVisualStyleBackColor = true;
             this.chkOverrideStartUrl.CheckedChanged += new System.EventHandler(this.chkOverrideStartUrl_CheckedChanged);
@@ -218,7 +218,7 @@ namespace Woofy.Gui
             this.txtOverrideStartUrl.Margin = new System.Windows.Forms.Padding(2);
             this.txtOverrideStartUrl.Name = "txtOverrideStartUrl";
             this.txtOverrideStartUrl.Size = new System.Drawing.Size(396, 20);
-            this.txtOverrideStartUrl.TabIndex = 12;
+            this.txtOverrideStartUrl.TabIndex = 3;
             // 
             // TaskDetailsForm
             // 
