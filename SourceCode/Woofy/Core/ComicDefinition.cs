@@ -101,13 +101,13 @@ namespace Woofy.Core
             get { return _allowMultipleStrips; }
         }
 
-        private bool useRootUrl;
+        private string rootUrl;
         /// <summary>
-        /// Specifies whether we should use the root path of start url when combining it with relative content.
+        /// Returns the root path that should be combined with relative content.
         /// </summary>
-        public bool UseRootUrl
+        public string RootUrl
         {
-            get { return useRootUrl; }
+            get { return rootUrl; }
         }
 
 
@@ -140,10 +140,8 @@ namespace Woofy.Core
 
                 string allowMissingStrips = reader.GetAttribute("allowMissingStrips");
                 string allowMultipleStrips = reader.GetAttribute("allowMultipleStrips");
-                string useRootUrl = reader.GetAttribute("useRootUrl");
                 bool.TryParse(allowMissingStrips, out _allowMissingStrips);
                 bool.TryParse(allowMultipleStrips, out _allowMultipleStrips);
-                bool.TryParse(useRootUrl, out this.useRootUrl);
 
                 while (reader.Read())
                 {
@@ -163,6 +161,9 @@ namespace Woofy.Core
                             break;
                         case "latestPageRegex":
                             _latestPageRegex = reader.ReadElementContentAsString();
+                            break;
+                        case "rootUrl":
+                            this.rootUrl = reader.ReadElementContentAsString();
                             break;
 
                     }

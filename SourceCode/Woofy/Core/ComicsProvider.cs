@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Net;
 using System.Threading;
-
-using Woofy.Properties;
 
 namespace Woofy.Core
 {
@@ -36,7 +33,7 @@ namespace Woofy.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="ComicsProvider"/> class.
         /// </summary>
-        /// <param name="comicInfo">An instance of the <see cref="ComicInfo"/> class, used to determine how to get the comic links.</param>
+        /// <param name="comicInfo">An instance of the <see cref="ComicDefinition"/> class, used to determine how to get the comic links.</param>
         /// <param name="downloadFolder">The folder to which the comics should be downloaded.</param>
         public ComicsProvider(ComicDefinition comicInfo, string downloadFolder)
             : this(comicInfo, new FileDownloader(downloadFolder))
@@ -85,13 +82,9 @@ namespace Woofy.Core
                     properStartUrl = GetProperStartUrl(startUrl, _comicInfo.LatestPageRegex);
                 else
                     properStartUrl = startUrl;
-                string rootUrl = _comicInfo.UseRootUrl ? WebPath.GetRootPath(_comicInfo.StartUrl) : _comicInfo.StartUrl;
+                string rootUrl = string.IsNullOrEmpty(_comicInfo.RootUrl) ? _comicInfo.StartUrl : _comicInfo.RootUrl;
 
                 string currentUrl = properStartUrl;
-                bool fileAlreadyDownloaded = false;
-                string pageContent;
-                string[] comicLinks;
-                string backButtonLink;
 
                 for (int i = 0; i < comicsToDownload || comicsToDownload == ComicsProvider.AllAvailableComics; i++)
                 {
@@ -105,24 +98,25 @@ namespace Woofy.Core
 
                     Logger.Debug("Visiting page {0}.", currentUrl);
 
-                    pageContent = _client.DownloadString(currentUrl);
+                    string pageContent = _client.DownloadString(currentUrl);
 
                     //I pass startUrl instead of properStartUrl because properStartUrlMight be something like http://www.website.com/comic/20070820, and WebPath will think it's a folder (damn mod_rewrite) and combine it with the captured link (e.g. http://www.website.com/comic/20070820/comic/2007/08/18).
-                    comicLinks = RetrieveComicLinksFromPage(pageContent, rootUrl, _comicInfo);
-                    backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, rootUrl, _comicInfo);
+                    string[] comicLinks = RetrieveComicLinksFromPage(pageContent, rootUrl, _comicInfo);
+                    string backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, rootUrl, _comicInfo);
 
                     if (!MatchedLinksObeyRules(comicLinks, _comicInfo.AllowMissingStrips, _comicInfo.AllowMultipleStrips, ref downloadOutcome))
                         break;
 
                     foreach (string comicLink in comicLinks)
                     {
+                        bool fileAlreadyDownloaded;
                         _comicsDownloader.DownloadFile(comicLink, currentUrl, out fileAlreadyDownloaded);
+
+                        if (fileAlreadyDownloaded && comicsToDownload == ComicsProvider.AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
+                            break;
+
+                        OnDownloadComicCompleted(new DownloadStripCompletedEventArgs(i + 1, backButtonLink));
                     }
-
-                    if (fileAlreadyDownloaded && comicsToDownload == ComicsProvider.AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
-                        break;
-
-                    OnDownloadComicCompleted(new DownloadStripCompletedEventArgs(i + 1, backButtonLink));
 
                     if (string.IsNullOrEmpty(backButtonLink))
                         break;
@@ -315,7 +309,7 @@ namespace Woofy.Core
         #endregion
 
         #region DownloadComicCompleted Event
-        private object _downloadComicCompletedLock = new object();
+
         private event EventHandler<DownloadStripCompletedEventArgs> _downloadComicCompleted;
         /// <summary>
         /// Occurs when a single comic is downloaded.

@@ -19,10 +19,10 @@ namespace UnitTests
 <comicInfo friendlyName=""some friendly name"" 
             allowMultipleStrips=""true"" 
             allowMissingStrips=""false"" 
-            useRootUrl = ""false""
             author=""some author""
             authorEmail=""some author email"">
     <comicRegex><![CDATA[some comic regex]]></comicRegex>
+    <rootUrl><![CDATA[some root url]]</rootUrl>
     <firstIssue><![CDATA[some first issue url]]></firstIssue>
     <startUrl><![CDATA[some base url]]></startUrl>
     <backButtonRegex><![CDATA[some back button regex]]></backButtonRegex>
@@ -33,10 +33,10 @@ namespace UnitTests
             Assert.AreEqual("some friendly name", comicInfo.FriendlyName);
             Assert.AreEqual(true, comicInfo.AllowMultipleStrips);
             Assert.AreEqual(false, comicInfo.AllowMissingStrips);
-            Assert.AreEqual(false, comicInfo.UseRootUrl);
             Assert.AreEqual("some author", comicInfo.Author);
             Assert.AreEqual("some author email", comicInfo.AuthorEmail);
             Assert.AreEqual("some base url", comicInfo.StartUrl);
+            Assert.AreEqual("some root url", comicInfo.RootUrl);
             Assert.AreEqual("some first issue url", comicInfo.FirstIssue);
             Assert.AreEqual("some comic regex", comicInfo.ComicRegex);
             Assert.AreEqual("some back button regex", comicInfo.BackButtonRegex);
