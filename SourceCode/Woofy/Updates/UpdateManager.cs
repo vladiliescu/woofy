@@ -75,6 +75,7 @@ namespace Woofy.Updates
             if (release == updateDescription.Woofy[0])
             {
                 UserSettings.LastReportedWoofyVersion = release.VersionNumber;
+                UserSettings.SaveData();
                 if (mainForm.DisplayMessageBox(GetNewVersionText("Woofy", release), MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 {
                     DoCleanup();
@@ -84,13 +85,13 @@ namespace Woofy.Updates
             else if (release == updateDescription.ComicPack[0])
             {
                 UserSettings.LastReportedComicPackVersion = release.VersionNumber;
+                UserSettings.SaveData();
                 if (mainForm.DisplayMessageBox(GetNewVersionText("ComicPack", release), MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 {
                     DoCleanup();
                     return;
                 }
             }
-            UserSettings.SaveData();
 
             UpgradeToRelease(release);
         }

@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Text;
 using System.Xml;
 
 namespace Woofy.Updates
@@ -13,7 +12,7 @@ namespace Woofy.Updates
         #region .ctor
 
         /// <summary>
-        /// Initializes a new instance of <see cref="Releases"/>, based on a given <see cref="XmlReader"/>.
+        /// Initializes a new instance of <see cref="ReleaseCollection"/>, based on a given <see cref="XmlReader"/>.
         /// </summary>
         public ReleaseCollection(XmlReader reader)
         {
