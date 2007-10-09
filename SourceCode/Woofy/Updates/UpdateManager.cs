@@ -146,7 +146,7 @@ namespace Woofy.Updates
         private static string GetNewVersionText(string product, Release release)
         {
             string releaseDate = release.ReleaseDate.HasValue ? release.ReleaseDate.Value.ToString("d") : "";
-            return string.Format("A newer version of {0} ({1}) has been released on {2}. Would you like to upgrade?", product, release.VersionNumber, releaseDate);
+            return string.Format("A newer {0} version ({1}) has been released on {2}. Would you like to upgrade?", product, release.VersionNumber, releaseDate);
         }
 
         #region Callbacks

@@ -185,7 +185,7 @@
     <ItemGroup Condition="'$(Configuration)' == 'Release'">
         <ApplicationFiles Include="bin\$(Configuration)\*.*" Exclude="bin\$(Configuration)\*.vshost.*;" />
         <ComicDefinitions Include="bin\$(Configuration)\ComicDefinitions\*.xml" />
-        <AllFiles Include="bin\$(Configuration)\**\*.*" />
+        <AllFiles Include="bin\$(Configuration)\**\*.*"  Exclude="bin\$(Configuration)\*.vshost.*;" />
     </ItemGroup>
     <ItemGroup>
         <ComicDefinitionFiles Include="..\ComicDefinitions\*.xml" />

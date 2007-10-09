@@ -107,9 +107,10 @@ namespace Woofy.Core
                     if (!MatchedLinksObeyRules(comicLinks, _comicInfo.AllowMissingStrips, _comicInfo.AllowMultipleStrips, ref downloadOutcome))
                         break;
 
+                    bool fileAlreadyDownloaded = false;
                     foreach (string comicLink in comicLinks)
                     {
-                        bool fileAlreadyDownloaded;
+                        
                         _comicsDownloader.DownloadFile(comicLink, currentUrl, out fileAlreadyDownloaded);
 
                         if (fileAlreadyDownloaded && comicsToDownload == ComicsProvider.AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
@@ -117,6 +118,10 @@ namespace Woofy.Core
 
                         OnDownloadComicCompleted(new DownloadStripCompletedEventArgs(i + 1, backButtonLink));
                     }
+
+                    //HACK
+                    if (fileAlreadyDownloaded && comicsToDownload == ComicsProvider.AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
+                        break;
 
                     if (string.IsNullOrEmpty(backButtonLink))
                         break;
