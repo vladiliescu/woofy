@@ -35,11 +35,11 @@ namespace Woofy.Gui
             this.comicDefinitionsList = new System.Windows.Forms.ListView();
             this.txtOverrideStartUrl = new System.Windows.Forms.TextBox();
             this.chkOverrideStartUrl = new System.Windows.Forms.CheckBox();
-            this.eventsRichTextBox = new Woofy.Core.ExRichTextBox();
             this.startButton = new System.Windows.Forms.Button();
             this.closeButton = new System.Windows.Forms.Button();
             this.pauseButton = new System.Windows.Forms.Button();
             this.abortButton = new System.Windows.Forms.Button();
+            this.eventsRichTextBox = new Woofy.Core.ExRichTextBox();
             columnHeader1 = new System.Windows.Forms.ColumnHeader();
             columnHeader2 = new System.Windows.Forms.ColumnHeader();
             groupBox1 = new System.Windows.Forms.GroupBox();
@@ -51,12 +51,12 @@ namespace Woofy.Gui
             // columnHeader1
             // 
             columnHeader1.Text = "Comic";
-            columnHeader1.Width = 400;
+            columnHeader1.Width = 390;
             // 
             // columnHeader2
             // 
             columnHeader2.Text = "Definition Author";
-            columnHeader2.Width = 230;
+            columnHeader2.Width = 180;
             // 
             // groupBox1
             // 
@@ -67,7 +67,7 @@ namespace Woofy.Gui
             groupBox1.Controls.Add(this.chkOverrideStartUrl);
             groupBox1.Location = new System.Drawing.Point(12, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(648, 334);
+            groupBox1.Size = new System.Drawing.Size(608, 334);
             groupBox1.TabIndex = 15;
             groupBox1.TabStop = false;
             groupBox1.Text = "Test Selection";
@@ -88,7 +88,7 @@ namespace Woofy.Gui
             this.comicDefinitionsList.Location = new System.Drawing.Point(6, 19);
             this.comicDefinitionsList.MultiSelect = false;
             this.comicDefinitionsList.Name = "comicDefinitionsList";
-            this.comicDefinitionsList.Size = new System.Drawing.Size(636, 258);
+            this.comicDefinitionsList.Size = new System.Drawing.Size(596, 258);
             this.comicDefinitionsList.TabIndex = 7;
             this.comicDefinitionsList.UseCompatibleStateImageBehavior = false;
             this.comicDefinitionsList.View = System.Windows.Forms.View.Details;
@@ -102,7 +102,7 @@ namespace Woofy.Gui
             this.txtOverrideStartUrl.Location = new System.Drawing.Point(5, 303);
             this.txtOverrideStartUrl.Margin = new System.Windows.Forms.Padding(2);
             this.txtOverrideStartUrl.Name = "txtOverrideStartUrl";
-            this.txtOverrideStartUrl.Size = new System.Drawing.Size(637, 20);
+            this.txtOverrideStartUrl.Size = new System.Drawing.Size(597, 20);
             this.txtOverrideStartUrl.TabIndex = 14;
             // 
             // chkOverrideStartUrl
@@ -126,29 +126,15 @@ namespace Woofy.Gui
             groupBox2.Controls.Add(this.eventsRichTextBox);
             groupBox2.Location = new System.Drawing.Point(12, 352);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new System.Drawing.Size(648, 305);
+            groupBox2.Size = new System.Drawing.Size(608, 305);
             groupBox2.TabIndex = 16;
             groupBox2.TabStop = false;
             groupBox2.Text = "Output";
             // 
-            // eventsRichTextBox
-            // 
-            this.eventsRichTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.eventsRichTextBox.HiglightColor = Woofy.Core.RtfColor.White;
-            this.eventsRichTextBox.Location = new System.Drawing.Point(6, 19);
-            this.eventsRichTextBox.Name = "eventsRichTextBox";
-            this.eventsRichTextBox.ReadOnly = true;
-            this.eventsRichTextBox.Size = new System.Drawing.Size(636, 275);
-            this.eventsRichTextBox.TabIndex = 6;
-            this.eventsRichTextBox.Text = "";
-            this.eventsRichTextBox.TextColor = Woofy.Core.RtfColor.Black;
-            // 
             // startButton
             // 
             this.startButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.startButton.Location = new System.Drawing.Point(504, 663);
+            this.startButton.Location = new System.Drawing.Point(464, 663);
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(75, 23);
             this.startButton.TabIndex = 2;
@@ -160,7 +146,7 @@ namespace Woofy.Gui
             // 
             this.closeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.closeButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.closeButton.Location = new System.Drawing.Point(585, 663);
+            this.closeButton.Location = new System.Drawing.Point(545, 663);
             this.closeButton.Name = "closeButton";
             this.closeButton.Size = new System.Drawing.Size(75, 23);
             this.closeButton.TabIndex = 3;
@@ -171,7 +157,7 @@ namespace Woofy.Gui
             // pauseButton
             // 
             this.pauseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.pauseButton.Location = new System.Drawing.Point(504, 663);
+            this.pauseButton.Location = new System.Drawing.Point(464, 663);
             this.pauseButton.Name = "pauseButton";
             this.pauseButton.Size = new System.Drawing.Size(75, 23);
             this.pauseButton.TabIndex = 17;
@@ -184,7 +170,7 @@ namespace Woofy.Gui
             // 
             this.abortButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.abortButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.abortButton.Location = new System.Drawing.Point(585, 663);
+            this.abortButton.Location = new System.Drawing.Point(545, 663);
             this.abortButton.Name = "abortButton";
             this.abortButton.Size = new System.Drawing.Size(75, 23);
             this.abortButton.TabIndex = 18;
@@ -193,13 +179,25 @@ namespace Woofy.Gui
             this.abortButton.Visible = false;
             this.abortButton.Click += new System.EventHandler(this.abortButton_Click);
             // 
+            // eventsRichTextBox
+            // 
+            this.eventsRichTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.eventsRichTextBox.HiglightColor = Woofy.Core.RtfColor.White;
+            this.eventsRichTextBox.Location = new System.Drawing.Point(6, 19);
+            this.eventsRichTextBox.Name = "eventsRichTextBox";
+            this.eventsRichTextBox.ReadOnly = true;
+            this.eventsRichTextBox.Size = new System.Drawing.Size(596, 275);
+            this.eventsRichTextBox.TabIndex = 6;
+            this.eventsRichTextBox.Text = "";
+            this.eventsRichTextBox.TextColor = Woofy.Core.RtfColor.Black;
+            // 
             // DefinitionsDebugForm
             // 
-            this.AcceptButton = this.startButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.closeButton;
-            this.ClientSize = new System.Drawing.Size(672, 698);
+            this.ClientSize = new System.Drawing.Size(632, 698);
             this.Controls.Add(this.abortButton);
             this.Controls.Add(this.pauseButton);
             this.Controls.Add(groupBox2);
