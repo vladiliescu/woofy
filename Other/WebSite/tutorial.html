@@ -11,7 +11,7 @@ Released for free under a Creative Commons Attribution 2.5 License
 <meta name="keywords" content="tutorial woofy definition comicinfo webcomic comix download comic strip woofy" />
 <meta name="description" content="" />
 <link href="default.css" rel="stylesheet" type="text/css" />
-<link rel="shortcut icon" href="favicon.ico" >
+<link rel="shortcut icon" href="favicon.ico"  />
 </head>
 <body>
 <div id="header">
@@ -37,45 +37,52 @@ Released for free under a Creative Commons Attribution 2.5 License
 <p>Woofy's download algorithm is pretty much straight-forward: it visits a comic's web pages one by one, from the current strip to the first one, and it downloads the strips from each page.</p>
 
 <p>When visiting a page, it searches it in order to find a link to the comic strip, and a link to the next page. If either of those isn't found then it assumes that it has reached the first strip, so it stops and reports that the download has finished.</p>
+<p>Don't forget that you can use the <a href="images/scr_defdebugger.jpg">definition debugger</a> to better understand the way Woofy uses your custom definitions. It provides more information than when downloading a comic, plus it's way faster as it only checks the comic links and doesn't download them.</p>
 <hr />
 <h2>The structure of a comic definition</h2>
 
 <p>A comic definition consists of a single xml file, describing how Woofy should visit and download the comic, and it looks kinda like the following fragment:</p>
 
 <blockquote>
-<p>&lt;comicInfo friendlyName="..."&gt;<br />
+<p>&lt;comicInfo friendlyName="My Fabulous Comic. Seriously." allowMultipleStrips="false" allowMissingStrips="false" author="Pogonitch" authorEmail="pogo@helloworld.com" &gt;<br />
   &nbsp;&nbsp;&nbsp;&nbsp;&lt;startUrl&gt;&lt;![CDATA[...]]&gt;&lt;/startUrl&gt;<br />
   &nbsp;&nbsp;&nbsp;&nbsp;&lt;firstIssue&gt;&lt;![CDATA[...]]&gt;&lt;/firstIssue&gt;<br />
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;rootUrl&gt;&lt;![CDATA[...]]&gt;&lt;/rootUrl&gt;<br />
   &nbsp;&nbsp;&nbsp;&nbsp;&lt;comicRegex&gt;&lt;![CDATA[...]]&gt;&lt;/comicRegex&gt;<br />
   &nbsp;&nbsp;&nbsp;&nbsp;&lt;backButtonRegex&gt;&lt;![CDATA[...]]&gt;&lt;/backButtonRegex&gt;<br />
+  &nbsp;&nbsp;&nbsp;&nbsp;&lt;latestPageRegex&gt;&lt;![CDATA[...]]&gt;&lt;/latestPageRegex&gt;<br />
   &lt;/comicInfo&gt;</p>
 </blockquote>
 
 <p>Note that each xml element wraps its content in a <a target="_blank" href="http://en.wikipedia.org/wiki/Cdata">CDATA</a> region. This is because the content might contain angle brackets, and those would break the xml markup.</p>
 
-<p>Anyways, let's take each of these elements (and the one attribute) for a spin and see what they do:</p>
+<p>First, let's take a look at the attributes, in order to better understand how to use them:</p>
+<ul>
+    <li><strong>friendlyName</strong> - the comic's name, the one that Woofy will display in the comics list;</li>
+    <li><strong>allowMultipleStrips</strong> - false by default; use this in order to tell Woofy that it shouldn't stop downloading if several strips are found in the same page;</li>
+    <li><strong>allowMissingStrips</strong> - false by default;  use this in order to tell Woofy that it shouldn't stop downloading if a page contains no strips;</li>
+    <li><strong>author</strong> - the definition's author; it will appear in the About dialog;</li>
+    <li><strong>authorEmail</strong> - the definition author's email :)</li>
+</ul>
+
+<p>Now, let's see what each of the elements do:</p>
 
 <ul><li>
-friendlyName - the comic's name, the one that Woofy will display in the comics list;
+<strong>startUrl</strong> - the url at which to start looking for strips; it will usually be the comic's start page;
 </li><li>
-startUrl - the url at which to start looking for strips; it will usually be the comic's start page;
+<strong>firstIssue</strong> - this is the url to the comic's very first issue; Woofy will not consider this element, but it's being used in the automated tests, in order to determine whether Woofy can visit all the pages for that comic or it gets stuck somewhere; setting it is recommended.
+</li>
+<li><strong>rootUrl</strong> - the url with which to combine the relative comic/button paths; should be specified if the startUrl can't be used for this (see the "Looking for Group" definition for an example).</li>
+<li>
+<strong>comicRegex</strong> - this is where it gets interesting; in order to be able to retrieve a strip's link from a page, Woofy needs to know how the link looks like, so we describe it, using .NET <a target="_blank" href="http://en.wikipedia.org/wiki/Regular_expressions">regular expressions</a>;
 </li><li>
-firstIssue - this is the url to the comic's very first issue; Woofy will not consider this element, but it's being used in the automated tests, in order to determine whether Woofy can visit all the pages for that comic or it gets stuck somewhere; setting it is recommended.
-</li><li>
-comicRegex - this is where it gets interesting; in order to be able to retrieve a strip's link from a page, Woofy needs to know how the link looks like, so we describe it, using .NET <a target="_blank" href="http://en.wikipedia.org/wiki/Regular_expressions">regular expressions</a>;
-</li><li>
-backButtonRegex - a regular expression describing how the link to the previous page looks like.
-</li></ul>
+<strong>backButtonRegex</strong> - a regular expression describing how the link to the previous page looks like.
+</li>
+<li><strong>latestPageRegex</strong> - a regular expression describing the link to the comic's latest page; this should be used when the comic doesn't have a fixed page displaying the latest strip, but instead offers a link to the latest strip in the startUrl.</li>
+</ul>
 
-<p>Note that the <b>comicRegex</b> and <b>backButtonRegex</b> elements allow the use of two grouping constructs: 
-<ul><li>
-content - used to wrap the actual link in a wider expression;
-</li><li>
-contentToBeMerged - used to wrap a fragment of the desired link; the fragment will be merged with the <b>startUrl</b> attribute, in order to obtain the full link.
-</li></ul>
-</p>
+<p>Note that the <b>comicRegex</b>, <b>backButtonRegex</b> and <strong>latestPageRegex</strong> elements allow the use of the <strong>content</strong> grouping construct, in order to wrap the actual link contained in a wider expression (see the "Least I Could Do" definition for an example).</p>
 
-<p>You should NOT use both grouping constructs in the same expression.</p>
 <hr />
 <h2>Building a comic definition from scratch</h2>
 
