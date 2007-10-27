@@ -4,5 +4,5 @@
     <rootUrl><![CDATA[http://lfgcomic.com]]></rootUrl>
     <firstIssue><![CDATA[http://archive.lfgcomic.com/lfg0001.gif]]></firstIssue>
     <comicRegex><![CDATA[http://archive\.lfgcomic\.com/lfg[0-9]{4}\.(gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref="(?<content>/page/[0-9]*)">[\s\n]*?<IMG\sSRC="/images/comic_32.jpg"]]></backButtonRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>/page/[0-9]*)">[\s\n]*?<IMG\sSRC="[a-z.:/A-Z]*?/comic_32.jpg"]]></backButtonRegex>
 </comicInfo>
