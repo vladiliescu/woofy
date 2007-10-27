@@ -77,6 +77,13 @@ namespace Woofy.Settings
             get { return Settings.LastReportedComicPackVersion; }
             set { Settings.LastReportedComicPackVersion = value; }
         }
+
+        [DefaultValue(false)]
+        public static bool CloseWhenAllComicsHaveFinished
+        {
+            get { return Settings.CloseWhenAllComicsHaveFinished; }
+            set { Settings.CloseWhenAllComicsHaveFinished = value; }
+        }
         #endregion
 
         #region Public Methods
@@ -184,6 +191,14 @@ namespace Woofy.Settings
                 get { return this.lastReportedComicPackVersion; }
                 set { this.lastReportedComicPackVersion = value; }
             }
+
+            private bool closeWhenAllComicsHaveFinished;
+            public bool CloseWhenAllComicsHaveFinished
+            {
+                get { return this.closeWhenAllComicsHaveFinished; }
+                set { this.closeWhenAllComicsHaveFinished = value; }
+            }
+
 
         }
         #endregion

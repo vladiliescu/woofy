@@ -23,6 +23,7 @@ namespace Woofy.Gui
             txtDefaultDownloadFolder.Text = UserSettings.DefaultDownloadFolder;
             chkAutomaticallyCheckForUpdates.Checked = UserSettings.AutomaticallyCheckForUpdates;
             chkMinimizeToTray.Checked = UserSettings.MinimizeToTray;
+            chkCloseWhenAllComicsFinish.Checked = UserSettings.CloseWhenAllComicsHaveFinished;
 
             if (string.IsNullOrEmpty(UserSettings.ProxyAddress))
                 return;
@@ -66,6 +67,7 @@ namespace Woofy.Gui
             UserSettings.DefaultDownloadFolder = txtDefaultDownloadFolder.Text;
             UserSettings.AutomaticallyCheckForUpdates = chkAutomaticallyCheckForUpdates.Checked;
             UserSettings.MinimizeToTray = chkMinimizeToTray.Checked;
+            UserSettings.CloseWhenAllComicsHaveFinished = chkCloseWhenAllComicsFinish.Checked;
 
             UserSettings.SaveData();
 

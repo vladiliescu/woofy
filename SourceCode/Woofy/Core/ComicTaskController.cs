@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 
 using Woofy.Properties;
+using Woofy.Settings;
 
 namespace Woofy.Core
 {
@@ -195,7 +196,7 @@ namespace Woofy.Core
         private void DownloadComicsCompletedCallback(object sender, DownloadCompletedEventArgs e)
         {
             _tasksGrid.Invoke(new MethodInvoker(
-                delegate()
+                delegate
                 {
                     ComicsProvider comicsProvider = (ComicsProvider)sender;
 
@@ -203,7 +204,7 @@ namespace Woofy.Core
                     if (index == -1)    //in case the task has already been deleted.
                         return;
 
-                    ComicTask task = (ComicTask)_tasks[index];
+                    ComicTask task = _tasks[index];
                     if (e.DownloadOutcome == DownloadOutcome.Cancelled)
                         task.Status = TaskStatus.Stopped;
                     else
@@ -212,6 +213,22 @@ namespace Woofy.Core
                     task.Delete();
 
                     ResetTasksBindings();
+
+                    if (!UserSettings.CloseWhenAllComicsHaveFinished)
+                        return;
+
+                    bool allTasksHaveFinished = true;
+                    foreach (ComicTask _task in _tasks)
+                    {
+                        if (_task.Status == TaskStatus.Running)
+                        {
+                            allTasksHaveFinished = false;
+                            break;
+                        }
+                    }
+
+                    if (allTasksHaveFinished)
+                        Application.Exit();
                 }
             ));
         }

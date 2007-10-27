@@ -31,6 +31,7 @@ namespace Woofy.Gui
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.GroupBox groupBox1;
             System.Windows.Forms.GroupBox groupBox2;
+            this.chkCloseWhenAllComicsFinish = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.txtDefaultDownloadFolder = new System.Windows.Forms.TextBox();
             this.chkAutomaticallyCheckForUpdates = new System.Windows.Forms.CheckBox();
@@ -53,6 +54,7 @@ namespace Woofy.Gui
             // 
             // groupBox1
             // 
+            groupBox1.Controls.Add(this.chkCloseWhenAllComicsFinish);
             groupBox1.Controls.Add(this.label1);
             groupBox1.Controls.Add(this.txtDefaultDownloadFolder);
             groupBox1.Controls.Add(this.chkAutomaticallyCheckForUpdates);
@@ -60,10 +62,20 @@ namespace Woofy.Gui
             groupBox1.Controls.Add(this.chkMinimizeToTray);
             groupBox1.Location = new System.Drawing.Point(12, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(455, 88);
+            groupBox1.Size = new System.Drawing.Size(455, 135);
             groupBox1.TabIndex = 13;
             groupBox1.TabStop = false;
             groupBox1.Text = "General Settings";
+            // 
+            // chkCloseWhenAllComicsFinish
+            // 
+            this.chkCloseWhenAllComicsFinish.AutoSize = true;
+            this.chkCloseWhenAllComicsFinish.Location = new System.Drawing.Point(20, 81);
+            this.chkCloseWhenAllComicsFinish.Name = "chkCloseWhenAllComicsFinish";
+            this.chkCloseWhenAllComicsFinish.Size = new System.Drawing.Size(196, 17);
+            this.chkCloseWhenAllComicsFinish.TabIndex = 13;
+            this.chkCloseWhenAllComicsFinish.Text = "Close when all comics have finished";
+            this.chkCloseWhenAllComicsFinish.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
@@ -86,8 +98,9 @@ namespace Woofy.Gui
             // chkAutomaticallyCheckForUpdates
             // 
             this.chkAutomaticallyCheckForUpdates.AutoSize = true;
+            this.chkAutomaticallyCheckForUpdates.Checked = true;
             this.chkAutomaticallyCheckForUpdates.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkAutomaticallyCheckForUpdates.Location = new System.Drawing.Point(257, 60);
+            this.chkAutomaticallyCheckForUpdates.Location = new System.Drawing.Point(20, 104);
             this.chkAutomaticallyCheckForUpdates.Name = "chkAutomaticallyCheckForUpdates";
             this.chkAutomaticallyCheckForUpdates.Size = new System.Drawing.Size(177, 17);
             this.chkAutomaticallyCheckForUpdates.TabIndex = 12;
@@ -108,6 +121,7 @@ namespace Woofy.Gui
             // chkMinimizeToTray
             // 
             this.chkMinimizeToTray.AutoSize = true;
+            this.chkMinimizeToTray.Checked = true;
             this.chkMinimizeToTray.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkMinimizeToTray.Location = new System.Drawing.Point(20, 58);
             this.chkMinimizeToTray.Name = "chkMinimizeToTray";
@@ -123,7 +137,7 @@ namespace Woofy.Gui
             groupBox2.Controls.Add(this.txtProxyPort);
             groupBox2.Controls.Add(this.lblAddress);
             groupBox2.Controls.Add(this.lblPort);
-            groupBox2.Location = new System.Drawing.Point(12, 106);
+            groupBox2.Location = new System.Drawing.Point(12, 153);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new System.Drawing.Size(455, 82);
             groupBox2.TabIndex = 14;
@@ -179,7 +193,7 @@ namespace Woofy.Gui
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(313, 207);
+            this.btnOK.Location = new System.Drawing.Point(313, 254);
             this.btnOK.Margin = new System.Windows.Forms.Padding(2);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
@@ -191,7 +205,7 @@ namespace Woofy.Gui
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(392, 207);
+            this.btnCancel.Location = new System.Drawing.Point(392, 254);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
@@ -210,7 +224,7 @@ namespace Woofy.Gui
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(478, 241);
+            this.ClientSize = new System.Drawing.Size(478, 287);
             this.Controls.Add(groupBox2);
             this.Controls.Add(groupBox1);
             this.Controls.Add(this.btnCancel);
@@ -248,5 +262,6 @@ namespace Woofy.Gui
         private System.Windows.Forms.ErrorProvider errorProvider;
         private System.Windows.Forms.CheckBox chkMinimizeToTray;
         private System.Windows.Forms.CheckBox chkAutomaticallyCheckForUpdates;
+        private System.Windows.Forms.CheckBox chkCloseWhenAllComicsFinish;
     }
 }
