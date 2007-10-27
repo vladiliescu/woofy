@@ -3,7 +3,7 @@ SetCompressor bzip2
 # Defines
 !define NAME "Woofy"
 !define REGKEY "SOFTWARE\${NAME}"
-!define VERSION 0.4b
+!define VERSION 0.4.1
 !define COMPANY "Vlad Iliescu"
 !define URL "http://woofy.sourceforge.net"
 
@@ -84,13 +84,10 @@ Section Woofy SEC0000
     File Files\Woofy.exe
     File Files\Woofy.exe.config
 
-    SetOutPath $INSTDIR\ComicInfos
+    SetOutPath $INSTDIR\ComicDefinitions
     SetOverwrite on
-    File /r Files\ComicInfos\*
-    
-    SetOutPath $SMPROGRAMS\$StartMenuGroup
-    CreateShortcut "$SMPROGRAMS\$StartMenuGroup\$(^Name).lnk" $INSTDIR\Woofy.exe
-    
+    File /r Files\ComicDefinitions\*
+
     ExecWait '"$WINDIR\Microsoft.NET\Framework\v2.0.50727\ngen.exe" install "$INSTDIR\System.Data.SQLite.DLL"'
     ExecWait '"$WINDIR\Microsoft.NET\Framework\v2.0.50727\ngen.exe" install "$INSTDIR\log4net.dll"'
     ExecWait '"$WINDIR\Microsoft.NET\Framework\v2.0.50727\ngen.exe" install "$INSTDIR\Woofy.exe"'
@@ -111,6 +108,7 @@ Section -post SEC0002
     WriteUninstaller $INSTDIR\uninstall.exe
     !insertmacro MUI_STARTMENU_WRITE_BEGIN Application
     SetOutPath $SMPROGRAMS\$StartMenuGroup
+    CreateShortcut "$SMPROGRAMS\$StartMenuGroup\$(^Name).lnk" $INSTDIR\Woofy.exe
     CreateShortcut "$SMPROGRAMS\$StartMenuGroup\Uninstall.lnk" $INSTDIR\uninstall.exe
     !insertmacro MUI_STARTMENU_WRITE_END
 

@@ -90,7 +90,7 @@ Its main features are:
 		<Application_URLs>
 			<Application_Info_URL>http://woofy.sourceforge.net/</Application_Info_URL>
 			<Application_Order_URL />
-			<Application_Screenshot_URL>http://woofy.sourceforge.net/images/contextmenu.jpg</Application_Screenshot_URL>
+			<Application_Screenshot_URL>http://woofy.sourceforge.net/images/scr_contextmenu.jpg</Application_Screenshot_URL>
 			<Application_Icon_URL />
 			<Application_XML_File_URL>http://woofy.sourceforge.net/pad_file.xml</Application_XML_File_URL>
 		</Application_URLs>
