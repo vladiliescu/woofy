@@ -151,6 +151,9 @@
         <Compile Include="Updates\UpdateManager.cs" />
     </ItemGroup>
     <ItemGroup>
+        <Content Include="ComicDefinitions\definitionsLicense.txt">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </Content>
         <Content Include="license.txt">
             <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
         </Content>
@@ -184,13 +187,12 @@
     <!--Prepare the files to be included in the setup kit-->
     <ItemGroup Condition="'$(Configuration)' == 'Release'">
         <ApplicationFiles Include="bin\$(Configuration)\*.*" Exclude="bin\$(Configuration)\*.vshost.*;bin\$(Configuration)\*.settings" />
-        <ComicDefinitions Include="bin\$(Configuration)\ComicDefinitions\*.xml" />
-        <AllFiles Include="bin\$(Configuration)\**\*.*"  Exclude="bin\$(Configuration)\*.vshost.*;bin\$(Configuration)\*.settings" />
+        <ComicDefinitions Include="bin\$(Configuration)\ComicDefinitions\*.*" />
+        <AllFiles Include="bin\$(Configuration)\**\*.*" Exclude="bin\$(Configuration)\*.vshost.*;bin\$(Configuration)\*.settings" />
     </ItemGroup>
     <ItemGroup>
         <ComicDefinitionFiles Include="..\ComicDefinitions\*.xml" />
     </ItemGroup>
-
     <Target Name="BeforeBuild">
         <Copy SourceFiles="@(ComicDefinitionFiles)" DestinationFolder="bin\$(Configuration)\ComicDefinitions" />
     </Target>
@@ -199,5 +201,6 @@
         <Copy SourceFiles="@(ApplicationFiles)" DestinationFolder="..\..\SetupKit\Files" />
         <Zip Files="@(AllFiles)" ZipFileName="..\..\SetupKit\Woofy-version-binaries.zip" WorkingDirectory="bin\$(Configuration)" />
         <Exec Command="d:\programming\nsis\makensis.exe ..\..\SetupKit\setup.nsi" />
+        <Exec Command="d:\programming\nsis\makensis.exe ..\..\SetupKit\setupComicPack.nsi" />
     </Target>
 </Project>
