@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Castlevania RPG" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
+    <startUrl><![CDATA[http://cvrpg.com/comics/latest.php]]></startUrl>
+    <firstIssue><![CDATA[http://cvrpg.com/images/comics/comic0.gif]]></firstIssue>
+    <comicRegex><![CDATA[../images/comics/comic[0-9]*.(gif|jpg|jpeg|png)"]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref='comic.php\?arch=comic&page=[0-9]*'><img\ssrc='../images/comicnav/nav-previous.gif']]></backButtonRegex>
+</comicInfo>

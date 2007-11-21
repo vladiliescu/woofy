@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Red Meat" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
+    <startUrl><![CDATA[http://www.redmeat.com/redmeat/current/index.html]]></startUrl>
+    <firstIssue><![CDATA[http://www.redmeat.com/redmeat/1996-06-10/index-1.gif]]></firstIssue>
+    <comicRegex><![CDATA[<img\ssrc="(?<content>index-1.(gif|jpg|jpeg|png))"]]></comicRegex>
+    <backButtonRegex><![CDATA[<div\sclass="previousLink">&laquo;\s<a\shref="(?<content>../2007-11-13/index.html)">previous</a></div>]]></backButtonRegex>
+</comicInfo>
