@@ -110,11 +110,19 @@ namespace UnitTests
         }
 
         [Test]
-        [ExpectedArgumentException]
-        public void TestThrowsIfFirstPathIsNotADirectory()
+        public void TestCombinesIfFirstPathIsNotADirectory()
         {
-            WebPath.Combine("http://woofy.sourceforge.net/favicon.ico", "favicon.ico");
-        } 
+            string resultedPath = WebPath.Combine("http://woofy.sourceforge.net/favicon.ico", "favicon4.ico");
+            Assert.AreEqual("http://woofy.sourceforge.net/favicon4.ico", resultedPath);
+        }
+
+        [Test]
+        public void ShouldCombineRelativePaths()
+        {
+            string resultedPath = WebPath.Combine("http://woofy.sourceforge.net/comics/mycomic", "../favicon.ico");
+            Assert.AreEqual("http://woofy.sourceforge.net/comics/favicon.ico", resultedPath);
+        }
+
         #endregion
 
         #region IsAbsolute

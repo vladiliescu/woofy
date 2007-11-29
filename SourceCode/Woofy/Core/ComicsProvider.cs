@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Net;
 using System.Threading;
+using System.Web;
 
 namespace Woofy.Core
 {
@@ -82,11 +83,11 @@ namespace Woofy.Core
                     properStartUrl = GetProperStartUrl(startUrl, _comicInfo.LatestPageRegex);
                 else
                     properStartUrl = startUrl;
-                string rootUrl = string.IsNullOrEmpty(_comicInfo.RootUrl) ? _comicInfo.StartUrl : _comicInfo.RootUrl;
+                string rootUrl = string.IsNullOrEmpty(_comicInfo.RootUrl) ? properStartUrl : _comicInfo.RootUrl;
 
                 string currentUrl = properStartUrl;
 
-                for (int i = 0; i < comicsToDownload || comicsToDownload == ComicsProvider.AllAvailableComics; i++)
+                for (int i = 0; i < comicsToDownload || comicsToDownload == AllAvailableComics; i++)
                 {
                     if (_isDownloadCancelled)
                     {
@@ -179,7 +180,7 @@ namespace Woofy.Core
         public static string[] RetrieveLinksFromPage(string pageContent, string currentUrl, string regex)
         {
             List<string> links = new List<string>();
-            string currentUrlDirectory = WebPath.GetDirectory(currentUrl);
+            string currentUrlDirectory = currentUrl;//WebPath.GetDirectory(currentUrl);
             string capturedContent;
             MatchCollection matches = Regex.Matches(pageContent, regex, RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace);
 
@@ -189,6 +190,9 @@ namespace Woofy.Core
                     capturedContent = match.Groups[ContentGroup].Value;
                 else
                     capturedContent = match.Value;
+
+                //just in case someone html-encoded the link; happened with Gone With The Blastwave;
+                capturedContent = HttpUtility.HtmlDecode(capturedContent);
 
                 if (WebPath.IsAbsolute(capturedContent))
                     links.Add(capturedContent);

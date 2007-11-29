@@ -22,11 +22,11 @@ namespace UnitTests
             author=""some author""
             authorEmail=""some author email"">
     <comicRegex><![CDATA[some comic regex]]></comicRegex>
-    <rootUrl><![CDATA[some root url]]</rootUrl>
+    <rootUrl><![CDATA[some root url]]></rootUrl>
     <firstIssue><![CDATA[some first issue url]]></firstIssue>
-    <startUrl><![CDATA[some base url]]></startUrl>
-    <backButtonRegex><![CDATA[some back button regex]]></backButtonRegex>
     <latestPageRegex><![CDATA[some latest page regex]]></latestPageRegex>
+    <startUrl><![CDATA[some base url]]></startUrl>
+    <backButtonRegex><![CDATA[some back button regex]]></backButtonRegex>    
 </comicInfo>
 ";
             ComicDefinition comicInfo = new ComicDefinition(new MemoryStream(Encoding.UTF8.GetBytes(comicInfoContent)));

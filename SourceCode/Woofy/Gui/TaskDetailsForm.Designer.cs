@@ -80,6 +80,7 @@ namespace Woofy.Gui
             this.errorProvider.SetIconPadding(this.cbComics, 3);
             this.cbComics.Location = new System.Drawing.Point(9, 26);
             this.cbComics.Margin = new System.Windows.Forms.Padding(2);
+            this.cbComics.MaxDropDownItems = 15;
             this.cbComics.Name = "cbComics";
             this.cbComics.Size = new System.Drawing.Size(396, 21);
             this.cbComics.TabIndex = 1;

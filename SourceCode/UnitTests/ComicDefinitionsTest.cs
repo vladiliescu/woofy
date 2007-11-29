@@ -51,7 +51,7 @@ namespace UnitTests
                     Assert.AreNotEqual(comics[i], comics[j], "individual comics");
         }
 
-        [CombinatorialTest]
+        //[CombinatorialTest]
         public void TestReachesFirstComic(
             [UsingFactories("ComicInfos")] string comicInfoFile
             )
@@ -72,7 +72,7 @@ namespace UnitTests
         public IEnumerable<string> ComicInfos()
         {
             //int i = 0;
-            foreach (string comicInfoFile in Directory.GetFiles(ApplicationSettings.ComicDefinitionsFolder, "*.*"))
+            foreach (string comicInfoFile in Directory.GetFiles(ApplicationSettings.ComicDefinitionsFolder, "*.xml"))
             {
                 //i++;
                 //if (i > 14)

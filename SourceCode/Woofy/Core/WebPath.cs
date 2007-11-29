@@ -48,16 +48,35 @@ namespace Woofy.Core
         public static string Combine(string path1, string path2)
         {
             string path1AsDirectory = GetDirectory(path1);
-            if (!path1AsDirectory.Equals(path1) && !path1AsDirectory.Equals(path1.Substring(0, path1.Length - 1)))
-                throw new ArgumentException("The first path must be a directory", "path1");
 
-            if (path1.EndsWith(DirectorySeparator))
-                path1 = path1.Substring(0, path1.Length - 1);
+            string protocol = "";
+            if (path1AsDirectory.StartsWith("http://"))
+                protocol = "http://";
+            else if (path1.StartsWith("https://"))
+                protocol = "https://";
 
-            if (path2.StartsWith(DirectorySeparator))
-                path2 = path2.Substring(1);
 
-            return string.Concat(path1, DirectorySeparator, path2);
+            string[] path1Tokens = path1AsDirectory.Replace(protocol, "")
+                                                    .Split(new string[] { DirectorySeparator }, StringSplitOptions.RemoveEmptyEntries);
+            string[] path2Tokens = path2.Split(new string[] { DirectorySeparator }, StringSplitOptions.RemoveEmptyEntries);
+
+            int i;
+            for (i = 0; i < path2Tokens.Length && path2Tokens[i] == ".."; i++)
+                ;
+
+            StringBuilder builder = new StringBuilder();
+            for (int j = 0; j < path1Tokens.Length - i; j++)
+            {
+                builder.AppendFormat("{0}/", path1Tokens[j]);
+            }
+
+            for (int j = i; j < path2Tokens.Length; j++)
+            {
+                builder.AppendFormat("{0}/", path2Tokens[j]);
+            }
+
+            return protocol + builder.ToString(0, builder.Length - 1);
+            //return string.Concat(path1, DirectorySeparator, path2);
         }
 
         /// <summary>
