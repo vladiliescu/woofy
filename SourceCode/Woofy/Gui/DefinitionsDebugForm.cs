@@ -36,7 +36,7 @@ namespace Woofy.Gui
             DisplayAppropriateControlsForCurrentMode();
 
             Logger.ClearDebugMessages();
-            Logger.IsDebugging = true;            
+            Logger.IsDebugging = true;
         }
 
         private void DefinitionsDebugForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -158,43 +158,52 @@ namespace Woofy.Gui
             switch (this.currentMode)
             {
                 case TestMode.StandBy:
-                    startButton.Visible =
-                        closeButton.Visible = true;
+                    this.Invoke(new MethodInvoker(delegate
+                                    {
+                                        startButton.Visible =
+                                            closeButton.Visible = true;
 
-                    pauseButton.Visible =
-                        abortButton.Visible = false;
+                                        pauseButton.Visible =
+                                            abortButton.Visible = false;
 
-                    chkOverrideStartUrl.Enabled =
-                        comicDefinitionsList.Enabled = true;
+                                        chkOverrideStartUrl.Enabled =
+                                            comicDefinitionsList.Enabled = true;
 
-                    txtOverrideStartUrl.Enabled = chkOverrideStartUrl.Checked;
+                                        txtOverrideStartUrl.Enabled = chkOverrideStartUrl.Checked;
+                                    }));
 
                     break;
                 case TestMode.Running:
-                    startButton.Visible =
-                        closeButton.Visible = false;
+                    this.Invoke(new MethodInvoker(delegate
+                                                      {
+                                                          startButton.Visible =
+                                                              closeButton.Visible = false;
 
-                    pauseButton.Visible =
-                        abortButton.Visible = true;
+                                                          pauseButton.Visible =
+                                                              abortButton.Visible = true;
 
-                    chkOverrideStartUrl.Enabled =
-                        txtOverrideStartUrl.Enabled = 
-                        comicDefinitionsList.Enabled = false;
+                                                          chkOverrideStartUrl.Enabled =
+                                                              txtOverrideStartUrl.Enabled =
+                                                              comicDefinitionsList.Enabled = false;
 
-                    pauseButton.Text = "Pause";
+                                                          pauseButton.Text = "Pause";
+                                                      })); 
                     break;
                 case TestMode.Paused:
-                    startButton.Visible =
-                        closeButton.Visible = false;
+                    this.Invoke(new MethodInvoker(delegate
+                                                      {
+                                                          startButton.Visible =
+                                                              closeButton.Visible = false;
 
-                    pauseButton.Visible =
-                        abortButton.Visible = true;
+                                                          pauseButton.Visible =
+                                                              abortButton.Visible = true;
 
-                    chkOverrideStartUrl.Enabled = 
-                        txtOverrideStartUrl.Enabled = 
-                        comicDefinitionsList.Enabled = false;
+                                                          chkOverrideStartUrl.Enabled =
+                                                              txtOverrideStartUrl.Enabled =
+                                                              comicDefinitionsList.Enabled = false;
 
-                    pauseButton.Text = "Resume";
+                                                          pauseButton.Text = "Resume";
+                                                      })); 
                     break;
                 default:
                     throw new InvalidEnumArgumentException();

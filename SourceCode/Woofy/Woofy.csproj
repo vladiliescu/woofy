@@ -195,7 +195,10 @@
     <ComicDefinitionFiles Include="..\ComicDefinitions\*.xml" />
   </ItemGroup>
   <Target Name="BeforeBuild">
-    <Copy SourceFiles="@(ComicDefinitionFiles)" DestinationFolder="bin\$(Configuration)\ComicDefinitions" />
+      <CreateItem Include="@(ComicDefinitionFiles)">
+          <Output TaskParameter="Include" ItemName="ComicDefinitions"/>
+      </CreateItem>
+    <Copy SourceFiles="@(ComicDefinitions)" DestinationFolder="bin\$(Configuration)\ComicDefinitions" />
   </Target>
   <Target Name="AfterBuild" Condition="'$(Configuration)' == 'Release'">
     <Copy SourceFiles="@(ComicDefinitions)" DestinationFolder="..\..\SetupKit\Files\ComicDefinitions" />

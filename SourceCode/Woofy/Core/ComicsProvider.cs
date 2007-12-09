@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text.RegularExpressions;
 using System.Net;
 using System.Threading;
@@ -22,7 +23,7 @@ namespace Woofy.Core
         #region Instance Members
         private IFileDownloader _comicsDownloader;
         private ComicDefinition _comicInfo;
-        private WebClient _client;
+        //private WebClient _client;
         private bool _isDownloadCancelled;
         #endregion
 
@@ -50,7 +51,7 @@ namespace Woofy.Core
             _comicInfo = comicInfo;
             _comicsDownloader = comicsDownloader;
 
-            _client = WebConnectionFactory.GetNewWebClientInstance();
+            //_client = WebConnectionFactory.GetNewWebClientInstance();
         }
         #endregion
 
@@ -83,7 +84,6 @@ namespace Woofy.Core
                     properStartUrl = GetProperStartUrl(startUrl, _comicInfo.LatestPageRegex);
                 else
                     properStartUrl = startUrl;
-                string rootUrl = string.IsNullOrEmpty(_comicInfo.RootUrl) ? properStartUrl : _comicInfo.RootUrl;
 
                 string currentUrl = properStartUrl;
 
@@ -99,35 +99,46 @@ namespace Woofy.Core
 
                     Logger.Debug("Visiting page {0}.", currentUrl);
 
-                    string pageContent = _client.DownloadString(currentUrl);
+                    string pageContent;
+                    HttpWebRequest request = (HttpWebRequest)WebConnectionFactory.GetNewWebRequestInstance(currentUrl);
+                    Uri responseUri;
+                    using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                    {
+                        StreamReader reader = new StreamReader(response.GetResponseStream());
+                        pageContent = reader.ReadToEnd();
+
+                        responseUri = response.ResponseUri;
+                    }
+
 
                     //I pass startUrl instead of properStartUrl because properStartUrlMight be something like http://www.website.com/comic/20070820, and WebPath will think it's a folder (damn mod_rewrite) and combine it with the captured link (e.g. http://www.website.com/comic/20070820/comic/2007/08/18).
-                    string[] comicLinks = RetrieveComicLinksFromPage(pageContent, rootUrl, _comicInfo);
-                    string backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, rootUrl, _comicInfo);
+                    Uri[] comicLinks = RetrieveComicLinksFromPage(pageContent, responseUri, _comicInfo);
+                    Uri backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, responseUri, _comicInfo);
 
-                    if (!MatchedLinksObeyRules(comicLinks, _comicInfo.AllowMissingStrips, _comicInfo.AllowMultipleStrips, ref downloadOutcome))
+                    if (!MatchedLinksObeyRules(comicLinks.Length, _comicInfo.AllowMissingStrips, _comicInfo.AllowMultipleStrips, ref downloadOutcome))
                         break;
 
                     bool fileAlreadyDownloaded = false;
-                    foreach (string comicLink in comicLinks)
+                    string backButtonStringLink = backButtonLink == null ? null : backButtonLink.AbsoluteUri;
+                    foreach (Uri comicLink in comicLinks)
                     {
                         
-                        _comicsDownloader.DownloadFile(comicLink, currentUrl, out fileAlreadyDownloaded);
+                        _comicsDownloader.DownloadFile(comicLink.AbsoluteUri, currentUrl, out fileAlreadyDownloaded);
 
                         if (fileAlreadyDownloaded && comicsToDownload == ComicsProvider.AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
                             break;
 
-                        OnDownloadComicCompleted(new DownloadStripCompletedEventArgs(i + 1, backButtonLink));
+                        OnDownloadComicCompleted(new DownloadStripCompletedEventArgs(i + 1, backButtonStringLink));
                     }
 
                     //HACK
                     if (fileAlreadyDownloaded && comicsToDownload == ComicsProvider.AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
                         break;
 
-                    if (string.IsNullOrEmpty(backButtonLink))
+                    if (backButtonLink == null)
                         break;
 
-                    currentUrl = backButtonLink;
+                    currentUrl = backButtonLink.AbsoluteUri;
                 }
             }
             catch (UriFormatException ex)
@@ -177,15 +188,14 @@ namespace Woofy.Core
         #endregion
 
         #region Helper Methods
-        public static string[] RetrieveLinksFromPage(string pageContent, string currentUrl, string regex)
+        public static Uri[] RetrieveLinksFromPage(string pageContent, Uri currentUri, string regex)
         {
-            List<string> links = new List<string>();
-            string currentUrlDirectory = currentUrl;//WebPath.GetDirectory(currentUrl);
-            string capturedContent;
+            List<Uri> links = new List<Uri>();
             MatchCollection matches = Regex.Matches(pageContent, regex, RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace);
 
             foreach (Match match in matches)
             {
+                string capturedContent;
                 if (match.Groups[ContentGroup].Success)
                     capturedContent = match.Groups[ContentGroup].Value;
                 else
@@ -195,9 +205,9 @@ namespace Woofy.Core
                 capturedContent = HttpUtility.HtmlDecode(capturedContent);
 
                 if (WebPath.IsAbsolute(capturedContent))
-                    links.Add(capturedContent);
+                    links.Add(new Uri(capturedContent));
                 else
-                    links.Add(WebPath.Combine(currentUrlDirectory, capturedContent));
+                    links.Add(new Uri(currentUri, capturedContent));
             }
 
             return links.ToArray();
@@ -209,15 +219,15 @@ namespace Woofy.Core
         /// <param name="comicLinks">The list of matched comic links.</param>
         /// <param name="downloadOutcome">If a rule is not obeyed, then this parameter will contain the respective outcome.</param>
         /// <returns>True if the matched links obey the rules, false otherwise.</returns>
-        public static bool MatchedLinksObeyRules(string[] comicLinks, bool allowMissingStrips, bool allowMultipleStrips, ref DownloadOutcome downloadOutcome)
+        public static bool MatchedLinksObeyRules(int linksLength, bool allowMissingStrips, bool allowMultipleStrips, ref DownloadOutcome downloadOutcome)
         {
-            if (comicLinks.Length == 0 && !allowMissingStrips)
+            if (linksLength == 0 && !allowMissingStrips)
             {
                 downloadOutcome = DownloadOutcome.NoStripMatchesRuleBroken;
                 return false;
             }
 
-            if (comicLinks.Length > 1 && !allowMultipleStrips)
+            if (linksLength > 1 && !allowMultipleStrips)
             {
                 downloadOutcome = DownloadOutcome.MultipleStripMatchesRuleBroken;
                 return false;
@@ -232,27 +242,36 @@ namespace Woofy.Core
                 return startUrl;
 
             Logger.Debug("Visiting page {0}.", startUrl);
-            string pageContent = _client.DownloadString(startUrl);
+            string pageContent;
+            HttpWebRequest request = (HttpWebRequest)WebConnectionFactory.GetNewWebRequestInstance(startUrl);
+            Uri uri;
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            {
+                StreamReader reader = new StreamReader(response.GetResponseStream());
+                pageContent = reader.ReadToEnd();
 
-            return GetProperStartUrlFromPage(pageContent, startUrl, latestPageRegex);
+                uri = response.ResponseUri;
+            }
+
+            return GetProperStartUrlFromPage(pageContent, uri/*startUrl*/, latestPageRegex);
         }
 
-        public static string GetProperStartUrlFromPage(string pageContent, string url, string latestPageRegex)
+        public static string GetProperStartUrlFromPage(string pageContent, Uri pageUri, string latestPageRegex)
         {
             if (string.IsNullOrEmpty(latestPageRegex))
-                return url;
+                return pageUri.AbsoluteUri;
 
-            string[] links = RetrieveLinksFromPage(pageContent, url, latestPageRegex);
+            Uri[] links = RetrieveLinksFromPage(pageContent, pageUri, latestPageRegex);
 
             if (links.Length == 0)
             {
-                Logger.Debug("No links match the latestPageRegex element. Using the startUrl element ({0}).", url);
-                return url;
+                Logger.Debug("No links match the latestPageRegex element. Using the startUrl element ({0}).", pageUri);
+                return pageUri.AbsoluteUri;
             }
 
             bool isFirst = true;
             Logger.Debug("Found {0} link(s) that match the latestPageRegex element:", links.Length);
-            foreach (string link in links)
+            foreach (Uri link in links)
             {
                 if (isFirst)
                 {
@@ -265,7 +284,7 @@ namespace Woofy.Core
                 }
             }
 
-            return links[0];
+            return links[0].AbsoluteUri;
         }
 
         /// <summary>
@@ -273,15 +292,15 @@ namespace Woofy.Core
         /// </summary>
         /// <param name="pageContent">Page content.</param>
         /// <returns></returns>
-        private string RetrieveBackButtonLinkFromPage(string pageContent, string currentUrl, ComicDefinition comicInfo)
+        private Uri RetrieveBackButtonLinkFromPage(string pageContent, Uri currentUri, ComicDefinition comicInfo)
         {
-            string[] backButtonLinks = RetrieveLinksFromPage(pageContent, currentUrl, comicInfo.BackButtonRegex);
+            Uri[] backButtonLinks = RetrieveLinksFromPage(pageContent, currentUri, comicInfo.BackButtonRegex);
 
             if (backButtonLinks.Length > 0)
             {
                 bool isFirst = true;
                 Logger.Debug("Found {0} link(s):", backButtonLinks.Length);
-                foreach (string link in backButtonLinks)
+                foreach (Uri link in backButtonLinks)
                 {
                     if (isFirst)
                     {
@@ -304,11 +323,11 @@ namespace Woofy.Core
             }
         }
 
-        private string[] RetrieveComicLinksFromPage(string pageContent, string url, ComicDefinition comicInfo)
+        private Uri[] RetrieveComicLinksFromPage(string pageContent, Uri pageUri, ComicDefinition comicInfo)
         {
-            string[] comicLinks = RetrieveLinksFromPage(pageContent, url, comicInfo.ComicRegex);
+            Uri[] comicLinks = RetrieveLinksFromPage(pageContent, pageUri, comicInfo.ComicRegex);
             Logger.Debug("Found {0} strip(s):", comicLinks.Length);
-            foreach (string comicLink in comicLinks)
+            foreach (Uri comicLink in comicLinks)
             {
                 Logger.Debug("\t{0}.", comicLink);
             }
@@ -363,8 +382,6 @@ namespace Woofy.Core
 
         protected virtual void OnDownloadCompleted(DownloadOutcome downloadOutcome)
         {
-            _client.Dispose();
-
             EventHandler<DownloadCompletedEventArgs> eventReference = _downloadCompleted;
 
             if (eventReference != null)

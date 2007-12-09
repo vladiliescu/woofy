@@ -54,7 +54,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="BeforeBuild">
-    <Copy SourceFiles="@(ComicDefinitionFiles)" DestinationFolder="bin\$(Configuration)\ComicDefinitions" />
+      <CreateItem Include="@(ComicDefinitionFiles)">
+          <Output TaskParameter="Include" ItemName="ComicDefinitions"/>
+      </CreateItem>
+    <Copy SourceFiles="@(ComicDefinitions)" DestinationFolder="bin\$(Configuration)\ComicDefinitions" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

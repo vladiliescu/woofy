@@ -3,6 +3,6 @@
     <startUrl><![CDATA[http://2kinds.com/]]></startUrl>
     <firstIssue><![CDATA[http://twokinds.comicgenesis.com/comics/20031022.jpg]]></firstIssue>
 	<latestPageRegex><![CDATA[<img\ssrc="images/indexfinal2_06.jpg"[^\n]*?href="(?<content>http://twokinds.comicgenesis.com/d/[0-9]*.html)"]]></latestPageRegex>
-    <comicRegex><![CDATA[http://twokinds.comicgenesis.com/comics/[0-9]*.(gif|jpg|jpeg|png)]]></comicRegex>
+    <comicRegex><![CDATA[http://twokinds.comicgenesis.com/comics/[\w]*.(gif|jpg|jpeg|png)]]></comicRegex>
     <backButtonRegex><![CDATA[<a\shref="(?<content>http://twokinds.comicgenesis.com/d/[0-9]*.html)"><img\sborder="0"\sname="previous_day"]]></backButtonRegex>
 </comicInfo>

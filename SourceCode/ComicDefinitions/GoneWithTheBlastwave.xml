@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <comicInfo friendlyName="Gone with the Blastwave" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
     <startUrl><![CDATA[http://blastwavecomic.com/]]></startUrl>
-	<rootUrl><![CDATA[http://blastwavecomic.com/index.php?p=comic&]]></rootUrl>
     <firstIssue><![CDATA[http://blastwavecomic.com/comics/20060501.jpg]]></firstIssue>
     <comicRegex><![CDATA[<div\sclass="comic_title">[^\n]*?</div>[\s\n]*?<img\ssrc=".(?<content>/comics/[\w]*.jpg)"]]></comicRegex>
     <backButtonRegex><![CDATA[<a\shref="(?<content>index.php\?p=comic&amp;nro=[0-9]*)"><img\ssrc="images/page/previous.jpg"\sborder="0"></a>]]></backButtonRegex>

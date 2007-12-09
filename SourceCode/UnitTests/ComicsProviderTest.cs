@@ -21,61 +21,61 @@ namespace UnitTests
         [Test]
         public void TestWorksWithSimpleRegex()
         {
-            string[] links = ComicsProvider.RetrieveLinksFromPage(PageContent,
-                                                                "http://www.myurl.com",
+            Uri[] links = ComicsProvider.RetrieveLinksFromPage(PageContent,
+                                                                new Uri("http://www.myurl.com"),
                                                                 @"http://[^\n]*html");
 
             Assert.AreEqual(2, links.Length);
-            Assert.AreEqual("http://www.myurl.com/dir1/hair.html", links[0]);
-            Assert.AreEqual("http://myurl.com/dir1/washe.html", links[1]);
+            Assert.AreEqual("http://www.myurl.com/dir1/hair.html", links[0].AbsoluteUri);
+            Assert.AreEqual("http://myurl.com/dir1/washe.html", links[1].AbsoluteUri);
         }
 
         [Test]
         public void TestCombinesRelativeCaptureWithCurrentUrl()
         {
-            string[] links = ComicsProvider.RetrieveLinksFromPage(PageContent,
-                                                                "http://www.myurl.com/mycomicsdir",
+            Uri[] links = ComicsProvider.RetrieveLinksFromPage(PageContent,
+                                                                new Uri("http://www.myurl.com/mycomicsdir/"),
                                                                 @"(?<content>(dir1/bear.html)|(/dir1/fuzzy.html))");
 
             Assert.AreEqual(2, links.Length);
-            Assert.AreEqual("http://www.myurl.com/mycomicsdir/dir1/bear.html", links[0]);
-            Assert.AreEqual("http://www.myurl.com/mycomicsdir/dir1/fuzzy.html", links[1]);
+            Assert.AreEqual("http://www.myurl.com/mycomicsdir/dir1/bear.html", links[0].AbsoluteUri);
+            Assert.AreEqual("http://www.myurl.com/mycomicsdir/dir1/fuzzy.html", links[1].AbsoluteUri);
         }
 
         [Test]
         public void TestCombinesRelativeContentWithCurrentUrl()
         {
-            string[] links = ComicsProvider.RetrieveLinksFromPage(PageContent,
-                                                                "http://www.myurl.com/mycomicsdir",
+            Uri[] links = ComicsProvider.RetrieveLinksFromPage(PageContent,
+                                                                new Uri("http://www.myurl.com/mycomicsdir"),
                                                                 @"(dir1/bear.html)|(/dir1/fuzzy.html)");
 
             Assert.AreEqual(2, links.Length);
-            Assert.AreEqual("http://www.myurl.com/mycomicsdir/dir1/bear.html", links[0]);
-            Assert.AreEqual("http://www.myurl.com/mycomicsdir/dir1/fuzzy.html", links[1]);
+            Assert.AreEqual("http://www.myurl.com/mycomicsdir/dir1/bear.html", links[0].AbsoluteUri);
+            Assert.AreEqual("http://www.myurl.com/mycomicsdir/dir1/fuzzy.html", links[1].AbsoluteUri);
         }
 
         [Test]
         public void TestReturnsAbsoluteCapture()
         {
-            string[] links = ComicsProvider.RetrieveLinksFromPage(PageContent,
-                                                                "http://www.myurl.com/mycomicsdir",
+            Uri[] links = ComicsProvider.RetrieveLinksFromPage(PageContent,
+                                                                new Uri("http://www.myurl.com/mycomicsdir"),
                                                                 @"<a\shref=""(?<content>http://[^\n]*html)");
 
             Assert.AreEqual(2, links.Length);
-            Assert.AreEqual("http://www.myurl.com/dir1/hair.html", links[0]);
-            Assert.AreEqual("http://myurl.com/dir1/washe.html", links[1]);
+            Assert.AreEqual("http://www.myurl.com/dir1/hair.html", links[0].AbsoluteUri);
+            Assert.AreEqual("http://myurl.com/dir1/washe.html", links[1].AbsoluteUri);
         }
 
         [Test]
         public void TestReturnsAbsoluteContent()
         {
-            string[] links = ComicsProvider.RetrieveLinksFromPage(PageContent,
-                                                                "http://www.myurl.com/mycomicsdir",
+            Uri[] links = ComicsProvider.RetrieveLinksFromPage(PageContent,
+                                                                new Uri("http://www.myurl.com/mycomicsdir"),
                                                                 @"http://[^\n]*html");
 
             Assert.AreEqual(2, links.Length);
-            Assert.AreEqual("http://www.myurl.com/dir1/hair.html", links[0]);
-            Assert.AreEqual("http://myurl.com/dir1/washe.html", links[1]);
+            Assert.AreEqual("http://www.myurl.com/dir1/hair.html", links[0].AbsoluteUri);
+            Assert.AreEqual("http://myurl.com/dir1/washe.html", links[1].AbsoluteUri);
         } 
         #endregion
 
@@ -85,7 +85,7 @@ namespace UnitTests
         public void TestMissingStripsAllowed()
         {
             DownloadOutcome downloadOutcome = DownloadOutcome.Successful;
-            bool result = ComicsProvider.MatchedLinksObeyRules(new string[0], true, false, ref downloadOutcome);
+            bool result = ComicsProvider.MatchedLinksObeyRules(0, true, false, ref downloadOutcome);
 
             Assert.AreEqual(true, result);
             Assert.AreEqual(DownloadOutcome.Successful, downloadOutcome);
@@ -95,7 +95,7 @@ namespace UnitTests
         public void TestMissingStripsNotAllowed()
         {
             DownloadOutcome downloadOutcome = DownloadOutcome.Successful;
-            bool result = ComicsProvider.MatchedLinksObeyRules(new string[0], false, false, ref downloadOutcome);
+            bool result = ComicsProvider.MatchedLinksObeyRules(0, false, false, ref downloadOutcome);
 
             Assert.AreEqual(false, result);
             Assert.AreEqual(DownloadOutcome.NoStripMatchesRuleBroken, downloadOutcome);
@@ -105,7 +105,7 @@ namespace UnitTests
         public void TestMultipleStripsAllowed()
         {
             DownloadOutcome downloadOutcome = DownloadOutcome.Successful;
-            bool result = ComicsProvider.MatchedLinksObeyRules(new string[2], false, true, ref downloadOutcome);
+            bool result = ComicsProvider.MatchedLinksObeyRules(2, false, true, ref downloadOutcome);
 
             Assert.AreEqual(true, result);
             Assert.AreEqual(DownloadOutcome.Successful, downloadOutcome);
@@ -115,7 +115,7 @@ namespace UnitTests
         public void TestMultipleStripsNotAllowed()
         {
             DownloadOutcome downloadOutcome = DownloadOutcome.Successful;
-            bool result = ComicsProvider.MatchedLinksObeyRules(new string[2], false, false, ref downloadOutcome);
+            bool result = ComicsProvider.MatchedLinksObeyRules(2, false, false, ref downloadOutcome);
 
             Assert.AreEqual(false, result);
             Assert.AreEqual(DownloadOutcome.MultipleStripMatchesRuleBroken, downloadOutcome);
@@ -125,7 +125,7 @@ namespace UnitTests
         public void TestOnlyOneStrip()
         {
             DownloadOutcome downloadOutcome = DownloadOutcome.Successful;
-            bool result = ComicsProvider.MatchedLinksObeyRules(new string[1], false, false, ref downloadOutcome);
+            bool result = ComicsProvider.MatchedLinksObeyRules(1, false, false, ref downloadOutcome);
 
             Assert.AreEqual(true, result);
             Assert.AreEqual(DownloadOutcome.Successful, downloadOutcome);
@@ -138,7 +138,7 @@ namespace UnitTests
         public void TestReturnsProperStartUrlWithoutLatestPageRegex()
         {
             string startUrl = 
-                ComicsProvider.GetProperStartUrlFromPage(PageContent, "http://www.myurl.com/mycomicsdir", null);
+                ComicsProvider.GetProperStartUrlFromPage(PageContent, new Uri("http://www.myurl.com/mycomicsdir"), null);
 
             Assert.AreEqual("http://www.myurl.com/mycomicsdir", startUrl);
         }
@@ -147,7 +147,7 @@ namespace UnitTests
         public void TestReturnsProperStartUrlWithLatestPageRegex()
         {
             string startUrl =
-                ComicsProvider.GetProperStartUrlFromPage(PageContent, "http://www.myurl.com/mycomicsdir", @"http://[^\n]*hair.html");
+                ComicsProvider.GetProperStartUrlFromPage(PageContent, new Uri("http://www.myurl.com/mycomicsdir"), @"http://[^\n]*hair.html");
 
             Assert.AreEqual("http://www.myurl.com/dir1/hair.html", startUrl);
         }
@@ -156,7 +156,7 @@ namespace UnitTests
         public void TestReturnsProperStartUrlWithoutAnyRegexMatches()
         {
             string startUrl =
-                ComicsProvider.GetProperStartUrlFromPage(PageContent, "http://www.myurl.com/mycomicsdir", @"jungle boogie");
+                ComicsProvider.GetProperStartUrlFromPage(PageContent, new Uri("http://www.myurl.com/mycomicsdir"), @"jungle boogie");
 
             Assert.AreEqual("http://www.myurl.com/mycomicsdir", startUrl);
         }
@@ -165,7 +165,7 @@ namespace UnitTests
         public void TestReturnsProperStartUrlWithMultipleRegexMatches()
         {
             string startUrl =
-                ComicsProvider.GetProperStartUrlFromPage(PageContent, "http://www.myurl.com/mycomicsdir", @"http://[^\n]*html");
+                ComicsProvider.GetProperStartUrlFromPage(PageContent, new Uri("http://www.myurl.com/mycomicsdir"), @"http://[^\n]*html");
 
             Assert.AreEqual("http://www.myurl.com/dir1/hair.html", startUrl);
         } 

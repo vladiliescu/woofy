@@ -3,6 +3,6 @@
     <startUrl><![CDATA[http://dreamshards.org/undertow/]]></startUrl>
     <firstIssue><![CDATA[http://undertow.dreamshards.org/0/u0_c.jpg]]></firstIssue>
 	<latestPageRegex><![CDATA[http://www.dreamshards.org/undertow/[0-9]+/u[a-zA-Z0-9]+_[0-9]*.html]]></latestPageRegex>
-    <comicRegex><![CDATA[u[a-zA-Z0-9]+_[0-9]*.(gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref="(?<content>u[a-zA-Z0-9]+_[0-9]*.html)"><img\ssrc="[\w.:/]*?teynpoint.JPG"\sborder=0></a>]]></backButtonRegex>
+    <comicRegex><![CDATA[u[\w]+_[\w]+.(gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>[\w:/.]*u[\w]+_[\w]*.html)"><img\ssrc="[\w.:/]*?teynpoint.JPG"\sborder=0></a>]]></backButtonRegex>
 </comicInfo>
