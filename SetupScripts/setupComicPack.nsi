@@ -44,7 +44,7 @@ Var StartMenuGroup
 Name "${NAME} ${VERSION}"
 BrandingText "${NAME} ${VERSION}"
 
-OutFile "${NAME}-${VERSION}-setup.exe"
+OutFile "Drop\${NAME}-${VERSION}-setup.exe"
 InstallDir $PROGRAMFILES\${NAMEWOOFY}
 InstallDirRegKey HKLM "${REGKEY}" "Path"
 CRCCheck on

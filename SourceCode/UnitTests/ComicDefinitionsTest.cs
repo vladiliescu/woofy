@@ -91,6 +91,8 @@ namespace UnitTests
                     && !comicInfoFile.Contains("Exterminatus")
                     && !comicInfoFile.Contains("Arlo")
                     && !comicInfoFile.Contains("GirlGenius")
+                    && !comicInfoFile.Contains("TwoK")
+                    && !comicInfoFile.Contains("Undert")
                     )
                     yield return Path.GetFileName(comicInfoFile);
             }
