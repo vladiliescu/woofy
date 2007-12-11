@@ -3,7 +3,7 @@ SetCompressor bzip2
 # Defines
 !define NAME "Woofy"
 !define REGKEY "SOFTWARE\${NAME}"
-!define VERSION 0.4.1
+!define VERSION 0.4.2
 !define COMPANY "Vlad Iliescu"
 !define URL "http://woofy.sourceforge.net"
 
@@ -73,16 +73,25 @@ Section Woofy SEC0000
     SectionIn RO
 
     SetOutPath $INSTDIR
-    
+
     SetOverwrite off
     File Files\data.s3db
     
     SetOverwrite on
     File Files\license.txt
-    File Files\System.Data.SQLite.DLL
     File Files\log4net.dll
     File Files\Woofy.exe
     File Files\Woofy.exe.config
+    
+
+StrCmp $%PROCESSOR_ARCHITECTURE% "x86" x86 x64
+x64:
+    File Files\x64\System.Data.SQLite.DLL
+    Goto endif
+x86:
+    File Files\System.Data.SQLite.DLL
+endif:
+
 
     SetOutPath $INSTDIR\ComicDefinitions
     SetOverwrite on
