@@ -4,7 +4,7 @@ SetCompressor bzip2
 !define NAME "ComicPack"
 !define NAMEWOOFY "Woofy"
 !define REGKEY "SOFTWARE\${NAMEWOOFY}"
-!define VERSION 0.4.1.1
+!define VERSION 0.4.2.1
 !define COMPANY "Vlad Iliescu"
 !define URL "http://woofy.sourceforge.net"
 

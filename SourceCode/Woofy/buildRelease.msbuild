@@ -28,8 +28,11 @@
             <Output TaskParameter="Include" ItemName="ApplicationFiles"/>
         </CreateItem>
 
+        <!--The comics excluded below are not yet ready for prime time-->
         <CreateItem
-            Include="bin\$(Configuration)\ComicDefinitions\*.*">
+            Include="bin\$(Configuration)\ComicDefinitions\*.*"
+            Exclude="bin\$(Configuration)\ComicDefinitions\*Piled*.*; bin\$(Configuration)\ComicDefinitions\*Noob*.*"
+            >
             <Output TaskParameter="Include" ItemName="ComicDefinitions"/>
         </CreateItem>
        

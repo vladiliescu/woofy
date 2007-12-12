@@ -142,11 +142,7 @@ Released for free under a Creative Commons Attribution 2.5 License
 <p>/comics/[0-9]{8}_[^.]*\.(gif|jpg|jpeg|png)</p>
 </blockquote>
 
-<p>We test it in Expresso, and see that it actually matches the text we wanted. A question remains though, how do we tell Woofy that this is only a fragment of the strip's link, and not all of it? Well, we can wrap the expression in a <b>contentToBeMerged</b> capturing group, so Woofy will combine the text with the comic's <b>startUrl</b>.</p>
-
-<blockquote>
-<p>&lt;comicRegex&gt;&lt;![CDATA[(?&lt;contentToBeMerged&gt;/comics/[0-9]{8}_[^.]*\.(gif|jpg|jpeg|png))]]&gt;&lt;/comicRegex&gt;</p>
-</blockquote>
+<p>We test it in Expresso, and see that it actually matches the text we wanted. </p>
 
 <p>Don't forget to test the regular expression you come up with on several of the comic's pages, to make sure it retrieves one and only one link. Otherwise, Woofy will assume it has finished downloading the comic, and it will stop.</p>
 
@@ -159,10 +155,10 @@ Released for free under a Creative Commons Attribution 2.5 License
 <p>This time we need to find an expression for the whole fragment, in order to avoid retrieving the forward button instead of the back button. Long story short, the regular expression is as follows:</p>
 
 <blockquote>
-<p>&lt;backButtonRegex&gt;&lt;![CDATA[&lt;a\shref="(?&lt;contentToBeMerged&gt;/d/[0-9]{8}\.html)"\starget="_self"&gt;&lt;img\sborder=0\ssrc="/images/back_button\.gif"&gt;&lt;/a&gt;]]&gt;&lt;/backButtonRegex&gt;</p>
+<p>&lt;backButtonRegex&gt;&lt;![CDATA[&lt;a\shref="/d/[0-9]{8}\.html"\starget="_self"&gt;&lt;img\sborder=0\ssrc="/images/back_button\.gif"&gt;&lt;/a&gt;]]&gt;&lt;/backButtonRegex&gt;</p>
 </blockquote>
 
-<p>Note that even though we're trying to match a larger text fragment, wich we're only interested in a tiny fragment inside, so we wrap it in a <b>contentToBeMerged</b> capturing group. If it were an entire link, instead of a link fragment, we would use <b>content</b> instead of <b>contentToBeMerged</b>.</p>
+<p>Note that even though we're trying to match a larger text fragment, wich we're only interested in a tiny fragment inside, so we wrap it in a <b>content</b> capturing group. </p>
 
 <p>The full comic definition should look like this:</p>
 
@@ -171,8 +167,8 @@ Released for free under a Creative Commons Attribution 2.5 License
 &lt;comicInfo friendlyName="Ugly Hill"&gt;<br />
  &nbsp;&nbsp;&nbsp;&nbsp;&lt;startUrl&gt;&lt;![CDATA[http://www.uglyhill.com]]&gt;&lt;/startUrl&gt;<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&lt;firstIssue&gt;&lt;![CDATA[http://www.uglyhill.com/comics/20050523.jpg]]&gt;&lt;/firstIssue&gt;<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;comicRegex&gt;&lt;![CDATA[(?&lt;contentToBeMerged&gt;/comics/[0-9]{8}_[^.]*\.(gif|jpg|jpeg|png))]]&gt;&lt;/comicRegex&gt;<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&lt;backButtonRegex&gt;&lt;![CDATA[&lt;a\shref="(?&lt;contentToBeMerged&gt;/d/[0-9]{8}\.html)"\starget="_self"&gt;&lt;img\sborder=0\ssrc="/images/back_button\.gif"&gt;&lt;/a&gt;]]&gt;&lt;/backButtonRegex&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;comicRegex&gt;&lt;![CDATA[/comics/[0-9]{8}_[^.]*\.(gif|jpg|jpeg|png)]]&gt;&lt;/comicRegex&gt;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;backButtonRegex&gt;&lt;![CDATA[&lt;a\shref="/d/[0-9]{8}\.html"\starget="_self"&gt;&lt;img\sborder=0\ssrc="/images/back_button\.gif"&gt;&lt;/a&gt;]]&gt;&lt;/backButtonRegex&gt;<br />
 &lt;/comicInfo&gt;</p>
 </blockquote>
 

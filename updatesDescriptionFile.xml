@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <updateDescription>
     <woofy>
+		<release versionNumber="0.4.2" downloadAddress="http://downloads.sourceforge.net/woofy/Woofy-0.4.2-setup.exe" releaseDate="2007-12-12" size="1026366">
+            <changes>
+                <change>A little.</change>
+            </changes>
+        </release> 
         <release versionNumber="0.4.1" downloadAddress="http://downloads.sourceforge.net/woofy/Woofy-0.4.1-setup.exe" releaseDate="2007-10-10" size="670685">
             <changes>
                 <change>A lot.</change>                
