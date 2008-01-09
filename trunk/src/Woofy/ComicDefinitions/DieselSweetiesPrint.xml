@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Diesel Sweeties - Print" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
+    <startUrl><![CDATA[http://www.dieselsweeties.com/print/]]></startUrl>
+    <firstIssue><![CDATA[http://www.dieselsweeties.com/print/strips/ds20070101.png]]></firstIssue>
+    <comicRegex><![CDATA[(?<content>strips/ds[0-9]{8}\.(gif|jpg|jpeg|png))]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>\?date=[0-9]{8})"><img\ssrc="previous\.gif"\sborder=0\sAlt="Previous"></a>]]></backButtonRegex>
+</comicInfo>

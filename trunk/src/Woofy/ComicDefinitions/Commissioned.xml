@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Commissioned" allowMissingStrips="true" author="Dirk Schlobinski" authorEmail="dirk@dirkdirkdirk.de">
+    <startUrl><![CDATA[http://commissionedcomic.com/]]></startUrl>
+    <firstIssue><![CDATA[http://commissionedcomic.com/strips/com_strip_1-1163515180.jpg]]></firstIssue>
+    <comicRegex><![CDATA[strips/com_strip_[0-9]*-[0-9]{10}\.(gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>index\.php\?strip=[0-9]*)"><img\ssrc="gifs/main/arr-previous.gif"\swidth="27"\sheight="27"\sborder="0"></a>]]></backButtonRegex>
+</comicInfo>

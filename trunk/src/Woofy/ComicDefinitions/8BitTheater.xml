@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<comicInfo friendlyName="8-Bit Theater" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
+    <startUrl><![CDATA[http://www.nuklearpower.com/latest.php]]></startUrl>
+    <firstIssue><![CDATA[http://www.nuklearpower.com/comics/010302.jpg]]></firstIssue>
+    <comicRegex><![CDATA[src="(?<content>http://www\.nuklearpower\.com/comics/[0-9]{6}\.(gif|jpg|jpeg|png|swf))"]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>http://www\.nuklearpower\.com/daily\.php\?date=[0-9]{6})"\sclass="nav3">Previous\sComic</a>]]></backButtonRegex>
+</comicInfo>

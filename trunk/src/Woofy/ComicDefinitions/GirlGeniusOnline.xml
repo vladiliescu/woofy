@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Girl Genius Online" allowMultipleStrips="true" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
+    <startUrl><![CDATA[http://girlgeniusonline.com/comic.php]]></startUrl>
+    <firstIssue><![CDATA[http://www.girlgeniusonline.com/ggmain/strips/ggmain20021104b.jpg]]></firstIssue>
+    <comicRegex><![CDATA[http://www.girlgeniusonline.com/ggmain/strips/ggmain[\w]*.(gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref='(?<content>http://www.girlgeniusonline.com/comic.php\?date=[0-9]*)'><img\sborder=0\salt='The\sPrevious\sComic'\ssrc='http://www.girlgeniusonline.com/!.images.page/navbuttons/previousday.jpg'/></a>]]></backButtonRegex>
+</comicInfo>

@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="PvP Online" allowMissingStrips="true" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
+    <startUrl><![CDATA[http://www.pvponline.com/]]></startUrl>
+    <firstIssue><![CDATA[http://www.pvponline.com/comics/pvp19980504.gif]]></firstIssue>
+    <comicRegex><![CDATA[http://www.pvponline.com/comics/[\w]*?.(gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>http://www.pvponline.com/[0-9]{4}/[0-9]{2}/[0-9]{2}/[\w-]*/)"(\srel="nofollow")?><img\ssrc="http://www.pvponline.com/newsite/images/((left)|(yesterday))_curl.jpg"\s/>]]></backButtonRegex>
+</comicInfo>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="The Noob" author="Justin Wendlandt" authorEmail="jwendl@hotmail.com">
+    <startUrl><![CDATA[http://www.thenoobcomic.com]]></startUrl>
+    <rootUrl><![CDATA[http://www.thenoobcomic.com/daily]]></rootUrl>
+    <firstIssue><![CDATA[http://www.thenoobcomic.com/images/20040608.jpg]]></firstIssue>
+    <comicRegex><![CDATA[<img\ssrc="(?<content>/images/[a-zA-Z0-9]+\.(gif|jpg|jpeg|png|swf))"]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>(/daily/)?strip\d+\.html)">Previous</a>]]></backButtonRegex>
+</comicInfo>
