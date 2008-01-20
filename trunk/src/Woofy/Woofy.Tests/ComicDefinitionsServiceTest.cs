@@ -34,9 +34,9 @@ namespace Woofy.Tests
             author=""some author""
             authorEmail=""some author email"">
     <comicRegex><![CDATA[some comic regex]]></comicRegex>
-    <firstIssue><![CDATA[some first issue url]]></firstIssue>
+    <firstIssue><![CDATA[http://home.page.com/first.png]]></firstIssue>
     <latestPageRegex><![CDATA[some latest page regex]]></latestPageRegex>
-    <startUrl><![CDATA[some base url]]></startUrl>
+    <startUrl><![CDATA[http://home.page.com]]></startUrl>
     <backButtonRegex><![CDATA[some back button regex]]></backButtonRegex>    
 </comicInfo>
 ";
@@ -47,8 +47,8 @@ namespace Woofy.Tests
             Assert.AreEqual(true, comic.AllowMissingStrips);
             Assert.AreEqual("some author", comic.DefinitionAuthor);
             Assert.AreEqual("some author email", comic.DefinitionAuthorEmail);
-            Assert.AreEqual("some base url", comic.HomeUrl);
-            Assert.AreEqual("some first issue url", comic.FirstStripUrl);
+            Assert.AreEqual("http://home.page.com/", comic.HomePageUrl.AbsoluteUri);
+            Assert.AreEqual("http://home.page.com/first.png", comic.FirstStripUrl.AbsoluteUri);
             Assert.AreEqual("some comic regex", comic.StripRegex);
             Assert.AreEqual("some back button regex", comic.NextIssueRegex);
             Assert.AreEqual("some latest page regex", comic.LatestIssueRegex);

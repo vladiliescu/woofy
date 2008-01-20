@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="UIAutomationProvider">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
@@ -55,6 +56,12 @@
     <Compile Include="Entities\ApplicationSettings.cs" />
     <Compile Include="Entities\Comic.cs" />
     <Compile Include="Entities\ComicCollection.cs" />
+    <Compile Include="Entities\Constants.cs" />
+    <Compile Include="Exceptions\FileAlreadyPresentException.cs" />
+    <Compile Include="Other\FileWrapper.cs" />
+    <Compile Include="Other\PathWrapper.cs" />
+    <Compile Include="Other\WebClientWrapper.cs" />
+    <Compile Include="Other\WebConnectionFactory.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -70,9 +77,10 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Services\ComicDefinitionsService.cs" />
+    <Compile Include="Services\FileDownloadService.cs" />
     <Compile Include="Services\IComicDefinitionsService.cs" />
     <Compile Include="Services\IComicPersistanceService.cs" />
-    <Compile Include="Services\PageParserService.cs" />
+    <Compile Include="Services\PageParseService.cs" />
     <Compile Include="Views\SelectComics.xaml.cs">
       <DependentUpon>SelectComics.xaml</DependentUpon>
     </Compile>
@@ -91,6 +99,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="favicons\blank.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -13,11 +13,11 @@ namespace Woofy.Entities
         /// <summary>
         /// Gets the comic's home page.
         /// </summary>
-        public string HomeUrl { get; set; }
+        public Uri HomePageUrl { get; set; }
         /// <summary>
         /// Gets the url of the comic's first issue.
         /// </summary>
-        public string FirstStripUrl { get; set; }
+        public Uri FirstStripUrl { get; set; }
         /// <summary>
         /// Gets the regular expression that will find the strip in a given page.
         /// </summary>
@@ -56,6 +56,11 @@ namespace Woofy.Entities
         /// Whether the comic should be downloaded or not.
         /// </summary>
         public bool IsActive { get; set; }
+
+        /// <summary>
+        /// Path to the comic's favicon.
+        /// </summary>
+        public string FaviconPath { get; set; }
                
 
         #region Constructors

@@ -35,6 +35,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\lib\MbUnit\MbUnit.Framework.dll</HintPath>
     </Reference>
+    <Reference Include="Rhino.Mocks, Version=3.3.0.906, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\Rhino Mocks\Rhino.Mocks.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -54,7 +58,10 @@
   <ItemGroup>
     <Compile Include="ComicDefinitionsServiceStub.cs" />
     <Compile Include="ComicDefinitionsServiceTest.cs" />
-    <Compile Include="PageParserService.cs" />
+    <Compile Include="ComicsPresenterTest.cs" />
+    <Compile Include="FileDownloadServiceTest.cs" />
+    <Compile Include="IEventSubscriber.cs" />
+    <Compile Include="PageParseServiceTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

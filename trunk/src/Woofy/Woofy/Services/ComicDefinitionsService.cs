@@ -52,7 +52,7 @@ namespace Woofy.Services
                     switch (reader.Name)
                     {
                         case "startUrl":
-                            comic.HomeUrl = reader.ReadElementContentAsString();
+                            comic.HomePageUrl = new Uri(reader.ReadElementContentAsString());
                             break;
                         case "comicRegex":
                             comic.StripRegex = reader.ReadElementContentAsString();
@@ -61,7 +61,7 @@ namespace Woofy.Services
                             comic.NextIssueRegex = reader.ReadElementContentAsString();
                             break;
                         case "firstIssue":
-                            comic.FirstStripUrl = reader.ReadElementContentAsString();
+                            comic.FirstStripUrl = new Uri(reader.ReadElementContentAsString());
                             break;
                         case "latestPageRegex":
                             comic.LatestIssueRegex = reader.ReadElementContentAsString();
@@ -72,7 +72,7 @@ namespace Woofy.Services
 
             if (string.IsNullOrEmpty(comic.Name))
                 throw new InvalidOperationException("The comic definition does not specify a name.");
-            if (string.IsNullOrEmpty(comic.HomeUrl))
+            if (string.IsNullOrEmpty(comic.HomePageUrl.AbsoluteUri))
                 throw new InvalidOperationException("The comic definition does not specify a home url.");
             if (string.IsNullOrEmpty(comic.StripRegex))
                 throw new InvalidOperationException("The comic definition does not specify a strip regular expression.");

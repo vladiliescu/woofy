@@ -11,7 +11,8 @@
 
     <Window.Resources>
         <DataTemplate x:Key="listBoxItem">
-            <StackPanel>
+            <StackPanel Margin="0, 1, 0, 1" Orientation="Horizontal">
+                <Image Width="16" Height="16" Source="{Binding FaviconPath}"/>
                 <TextBlock Text="{Binding Name}" />
             </StackPanel>
         </DataTemplate>

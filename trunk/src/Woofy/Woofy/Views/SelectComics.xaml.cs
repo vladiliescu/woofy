@@ -14,37 +14,49 @@ using System.Collections;
 
 using Woofy.Controllers;
 using Woofy.Entities;
+using System.Windows.Threading;
 
 namespace Woofy.Views
 {
     public partial class SelectComics : Window
     {
         #region Instance Members
-        private ComicsPresenter _controller;
+        private ComicsPresenter _presenter;
 
         private ListCollectionView _inactiveComicsView;
         private ListCollectionView _activeComicsView; 
         #endregion
 
         #region Constructors
-        public SelectComics(IPresenter controller)
+        public SelectComics(IPresenter presenter)
         {
             InitializeComponent();
 
-            _controller = (ComicsPresenter)controller;
+            _presenter = (ComicsPresenter)presenter;
+            _presenter.RefreshViewsRequired += new EventHandler(Presenter_RefreshViewsRequired);
 
-            _inactiveComicsView = new ListCollectionView(_controller.Comics);            
+            _inactiveComicsView = new ListCollectionView(_presenter.Comics);            
             _inactiveComicsView.Filter = new Predicate<object>(delegate(object comic)
             {
                 return !((Comic)comic).IsActive;
             });
 
-            _activeComicsView = new ListCollectionView(_controller.Comics);
+            _activeComicsView = new ListCollectionView(_presenter.Comics);
             _activeComicsView.Filter = new Predicate<object>(delegate(object comic)
             {
                 return ((Comic)comic).IsActive;
             });
 
+        }
+
+        private delegate void MethodInvoker();
+
+        private void Presenter_RefreshViewsRequired(object sender, EventArgs e)
+        {
+            Dispatcher.Invoke(DispatcherPriority.Normal, new MethodInvoker(delegate{
+                _inactiveComicsView.Refresh();
+                _activeComicsView.Refresh();    
+            }));            
         } 
         #endregion
 
@@ -59,14 +71,14 @@ namespace Woofy.Views
         #region Events - Buttons
         private void LeftToRightButton_Click(object sender, RoutedEventArgs e)
         {
-            _controller.ActivateComics(inactiveComicsList.SelectedItems);
+            _presenter.ActivateComics(inactiveComicsList.SelectedItems);
 
             SelectListBoxItems(inactiveComicsList.SelectedItems, activeComicsList);
         }
 
         private void RightToLeftButton_Click(object sender, RoutedEventArgs e)
         {
-            _controller.DeactivateComics(activeComicsList.SelectedItems);
+            _presenter.DeactivateComics(activeComicsList.SelectedItems);
 
             SelectListBoxItems(activeComicsList.SelectedItems, inactiveComicsList);
         } 
