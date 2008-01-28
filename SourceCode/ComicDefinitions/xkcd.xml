@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<comicInfo friendlyName="xkcd" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
+    <startUrl><![CDATA[http://xkcd.com/]]></startUrl>
+    <firstIssue><![CDATA[http://imgs.xkcd.com/comics/barrel_cropped_(1).jpg]]></firstIssue>
+    <comicRegex><![CDATA[<img\ssrc="(?<content>http://imgs.xkcd.com/comics/[\w()-]*\.(gif|jpg|jpeg|png))]]></comicRegex> 
+    <backButtonRegex><![CDATA[<a\shref="(?<content>/[\d]*/)"\saccesskey="p">]]></backButtonRegex>
+</comicInfo>
