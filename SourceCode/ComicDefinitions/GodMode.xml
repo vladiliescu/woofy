@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="God Mode" author="kb">
+    <startUrl><![CDATA[http://www.godmodeonline.com/]]></startUrl>
+    <firstIssue><![CDATA[http://www.godmodeonline.com/comics/gm20050915.jpg]]></firstIssue>
+    <comicRegex><![CDATA[(/comics)?/gm[0-9]{8}\.(gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>/d/[0-9]{8}.html)"><img\sborder=0\sname="previous_day"]]></backButtonRegex>
+</comicInfo>

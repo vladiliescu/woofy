@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Sore Thumbs" author="kb">
+    <startUrl><![CDATA[http://www.sorethumbsonline.com/]]></startUrl>
+    <firstIssue><![CDATA[http://www.sorethumbsonline.com/comics/st20040308.gif]]></firstIssue>
+    <comicRegex><![CDATA[/comics/st[0-9]{8}\.(gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>/d/[0-9]{8}.html)"><img\sborder=0\sname="previous_day"]]></backButtonRegex>
+</comicInfo>
