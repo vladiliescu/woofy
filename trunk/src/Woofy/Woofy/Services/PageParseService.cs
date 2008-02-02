@@ -13,33 +13,60 @@ namespace Woofy.Services
 {
     public class PageParseService
     {
-        public Uri RetrieveFaviconUrlFromPage(Uri url)
+        private WebClientWrapper _webClient;
+
+        #region Constructor
+        public PageParseService(WebClientWrapper webClient)
         {
-            Uri defaultFaviconUri = new Uri(url, "favicon.ico");
-            HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(defaultFaviconUri);
-            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-            if (response.ContentLength > 0)
-                return defaultFaviconUri;
+            _webClient = webClient;
+        }
 
-            string pageContent = string.Empty;
-            try
-            {
-                pageContent = ReadPageContent(url);
+        public PageParseService()
+            : this(new WebClientWrapper())
+        {
+        }
+        #endregion
+
+        public virtual Uri RetrieveFaviconAddressFromPage(Uri address)
+        {            
+            string pageContent = "";
+            try 
+            { 
+                pageContent = _webClient.DownloadString(address); 
             }
-            catch (WebException)
+            catch (WebException) 
             {
-                return null;
+                return null; 
             }
 
-            Uri[] links = RetrieveLinksFromPageByRegex(Constants.FaviconRegex, pageContent, url);
+            Uri[] links = RetrieveLinksFromPageByRegex(Constants.FaviconRegex, pageContent, address);
 
             if (links.Length > 0)
                 return links[0];
-            else 
-                return null;
+
+            Uri defaultFaviconAddress = new Uri(address.Scheme + Uri.SchemeDelimiter + address.Authority + "/favicon.ico");
+            Stream defaultFaviconStream = null;
+
+            try
+            {
+                defaultFaviconStream = _webClient.OpenRead(defaultFaviconAddress);
+            }
+            catch (WebException)
+            {
+            }
+            finally
+            {
+                if (defaultFaviconStream != null)
+                    defaultFaviconStream.Dispose();
+            }
+
+            if (defaultFaviconStream != null)
+                return defaultFaviconAddress;
+
+            return null;
         }        
 
-        public Uri[] RetrieveLinksFromPageByRegex(string regex, string pageContent, Uri currentUri)
+        public virtual Uri[] RetrieveLinksFromPageByRegex(string regex, string pageContent, Uri currentUri)
         {
             List<Uri> links = new List<Uri>();
             MatchCollection matches = Regex.Matches(pageContent, regex, Constants.RegexOptions);
@@ -64,24 +91,5 @@ namespace Woofy.Services
 
             return links.ToArray();
         }
-
-        #region Private Methods
-        public virtual string ReadPageContent(Uri url)
-        {
-            WebRequest request = WebConnectionFactory.CreateWebRequest(url);
-            string pageContent;
-            //Uri currentUri;
-
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            {
-                StreamReader reader = new StreamReader(response.GetResponseStream());
-
-                pageContent = reader.ReadToEnd();
-                //currentUri = response.ResponseUri;
-            }
-
-            return pageContent;
-        } 
-        #endregion
     }
 }

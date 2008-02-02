@@ -52,132 +52,132 @@ namespace Woofy.Tests
         #endregion
 
         #region DownloadFile
-        [Test]
-        public void DownloadFile_ShouldDownloadFileWithATemporaryExtensionAndRenameItAfterDownloading()
-        {
-            string fileName = "myfile.zip";
-            Uri fileAddress = new Uri("http://mysite.com/" + fileName);
-            using (_mocks.Record())
-            {
-                Expect
-                    .Call(delegate { _webClientDynamic.DownloadFile(null, null); })
-                    .IgnoreArguments()
-                    .Constraints(Property.Value("AbsoluteUri", "http://mysite.com/myfile.zip"), Text.EndsWith(fileName + ".!wf"));
+        //[Test]
+        //public void DownloadFile_ShouldDownloadFileWithATemporaryExtensionAndRenameItAfterDownloading()
+        //{
+        //    string fileName = "myfile.zip";
+        //    Uri fileAddress = new Uri("http://mysite.com/" + fileName);
+        //    using (_mocks.Record())
+        //    {
+        //        Expect
+        //            .Call(delegate { _webClientDynamic.DownloadFile(null, null); })
+        //            .IgnoreArguments()
+        //            .Constraints(Property.Value("AbsoluteUri", "http://mysite.com/myfile.zip"), Text.EndsWith(fileName + ".!wf"));
 
-                Expect
-                    .Call(delegate { _fileWrapperDynamic.Move(null, null); })
-                    .IgnoreArguments()
-                    .Constraints(Text.EndsWith(fileName + ".!wf"), Text.EndsWith(fileName));
-            }
+        //        Expect
+        //            .Call(delegate { _fileWrapperDynamic.Move(null, null); })
+        //            .IgnoreArguments()
+        //            .Constraints(Text.EndsWith(fileName + ".!wf"), Text.EndsWith(fileName));
+        //    }
 
-            using (_mocks.Playback())
-            {
-                _fileDownloadServiceDynamic.DownloadFile(fileAddress);
-            }
-        }
+        //    using (_mocks.Playback())
+        //    {
+        //        _fileDownloadServiceDynamic.DownloadFile(fileAddress);
+        //    }
+        //}
 
-        [Test]
-        public void DownloadFile_ShouldReturnThePathToTheDownloadedFile()
-        {
-            string fileName = "myfile.zip";
-            Uri fileAddress = new Uri("http://mysite.com/" + fileName);
-            using (_mocks.Record())
-            {
-                Expect
-                    .Call(delegate { _webClientDynamic.DownloadFile(null, null); })
-                    .IgnoreArguments();
+        //[Test]
+        //public void DownloadFile_ShouldReturnThePathToTheDownloadedFile()
+        //{
+        //    string fileName = "myfile.zip";
+        //    Uri fileAddress = new Uri("http://mysite.com/" + fileName);
+        //    using (_mocks.Record())
+        //    {
+        //        Expect
+        //            .Call(delegate { _webClientDynamic.DownloadFile(null, null); })
+        //            .IgnoreArguments();
 
-                Expect
-                    .Call(delegate { _fileWrapperDynamic.Move(null, null); })
-                    .IgnoreArguments();
-            }
+        //        Expect
+        //            .Call(delegate { _fileWrapperDynamic.Move(null, null); })
+        //            .IgnoreArguments();
+        //    }
 
-            using (_mocks.Playback())
-            {
-                string downloadedFilePath = _fileDownloadServiceDynamic.DownloadFile(fileAddress);
-                Assert.AreEqual(Path.Combine(Constants.DefaultDownloadFolder, fileName), downloadedFilePath);
-            }
-        }
+        //    using (_mocks.Playback())
+        //    {
+        //        string downloadedFilePath = _fileDownloadServiceDynamic.DownloadFile(fileAddress);
+        //        Assert.AreEqual(Path.Combine(Constants.DefaultDownloadFolder, fileName), downloadedFilePath);
+        //    }
+        //}
 
-        [Test]
-        [ExpectedException(typeof(WebException))]
-        public void DownloadFile_ShouldHandleDownloadExceptionsByDeletingThePartialFileAndRethrowing()
-        {
-            string fileName = "myfile.zip";
-            Uri fileAddress = new Uri("http://mysite.com/" + fileName);
-            using (_mocks.Record())
-            {
-                Expect
-                    .Call(delegate { _webClientDynamic.DownloadFile(null, null); })
-                    .IgnoreArguments()
-                    .Throw(new WebException());
+        //[Test]
+        //[ExpectedException(typeof(WebException))]
+        //public void DownloadFile_ShouldHandleDownloadExceptionsByDeletingThePartialFileAndRethrowing()
+        //{
+        //    string fileName = "myfile.zip";
+        //    Uri fileAddress = new Uri("http://mysite.com/" + fileName);
+        //    using (_mocks.Record())
+        //    {
+        //        Expect
+        //            .Call(delegate { _webClientDynamic.DownloadFile(null, null); })
+        //            .IgnoreArguments()
+        //            .Throw(new WebException());
 
-                Expect
-                    .Call(delegate { _fileWrapperDynamic.Delete(null); })
-                    .IgnoreArguments()
-                    .Constraints(Text.EndsWith(fileName + ".!wf"));
-            }
+        //        Expect
+        //            .Call(delegate { _fileWrapperDynamic.Delete(null); })
+        //            .IgnoreArguments()
+        //            .Constraints(Text.EndsWith(fileName + ".!wf"));
+        //    }
 
-            using (_mocks.Playback())
-            {
-                _fileDownloadServiceDynamic.DownloadFile(fileAddress);
-            }
-        }
+        //    using (_mocks.Playback())
+        //    {
+        //        _fileDownloadServiceDynamic.DownloadFile(fileAddress);
+        //    }
+        //}
 
-        [Test]
-        public void DownloadFile_ShouldOverwriteExistingFileIfSpecified()
-        {
-            string fileName = "myfile.zip";
-            using (_mocks.Record())
-            {
-                Expect
-                    .Call(delegate { _webClientDynamic.DownloadFile(null, null); })
-                    .IgnoreArguments();
+        //[Test]
+        //public void DownloadFile_ShouldOverwriteExistingFileIfSpecified()
+        //{
+        //    string fileName = "myfile.zip";
+        //    using (_mocks.Record())
+        //    {
+        //        Expect
+        //            .Call(delegate { _webClientDynamic.DownloadFile(null, null); })
+        //            .IgnoreArguments();
 
-                Expect
-                    .Call(_fileWrapperDynamic.Exists(null))
-                    .IgnoreArguments()
-                    .Return(true);
+        //        Expect
+        //            .Call(_fileWrapperDynamic.Exists(null))
+        //            .IgnoreArguments()
+        //            .Return(true);
 
-                Expect
-                    .Call(delegate { _fileWrapperDynamic.Delete(null); })
-                    .IgnoreArguments()
-                    .Constraints(Text.EndsWith(fileName));
+        //        Expect
+        //            .Call(delegate { _fileWrapperDynamic.Delete(null); })
+        //            .IgnoreArguments()
+        //            .Constraints(Text.EndsWith(fileName));
 
-                Expect
-                    .Call(delegate { _fileWrapperDynamic.Move(null, null); })
-                    .IgnoreArguments()
-                    .Constraints(Text.EndsWith(fileName + ".!wf"), Text.EndsWith(fileName));
-            }
+        //        Expect
+        //            .Call(delegate { _fileWrapperDynamic.Move(null, null); })
+        //            .IgnoreArguments()
+        //            .Constraints(Text.EndsWith(fileName + ".!wf"), Text.EndsWith(fileName));
+        //    }
 
-            using (_mocks.Playback())
-            {
-                _fileDownloadServiceDynamic.DownloadFile(new Uri("http://mysite.com/" + fileName), null, true);
-            }
-        }
+        //    using (_mocks.Playback())
+        //    {
+        //        _fileDownloadServiceDynamic.DownloadFile(new Uri("http://mysite.com/" + fileName), null, true);
+        //    }
+        //}
 
-        [Test]
-        public void DownloadFile_ShouldNotOverwriteExistingFileAndReturnNullIfNotSpecified()
-        {
+        //[Test]
+        //public void DownloadFile_ShouldNotOverwriteExistingFileAndReturnNullIfNotSpecified()
+        //{
 
-            string fileName = "myfile.zip";
-            using (_mocks.Record())
-            {
-                Expect
-                    .Call(delegate { _webClientDynamic.DownloadFile(null, null); })
-                    .IgnoreArguments();
+        //    string fileName = "myfile.zip";
+        //    using (_mocks.Record())
+        //    {
+        //        Expect
+        //            .Call(delegate { _webClientDynamic.DownloadFile(null, null); })
+        //            .IgnoreArguments();
 
-                Expect
-                    .Call(_fileWrapperDynamic.Exists(null))
-                    .IgnoreArguments()
-                    .Return(true);
-            }
+        //        Expect
+        //            .Call(_fileWrapperDynamic.Exists(null))
+        //            .IgnoreArguments()
+        //            .Return(true);
+        //    }
 
-            using (_mocks.Playback())
-            {
-                Assert.IsNull(_fileDownloadServiceDynamic.DownloadFile(new Uri("http://mysite.com/" + fileName), null, false));
-            }
-        }
+        //    using (_mocks.Playback())
+        //    {
+        //        Assert.IsNull(_fileDownloadServiceDynamic.DownloadFile(new Uri("http://mysite.com/" + fileName), null, false));
+        //    }
+        //}
         #endregion
 
         #region DownloadFileAsync

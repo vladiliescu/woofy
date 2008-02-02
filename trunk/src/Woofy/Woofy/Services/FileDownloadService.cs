@@ -34,43 +34,27 @@ namespace Woofy.Services
         }
         #endregion
 
-        public string DownloadFile(Uri fileUri)
-        {
-            return DownloadFile(fileUri, null);
-        }
+        //public string DownloadFile(Uri fileUri)
+        //{
+        //    return DownloadFile(fileUri, null);
+        //}
 
-        public string DownloadFile(Uri fileUri, string downloadFolder)
-        {
-            return DownloadFile(fileUri, downloadFolder, false);
-        }
+        //public string DownloadFile(Uri fileUri, string downloadFolder)
+        //{
+        //    return DownloadFile(fileUri, downloadFolder, false);
+        //}
 
-        public string DownloadFile(Uri fileUri, string downloadFolder, bool overwriteExisting)
+        public void DownloadFile(Uri fileUri, string downloadPath)
         {
-            string filePath = GetPathToDownloadFileTo(fileUri, downloadFolder);
-            string tempFilePath = filePath + ".!wf";
-
             try
             {
-                _webClient.DownloadFile(fileUri, tempFilePath);
+                _webClient.DownloadFile(fileUri, downloadPath);
             }
             catch
             {
-                _fileWrapper.Delete(tempFilePath);
+                _fileWrapper.Delete(downloadPath);
                 throw;
             }
-
-            if (!_fileWrapper.Exists(filePath))
-            {
-                _fileWrapper.Move(tempFilePath, filePath);
-                return filePath;
-            }
-
-            if (!overwriteExisting)
-                return null;
-
-            _fileWrapper.Delete(filePath);
-            _fileWrapper.Move(tempFilePath, filePath);
-            return filePath;
         }
 
         public void DownloadFileAsync(Uri fileUri)

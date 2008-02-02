@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Net;
 using System.ComponentModel;
+using System.IO;
 
 namespace Woofy.Other
 {
@@ -22,6 +23,16 @@ namespace Woofy.Other
         public virtual void DownloadFileAsync(Uri address, string fileName)
         {
             _webClient.DownloadFileAsync(address, fileName);
+        }
+
+        public virtual Stream OpenRead(Uri address)
+        {
+            return _webClient.OpenRead(address);
+        }
+
+        public virtual string DownloadString(Uri address)
+        {
+            return _webClient.DownloadString(address);
         }
 
         public event AsyncCompletedEventHandler DownloadFileCompleted

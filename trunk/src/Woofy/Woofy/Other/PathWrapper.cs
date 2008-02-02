@@ -16,5 +16,15 @@ namespace Woofy.Other
         {
             return Path.GetDirectoryName(path);
         }
+
+        public virtual string GetTempFileName()
+        {
+            return Path.GetTempFileName();
+        }
+
+        public virtual string GetFileNameWithoutExtension(string path)
+        {
+            return Path.GetFileNameWithoutExtension(path);
+        }
     }
 }

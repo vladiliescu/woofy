@@ -23,9 +23,25 @@ namespace Woofy.Controllers
         private IComicPersistanceService _comicPersistanceService;
         private IComicDefinitionsService _comicDefinitionService = new ComicDefinitionsService();
         private FileDownloadService _fileDownloadService = new FileDownloadService();
-        private PageParseService _pageParseService = new PageParseService();
-        private FileWrapper _fileWrapper = new FileWrapper();
-        private PathWrapper _pathWrapper = new PathWrapper();
+        private PageParseService _pageParseService;
+        private FileWrapper _file;
+        private PathWrapper _path;
+        private WebClientWrapper _webClient;
+        #endregion
+
+        #region Constructors
+        public ComicsPresenter()
+            : this (new PageParseService(), new WebClientWrapper(), new PathWrapper(), new FileWrapper())
+        {
+        }
+
+        public ComicsPresenter(PageParseService pageParseService, WebClientWrapper webClient, PathWrapper path, FileWrapper file)
+        {
+            _pageParseService = pageParseService;
+            _webClient = webClient;
+            _path = path;
+            _file = file;
+        }
         #endregion
 
         #region Public Methods
@@ -66,27 +82,34 @@ namespace Woofy.Controllers
         } 
         #endregion
 
-        #region Private Methods
+
         public void RefreshComicFavicons(object state)
         {
             foreach (Comic comic in Comics)
             {
-                Uri faviconUrl = _pageParseService.RetrieveFaviconUrlFromPage(comic.HomePageUrl);
-                if (faviconUrl == null)
-                    continue;
-
-                string faviconTempPath = _fileDownloadService.DownloadFile(faviconUrl, Constants.FaviconsFolder, true);
-                //todo: trebuie sa fac overwrite
-                string faviconName = comic.Name.Replace(" ", "");
-                string faviconPath =_pathWrapper.Combine(_pathWrapper.GetDirectoryName(faviconTempPath), faviconName + ".ico");
-                
-                _fileWrapper.Move(faviconTempPath, faviconPath);
-                comic.FaviconPath = faviconPath;
-
-                OnRefreshViewsRequired();
+                RefreshComicFavicon(comic);
             }
         }
-        #endregion
+
+        public void RefreshComicFavicon(Comic comic)
+        {
+            Uri faviconAddress = _pageParseService.RetrieveFaviconAddressFromPage(comic.HomePageUrl);
+            if (faviconAddress == null)
+                return;
+
+            string faviconTempPath = _path.GetTempFileName();
+            _webClient.DownloadFile(faviconAddress, faviconTempPath);
+
+            string faviconName = _path.GetFileNameWithoutExtension(comic.DefinitionFileName) + ".ico";
+            string faviconPath = _path.Combine(Constants.FaviconsFolder, faviconName);
+
+            _file.Delete(faviconPath);
+            _file.Move(faviconTempPath, faviconPath);
+
+            comic.FaviconPath = faviconPath;
+            OnRefreshViewsRequired();
+        }
+
 
         private event EventHandler _refreshViewsRequired;
         public event EventHandler RefreshViewsRequired
