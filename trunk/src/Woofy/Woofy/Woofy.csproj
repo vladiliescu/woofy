@@ -35,6 +35,10 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite, Version=1.0.48.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\lib\SQLite\System.Data.SQLite.DLL</HintPath>
+    </Reference>
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="UIAutomationProvider">
@@ -52,11 +56,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\ComicsPresenter.cs" />
-    <Compile Include="Controllers\IPresenter.cs" />
     <Compile Include="Entities\ApplicationSettings.cs" />
     <Compile Include="Entities\Comic.cs" />
     <Compile Include="Entities\ComicCollection.cs" />
-    <Compile Include="Entities\Constants.cs" />
+    <Compile Include="Entities\ComicDefinition.cs" />
     <Compile Include="Exceptions\FileAlreadyPresentException.cs" />
     <Compile Include="Other\FileWrapper.cs" />
     <Compile Include="Other\PathWrapper.cs" />
@@ -81,6 +84,8 @@
     <Compile Include="Services\IComicDefinitionsService.cs" />
     <Compile Include="Services\IComicPersistanceService.cs" />
     <Compile Include="Services\PageParseService.cs" />
+    <Compile Include="Services\PersistanceService.cs" />
+    <Compile Include="Services\Session.cs" />
     <Compile Include="Views\SelectComics.xaml.cs">
       <DependentUpon>SelectComics.xaml</DependentUpon>
     </Compile>

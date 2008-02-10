@@ -46,13 +46,13 @@ namespace Woofy.Services
                     comic.AllowMissingStrips = bool.Parse(allowMissingStrips);
                 if (!string.IsNullOrEmpty(allowMultipleStrips))
                     comic.AllowMultipleStrips = bool.Parse(allowMultipleStrips);
-                
+
                 while (reader.Read())
                 {
                     switch (reader.Name)
                     {
                         case "startUrl":
-                            comic.HomePageUrl = new Uri(reader.ReadElementContentAsString());
+                            comic.HomePageAddress = new Uri(reader.ReadElementContentAsString());
                             break;
                         case "comicRegex":
                             comic.StripRegex = reader.ReadElementContentAsString();
@@ -61,7 +61,7 @@ namespace Woofy.Services
                             comic.NextIssueRegex = reader.ReadElementContentAsString();
                             break;
                         case "firstIssue":
-                            comic.FirstStripUrl = new Uri(reader.ReadElementContentAsString());
+                            comic.FirstStripAddress = new Uri(reader.ReadElementContentAsString());
                             break;
                         case "latestPageRegex":
                             comic.LatestIssueRegex = reader.ReadElementContentAsString();
@@ -72,7 +72,7 @@ namespace Woofy.Services
 
             if (string.IsNullOrEmpty(comic.Name))
                 throw new InvalidOperationException("The comic definition does not specify a name.");
-            if (string.IsNullOrEmpty(comic.HomePageUrl.AbsoluteUri))
+            if (string.IsNullOrEmpty(comic.HomePageAddress.AbsoluteUri))
                 throw new InvalidOperationException("The comic definition does not specify a home url.");
             if (string.IsNullOrEmpty(comic.StripRegex))
                 throw new InvalidOperationException("The comic definition does not specify a strip regular expression.");
@@ -90,6 +90,5 @@ namespace Woofy.Services
             
             return comic;
         }
-
     }
 }

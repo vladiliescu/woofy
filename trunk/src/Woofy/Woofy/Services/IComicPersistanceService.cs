@@ -6,5 +6,6 @@ namespace Woofy.Services
 {
     public interface IComicPersistanceService
     {
+        void RefreshDatabaseComics(Woofy.Entities.ComicCollection Comics);
     }
 }

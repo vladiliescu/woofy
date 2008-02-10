@@ -28,11 +28,11 @@ namespace Woofy.Views
         #endregion
 
         #region Constructors
-        public SelectComics(IPresenter presenter)
+        public SelectComics(ComicsPresenter presenter)
         {
             InitializeComponent();
 
-            _presenter = (ComicsPresenter)presenter;
+            _presenter = presenter;
             _presenter.RefreshViewsRequired += new EventHandler(Presenter_RefreshViewsRequired);
 
             _inactiveComicsView = new ListCollectionView(_presenter.Comics);            

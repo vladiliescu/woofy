@@ -224,7 +224,7 @@ namespace Woofy.Tests
             using (_mocks.Record())
             {
                 Expect
-                    .Call(_pathWrapper.Combine(Constants.DefaultDownloadFolder, "myfile.zip"))
+                    .Call(_pathWrapper.Combine(ApplicationSettings.DefaultDownloadFolder, "myfile.zip"))
                     .Return(null);
             }
 

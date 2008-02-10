@@ -99,7 +99,7 @@ namespace Woofy.Services
             string fileName = uri.AbsoluteUri.Substring(uri.AbsoluteUri.LastIndexOf('/') + 1);
             string filePath;
             if (string.IsNullOrEmpty(downloadFolder))
-                filePath = _pathWrapper.Combine(Constants.DefaultDownloadFolder, fileName);
+                filePath = _pathWrapper.Combine(ApplicationSettings.DefaultDownloadFolder, fileName);
             else
                 filePath = _pathWrapper.Combine(downloadFolder, fileName);
 

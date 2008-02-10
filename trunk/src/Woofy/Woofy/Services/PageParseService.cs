@@ -39,7 +39,7 @@ namespace Woofy.Services
                 return null; 
             }
 
-            Uri[] links = RetrieveLinksFromPageByRegex(Constants.FaviconRegex, pageContent, address);
+            Uri[] links = RetrieveLinksFromPageByRegex(ApplicationSettings.FaviconRegex, pageContent, address);
 
             if (links.Length > 0)
                 return links[0];
@@ -69,13 +69,13 @@ namespace Woofy.Services
         public virtual Uri[] RetrieveLinksFromPageByRegex(string regex, string pageContent, Uri currentUri)
         {
             List<Uri> links = new List<Uri>();
-            MatchCollection matches = Regex.Matches(pageContent, regex, Constants.RegexOptions);
+            MatchCollection matches = Regex.Matches(pageContent, regex, ApplicationSettings.RegexOptions);
 
             foreach (Match match in matches)
             {
                 string capturedContent;
-                if (match.Groups[Constants.ContentGroup].Success)
-                    capturedContent = match.Groups[Constants.ContentGroup].Value;
+                if (match.Groups[ApplicationSettings.ContentGroup].Success)
+                    capturedContent = match.Groups[ApplicationSettings.ContentGroup].Value;
                 else
                     capturedContent = match.Value;
 
