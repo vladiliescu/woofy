@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Starslip Crisis" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
+    <startUrl><![CDATA[http://www.starslip.com/]]></startUrl>
+    <firstIssue><![CDATA[http://www.starslip.com/comics/ssc20050523.gif]]></firstIssue>
+    <comicRegex><![CDATA[http://www.starslip.com/comics/[\w\d]*.(gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>http://www.starslip.com/[\d]{4}/[\d]{2}/[\d]{2}/[\w-]*/)"><img\ssrc="/images/starslip_sharenav_02]]></backButtonRegex>
+</comicInfo>
