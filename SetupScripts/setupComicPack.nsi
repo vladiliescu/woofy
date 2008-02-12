@@ -15,6 +15,8 @@ SetCompressor bzip2
 !define MUI_STARTMENUPAGE_REGISTRY_ROOT HKLM
 !define MUI_STARTMENUPAGE_REGISTRY_KEY ${REGKEY}
 !define MUI_STARTMENUPAGE_DEFAULTFOLDER ${NAMEWOOFY}
+!define MUI_FINISHPAGE_RUN $INSTDIR\Woofy.exe
+!define MUI_FINISHPAGE_RUN_TEXT "Run ${NAMEWOOFY}"
 !define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\orange-install.ico"
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\orange-uninstall.ico"
 !define MUI_HEADERIMAGE_BITMAP "${NSISDIR}\Contrib\Graphics\Header\orange-nsis.bmp"
