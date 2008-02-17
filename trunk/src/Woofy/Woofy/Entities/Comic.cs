@@ -1,9 +1,11 @@
 ﻿using System;
 using System.IO;
 using System.Xml;
+using System.Diagnostics;
 
 namespace Woofy.Entities
 {
+    [DebuggerDisplay("{Name}")]
     public class Comic
     {
 
@@ -24,7 +26,7 @@ namespace Woofy.Entities
         /// </summary>
         public string FaviconPath { get; set; }
 
-        public ComicDefinition Definition { get; set; }
+        public ComicDefinition Definition { get; private set; }
                
 
         #region Constructors
@@ -35,5 +37,14 @@ namespace Woofy.Entities
 
         
         #endregion
+
+        public void AssociateWithDefinition(ComicDefinition definition)
+        {
+            if (Definition == definition)
+                return;
+
+            Definition = definition;
+            definition.AssociateWithComic(this);
+        }
     }
 }

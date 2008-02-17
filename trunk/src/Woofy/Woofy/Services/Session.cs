@@ -23,6 +23,7 @@ namespace Woofy.Services
             Session session = new Session();
 
             session._connection = new SQLiteConnection(ApplicationSettings.ConnectionString);
+            session._connection.Open();
             session._transaction = session._connection.BeginTransaction();
 
             return session;
@@ -49,22 +50,28 @@ namespace Woofy.Services
         #endregion
 
         #region Helper Methods
-        private DbCommand CreateCommand(string commandText, params object[] parameterValues)
+        private DbCommand CreateCommand(string commandText, params DbParameter[] parameters)
         {
             DbCommand command = _connection.CreateCommand();
-
             command.CommandText = commandText;
-            foreach (object parameterValue in parameterValues)
-            {
-                if (parameterValue is string)
-                    command.Parameters.Add(string.IsNullOrEmpty((string)parameterValue) ? DBNull.Value : parameterValue);
-                else if (parameterValue is bool)
-                    command.Parameters.Add((bool)parameterValue ? 1 : 0);
-                else
-                    command.Parameters.Add(parameterValue);
-            }
+            command.Parameters.AddRange(parameters);
 
             return command;
+        }
+
+        private DbParameter CreateParameter(string name, object value)
+        {
+            SQLiteParameter parameter = new SQLiteParameter();
+            parameter.ParameterName = name;
+
+            if (value is string)
+                parameter.Value = (string.IsNullOrEmpty((string)value) ? DBNull.Value : value);
+            //else if (parameterValue is bool)
+            //    command.Parameters.Add((bool)parameterValue ? 1 : 0);
+            else
+                parameter.Value = value;
+
+            return parameter;
         }
 
         private T GetReaderValue<T>(DbDataReader reader, string columnName)
@@ -80,8 +87,8 @@ namespace Woofy.Services
         #region Public Methods
         public void Commit()
         {
-            _transaction.Commit();
-            _connection.Close();
+            try { _transaction.Commit(); }
+            finally { _connection.Close(); }
         }
 
         public void CreateComic(Comic comic)
@@ -90,13 +97,13 @@ namespace Woofy.Services
 INSERT INTO [Comics] 
     (Name, IsActive, FaviconPath)
 VALUES 
-    (?, ?, ?);
+    (:name, :isActive, :faviconPath);
 
 SELECT last_insert_rowid();
 ",
-            comic.Name,
-            comic.IsActive,
-            comic.FaviconPath
+            CreateParameter(":name", comic.Name),
+            CreateParameter(":isActive", comic.IsActive),
+            CreateParameter(":faviconPath", comic.FaviconPath)
             );
 
             comic.Id = (long)command.ExecuteScalar();
@@ -106,19 +113,19 @@ SELECT last_insert_rowid();
 INSERT INTO [ComicDefinitions]
     (ComicId, AllowMissingStrips, AllowMultipleStrips, Author, AuthorEmail, FirstStripAddress, HomePageAddress, LatestIssueRegex, NextIssueRegex, SourceFileName, StripRegex)
 VALUES
-    (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+    (:comicId, :allowMissingStrips, :allowMultipleStrips, :author, :authorEmail, :firstStripAddress, :homePageAddress, :latestIssueRegex, :nextIssueRegex, :sourceFileName, :stripRegex);
 ",
-            definition.Comic.Id,
-            definition.AllowMissingStrips,
-            definition.AllowMultipleStrips,
-            definition.Author,
-            definition.AuthorEmail,
-            definition.FirstStripAddress.OriginalString,
-            definition.HomePageAddress.OriginalString,
-            definition.LatestIssueRegex,
-            definition.NextIssueRegex,
-            definition.SourceFileName,
-            definition.StripRegex
+            CreateParameter(":comicId", definition.Comic.Id),
+            CreateParameter(":allowMissingStrips", definition.AllowMissingStrips),
+            CreateParameter(":allowMultipleStrips", definition.AllowMultipleStrips),
+            CreateParameter(":author", definition.Author),
+            CreateParameter(":authorEmail", definition.AuthorEmail),
+            CreateParameter(":firstStripAddress", definition.FirstStripAddress.OriginalString),
+            CreateParameter(":homePageAddress", definition.HomePageAddress.OriginalString),
+            CreateParameter(":latestIssueRegex", definition.LatestIssueRegex),
+            CreateParameter(":nextIssueRegex", definition.NextIssueRegex),
+            CreateParameter(":sourceFileName", definition.SourceFileName),
+            CreateParameter(":stripRegex", definition.StripRegex)
             );
 
             definitionCommand.ExecuteNonQuery();
@@ -128,13 +135,13 @@ VALUES
         {
             DbCommand command = CreateCommand(@"
 UPDATE [Comics]
-    SET Name = ?, IsActive = ?, FaviconPath = ?
-WHERE Id = ?;
+    SET Name = :name, IsActive = :isActive, FaviconPath = :faviconPath
+WHERE Id = :id;
 ",
-            comic.Name,
-            comic.IsActive,
-            comic.FaviconPath,
-            comic.Id
+            CreateParameter(":name", comic.Name),
+            CreateParameter(":isActive", comic.IsActive),
+            CreateParameter(":faviconPath", comic.FaviconPath),
+            CreateParameter(":id", comic.Id)
             );
 
             command.ExecuteNonQuery();
@@ -142,27 +149,25 @@ WHERE Id = ?;
             ComicDefinition definition = comic.Definition;
             DbCommand definitionCommand = CreateCommand(@"
 UPDATE [ComicDefinitions]
-    SET AllowMissingStrips = ?, AllowMultipleStrips = ?, Author = ?, AuthorEmail = ?, 
-        FirstStripAddress = ?, HomePageAddress = ?, LatestIssueRegex = ?, SourceFileName = ?, StripRegex = ?
-WHERE ComicId = ?;
+    SET AllowMissingStrips = :allowMissingStrips, AllowMultipleStrips = :allowMultipleStrips, Author = :author, AuthorEmail = :authorEmail, 
+        FirstStripAddress = :firstStripAddress, HomePageAddress = :homePageAddress, LatestIssueRegex = :latestIssueRegex, SourceFileName = :sourceFileName, StripRegex = :stripRegex
+WHERE ComicId = :comicId;
 ",
-            definition.AllowMissingStrips,
-            definition.AllowMultipleStrips,
-            definition.Author,
-            definition.AuthorEmail,
-            definition.FirstStripAddress.OriginalString,
-            definition.HomePageAddress.OriginalString,
-            definition.LatestIssueRegex,
-            definition.NextIssueRegex,
-            definition.SourceFileName,
-            definition.StripRegex,
-            definition.Comic.Id
+            CreateParameter(":allowMissingStrips", definition.AllowMissingStrips),
+            CreateParameter(":allowMultipleStrips", definition.AllowMultipleStrips),
+            CreateParameter(":author", definition.Author),
+            CreateParameter(":authorEmail", definition.AuthorEmail),
+            CreateParameter(":firstStripAddress", definition.FirstStripAddress.OriginalString),
+            CreateParameter(":homePageAddress", definition.HomePageAddress.OriginalString),
+            CreateParameter(":latestIssueRegex", definition.LatestIssueRegex),
+            CreateParameter(":nextIssueRegex", definition.NextIssueRegex),
+            CreateParameter(":sourceFileName", definition.SourceFileName),
+            CreateParameter(":stripRegex", definition.StripRegex),
+            CreateParameter(":comicId", definition.Comic.Id)
             );
 
             definitionCommand.ExecuteNonQuery();
-        }
-
- 
+        } 
 
         public ComicCollection ReadAllComics()
         {
@@ -184,7 +189,7 @@ ORDER BY ComicId
             DbDataReader definitionsReader = definitionsCommand.ExecuteReader(CommandBehavior.SingleResult);
             try
             {
-                while (comicsReader.NextResult() && definitionsReader.NextResult())
+                while (comicsReader.Read() && definitionsReader.Read())
                 {
                     Comic comic = new Comic();
 
@@ -206,8 +211,7 @@ ORDER BY ComicId
                     definition.SourceFileName = GetReaderValue<string>(definitionsReader, "SourceFileName");
                     definition.StripRegex = GetReaderValue<string>(definitionsReader, "StripRegex");
 
-                    comic.Definition = definition;
-                    definition.Comic = comic;
+                    comic.AssociateWithDefinition(definition);
 
                     comics.Add(comic);
                 }
@@ -220,6 +224,68 @@ ORDER BY ComicId
 
             return comics;
         }
+
+        public ComicDefinitionCollection ReadAllDefinitions()
+        {
+            ComicDefinitionCollection definitions = new ComicDefinitionCollection();
+
+            DbCommand command = CreateCommand(@"
+SELECT ComicId, AllowMissingStrips, AllowMultipleStrips, Author, AuthorEmail, FirstStripAddress, HomePageAddress, LatestIssueRegex, NextIssueRegex, SourceFileName, StripRegex
+    FROM [ComicDefinitions]
+ORDER BY ComicId
+            ");
+
+            using (DbDataReader reader = command.ExecuteReader(CommandBehavior.SingleResult))
+            {
+                while (reader.Read())
+                {
+                    ComicDefinition definition = new ComicDefinition();
+                    Comic comic = new Comic();
+                    definition.AssociateWithComic(comic);
+
+                    comic.Id = GetReaderValue<long>(reader, "ComicId");
+                    definition.AllowMissingStrips = GetReaderValue<bool>(reader, "AllowMissingStrips");
+                    definition.AllowMultipleStrips = GetReaderValue<bool>(reader, "AllowMultipleStrips");
+                    definition.Author = GetReaderValue<string>(reader, "Author");
+                    definition.AuthorEmail = GetReaderValue<string>(reader, "AuthorEmail");
+                    definition.FirstStripAddress = new Uri(GetReaderValue<string>(reader, "FirstStripAddress"));
+                    definition.HomePageAddress = new Uri(GetReaderValue<string>(reader, "HomePageAddress"));
+                    definition.LatestIssueRegex = GetReaderValue<string>(reader, "LatestIssueRegex");
+                    definition.NextIssueRegex = GetReaderValue<string>(reader, "NextIssueRegex");
+                    definition.SourceFileName = GetReaderValue<string>(reader, "SourceFileName");
+                    definition.StripRegex = GetReaderValue<string>(reader, "StripRegex");
+
+                    definitions.Add(definition);
+                }
+            }            
+
+            return definitions;
+        }
+
+        public void UpdateDefinition(ComicDefinition definition)
+        {
+            DbCommand command = CreateCommand(@"
+UPDATE [ComicDefinitions]
+    SET AllowMissingStrips = :allowMissingStrips, AllowMultipleStrips = :allowMultipleStrips, Author = :author, AuthorEmail = :authorEmail, 
+        FirstStripAddress = :firstStripAddress, HomePageAddress = :homePageAddress, LatestIssueRegex = :latestIssueRegex, SourceFileName = :sourceFileName, StripRegex = :stripRegex
+WHERE ComicId = :comicId;
+",
+            CreateParameter(":allowMissingStrips", definition.AllowMissingStrips),
+            CreateParameter(":allowMultipleStrips", definition.AllowMultipleStrips),
+            CreateParameter(":author", definition.Author),
+            CreateParameter(":authorEmail", definition.AuthorEmail),
+            CreateParameter(":firstStripAddress", definition.FirstStripAddress.OriginalString),
+            CreateParameter(":homePageAddress", definition.HomePageAddress.OriginalString),
+            CreateParameter(":latestIssueRegex", definition.LatestIssueRegex),
+            CreateParameter(":nextIssueRegex", definition.NextIssueRegex),
+            CreateParameter(":sourceFileName", definition.SourceFileName),
+            CreateParameter(":stripRegex", definition.StripRegex),
+            CreateParameter(":comicId", definition.Comic.Id)
+            );
+
+            command.ExecuteNonQuery();
+        }
         #endregion
+        
     }
 }

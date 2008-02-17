@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Diagnostics;
 
 namespace Woofy.Entities
 {
+    [DebuggerDisplay("{Comic.Name}, {HomePageAddress}")]
     public class ComicDefinition
     {
         /// <summary>
@@ -53,20 +55,15 @@ namespace Woofy.Entities
             get { return !string.IsNullOrEmpty(SourceFileName); }
         }
 
-        public Comic Comic { get; set; }
+        public Comic Comic { get; private set; }
 
-        public void CopyTo(ComicDefinition definition)
+        public void AssociateWithComic(Comic comic)
         {
-            definition.AllowMissingStrips = this.AllowMissingStrips;
-            definition.AllowMultipleStrips = this.AllowMultipleStrips;
-            definition.Author = this.Author;
-            definition.AuthorEmail = this.AuthorEmail;
-            definition.FirstStripAddress = this.FirstStripAddress;
-            definition.HomePageAddress = this.HomePageAddress;
-            definition.LatestIssueRegex = this.LatestIssueRegex;
-            definition.NextIssueRegex = this.NextIssueRegex;
-            definition.SourceFileName = this.SourceFileName;
-            definition.StripRegex = this.StripRegex;
+            if (Comic == comic)
+                return;
+
+            Comic = comic;
+            comic.AssociateWithDefinition(this);
         }
     }
 }

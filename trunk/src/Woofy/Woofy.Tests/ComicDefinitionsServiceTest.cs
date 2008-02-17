@@ -15,13 +15,11 @@ namespace Woofy.Tests
     public class ComicDefinitionsServiceTest
     {
         private ComicDefinitionsService _comicDefinitionsService;
-        private ComicDefinitionsServiceStub _comicDefinitionsServiceStub;
 
         [SetUp]
         public void SetUp()
         {
             _comicDefinitionsService = new ComicDefinitionsService();
-            _comicDefinitionsServiceStub = new ComicDefinitionsServiceStub();
         }
 
         [Test]
@@ -40,27 +38,18 @@ namespace Woofy.Tests
     <backButtonRegex><![CDATA[some back button regex]]></backButtonRegex>    
 </comicInfo>
 ";
-            Comic comic = _comicDefinitionsService.BuildComicFromDefinition(new MemoryStream(Encoding.UTF8.GetBytes(comicInfoContent)));
+            ComicDefinition definition = _comicDefinitionsService.BuildDefinitionFromStream(new MemoryStream(Encoding.UTF8.GetBytes(comicInfoContent)));
 
-            //Assert.AreEqual("some friendly name", comic.Name);
-            //Assert.AreEqual(true, comic.AllowMultipleStrips);
-            //Assert.AreEqual(true, comic.AllowMissingStrips);
-            //Assert.AreEqual("some author", comic.DefinitionAuthor);
-            //Assert.AreEqual("some author email", comic.DefinitionAuthorEmail);
-            //Assert.AreEqual("http://home.page.com/", comic.HomePageAddress.AbsoluteUri);
-            //Assert.AreEqual("http://home.page.com/first.png", comic.FirstStripAddress.AbsoluteUri);
-            //Assert.AreEqual("some comic regex", comic.StripRegex);
-            //Assert.AreEqual("some back button regex", comic.NextIssueRegex);
-            //Assert.AreEqual("some latest page regex", comic.LatestIssueRegex);
-        }
-
-        [Test]
-        public void ShouldBuildAComicForEachDefinitionPassed()
-        {
-            string[] definitionFileNames = new string[5];
-            //_comicDefinitionsServiceStub.BuildComicsFromDefinitions(definitionFileNames);
-
-            Assert.AreEqual(definitionFileNames.Length, _comicDefinitionsServiceStub.TimesBuildComicFromDefinitionCalled);
+            Assert.AreEqual("some friendly name", definition.Comic.Name);
+            Assert.AreEqual(true, definition.AllowMultipleStrips);
+            Assert.AreEqual(true, definition.AllowMissingStrips);
+            Assert.AreEqual("some author", definition.Author);
+            Assert.AreEqual("some author email", definition.AuthorEmail);
+            Assert.AreEqual("http://home.page.com/", definition.HomePageAddress.AbsoluteUri);
+            Assert.AreEqual("http://home.page.com/first.png", definition.FirstStripAddress.AbsoluteUri);
+            Assert.AreEqual("some comic regex", definition.StripRegex);
+            Assert.AreEqual("some back button regex", definition.NextIssueRegex);
+            Assert.AreEqual("some latest page regex", definition.LatestIssueRegex);
         }
     }
 }

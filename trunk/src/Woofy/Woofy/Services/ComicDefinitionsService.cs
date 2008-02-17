@@ -8,87 +8,89 @@ using System.Xml;
 
 namespace Woofy.Services
 {
-    public class ComicDefinitionsService : IComicDefinitionsService
+    public class ComicDefinitionsService
     {
-
-        public ComicCollection BuildComicsFromDefinitions()
+        public ComicDefinitionCollection BuildComicDefinitionsFromFiles()
         {
-            return BuildComicsFromDefinitions(Directory.GetFiles(ApplicationSettings.ComicDefinitionsFolder));
+            return BuildComicDefinitionsFromFiles(Directory.GetFiles(ApplicationSettings.ComicDefinitionsFolder));
         }
 
-        public ComicCollection BuildComicsFromDefinitions(string[] definitionFiles)
+        public ComicDefinitionCollection BuildComicDefinitionsFromFiles(string[] definitionFiles)
         {
-            ComicCollection comics = new ComicCollection();
+            ComicDefinitionCollection definitions = new ComicDefinitionCollection();
 
             foreach (string definitionFile in definitionFiles)
-                comics.Add(BuildComicFromDefinition(definitionFile));
+                definitions.Add(BuildDefinitionFromFile(definitionFile));
 
-            return comics;
+            return definitions;
         }
 
         /// <param name="comicInfoStream">Stream containing the data necessary to create a new instance.</param>
-        public virtual Comic BuildComicFromDefinition(Stream comicInfoStream)
+        public ComicDefinition BuildDefinitionFromStream(Stream comicInfoStream)
         {
+            ComicDefinition definition = new ComicDefinition();
             Comic comic = new Comic();
+            comic.AssociateWithDefinition(definition);
+
             using (XmlReader reader = XmlReader.Create(comicInfoStream))
             {
                 reader.Read();  //<?xml..
                 reader.Read();  //Whitespace..
                 reader.Read();  //<comicInfo..
-                comic.Name = reader.GetAttribute("friendlyName");
-                comic.DefinitionAuthor = reader.GetAttribute("author");
-                comic.DefinitionAuthorEmail = reader.GetAttribute("authorEmail");
+                definition.Comic.Name = reader.GetAttribute("friendlyName");
+                definition.Author = reader.GetAttribute("author");
+                definition.AuthorEmail = reader.GetAttribute("authorEmail");
 
                 string allowMissingStrips = reader.GetAttribute("allowMissingStrips");
                 string allowMultipleStrips = reader.GetAttribute("allowMultipleStrips");
 
                 if (!string.IsNullOrEmpty(allowMissingStrips))
-                    comic.AllowMissingStrips = bool.Parse(allowMissingStrips);
+                    definition.AllowMissingStrips = bool.Parse(allowMissingStrips);
                 if (!string.IsNullOrEmpty(allowMultipleStrips))
-                    comic.AllowMultipleStrips = bool.Parse(allowMultipleStrips);
+                    definition.AllowMultipleStrips = bool.Parse(allowMultipleStrips);
 
                 while (reader.Read())
                 {
                     switch (reader.Name)
                     {
                         case "startUrl":
-                            comic.HomePageAddress = new Uri(reader.ReadElementContentAsString());
+                            definition.HomePageAddress = new Uri(reader.ReadElementContentAsString());
                             break;
                         case "comicRegex":
-                            comic.StripRegex = reader.ReadElementContentAsString();
+                            definition.StripRegex = reader.ReadElementContentAsString();
                             break;
                         case "backButtonRegex":
-                            comic.NextIssueRegex = reader.ReadElementContentAsString();
+                            definition.NextIssueRegex = reader.ReadElementContentAsString();
                             break;
                         case "firstIssue":
-                            comic.FirstStripAddress = new Uri(reader.ReadElementContentAsString());
+                            definition.FirstStripAddress = new Uri(reader.ReadElementContentAsString());
                             break;
                         case "latestPageRegex":
-                            comic.LatestIssueRegex = reader.ReadElementContentAsString();
+                            definition.LatestIssueRegex = reader.ReadElementContentAsString();
                             break;
                     }
                 }
             }
 
-            if (string.IsNullOrEmpty(comic.Name))
+            if (string.IsNullOrEmpty(definition.Comic.Name))
                 throw new InvalidOperationException("The comic definition does not specify a name.");
-            if (string.IsNullOrEmpty(comic.HomePageAddress.AbsoluteUri))
+            if (string.IsNullOrEmpty(definition.HomePageAddress.AbsoluteUri))
                 throw new InvalidOperationException("The comic definition does not specify a home url.");
-            if (string.IsNullOrEmpty(comic.StripRegex))
+            if (string.IsNullOrEmpty(definition.StripRegex))
                 throw new InvalidOperationException("The comic definition does not specify a strip regular expression.");
-            if (string.IsNullOrEmpty(comic.NextIssueRegex))
+            if (string.IsNullOrEmpty(definition.NextIssueRegex))
                 throw new InvalidOperationException("The comic definition does not specify a next issue regular expression.");
 
-            return comic;
+            return definition;
         }
 
         /// <param name="definitionFile">Path to an xml file containing the data necessary to create a new instance.</param>
-        public virtual Comic BuildComicFromDefinition(string definitionFile)
+        public ComicDefinition BuildDefinitionFromFile(string definitionFile)
         {
-            Comic comic = BuildComicFromDefinition(new FileStream(definitionFile, FileMode.Open, FileAccess.Read));
-            comic.DefinitionFileName = definitionFile;
+            ComicDefinition definition = BuildDefinitionFromStream(new FileStream(definitionFile, FileMode.Open, FileAccess.Read));
+            definition.SourceFileName = definitionFile;
             
-            return comic;
+            return definition;
         }
     }
 }

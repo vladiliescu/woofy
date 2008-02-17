@@ -20,8 +20,8 @@ namespace Woofy.Controllers
         #endregion
 
         #region Variables
-        private PersistanceService _persistanceService;
-        private ComicDefinitionsService _comicDefinitionService;
+        private PersistanceService _persistanceService = new PersistanceService();
+        private ComicDefinitionsService _comicDefinitionService = new ComicDefinitionsService();
         private FileDownloadService _fileDownloadService = new FileDownloadService();
         private PageParseService _pageParseService;
         private FileWrapper _file;
@@ -47,16 +47,13 @@ namespace Woofy.Controllers
         #region Public Methods
         public void RunApplication()
         {
-            //TODO: ar trebui sa construiesc lista de definitii, si in functie de ea sa actualizez/creez comic-uri
-            //Nu are rost sa mai construiesc toata lista de comics..decat pentru nume. hmm..
-            Comics = _comicDefinitionService.BuildComicsFromDefinitions();
+            _persistanceService.RefreshDatabaseComics(_comicDefinitionService.BuildComicDefinitionsFromFiles());
+
+            Comics = _persistanceService.ReadAllComics();
             foreach (Comic comic in Comics)
             {
                 comic.FaviconPath = Path.Combine(ApplicationSettings.FaviconsFolder, "blank.png");
             }
-
-            _persistanceService.RefreshDatabaseComics(Comics);
-            return;
 
             ThreadPool.UnsafeQueueUserWorkItem(RefreshComicFavicons, null);
             //RefreshComicFavicons(null);
@@ -97,21 +94,21 @@ namespace Woofy.Controllers
 
         public void RefreshComicFavicon(Comic comic)
         {
-            //Uri faviconAddress = _pageParseService.RetrieveFaviconAddressFromPage(comic.HomePageAddress);
-            //if (faviconAddress == null)
-            //    return;
+            Uri faviconAddress = _pageParseService.RetrieveFaviconAddressFromPage(comic.Definition.HomePageAddress);
+            if (faviconAddress == null)
+                return;
 
-            //string faviconTempPath = _path.GetTempFileName();
-            //_webClient.DownloadFile(faviconAddress, faviconTempPath);
+            string faviconTempPath = _path.GetTempFileName();
+            _webClient.DownloadFile(faviconAddress, faviconTempPath);
 
-            //string faviconName = _path.GetFileNameWithoutExtension(comic.DefinitionFileName) + ".ico";
-            //string faviconPath = _path.Combine(ApplicationSettings.FaviconsFolder, faviconName);
+            string faviconName = comic.Id.ToString() + ".ico";
+            string faviconPath = _path.Combine(ApplicationSettings.FaviconsFolder, faviconName);
 
-            //_file.Delete(faviconPath);
-            //_file.Move(faviconTempPath, faviconPath);
+            _file.Delete(faviconPath);
+            _file.Move(faviconTempPath, faviconPath);
 
-            //comic.FaviconPath = faviconPath;
-            //OnRefreshViewsRequired();
+            comic.FaviconPath = faviconPath;
+            OnRefreshViewsRequired();
         }
 
         #region Events - RefreshViewsRequired

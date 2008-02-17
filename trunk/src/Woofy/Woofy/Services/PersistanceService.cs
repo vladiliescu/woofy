@@ -12,28 +12,35 @@ namespace Woofy.Services
 {
     public class PersistanceService
     {
-        public void RefreshDatabaseComics(ComicCollection comics)
+        public void RefreshDatabaseComics(ComicDefinitionCollection definitions)
         {
             using (Session session = Session.CreateSession())
             {
-                ComicCollection databaseComics = session.ReadAllComics();
+                ComicDefinitionCollection databaseDefinitions = session.ReadAllDefinitions();
                 
-                foreach (Comic comic in comics)
+                foreach (ComicDefinition definition in definitions)
                 {
-                    Comic databaseComic = databaseComics.FindBySourceFileName(comic.Definition.SourceFileName);
-                    if (databaseComic == null)
+                    ComicDefinition databaseDefinition = databaseDefinitions.FindBySourceFileName(definition.SourceFileName);
+                    if (databaseDefinition == null)
                     {
-                        databaseComics.Add(comic);
-                        session.CreateComic(comic);
+                        session.CreateComic(definition.Comic);
                     }
                     else
                     {
-                        comic.Definition.CopyTo(databaseComic.Definition);
-                        session.UpdateComic(databaseComic);
+                        definition.AssociateWithComic(databaseDefinition.Comic);
+                        session.UpdateDefinition(definition);
                     }
                 }
 
                 session.Commit();
+            }
+        }
+
+        public ComicCollection ReadAllComics()
+        {
+            using (Session session = Session.CreateSession())
+            {
+                return session.ReadAllComics();
             }
         }
     }

@@ -60,6 +60,7 @@
     <Compile Include="Entities\Comic.cs" />
     <Compile Include="Entities\ComicCollection.cs" />
     <Compile Include="Entities\ComicDefinition.cs" />
+    <Compile Include="Entities\ComicDefinitionCollection.cs" />
     <Compile Include="Exceptions\FileAlreadyPresentException.cs" />
     <Compile Include="Other\FileWrapper.cs" />
     <Compile Include="Other\PathWrapper.cs" />
@@ -81,8 +82,6 @@
     </Compile>
     <Compile Include="Services\ComicDefinitionsService.cs" />
     <Compile Include="Services\FileDownloadService.cs" />
-    <Compile Include="Services\IComicDefinitionsService.cs" />
-    <Compile Include="Services\IComicPersistanceService.cs" />
     <Compile Include="Services\PageParseService.cs" />
     <Compile Include="Services\PersistanceService.cs" />
     <Compile Include="Services\Session.cs" />
