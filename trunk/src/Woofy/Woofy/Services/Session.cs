@@ -120,8 +120,8 @@ VALUES
             CreateParameter(":allowMultipleStrips", definition.AllowMultipleStrips),
             CreateParameter(":author", definition.Author),
             CreateParameter(":authorEmail", definition.AuthorEmail),
-            CreateParameter(":firstStripAddress", definition.FirstStripAddress.OriginalString),
-            CreateParameter(":homePageAddress", definition.HomePageAddress.OriginalString),
+            CreateParameter(":firstStripAddress", definition.FirstStripAddress == null ? null : definition.FirstStripAddress.OriginalString),
+            CreateParameter(":homePageAddress", definition.HomePageAddress == null ? null : definition.HomePageAddress.OriginalString),
             CreateParameter(":latestIssueRegex", definition.LatestIssueRegex),
             CreateParameter(":nextIssueRegex", definition.NextIssueRegex),
             CreateParameter(":sourceFileName", definition.SourceFileName),
@@ -157,7 +157,7 @@ WHERE ComicId = :comicId;
             CreateParameter(":allowMultipleStrips", definition.AllowMultipleStrips),
             CreateParameter(":author", definition.Author),
             CreateParameter(":authorEmail", definition.AuthorEmail),
-            CreateParameter(":firstStripAddress", definition.FirstStripAddress.OriginalString),
+            CreateParameter(":firstStripAddress", definition.FirstStripAddress == null ? null : definition.FirstStripAddress.OriginalString),
             CreateParameter(":homePageAddress", definition.HomePageAddress.OriginalString),
             CreateParameter(":latestIssueRegex", definition.LatestIssueRegex),
             CreateParameter(":nextIssueRegex", definition.NextIssueRegex),
@@ -204,7 +204,7 @@ ORDER BY ComicId
                     definition.AllowMultipleStrips = GetReaderValue<bool>(definitionsReader, "AllowMultipleStrips");
                     definition.Author = GetReaderValue<string>(definitionsReader, "Author");
                     definition.AuthorEmail = GetReaderValue<string>(definitionsReader, "AuthorEmail");
-                    definition.FirstStripAddress = new Uri(GetReaderValue<string>(definitionsReader, "FirstStripAddress"));
+                    //definition.FirstStripAddress = new Uri(GetReaderValue<string>(definitionsReader, "FirstStripAddress"));
                     definition.HomePageAddress = new Uri(GetReaderValue<string>(definitionsReader, "HomePageAddress"));
                     definition.LatestIssueRegex = GetReaderValue<string>(definitionsReader, "LatestIssueRegex");
                     definition.NextIssueRegex = GetReaderValue<string>(definitionsReader, "NextIssueRegex");
@@ -248,7 +248,7 @@ ORDER BY ComicId
                     definition.AllowMultipleStrips = GetReaderValue<bool>(reader, "AllowMultipleStrips");
                     definition.Author = GetReaderValue<string>(reader, "Author");
                     definition.AuthorEmail = GetReaderValue<string>(reader, "AuthorEmail");
-                    definition.FirstStripAddress = new Uri(GetReaderValue<string>(reader, "FirstStripAddress"));
+                    //definition.FirstStripAddress = new Uri(GetReaderValue<string>(reader, "FirstStripAddress"));
                     definition.HomePageAddress = new Uri(GetReaderValue<string>(reader, "HomePageAddress"));
                     definition.LatestIssueRegex = GetReaderValue<string>(reader, "LatestIssueRegex");
                     definition.NextIssueRegex = GetReaderValue<string>(reader, "NextIssueRegex");
@@ -274,7 +274,7 @@ WHERE ComicId = :comicId;
             CreateParameter(":allowMultipleStrips", definition.AllowMultipleStrips),
             CreateParameter(":author", definition.Author),
             CreateParameter(":authorEmail", definition.AuthorEmail),
-            CreateParameter(":firstStripAddress", definition.FirstStripAddress.OriginalString),
+            CreateParameter(":firstStripAddress", definition.FirstStripAddress == null ? null : definition.FirstStripAddress.OriginalString),
             CreateParameter(":homePageAddress", definition.HomePageAddress.OriginalString),
             CreateParameter(":latestIssueRegex", definition.LatestIssueRegex),
             CreateParameter(":nextIssueRegex", definition.NextIssueRegex),
@@ -285,7 +285,25 @@ WHERE ComicId = :comicId;
 
             command.ExecuteNonQuery();
         }
+
+        public void CreateComicStrip(ComicStrip comicStrip)
+        {
+            DbCommand command = CreateCommand(@"
+INSERT INTO ComicStrips (ComicId, SourcePageAddress, FilePath)
+    VALUES (:comicId, :sourcePageAddress, :filePath)
+
+SELECT last_insert_rowid();
+",
+            CreateParameter(":comicId", comicStrip.Comic.Id),
+            CreateParameter(":sourcePageAddress", comicStrip.SourcePageAddress),
+            CreateParameter(":filePath", comicStrip.FilePath)
+            );
+
+            comicStrip.Id = (long)command.ExecuteScalar();
+        }
         #endregion
+
+
         
     }
 }

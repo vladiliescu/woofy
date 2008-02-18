@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Gunnerkrigg Court" author="David Andersson">
-    <startUrl><![CDATA[http://www.gunnerkrigg.com/index2.php]]></startUrl>
-    <firstIssue><![CDATA[http://www.gunnerkrigg.com//comics/00000001.jpg]]></firstIssue>
-    <comicRegex><![CDATA[src="(?<content>http://www.gunnerkrigg.com//comics/[0-9]+\.(gif|jpg|jpeg|png))"]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref="(?<content>http://www.gunnerkrigg.com/archive_page\.php\?comicID=[0-9]+)"><img\ssrc="images/prev_a.jpg"[^>]*></a>]]></backButtonRegex>
-</comicInfo>

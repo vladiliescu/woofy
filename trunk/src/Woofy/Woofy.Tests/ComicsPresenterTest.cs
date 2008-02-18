@@ -39,13 +39,13 @@ namespace Woofy.Tests
             _comicsPresenter = _mocks.PartialMock<ComicsPresenter>(_pageParseService, _webClient, _path, _file);
 
             _eventSubscriber = _mocks.CreateMock<IEventSubscriber>();
-            _comicsPresenter.RefreshViewsRequired += _eventSubscriber.Handler;
+            _comicsPresenter.RunCodeOnUIThreadRequired += _eventSubscriber.Handler;
         }
 
         [TearDown]
         public void TearDown()
         {
-            _comicsPresenter.RefreshViewsRequired -= _eventSubscriber.Handler;
+            _comicsPresenter.RunCodeOnUIThreadRequired -= _eventSubscriber.Handler;
         }
         #endregion
 

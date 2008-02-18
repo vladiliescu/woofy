@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="DMFA" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
-    <startUrl><![CDATA[http://missmab.com/]]></startUrl>
-    <firstIssue><![CDATA[http://missmab.com/Comics/Vol01.jpg]]></firstIssue>
-    <comicRegex><![CDATA[Comics/Vol[\d]*.(gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[<A\sHREF="(?<content>Comics/Vol_[\d]*.php)"><IMG\sSRC="Images/comicprev.gif"]]></backButtonRegex>
-</comicInfo>

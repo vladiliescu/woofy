@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Arlo and Janis" author="Justin Wendlandt" authorEmail="jwendl@hotmail.com">
-    <startUrl><![CDATA[http://www.unitedmedia.com/comics/arlonjanis/archive]]></startUrl>
-    <rootUrl><![CDATA[http://www.unitedmedia.com]]></rootUrl>
-    <firstIssue><![CDATA[http://www.unitedmedia.com/comics/arlonjanis/archive/images/arlonjanis2033334071106.gif]]></firstIssue>
-    <comicRegex><![CDATA[(?<content>/comics/arlonjanis/archive/images/arlonjanis\d+\..*?)"\sALT="Today's]]></comicRegex>
-    <backButtonRegex><![CDATA[<A\sHREF="(?<content>/comics/arlonjanis/archive/arlonjanis-\d+\.html)">(Previous\sDay|<IMG\sSRC="/comics/arlonjanis/images/arrow_left\.gif)]]></backButtonRegex>
-</comicInfo>

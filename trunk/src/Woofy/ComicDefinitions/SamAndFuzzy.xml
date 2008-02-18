@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Sam and Fuzzy" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
-    <startUrl><![CDATA[http://samandfuzzy.com/]]></startUrl>
-    <firstIssue><![CDATA[http://samandfuzzy.com/comics/00000001.gif]]></firstIssue>
-    <comicRegex><![CDATA[http://samandfuzzy.com/comics/[\d]{8}.(gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref="(?<content>http://samandfuzzy.com/archive.php\?comicID=[\d]*)"><img\ssrc="imgint/nav_prev.gif"]]></backButtonRegex>
-</comicInfo>

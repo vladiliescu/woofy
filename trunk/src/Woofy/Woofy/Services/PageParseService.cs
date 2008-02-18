@@ -91,5 +91,19 @@ namespace Woofy.Services
 
             return links.ToArray();
         }
+
+        public virtual Uri GetLatestPageOrStartAddress(Uri startAddress, string latestPageRegex)
+        {
+            if (string.IsNullOrEmpty(latestPageRegex))
+                return startAddress;
+
+            string pageContent = _webClient.DownloadString(startAddress);
+            
+            Uri[] addresses = RetrieveLinksFromPageByRegex(latestPageRegex, pageContent, startAddress);
+            if (addresses.Length == 0)
+                return startAddress;
+
+            return addresses[0];
+        }        
     }
 }

@@ -53,13 +53,13 @@ namespace Woofy.Services
                 {
                     switch (reader.Name)
                     {
-                        case "startUrl":
+                        case "startAddress":
                             definition.HomePageAddress = new Uri(reader.ReadElementContentAsString());
                             break;
-                        case "comicRegex":
+                        case "stripRegex":
                             definition.StripRegex = reader.ReadElementContentAsString();
                             break;
-                        case "backButtonRegex":
+                        case "nextPageLinkRegex":
                             definition.NextIssueRegex = reader.ReadElementContentAsString();
                             break;
                         case "firstIssue":

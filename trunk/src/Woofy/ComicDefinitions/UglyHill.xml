@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Ugly Hill" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
-    <startUrl><![CDATA[http://www.uglyhill.com]]></startUrl>
-    <firstIssue><![CDATA[http://www.uglyhill.com/comics/20050523.jpg]]></firstIssue>
-    <comicRegex><![CDATA[(?<content>/comics/[0-9]{8}_?[^.]*\.(gif|jpg|jpeg|png))]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref="(?<content>/d/[0-9]{8}\.html)"\starget="_self"><img\sborder=0\ssrc="/images/back_button\.gif"></a>]]></backButtonRegex>
-</comicInfo>

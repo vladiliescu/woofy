@@ -15,6 +15,7 @@ using System.Collections;
 using Woofy.Controllers;
 using Woofy.Entities;
 using System.Windows.Threading;
+using Woofy.EventArguments;
 
 namespace Woofy.Views
 {
@@ -22,9 +23,6 @@ namespace Woofy.Views
     {
         #region Instance Members
         private ComicsPresenter _presenter;
-
-        private ListCollectionView _inactiveComicsView;
-        private ListCollectionView _activeComicsView; 
         #endregion
 
         #region Constructors
@@ -33,38 +31,15 @@ namespace Woofy.Views
             InitializeComponent();
 
             _presenter = presenter;
-            _presenter.RefreshViewsRequired += new EventHandler(Presenter_RefreshViewsRequired);
-
-            _inactiveComicsView = new ListCollectionView(_presenter.Comics);            
-            _inactiveComicsView.Filter = new Predicate<object>(delegate(object comic)
-            {
-                return !((Comic)comic).IsActive;
-            });
-
-            _activeComicsView = new ListCollectionView(_presenter.Comics);
-            _activeComicsView.Filter = new Predicate<object>(delegate(object comic)
-            {
-                return ((Comic)comic).IsActive;
-            });
-
-        }
-
-        private delegate void MethodInvoker();
-
-        private void Presenter_RefreshViewsRequired(object sender, EventArgs e)
-        {
-            Dispatcher.Invoke(DispatcherPriority.Normal, new MethodInvoker(delegate{
-                _inactiveComicsView.Refresh();
-                _activeComicsView.Refresh();    
-            }));            
-        } 
+            _presenter.RunCodeOnUIThreadRequired += new EventHandler<RunCodeOnUIThreadRequiredEventArgs>(OnRunCodeOnUIThreadRequired);
+        }        
         #endregion
 
         #region Events - Window
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            inactiveComicsList.ItemsSource = _inactiveComicsView;
-            activeComicsList.ItemsSource = _activeComicsView;
+            inactiveComicsList.ItemsSource = _presenter.InactiveComicsView;
+            activeComicsList.ItemsSource = _presenter.ActiveComicsView;
         } 
         #endregion
 
@@ -84,6 +59,11 @@ namespace Woofy.Views
         } 
         #endregion
 
+        private void OnRunCodeOnUIThreadRequired(object sender, RunCodeOnUIThreadRequiredEventArgs e)
+        {
+            Dispatcher.Invoke(DispatcherPriority.Normal, e.Code);
+        }
+
         #region Methods
         private void SelectListBoxItems(IList items, ListBox listBox)
         {
@@ -92,8 +72,8 @@ namespace Woofy.Views
             foreach (object item in items)
                 listBox.SelectedItems.Add(item);
 
-            _inactiveComicsView.Refresh();
-            _activeComicsView.Refresh();
+            _presenter.ActiveComicsView.Refresh();
+            _presenter.InactiveComicsView.Refresh();
         }
         #endregion
     }

@@ -15,7 +15,7 @@ namespace Woofy.Entities
         public const string ConnectionString = @"Data Source=D:\projects\Woofy\trunk\db\data.db3;Version=3;";
 
         //Folders
-        public static readonly string DefaultDownloadFolder = AppDomain.CurrentDomain.BaseDirectory;
+        public static readonly string DefaultDownloadFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Comics");
         public static readonly string FaviconsFolder = Path.Combine(DefaultDownloadFolder, "favicons");
         public static readonly string TempFolder = Path.GetTempPath();
     }

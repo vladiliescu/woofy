@@ -43,5 +43,13 @@ namespace Woofy.Services
                 return session.ReadAllComics();
             }
         }
+
+        public void CreateComicStrip(ComicStrip comicStrip)
+        {
+            using (Session session = Session.CreateSession())
+            {
+                session.CreateComicStrip(comicStrip);
+            }
+        }
     }
 }

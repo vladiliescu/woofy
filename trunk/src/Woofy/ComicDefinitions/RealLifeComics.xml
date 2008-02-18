@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Real Life Comics" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
-    <startUrl><![CDATA[http://www.reallifecomics.com/]]></startUrl>
-    <firstIssue><![CDATA[http://www.reallifecomics.com/comics/1999/19991115_1.png]]></firstIssue>
-    <comicRegex><![CDATA[/comics/[0-9]{4}/[0-9]{8}_[0-9]*.(gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref="(?<content>/archive/[0-9]{6}.html)"><img\ssrc="/images/nav_previous.png"]]></backButtonRegex>
-</comicInfo>

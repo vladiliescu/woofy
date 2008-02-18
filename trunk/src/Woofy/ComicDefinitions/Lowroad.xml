@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <comicInfo friendlyName="Lowroad" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
-    <startUrl><![CDATA[http://lowroad75.comicgenesis.com/]]></startUrl>
-    <firstIssue><![CDATA[http://lowroad75.comicgenesis.com/comics/20031108.gif]]></firstIssue>
-    <comicRegex><![CDATA[http://lowroad75.comicgenesis.com/comics/[0-9]*.(gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref="(?<content>http://lowroad75.comicgenesis.com/d/[0-9]*.html)"><img\sborder="0"\sname="previous_day"]]></backButtonRegex>
+    <startAddress><![CDATA[http://lowroad75.comicgenesis.com/d/20080103.html]]></startAddress>
+    <stripRegex><![CDATA[http://lowroad75.comicgenesis.com/comics/[0-9]*.(gif|jpg|jpeg|png)]]></stripRegex>
+    <nextPageLinkRegex><![CDATA[<a\shref="(?<content>http://lowroad75.comicgenesis.com/d/[\w]{8}.html)"><img\sborder="0"\sname="next_day"]]></nextPageLinkRegex>
 </comicInfo>

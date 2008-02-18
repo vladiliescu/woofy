@@ -10,13 +10,22 @@ using Woofy.Services;
 using Woofy.Views;
 using System.IO;
 using Woofy.Other;
+using System.Windows.Data;
+using System.Windows.Threading;
+using Woofy.EventArguments;
+using System.Net;
 
 namespace Woofy.Controllers
 {
     public class ComicsPresenter
     {
+        private delegate void MethodInvoker();
+
         #region Properties
-        public ComicCollection Comics { get; private set; } 
+        public ComicCollection Comics { get; private set; }
+
+        public ListCollectionView ActiveComicsView { get; private set; }
+        public ListCollectionView InactiveComicsView { get; private set; }
         #endregion
 
         #region Variables
@@ -55,13 +64,28 @@ namespace Woofy.Controllers
                 comic.FaviconPath = Path.Combine(ApplicationSettings.FaviconsFolder, "blank.png");
             }
 
-            ThreadPool.UnsafeQueueUserWorkItem(RefreshComicFavicons, null);
+            InactiveComicsView = new ListCollectionView(Comics);
+            InactiveComicsView.Filter = new Predicate<object>(delegate(object comic)
+            {
+                return !((Comic)comic).IsActive;
+            });
+
+            ActiveComicsView = new ListCollectionView(Comics);
+            ActiveComicsView.Filter = new Predicate<object>(delegate(object comic)
+            {
+                return ((Comic)comic).IsActive;
+            });
+
+            CheckActiveComicsForUpdates();
+
+            //ThreadPool.UnsafeQueueUserWorkItem(RefreshComicFavicons, null);
             //RefreshComicFavicons(null);
 
-            SelectComics startWindow = new SelectComics(this);
+            //SelectComics startWindow = new SelectComics(this);
+            ViewComics startWindow = new ViewComics(this);
             Application application = new Application();
             application.Run(startWindow);
-        }
+        }        
 
         public void ActivateComics(IList comicsToActivate)
         {
@@ -108,29 +132,136 @@ namespace Woofy.Controllers
             _file.Move(faviconTempPath, faviconPath);
 
             comic.FaviconPath = faviconPath;
-            OnRefreshViewsRequired();
+            
+            RefreshViews();
         }
 
-        #region Events - RefreshViewsRequired
-        private event EventHandler _refreshViewsRequired;
-        public event EventHandler RefreshViewsRequired
+        private void RefreshViews()
         {
-            add { _refreshViewsRequired += value; }
-            remove { _refreshViewsRequired -= value; }
+            OnRunCodeOnUIThreadRequired(delegate
+            {
+                ActiveComicsView.Refresh();
+                InactiveComicsView.Refresh();
+            });
         }
 
-        protected virtual void OnRefreshViewsRequired(EventArgs e)
+        #region Events - RunCodeOnUIThreadRequired
+        private event EventHandler<RunCodeOnUIThreadRequiredEventArgs> _runCodeOnUIThreadRequired;
+        public event EventHandler<RunCodeOnUIThreadRequiredEventArgs> RunCodeOnUIThreadRequired
         {
-            EventHandler reference = _refreshViewsRequired;
+            add { _runCodeOnUIThreadRequired += value; }
+            remove { _runCodeOnUIThreadRequired -= value; }
+        }
+
+        protected virtual void OnRunCodeOnUIThreadRequired(RunCodeOnUIThreadRequiredEventArgs e)
+        {
+            EventHandler<RunCodeOnUIThreadRequiredEventArgs> reference = _runCodeOnUIThreadRequired;
             if (reference != null)
                 reference(this, e);
         }
 
-        private void OnRefreshViewsRequired()
+        private void OnRunCodeOnUIThreadRequired(MethodInvoker code)
         {
-            OnRefreshViewsRequired(EventArgs.Empty);
+            RunCodeOnUIThreadRequiredEventArgs e = new RunCodeOnUIThreadRequiredEventArgs(code);
+            OnRunCodeOnUIThreadRequired(e);
         }
 
         #endregion
+
+        private void CheckActiveComicsForUpdates()
+        {
+            foreach (Comic comic in ActiveComicsView)
+            {
+                CheckComicForUpdates(comic);
+            }
+        }
+
+        private void CheckComicForUpdates(Comic comic)
+        {
+            ComicDefinition definition = comic.Definition;
+            string downloadFolder = _path.Combine(ApplicationSettings.DefaultDownloadFolder, comic.Name);
+            try
+            {
+                Uri startAddress = _pageParseService.GetLatestPageOrStartAddress(definition.HomePageAddress, definition.LatestIssueRegex);
+                Uri currentAddress = startAddress;
+
+                while (true)                
+                {
+                    //if (_isDownloadCancelled)
+                    //{
+                    //    downloadOutcome = DownloadOutcome.Cancelled;
+                    //    break;
+                    //}
+
+
+                    string pageContent = _webClient.DownloadString(currentAddress);
+
+                    Uri[] comicLinks = _pageParseService.RetrieveLinksFromPageByRegex(definition.StripRegex, pageContent, currentAddress);
+                    Uri[] nextStripLinks = _pageParseService.RetrieveLinksFromPageByRegex(definition.NextIssueRegex, pageContent, currentAddress);
+
+                    if (!MatchedLinksObeyRules(comicLinks.Length, definition.AllowMissingStrips, definition.AllowMultipleStrips))//, ref downloadOutcome))
+                        break;
+
+                    //bool fileAlreadyDownloaded = false;
+                    //string backButtonStringLink = backButtonLink == null ? null : backButtonLink.AbsoluteUri;
+                    foreach (Uri comicLink in comicLinks)
+                    {
+                        string stripFileName = comicLink.AbsoluteUri.Substring(comicLink.AbsoluteUri.LastIndexOf('/') + 1);
+                        string downloadPath = _path.Combine(downloadFolder, stripFileName);
+                        _fileDownloadService.DownloadFile(comicLink, downloadPath);
+
+                        ComicStrip strip = new ComicStrip(comic);
+                        strip.SourcePageAddress = currentAddress;
+                        strip.FilePath = downloadPath;
+
+                        _persistanceService.CreateComicStrip(strip);
+
+                        //if (fileAlreadyDownloaded && comicsToDownload == ComicsProvider.AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
+                            //break;
+
+                        //OnDownloadComicCompleted(new DownloadStripCompletedEventArgs(i + 1, backButtonStringLink));
+                    }
+
+                    //HACK
+                    //if (fileAlreadyDownloaded && comicsToDownload == ComicsProvider.AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
+                      //  break;
+
+                    if (nextStripLinks.Length == 0)
+                        break;
+
+                    currentAddress = nextStripLinks[0];
+                }
+            }
+            catch (UriFormatException ex)
+            {
+            }
+            catch (WebException ex)
+            {
+                //TODO: trebuie sa raportez exceptiile ca erori.
+            }
+        }
+
+        /// <summary>
+        /// Checks if the matched comic links obey the comic's download rules (i.e. no multiple strip matches).
+        /// </summary>
+        /// <param name="comicLinks">The list of matched comic links.</param>
+        /// <param name="downloadOutcome">If a rule is not obeyed, then this parameter will contain the respective outcome.</param>
+        /// <returns>True if the matched links obey the rules, false otherwise.</returns>
+        private bool MatchedLinksObeyRules(int linksLength, bool allowMissingStrips, bool allowMultipleStrips)//, ref DownloadOutcome downloadOutcome)
+        {
+            if (linksLength == 0 && !allowMissingStrips)
+            {
+                //downloadOutcome = DownloadOutcome.NoStripMatchesRuleBroken;
+                return false;
+            }
+
+            if (linksLength > 1 && !allowMultipleStrips)
+            {
+                //downloadOutcome = DownloadOutcome.MultipleStripMatchesRuleBroken;
+                return false;
+            }
+
+            return true;
+        }
     }
 }
