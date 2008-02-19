@@ -10,7 +10,7 @@ using Woofy.Settings;
 namespace UnitTests
 {
     [FixtureCategory("Long-running")]
-    [TestFixture(TimeOut = 180)]
+    [TestFixture(TimeOut = 540)]
     public class ComicDefinitionsTest
     {  
         private static readonly string ComicsDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Comics");
@@ -75,25 +75,14 @@ namespace UnitTests
             foreach (string comicInfoFile in Directory.GetFiles(ApplicationSettings.ComicDefinitionsFolder, "*.xml"))
             {
                 //i++;
-                //if (i > 14)
-                if (File.GetLastWriteTime(comicInfoFile) > new DateTime(2007, 11, 17)
-                    && !comicInfoFile.Contains("Blastwave")
-                    && !comicInfoFile.Contains("LeastICouldDo")
-                    && !comicInfoFile.Contains("MegaTokyo")
-                    && !comicInfoFile.Contains("Penny")
-                    && !comicInfoFile.Contains("Order")
-                    && !comicInfoFile.Contains("Lowroad")
-                    && !comicInfoFile.Contains("Castlevania")
-                    && !comicInfoFile.Contains("Cyanide")
-                    && !comicInfoFile.Contains("PvPOnline")
-                    && !comicInfoFile.Contains("RealLife")
-                    && !comicInfoFile.Contains("Striptease")
-                    && !comicInfoFile.Contains("Exterminatus")
-                    && !comicInfoFile.Contains("Arlo")
-                    && !comicInfoFile.Contains("GirlGenius")
-                    && !comicInfoFile.Contains("TwoK")
-                    && !comicInfoFile.Contains("Undert")
-                    )
+                //if (string.Compare(comicInfoFile, @"D:\projects\Woofy\SourceCode\UnitTests\bin\Debug\ComicDefinitions\CastlevaniaRPGSups.xml") > 0  
+                //    && !comicInfoFile.Contains("CtrlAltDel")
+                //    && !comicInfoFile.Contains("Cyanide")
+                //    && !comicInfoFile.Contains("Darths")
+                //    )
+                //if (File.GetLastWriteTime(comicInfoFile) > new DateTime(2007, 12, 12)
+
+                  //  )
                     yield return Path.GetFileName(comicInfoFile);
             }
         }

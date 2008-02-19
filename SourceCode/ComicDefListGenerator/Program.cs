@@ -11,7 +11,7 @@ namespace ComicDefListGenerator
             {
                 foreach (ComicDefinition comicDefinition in ComicDefinition.GetAvailableComicDefinitions())
                 {
-                    writer.WriteLine(string.Format("<li><a rel=\"nofollow\" href=\"{0}\">{1}</a></li>",
+                    writer.WriteLine(string.Format("<li><a target=\"_blank\" rel=\"nofollow\" href=\"{0}\">{1}</a></li>",
                                                     comicDefinition.StartUrl, comicDefinition.FriendlyName));
                 }
             }

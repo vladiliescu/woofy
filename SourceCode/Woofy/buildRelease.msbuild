@@ -31,7 +31,7 @@
         <!--The comics excluded below are not yet ready for prime time-->
         <CreateItem
             Include="bin\$(Configuration)\ComicDefinitions\*.*"
-            Exclude="bin\$(Configuration)\ComicDefinitions\*Piled*.*; bin\$(Configuration)\ComicDefinitions\*Noob*.*"
+            Exclude="bin\$(Configuration)\ComicDefinitions\*Piled*.*; bin\$(Configuration)\ComicDefinitions\*CollegeRoomies*.*;bin\$(Configuration)\ComicDefinitions\*UserFriendly*.*"
             >
             <Output TaskParameter="Include" ItemName="ComicDefinitions"/>
         </CreateItem>
@@ -50,6 +50,7 @@
         </CreateItem>
         
         <Zip Files="@(SetupFiles)" ZipFileName="$(SetupScriptsPath)\Drop\Woofy-version-binaries.zip" ZipLevel="10" WorkingDirectory="$(SetupFilesPath)" />
+		<Zip Files="@(ComicDefinitions)" ZipFileName="$(SetupScriptsPath)\Drop\ComicPack-version.zip" ZipLevel="10" WorkingDirectory="bin\$(Configuration)" />
         
         <Exec Command="d:\programming\nsis\makensis.exe $(SetupScriptsPath)\setup.nsi" />
         <Exec Command="d:\programming\nsis\makensis.exe $(SetupScriptsPath)\setupComicPack.nsi" />
