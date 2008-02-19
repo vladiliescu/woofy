@@ -73,7 +73,7 @@ namespace Woofy.Core
             WebResponse response = request.GetResponse();
             Stream stream = response.GetResponseStream();
 
-            string tempFilePath = filePath + ".!wf";
+            string tempFilePath = Path.GetTempFileName();
             BinaryWriter writer = new BinaryWriter(File.Create(tempFilePath));
             byte[] buffer = new byte[MaxBufferSize];
 
@@ -96,7 +96,8 @@ namespace Woofy.Core
                     writer.Close();
                 }
 
-                File.Move(tempFilePath, filePath);
+                if (!File.Exists(filePath))
+                    File.Move(tempFilePath, filePath);
             }
             catch
             {

@@ -139,8 +139,9 @@ namespace Woofy.Core
         /// </summary>
         public void OpenTaskFolder(ComicTask task)
         {
-            if (Directory.Exists(task.DownloadFolder))
-                Process.Start(task.DownloadFolder);
+            string downloadFolder = (Path.IsPathRooted(task.DownloadFolder) ? task.DownloadFolder : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, task.DownloadFolder));
+            if (Directory.Exists(downloadFolder))
+                Process.Start(downloadFolder);
         }
 
         public void ResetTasksBindings()
