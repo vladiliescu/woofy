@@ -24,19 +24,28 @@ SetCompressor bzip2
 !define MUI_WELCOMEFINISHPAGE_BITMAP "${NSISDIR}\Contrib\Graphics\Wizard\orange-nsis.bmp"
 !define MUI_UNFINISHPAGE_NOAUTOCLOSE
 
+
 # Included files
 !include Sections.nsh
 !include MUI.nsh
-
+!include "MUI_EXTRAPAGES.nsh"
 
 # Installer pages
 !insertmacro MUI_PAGE_WELCOME
+!insertmacro MUI_PAGE_README "changelog.txt"
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_INSTFILES
 !insertmacro MUI_PAGE_FINISH
 
 # Installer languages
 !insertmacro MUI_LANGUAGE English
+  ;Set up install lang strings for 1st lang
+  ${ReadmeLanguage} "${LANG_ENGLISH}" \
+          "What's new" \
+          "Please review the following changes" \
+          "${name} updates ${namewoofy} with the following comics:" \
+          "$\n  Click on scrollbar arrows or press Page Down to review the entire text."
+
 
 # Installer attributes
 Name "${NAME} ${VERSION}"
