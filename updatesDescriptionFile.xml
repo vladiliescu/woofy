@@ -13,9 +13,9 @@
         </release>        
     </woofy>
     <comicPack>
-		<release versionNumber="0.0.0" downloadAddress="none" releaseDate="2007-10-10" size="0">
+		<release versionNumber="0.4.2.1" downloadAddress="http://downloads.sourceforge.net/woofy/ComicPack-0.4.2.1-setup.exe" releaseDate="2008-02-14" size="103219">
             <changes>
-                <change>Placeholder entry.</change>
+                <change>Some new comics.</change>
             </changes>
         </release>   
     </comicPack>
