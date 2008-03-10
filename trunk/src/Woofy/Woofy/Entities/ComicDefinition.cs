@@ -55,6 +55,8 @@ namespace Woofy.Entities
             get { return !string.IsNullOrEmpty(SourceFileName); }
         }
 
+        public long ComicId { get; set; }
+
         public Comic Comic { get; private set; }
 
         public void AssociateWithComic(Comic comic)
@@ -63,6 +65,8 @@ namespace Woofy.Entities
                 return;
 
             Comic = comic;
+            ComicId = comic.Id;
+
             comic.AssociateWithDefinition(this);
         }
     }

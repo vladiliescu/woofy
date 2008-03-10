@@ -44,10 +44,14 @@ namespace Woofy.Services
         //    return DownloadFile(fileUri, downloadFolder, false);
         //}
 
-        public void DownloadFile(Uri fileUri, string downloadPath)
+        public void DownloadFile(Uri fileUri, string downloadPath, Uri referrerUri)
         {
             try
             {
+                _webClient.Headers.Clear();
+                if (referrerUri != null)
+                    _webClient.Headers.Add("Referer", referrerUri.AbsoluteUri);
+
                 _webClient.DownloadFile(fileUri, downloadPath);
             }
             catch

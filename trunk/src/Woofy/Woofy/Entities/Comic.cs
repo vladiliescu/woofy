@@ -10,11 +10,11 @@ namespace Woofy.Entities
     {
 
         public long Id { get; set; }
+        
         /// <summary>
         /// The comic's name.
         /// </summary>
-        public string Name { get; set; }
-        
+        public string Name { get; set; }        
 
         /// <summary>
         /// Whether the comic should be downloaded or not.
@@ -27,16 +27,6 @@ namespace Woofy.Entities
         public string FaviconPath { get; set; }
 
         public ComicDefinition Definition { get; private set; }
-               
-
-        #region Constructors
-
-        public Comic()
-        {
-        }
-
-        
-        #endregion
 
         public void AssociateWithDefinition(ComicDefinition definition)
         {

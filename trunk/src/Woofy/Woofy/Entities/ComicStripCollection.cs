@@ -7,5 +7,12 @@ namespace Woofy.Entities
 {
     public class ComicStripCollection : Collection<ComicStrip>
     {
+        public void CopyTo(ComicStripCollection stripCollection)
+        {
+            foreach (ComicStrip strip in this)
+            {
+                stripCollection.Add(strip);
+            }
+        }
     }
 }

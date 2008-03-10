@@ -14,6 +14,7 @@ using System.Windows.Data;
 using System.Windows.Threading;
 using Woofy.EventArguments;
 using System.Net;
+using Woofy.DatabaseAccess;
 
 namespace Woofy.Controllers
 {
@@ -22,10 +23,13 @@ namespace Woofy.Controllers
         private delegate void MethodInvoker();
 
         #region Properties
-        public ComicCollection Comics { get; private set; }
+        private ComicCollection Comics { get; set; }
+        private ComicStripCollection Strips { get; set; }
 
         public ListCollectionView ActiveComicsView { get; private set; }
         public ListCollectionView InactiveComicsView { get; private set; }
+
+        public ListCollectionView StripsView { get; private set; }
         #endregion
 
         #region Variables
@@ -36,6 +40,7 @@ namespace Woofy.Controllers
         private FileWrapper _file;
         private PathWrapper _path;
         private WebClientWrapper _webClient;
+        private DatabaseAdapter _databaseAdapter = new DatabaseAdapter();
         #endregion
 
         #region Constructors
@@ -56,13 +61,15 @@ namespace Woofy.Controllers
         #region Public Methods
         public void RunApplication()
         {
-            _persistanceService.RefreshDatabaseComics(_comicDefinitionService.BuildComicDefinitionsFromFiles());
+            ComicDefinitionCollection fileDefinitions = _comicDefinitionService.BuildComicDefinitionsFromFiles();
+            foreach (ComicDefinition fileDefinition in fileDefinitions)
+                _databaseAdapter.InsertOrUpdateDefinition(fileDefinition);
 
-            Comics = _persistanceService.ReadAllComics();
+            int selectedComicIndex = 1;
+            Comics = _databaseAdapter.ReadAllComics();
             foreach (Comic comic in Comics)
-            {
                 comic.FaviconPath = Path.Combine(ApplicationSettings.FaviconsFolder, "blank.png");
-            }
+            Strips = _databaseAdapter.ReadStripsForComic(Comics[selectedComicIndex]);
 
             InactiveComicsView = new ListCollectionView(Comics);
             InactiveComicsView.Filter = new Predicate<object>(delegate(object comic)
@@ -75,8 +82,11 @@ namespace Woofy.Controllers
             {
                 return ((Comic)comic).IsActive;
             });
+            
+            StripsView = new ListCollectionView(Strips);
 
-            CheckActiveComicsForUpdates();
+            ThreadPool.QueueUserWorkItem(delegate { CheckActiveComicsForUpdates(); });
+            //CheckActiveComicsForUpdates();
 
             //ThreadPool.UnsafeQueueUserWorkItem(RefreshComicFavicons, null);
             //RefreshComicFavicons(null);
@@ -108,7 +118,7 @@ namespace Woofy.Controllers
         } 
         #endregion
 
-        public void RefreshComicFavicons(object state)
+        public void RefreshComicFavicons()
         {
             foreach (Comic comic in Comics)
             {
@@ -142,6 +152,14 @@ namespace Woofy.Controllers
             {
                 ActiveComicsView.Refresh();
                 InactiveComicsView.Refresh();
+            });
+        }
+
+        private void RefreshStrips()
+        {
+            OnRunCodeOnUIThreadRequired(delegate
+            {
+                StripsView.Refresh();
             });
         }
 
@@ -179,10 +197,25 @@ namespace Woofy.Controllers
         private void CheckComicForUpdates(Comic comic)
         {
             ComicDefinition definition = comic.Definition;
+            ComicStrip mostRecentStrip = _databaseAdapter.ReadMostRecentStrip(comic);
             string downloadFolder = _path.Combine(ApplicationSettings.DefaultDownloadFolder, comic.Name);
             try
             {
-                Uri startAddress = _pageParseService.GetLatestPageOrStartAddress(definition.HomePageAddress, definition.LatestIssueRegex);
+                Uri startAddress;
+                if (mostRecentStrip == null)
+                {
+                    startAddress = _pageParseService.GetLatestPageOrStartAddress(definition.HomePageAddress, definition.LatestIssueRegex);
+                }
+                else
+                {
+                    string pageContent = _webClient.DownloadString(mostRecentStrip.SourcePageAddress);
+                    Uri[] nextStripLinks = _pageParseService.RetrieveLinksFromPageByRegex(definition.NextIssueRegex, pageContent, mostRecentStrip.SourcePageAddress);
+                    if (nextStripLinks.Length == 0)
+                        return;
+
+                    startAddress = nextStripLinks[0];
+                }
+
                 Uri currentAddress = startAddress;
 
                 while (true)                
@@ -193,7 +226,6 @@ namespace Woofy.Controllers
                     //    break;
                     //}
 
-
                     string pageContent = _webClient.DownloadString(currentAddress);
 
                     Uri[] comicLinks = _pageParseService.RetrieveLinksFromPageByRegex(definition.StripRegex, pageContent, currentAddress);
@@ -201,6 +233,7 @@ namespace Woofy.Controllers
 
                     if (!MatchedLinksObeyRules(comicLinks.Length, definition.AllowMissingStrips, definition.AllowMultipleStrips))//, ref downloadOutcome))
                         break;
+                    
 
                     //bool fileAlreadyDownloaded = false;
                     //string backButtonStringLink = backButtonLink == null ? null : backButtonLink.AbsoluteUri;
@@ -208,13 +241,21 @@ namespace Woofy.Controllers
                     {
                         string stripFileName = comicLink.AbsoluteUri.Substring(comicLink.AbsoluteUri.LastIndexOf('/') + 1);
                         string downloadPath = _path.Combine(downloadFolder, stripFileName);
-                        _fileDownloadService.DownloadFile(comicLink, downloadPath);
+                        if (!Directory.Exists(downloadFolder))
+                            Directory.CreateDirectory(downloadFolder);
+                        _fileDownloadService.DownloadFile(comicLink, downloadPath, currentAddress);
 
                         ComicStrip strip = new ComicStrip(comic);
                         strip.SourcePageAddress = currentAddress;
                         strip.FilePath = downloadPath;
 
-                        _persistanceService.CreateComicStrip(strip);
+                        if (ActiveComicsView.CurrentItem == comic)
+                        {
+                            Strips.Add(strip);
+                            RefreshStrips();
+                        }
+
+                        _databaseAdapter.InsertStrip(strip);
 
                         //if (fileAlreadyDownloaded && comicsToDownload == ComicsProvider.AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
                             //break;
@@ -262,6 +303,20 @@ namespace Woofy.Controllers
             }
 
             return true;
+        }
+
+        public void HandleSelectedComic(Comic comic)
+        {
+            Strips.Clear();
+            _databaseAdapter.ReadStripsForComic(comic).CopyTo(Strips);
+            
+            RefreshStrips();
+        }
+
+        public void HandleSelectedStrip(ComicStrip strip)
+        {
+
+            
         }
     }
 }

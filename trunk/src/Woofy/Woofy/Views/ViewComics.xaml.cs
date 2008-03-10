@@ -12,6 +12,7 @@ using System.Windows.Shapes;
 using Woofy.Controllers;
 using Woofy.EventArguments;
 using System.Windows.Threading;
+using Woofy.Entities;
 
 namespace Woofy.Views
 {
@@ -32,9 +33,20 @@ namespace Woofy.Views
             Dispatcher.Invoke(DispatcherPriority.Normal, e.Code);
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e)
+        private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
             comicsList.ItemsSource = _presenter.ActiveComicsView;
+            stripsList.ItemsSource = _presenter.StripsView;
+        }
+
+        private void OnComicSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            _presenter.HandleSelectedComic((Comic)comicsList.SelectedItem);
+        }
+
+        private void OnStripSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            _presenter.HandleSelectedStrip((ComicStrip)stripsList.SelectedItem);
         } 
     }
 }
