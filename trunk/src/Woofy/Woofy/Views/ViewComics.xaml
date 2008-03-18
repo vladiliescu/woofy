@@ -7,44 +7,47 @@
         Title="Woofy" 
         Height="600" Width="800">
 
-    <StackPanel Orientation="Vertical">
-        <StackPanel
-        Orientation="Horizontal"
-        VerticalAlignment="Top"
-        >
-            <ListBox Name="comicsList"
-                 HorizontalAlignment="Left"                 
-                 Width="150" Height="350" SelectionMode="Single"
-                 SelectionChanged="OnComicSelectionChanged"
-                 >
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Margin="0, 1, 0, 1" Orientation="Horizontal">
-                            <Image Width="16" Height="16" Source="{Binding FaviconPath}"/>
-                            <TextBlock Text="{Binding Name}" />
-                    </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+    <DockPanel>
 
-            <ListBox Name="stripsList" MaxWidth="500" SelectionChanged="OnStripSelectionChanged" >
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
+        <ListBox Name="comicsList" Background="BlanchedAlmond"
+                HorizontalAlignment="Left"                 
+                Width="150" SelectionMode="Single"
+                SelectionChanged="OnComicSelectionChanged"
+                DockPanel.Dock="Left"
+            >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Margin="0, 1, 0, 1" Orientation="Horizontal">
+                        <Image Width="16" Height="16" Source="{Binding FaviconPath}"/>
+                        <TextBlock Text="{Binding Name}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <ListBox Background="AliceBlue" Name="stripsList" SelectionChanged="OnStripSelectionChanged" >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border CornerRadius="5" BorderBrush="DarkGray" BorderThickness="2" Margin="5">
                         <StackPanel Orientation="Vertical">
                             <Image Width="100" Height="100" Source="{Binding FilePath}" />
                             <TextBlock Text="File Name" />
-                    </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel />
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-            </ListBox>
-        </StackPanel>
-        <StackPanel>
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+            <ListBox.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel />
+                </ItemsPanelTemplate>
+            </ListBox.ItemsPanel>
+            <ScrollViewer.HorizontalScrollBarVisibility>Disabled</ScrollViewer.HorizontalScrollBarVisibility>
+        </ListBox>
+
+
+        <!--<StackPanel>
             <Image Name="currentStrip" Stretch="None" Source="{Binding ElementName=stripsList, Path=SelectedItem.FilePath, Mode=OneWay}" />
-        </StackPanel>
-    </StackPanel>
+        </StackPanel>-->
+    </DockPanel>
+
 </Window>

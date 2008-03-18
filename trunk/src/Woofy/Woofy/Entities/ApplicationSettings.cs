@@ -12,7 +12,7 @@ namespace Woofy.Entities
         public const string FaviconRegex = @"<link\srel=""shortcut\sicon""\shref=""(?<content>[\w./:]*)""";
         public static readonly RegexOptions RegexOptions = RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace;
 
-        public const string ConnectionString = @"Data Source=D:\projects\Woofy\trunk\db\data.db3;Version=3;";
+        public const string ConnectionString = @"Data Source=..\..\..\..\..\db\data.db3;Version=3;";
 
         //Folders
         public static readonly string DefaultDownloadFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Comics");

@@ -85,7 +85,7 @@ namespace Woofy.Controllers
             
             StripsView = new ListCollectionView(Strips);
 
-            ThreadPool.QueueUserWorkItem(delegate { CheckActiveComicsForUpdates(); });
+            //ThreadPool.QueueUserWorkItem(delegate { CheckActiveComicsForUpdates(); });
             //CheckActiveComicsForUpdates();
 
             //ThreadPool.UnsafeQueueUserWorkItem(RefreshComicFavicons, null);
