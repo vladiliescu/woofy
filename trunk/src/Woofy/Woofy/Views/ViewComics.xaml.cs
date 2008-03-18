@@ -47,6 +47,33 @@ namespace Woofy.Views
         private void OnStripSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             _presenter.HandleSelectedStrip((ComicStrip)stripsList.SelectedItem);
-        } 
+        }
+
+        private void OnStripsMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount < 2)
+                return;
+
+            ToggleFullscreenView(true);
+        }
+
+        private void OnCurrentStripMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ClickCount < 2)
+                return;
+
+            ToggleFullscreenView(false);
+        }
+
+        private void ToggleFullscreenView(bool isFullscreen)
+        {
+            Visibility fullscreenVisibility = isFullscreen ? Visibility.Visible : Visibility.Collapsed;
+            Visibility notFullscreenVisibility = isFullscreen ? Visibility.Collapsed : Visibility.Visible;
+
+            currentStripPanel.Visibility = fullscreenVisibility;
+            comicsList.Visibility = notFullscreenVisibility;
+            stripsList.Visibility = notFullscreenVisibility;
+
+        }
     }
 }

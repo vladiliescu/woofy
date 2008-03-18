@@ -25,13 +25,17 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <ListBox Background="AliceBlue" Name="stripsList" SelectionChanged="OnStripSelectionChanged" >
+        <ListBox Background="AliceBlue" Name="stripsList" 
+                 SelectionChanged="OnStripSelectionChanged" 
+                  >
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Border CornerRadius="5" BorderBrush="DarkGray" BorderThickness="2" Margin="5">
+                    <Border CornerRadius="5" BorderBrush="DarkGray" BorderThickness="2" Margin="3" Padding="2"
+                            MouseLeftButtonDown="OnStripsMouseLeftButtonDown"
+                            >
                         <StackPanel Orientation="Vertical">
                             <Image Width="100" Height="100" Source="{Binding FilePath}" />
-                            <TextBlock Text="File Name" />
+                            <TextBlock Text="File Name" HorizontalAlignment="Center" />
                         </StackPanel>
                     </Border>
                 </DataTemplate>
@@ -43,11 +47,17 @@
             </ListBox.ItemsPanel>
             <ScrollViewer.HorizontalScrollBarVisibility>Disabled</ScrollViewer.HorizontalScrollBarVisibility>
         </ListBox>
-
-
-        <!--<StackPanel>
-            <Image Name="currentStrip" Stretch="None" Source="{Binding ElementName=stripsList, Path=SelectedItem.FilePath, Mode=OneWay}" />
-        </StackPanel>-->
+        
+        <StackPanel Name="currentStripPanel" Visibility="Collapsed" Background="LightGoldenrodYellow">
+            <StackPanel Orientation="Horizontal" Background="AliceBlue">
+                <Button Width="100" Margin="10">Left</Button>
+                <Button Width="100">Right</Button>
+            </StackPanel>
+            
+            <Image Name="currentStrip"  Stretch="None" Source="{Binding ElementName=stripsList, Path=SelectedItem.FilePath, Mode=OneWay}" 
+                   MouseLeftButtonDown="OnCurrentStripMouseLeftButtonDown"
+                   />
+        </StackPanel>
     </DockPanel>
 
 </Window>
