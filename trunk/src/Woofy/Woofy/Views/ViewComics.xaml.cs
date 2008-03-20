@@ -13,6 +13,7 @@ using Woofy.Controllers;
 using Woofy.EventArguments;
 using System.Windows.Threading;
 using Woofy.Entities;
+using System.Diagnostics;
 
 namespace Woofy.Views
 {
@@ -50,7 +51,7 @@ namespace Woofy.Views
             if (e.ClickCount < 2)
                 return;
 
-            ToggleFullscreenView(true);
+            ToggleFullscreenView();
         }
 
         private void OnCurrentStripMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -58,28 +59,43 @@ namespace Woofy.Views
             if (e.ClickCount < 2)
                 return;
 
-            ToggleFullscreenView(false);
-        }
-
-        private void ToggleFullscreenView(bool isFullscreen)
-        {
-            Visibility fullscreenVisibility = isFullscreen ? Visibility.Visible : Visibility.Collapsed;
-            Visibility notFullscreenVisibility = isFullscreen ? Visibility.Collapsed : Visibility.Visible;
-
-            currentStripPanel.Visibility = fullscreenVisibility;
-            comicsList.Visibility = notFullscreenVisibility;
-            stripsList.Visibility = notFullscreenVisibility;
-
-        }
-
-        
+            ToggleFullscreenView();
+        }                
 
         private void stripsList_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Delete)
                 _presenter.DeleteStrips(stripsList.SelectedItems);
+        }
+        //TODO: e posibil sa nu fie nevoie de un intreg refresh pe strips/comics view. Cred ca e ok daca il actualizez pe firul grafic.
+        private void OnMoveToLeftStrip(object sender, RoutedEventArgs e)
+        {
+            _presenter.MoveToPreviousStrip();            
+        }
 
+        private void OnMoveToRightStrip(object sender, RoutedEventArgs e)
+        {
+            _presenter.MoveToNextStrip();
+        }
 
+        #region Helpers
+        private void ToggleFullscreenView()
+        {
+            currentStripPanel.Visibility = currentStripPanel.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+            comicsList.Visibility = comicsList.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+            stripsList.Visibility = stripsList.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+        }
+        #endregion
+
+        private void Window_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (currentStripPanel.Visibility != Visibility.Visible)
+                return;
+
+            if (e.Delta < 0)
+                _presenter.MoveToNextStrip();
+            else
+                _presenter.MoveToPreviousStrip();
         }
     }
 }

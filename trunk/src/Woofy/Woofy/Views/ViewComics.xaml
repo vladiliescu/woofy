@@ -5,7 +5,10 @@
         Loaded="OnWindowLoaded"
         
         Title="Woofy" 
-        Height="600" Width="800">
+        Height="600" Width="800"
+        
+        MouseWheel="Window_MouseWheel"
+        >
 
     <DockPanel>
 
@@ -25,7 +28,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <ListBox Background="AliceBlue" Name="stripsList" KeyDown="stripsList_KeyDown" SelectionMode="Extended"
+        <ListBox Background="AliceBlue" IsSynchronizedWithCurrentItem="True" Name="stripsList" KeyDown="stripsList_KeyDown" SelectionMode="Extended"
                   >
             <ListBox.ItemTemplate>
                 <DataTemplate>
@@ -49,8 +52,8 @@
         
         <StackPanel Name="currentStripPanel" Visibility="Collapsed" Background="LightGoldenrodYellow">
             <StackPanel Orientation="Horizontal" Background="AliceBlue">
-                <Button Width="100" Margin="10">Left</Button>
-                <Button Width="100">Right</Button>
+                <Button Width="100" Margin="0 0 100 0" Click="OnMoveToLeftStrip">Left</Button>
+                <Button Width="100" Click="OnMoveToRightStrip">Right</Button>
             </StackPanel>
             
             <Image Name="currentStrip"  Stretch="None" Source="{Binding ElementName=stripsList, Path=SelectedItem.FilePath, Mode=OneWay}" 

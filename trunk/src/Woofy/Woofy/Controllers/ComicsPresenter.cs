@@ -324,5 +324,21 @@ namespace Woofy.Controllers
 
             RefreshStrips();
         }
+
+        public void MoveToPreviousStrip()
+        {
+            if (StripsView.CurrentPosition <= 0)
+                return;
+
+            StripsView.MoveCurrentToPrevious();
+        }
+
+        public void MoveToNextStrip()
+        {
+            if (StripsView.CurrentPosition >= StripsView.Count - 1)
+                return;   
+
+            StripsView.MoveCurrentToNext();
+        }
     }
 }
