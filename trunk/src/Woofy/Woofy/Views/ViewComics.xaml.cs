@@ -44,11 +44,7 @@ namespace Woofy.Views
             _presenter.HandleSelectedComic((Comic)comicsList.SelectedItem);
         }
 
-        private void OnStripSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            _presenter.HandleSelectedStrip((ComicStrip)stripsList.SelectedItem);
-        }
-
+        
         private void OnStripsMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount < 2)
@@ -73,6 +69,16 @@ namespace Woofy.Views
             currentStripPanel.Visibility = fullscreenVisibility;
             comicsList.Visibility = notFullscreenVisibility;
             stripsList.Visibility = notFullscreenVisibility;
+
+        }
+
+        
+
+        private void stripsList_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Delete)
+                _presenter.DeleteStrips(stripsList.SelectedItems);
+
 
         }
     }

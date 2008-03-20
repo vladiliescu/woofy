@@ -230,6 +230,20 @@ SELECT Id, ComicId, SourcePageAddress, FilePath
             return command.ExecuteReader(CommandBehavior.SingleResult);
         }
 
+        public void Delete<T>(params DatabaseParameter[] parameters)
+        {
+            string commandText = string.Format(@"
+                DELETE FROM {0}
+                WHERE {1}
+                ",
+                 EntityTables[typeof(T)],
+                 GetFormattedParameters(parameters, ParameterPurposes.Where, "{0} = {1}, ", 2, ColumnName, ParameterName)
+                 );
+
+            DbCommand command = CreateCommand(commandText, parameters);
+            command.ExecuteNonQuery();
+        }
+
         #endregion
     }
 }

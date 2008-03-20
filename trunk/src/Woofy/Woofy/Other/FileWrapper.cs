@@ -20,6 +20,16 @@ namespace Woofy.Other
             File.Delete(path);
         }
 
+        public virtual bool TryDelete(string path)
+        {
+            //yes, Delete doesn't throw when the file doesn't exist, but does throw when the directory doesn't exist
+            if (!File.Exists(path))
+                return false;
+
+            File.Delete(path);
+            return true;
+        }
+
         public virtual void Move(string sourceFileName, string destFileName)
         {
             File.Move(sourceFileName, destFileName);

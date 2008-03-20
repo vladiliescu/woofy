@@ -33,7 +33,6 @@ namespace Woofy.Controllers
         #endregion
 
         #region Variables
-        private PersistanceService _persistanceService = new PersistanceService();
         private ComicDefinitionsService _comicDefinitionService = new ComicDefinitionsService();
         private FileDownloadService _fileDownloadService = new FileDownloadService();
         private PageParseService _pageParseService;
@@ -313,10 +312,17 @@ namespace Woofy.Controllers
             RefreshStrips();
         }
 
-        public void HandleSelectedStrip(ComicStrip strip)
+        public void DeleteStrips(IList strips)
         {
+            foreach (ComicStrip strip in strips)
+            {
+                _databaseAdapter.DeleteStrip(strip);
+                _file.TryDelete(strip.FilePath);
 
-            
+                Strips.Remove(strip);
+            }
+
+            RefreshStrips();
         }
     }
 }

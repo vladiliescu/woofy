@@ -116,17 +116,6 @@ namespace Woofy.DatabaseAccess
             }
         }
 
-//        public void FindMostRecentStrip(Comic comic)
-//        {
-//            DbCommand command = CreateSelectCommand<ComicStrip>(@"
-//WHERE ComicId = :comicId
-//ORDER BY Id DESC
-//LIMIT 1
-//",
-//                CreateParameter(":comicId", comic.Id)
-//                );
-//        }
-
         public ComicStripCollection ReadStripsForComic(Comic comic)
         {
             ComicStripCollection strips = new ComicStripCollection();
@@ -162,6 +151,29 @@ namespace Woofy.DatabaseAccess
                 {
                     return reader.Read<ComicStrip>();
                 }
+            }
+        }
+
+        //TODO: as vrea sa scriu ceva in genul:
+        /*
+         * using (new DatabaseSession())
+         * {
+         *      Session.Delete<ComicStrip>(
+         *          CreateParameter(Model.ComicStrip.Id, strip.Id, ParameterPurposes.Where)
+         *      );
+         * }
+         * 
+         * (si fara commit)
+         */
+        public void DeleteStrip(ComicStrip strip)
+        {
+            using (DatabaseSession session = DatabaseSession.Create())
+            {
+                session.Delete<ComicStrip>(
+                    session.CreateParameter(":id", strip.Id, ParameterPurposes.Where)
+                    );
+
+                session.Commit();
             }
         }
     }

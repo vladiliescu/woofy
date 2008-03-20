@@ -91,7 +91,6 @@
     <Compile Include="Services\ComicDefinitionsService.cs" />
     <Compile Include="Services\FileDownloadService.cs" />
     <Compile Include="Services\PageParseService.cs" />
-    <Compile Include="DatabaseAccess\PersistanceService.cs" />
     <Compile Include="DatabaseAccess\DatabaseSession.cs" />
     <Compile Include="Views\SelectComics.xaml.cs">
       <DependentUpon>SelectComics.xaml</DependentUpon>

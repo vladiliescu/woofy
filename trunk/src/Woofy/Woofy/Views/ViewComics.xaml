@@ -25,8 +25,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <ListBox Background="AliceBlue" Name="stripsList" 
-                 SelectionChanged="OnStripSelectionChanged" 
+        <ListBox Background="AliceBlue" Name="stripsList" KeyDown="stripsList_KeyDown" SelectionMode="Extended"
                   >
             <ListBox.ItemTemplate>
                 <DataTemplate>
