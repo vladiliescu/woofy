@@ -16,7 +16,7 @@ namespace Woofy.DatabaseAccess
         private DbConnection _connection;
         private TypeConverter _typeConverter = new TypeConverter();
 
-        //TODO: poate ar trebui sa unific dictionarele de mai jos in unul singur, sa zicem EntityData/EntityModel/DatabaseModel, care sa contina informatii despre fiecare entitate
+        //TODO: poate ar trebui sa unific dictionarele de mai jos in unul singur, sa zicem EntityData/EntityModel/DatabaseModel/Mappings, care sa contina informatii despre fiecare entitate
         private static Dictionary<Type, string> SelectCommands = new Dictionary<Type, string>();
         private static Dictionary<Type, string> EntityTables = new Dictionary<Type, string>();
 

@@ -1,16 +1,15 @@
 ﻿<Window x:Class="Woofy.Views.ViewComics"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        
-        Loaded="OnWindowLoaded"
-        
+                
         Title="Woofy" 
         Height="600" Width="800"
         
-        MouseWheel="Window_MouseWheel"
-        >
+        Loaded="OnWindowLoaded" 
+        KeyDown="Window_KeyDown" MouseWheel="Window_MouseWheel"
+        Closing="Window_Closing">
 
-    <DockPanel>
+    <DockPanel Name="mainPanel" SizeChanged="mainPanel_SizeChanged" >
 
         <ListBox Name="comicsList" Background="BlanchedAlmond"
                 HorizontalAlignment="Left"                 
@@ -28,11 +27,13 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <ListBox Background="AliceBlue" IsSynchronizedWithCurrentItem="True" Name="stripsList" KeyDown="stripsList_KeyDown" SelectionMode="Extended"
+        <ListBox Background="AliceBlue" Name="stripsList" 
+                 SelectionChanged="OnStripSelectionChanged" 
+                 IsSynchronizedWithCurrentItem="True"
                   >
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <Border CornerRadius="5" BorderBrush="DarkGray" BorderThickness="2" Margin="3" Padding="2"
+                    <Border CornerRadius="5" BorderBrush="DarkGray" BorderThickness="2" Margin="3" Padding="2" IsHitTestVisible="True"
                             MouseLeftButtonDown="OnStripsMouseLeftButtonDown"
                             >
                         <StackPanel Orientation="Vertical">
@@ -49,17 +50,27 @@
             </ListBox.ItemsPanel>
             <ScrollViewer.HorizontalScrollBarVisibility>Disabled</ScrollViewer.HorizontalScrollBarVisibility>
         </ListBox>
-        
-        <StackPanel Name="currentStripPanel" Visibility="Collapsed" Background="LightGoldenrodYellow">
-            <StackPanel Orientation="Horizontal" Background="AliceBlue">
-                <Button Width="100" Margin="0 0 100 0" Click="OnMoveToLeftStrip">Left</Button>
-                <Button Width="100" Click="OnMoveToRightStrip">Right</Button>
-            </StackPanel>
-            
-            <Image Name="currentStrip"  Stretch="None" Source="{Binding ElementName=stripsList, Path=SelectedItem.FilePath, Mode=OneWay}" 
-                   MouseLeftButtonDown="OnCurrentStripMouseLeftButtonDown"
-                   />
-        </StackPanel>
-    </DockPanel>
 
+
+        <Grid  Name="currentStripPanel" Background="LightGreen" Visibility="Collapsed">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0" Orientation="Horizontal" Background="AliceBlue">
+                <Button Margin="0 0 50 0" Click="Button_Click">Left</Button>
+                <Button Click="Button_Click_1">Right</Button>
+            </StackPanel>
+
+            <Image Name="currentStrip" Grid.Row="1"
+                   Source="{Binding ElementName=stripsList, Path=SelectedItem.FilePath, Mode=OneWay}" 
+                   MouseLeftButtonDown="OnCurrentStripMouseLeftButtonDown"
+                />
+        </Grid>
+
+    </DockPanel>
 </Window>
