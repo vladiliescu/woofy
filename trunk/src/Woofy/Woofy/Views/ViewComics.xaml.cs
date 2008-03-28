@@ -19,28 +19,19 @@ using Woofy.Other;
 
 namespace Woofy.Views
 {
-    public partial class ViewComics : Window
-    {
-        private ComicsPresenter _presenter;
+    public partial class ViewComics : BaseWindow
+    {       
 
         public ViewComics(ComicsPresenter presenter)
+            : base (presenter)
         {
-            InitializeComponent();
-
-            _presenter = presenter;
-            _presenter.RunCodeOnUIThreadRequired += new EventHandler<RunCodeOnUIThreadRequiredEventArgs>(OnRunCodeOnUIThreadRequired);
-        }
-
-
-        private void OnRunCodeOnUIThreadRequired(object sender, RunCodeOnUIThreadRequiredEventArgs e)
-        {
-            Dispatcher.Invoke(DispatcherPriority.Normal, e.Code);
+            InitializeComponent();            
         }
 
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
-            comicsList.ItemsSource = _presenter.ActiveComicsView;
-            stripsList.ItemsSource = _presenter.StripsView;
+            comicsList.ItemsSource = Presenter.ActiveAndSortedComicsView;
+            stripsList.ItemsSource = Presenter.StripsView;
 
             RegisterKeyBindings();
 
@@ -49,12 +40,12 @@ namespace Woofy.Views
 
         private void OnComicSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            _presenter.HandleSelectedComic((Comic)comicsList.SelectedItem);
+            Presenter.HandleSelectedComic((Comic)comicsList.SelectedItem);
         }
 
         private void OnStripSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            _presenter.HandleSelectedStrip((ComicStrip)stripsList.SelectedItem);
+            Presenter.HandleSelectedStrip((ComicStrip)stripsList.SelectedItem);
         }
 
         private void OnStripsMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -115,20 +106,20 @@ namespace Woofy.Views
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            _presenter.MoveToPreviousStrip();
+            Presenter.MoveToPreviousStrip();
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            _presenter.MoveToNextStrip();
+            Presenter.MoveToNextStrip();
         }
 
         private void Window_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             if (e.Delta > 0)
-                _presenter.MoveToPreviousStrip();
+                Presenter.MoveToPreviousStrip();
             else
-                _presenter.MoveToNextStrip();
+                Presenter.MoveToNextStrip();
         }
 
         private void MoveFocusTo(FocusNavigationDirection direction)
@@ -176,25 +167,25 @@ namespace Woofy.Views
 
             KeyboardManager.RegisterKeyBinding(
                 IsCurrentStripPanelVisible,
-                _presenter.MoveToPreviousStrip,
+                Presenter.MoveToPreviousStrip,
                 Key.Left, Key.PageUp, Key.Back
                 );
 
             KeyboardManager.RegisterKeyBinding(
                 IsCurrentStripPanelVisible,
-                _presenter.MoveToNextStrip,
+                Presenter.MoveToNextStrip,
                 Key.Right, Key.PageDown, Key.Space
                 );
 
             KeyboardManager.RegisterKeyBinding(
                 IsCurrentStripPanelVisible,
-                _presenter.MoveToFirstStrip,
+                Presenter.MoveToFirstStrip,
                 Key.Home
                 );
 
             KeyboardManager.RegisterKeyBinding(
                 IsCurrentStripPanelVisible,
-                _presenter.MoveToLastStrip,
+                Presenter.MoveToLastStrip,
                 Key.End
                 );
 
@@ -225,6 +216,16 @@ namespace Woofy.Views
         private void DisplayCurrentStripInScaledSize()
         {
             currentStrip.Stretch = Stretch.Uniform;
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Presenter.MoveComicUp((Comic)comicsList.SelectedItem);
+        }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            Presenter.MoveComicDown((Comic)comicsList.SelectedItem);
         }
     }
 }

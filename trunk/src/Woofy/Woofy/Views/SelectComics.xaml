@@ -1,7 +1,8 @@
-﻿<Window x:Class="Woofy.Views.SelectComics"
+﻿<src:BaseWindow x:Class="Woofy.Views.SelectComics"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:m="clr-namespace:Woofy.Controllers"        
+        xmlns:m="clr-namespace:Woofy.Controllers"
+        xmlns:src="clr-namespace:Woofy.Views"
         
         Title="SelectComics" 
         Height="450" Width="800"
@@ -44,4 +45,4 @@
         </ListBox>
 
     </StackPanel>
-</Window>
+</src:BaseWindow>

@@ -19,7 +19,7 @@ using Woofy.EventArguments;
 
 namespace Woofy.Views
 {
-    public partial class SelectComics : Window
+    public partial class SelectComics : BaseWindow
     {
         #region Instance Members
         private ComicsPresenter _presenter;
@@ -27,26 +27,24 @@ namespace Woofy.Views
 
         #region Constructors
         public SelectComics(ComicsPresenter presenter)
+            : base(presenter)
         {
             InitializeComponent();
-
-            _presenter = presenter;
-            _presenter.RunCodeOnUIThreadRequired += new EventHandler<RunCodeOnUIThreadRequiredEventArgs>(OnRunCodeOnUIThreadRequired);
         }        
         #endregion
 
         #region Events - Window
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            inactiveComicsList.ItemsSource = _presenter.InactiveComicsView;
-            activeComicsList.ItemsSource = _presenter.ActiveComicsView;
+            inactiveComicsList.ItemsSource = Presenter.InactiveComicsView;
+            activeComicsList.ItemsSource = Presenter.ActiveComicsView;
         } 
         #endregion
 
         #region Events - Buttons
         private void LeftToRightButton_Click(object sender, RoutedEventArgs e)
         {
-            _presenter.ActivateComics(inactiveComicsList.SelectedItems);
+            Presenter.ActivateComics(inactiveComicsList.SelectedItems);
 
             SelectListBoxItems(inactiveComicsList.SelectedItems, activeComicsList);
         }
@@ -59,11 +57,6 @@ namespace Woofy.Views
         } 
         #endregion
 
-        private void OnRunCodeOnUIThreadRequired(object sender, RunCodeOnUIThreadRequiredEventArgs e)
-        {
-            Dispatcher.Invoke(DispatcherPriority.Normal, e.Code);
-        }
-
         #region Methods
         private void SelectListBoxItems(IList items, ListBox listBox)
         {
@@ -72,8 +65,8 @@ namespace Woofy.Views
             foreach (object item in items)
                 listBox.SelectedItems.Add(item);
 
-            _presenter.ActiveComicsView.Refresh();
-            _presenter.InactiveComicsView.Refresh();
+            Presenter.ActiveComicsView.Refresh();
+            Presenter.InactiveComicsView.Refresh();
         }
         #endregion
     }

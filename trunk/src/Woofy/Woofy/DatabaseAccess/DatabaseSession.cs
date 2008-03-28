@@ -16,30 +16,6 @@ namespace Woofy.DatabaseAccess
         private DbConnection _connection;
         private TypeConverter _typeConverter = new TypeConverter();
 
-        //TODO: poate ar trebui sa unific dictionarele de mai jos in unul singur, sa zicem EntityData/EntityModel/DatabaseModel/Mappings, care sa contina informatii despre fiecare entitate
-        private static Dictionary<Type, string> SelectCommands = new Dictionary<Type, string>();
-        private static Dictionary<Type, string> EntityTables = new Dictionary<Type, string>();
-
-        static DatabaseSession()
-        {
-            SelectCommands.Add(typeof(Comic), @"
-SELECT Id, Name, IsActive, FaviconPath
-    FROM Comics
-");
-            SelectCommands.Add(typeof(ComicDefinition), @"
-SELECT ComicId, AllowMissingStrips, AllowMultipleStrips, Author, AuthorEmail, FirstStripAddress, HomePageAddress, LatestIssueRegex, NextIssueRegex, SourceFileName, StripRegex
-    FROM ComicDefinitions
-");
-            SelectCommands.Add(typeof(ComicStrip), @"
-SELECT Id, ComicId, SourcePageAddress, FilePath
-    FROM ComicStrips
-");
-
-            EntityTables.Add(typeof(Comic), "Comics");
-            EntityTables.Add(typeof(ComicDefinition), "ComicDefinitions");
-            EntityTables.Add(typeof(ComicStrip), "ComicStrips");
-        }
-
         #region Static Methods
         public static DatabaseSession Create()
         {
@@ -178,7 +154,7 @@ SELECT Id, ComicId, SourcePageAddress, FilePath
 
                 SELECT last_insert_rowid();
                 ",
-                EntityTables[typeof(T)],
+                EntityModel.FindTableName<T>(),
                 GetFormattedParameters(parameters, ParameterPurposes.Any, "{0}, ", 2, ColumnName),
                 GetFormattedParameters(parameters, ParameterPurposes.Any, "{0}, ", 2, ParameterName)
                 );
@@ -195,7 +171,7 @@ SELECT Id, ComicId, SourcePageAddress, FilePath
                     SET {1}
                 WHERE {2}
                 ",
-                EntityTables[typeof(T)],
+                EntityModel.FindTableName<T>(),
                 GetFormattedParameters(parameters, ParameterPurposes.Regular, "{0} = {1}, ", 2, ColumnName, ParameterName),
                 GetFormattedParameters(parameters, ParameterPurposes.Where, "{0} = {1} AND ", 5, ColumnName, ParameterName)
                 );
@@ -220,7 +196,7 @@ SELECT Id, ComicId, SourcePageAddress, FilePath
                 {2}
                 {3}
                 ", 
-                SelectCommands[typeof(T)],
+                EntityModel.FindSelectCommandText<T>(),
                 string.IsNullOrEmpty(filterText) ? "" : "WHERE " + filterText,
                 string.IsNullOrEmpty(orderByText) ? "" : "ORDER BY " + orderByText,
                 limit.HasValue ? "LIMIT " + limit.Value : ""
@@ -236,7 +212,7 @@ SELECT Id, ComicId, SourcePageAddress, FilePath
                 DELETE FROM {0}
                 WHERE {1}
                 ",
-                 EntityTables[typeof(T)],
+                 EntityModel.FindTableName<T>(),
                  GetFormattedParameters(parameters, ParameterPurposes.Where, "{0} = {1}, ", 2, ColumnName, ParameterName)
                  );
 

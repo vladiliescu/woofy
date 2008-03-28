@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data.Common;
 using Woofy.Entities;
+using Woofy.DatabaseAccess;
 
 namespace Woofy
 {
@@ -26,57 +27,13 @@ namespace Woofy
             Type type = typeof(T);
             
             if (type == typeof(ComicDefinition))
-                return (T)ReadComicDefinition(reader);
+                return (T)EntityModel.ReadComicDefinition(reader);
             else if (type == typeof(Comic))
-                return (T)ReadComic(reader);
+                return (T)EntityModel.ReadComic(reader);
             else if (type == typeof(ComicStrip))
-                return (T)ReadComicStrip(reader);
+                return (T)EntityModel.ReadComicStrip(reader);
 
-            return null;
-            
-        }
-
-        private static object ReadComicStrip(DbDataReader reader)
-        {
-            ComicStrip strip = new ComicStrip();
-
-            strip.ComicId = reader.GetValue<long>("ComicId");
-            strip.FilePath = reader.GetValue<string>("FilePath");
-            strip.Id = reader.GetValue<long>("Id");
-            strip.SourcePageAddress = new Uri(reader.GetValue<string>("SourcePageAddress"));
-
-            return strip;
-        }
-
-        private static object ReadComic(DbDataReader reader)
-        {
-            Comic comic = new Comic();
-
-            comic.Id = reader.GetValue<long>("Id");
-            comic.Name = reader.GetValue<string>("Name");
-            comic.IsActive = reader.GetValue<bool>("IsActive");
-            comic.FaviconPath = reader.GetValue<string>("FaviconPath");
-
-            return comic;
-        }
-
-        private static object ReadComicDefinition(DbDataReader reader)
-        {
-            ComicDefinition definition = new ComicDefinition();
-            
-            definition.ComicId = reader.GetValue<long>("ComicId");
-            definition.AllowMissingStrips = reader.GetValue<bool>("AllowMissingStrips");
-            definition.AllowMultipleStrips = reader.GetValue<bool>("AllowMultipleStrips");
-            definition.Author = reader.GetValue<string>("Author");
-            definition.AuthorEmail = reader.GetValue<string>("AuthorEmail");
-            //definition.FirstStripAddress = new Uri(GetReaderValue<string>(reader, "FirstStripAddress"));
-            definition.HomePageAddress = new Uri(reader.GetValue<string>("HomePageAddress"));
-            definition.LatestIssueRegex = reader.GetValue<string>("LatestIssueRegex");
-            definition.NextIssueRegex = reader.GetValue<string>("NextIssueRegex");
-            definition.SourceFileName = reader.GetValue<string>("SourceFileName");
-            definition.StripRegex = reader.GetValue<string>("StripRegex");
-            
-            return definition;
-        }
+            return null;            
+        }        
     }
 }

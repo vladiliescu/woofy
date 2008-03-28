@@ -15,6 +15,7 @@ using System.Windows.Threading;
 using Woofy.EventArguments;
 using System.Net;
 using Woofy.DatabaseAccess;
+using System.ComponentModel;
 
 namespace Woofy.Controllers
 {
@@ -25,6 +26,7 @@ namespace Woofy.Controllers
         private ComicStripCollection Strips { get; set; }
 
         public ListCollectionView ActiveComicsView { get; private set; }
+        public ListCollectionView ActiveAndSortedComicsView { get; private set; }
         public ListCollectionView InactiveComicsView { get; private set; }
 
         public ListCollectionView StripsView { get; private set; }
@@ -34,14 +36,36 @@ namespace Woofy.Controllers
         private ComicDefinitionsService _comicDefinitionService = new ComicDefinitionsService();        
         private DatabaseAdapter _databaseAdapter = new DatabaseAdapter();
         private ComicAdapter _comicAdapter = new ComicAdapter();
+        private FileWrapper _file = new FileWrapper();
         #endregion
+
+        public ComicsPresenter()
+        {
+            _comicAdapter.DownloadingStrip += new EventHandler<DownloadingStripEventArgs>(OnDownloadingStrip);
+            _comicAdapter.DownloadedStrip += new EventHandler<DownloadedStripEventArgs>(OnDownloadedStrip);
+        }
+
+        private void OnDownloadedStrip(object sender, DownloadedStripEventArgs e)
+        {
+            _databaseAdapter.InsertStrip(e.Strip);
+            if (ActiveComicsView.CurrentItem != e.Strip.Comic)
+                return;
+
+            Strips.Add(e.Strip);
+            RefreshStrips();
+        }
+
+        private void OnDownloadingStrip(object sender, DownloadingStripEventArgs e)
+        {
+            
+        }
 
         #region Public Methods
         public void RunApplication()
         {
             ComicDefinitionCollection fileDefinitions = _comicDefinitionService.BuildComicDefinitionsFromFiles();
             foreach (ComicDefinition fileDefinition in fileDefinitions)
-                _databaseAdapter.InsertOrUpdateDefinition(fileDefinition);
+                _databaseAdapter.InsertOrUpdateComicAndDefinition(fileDefinition);
 
             int selectedComicIndex = 1;
             Comics = _databaseAdapter.ReadAllComics();
@@ -50,16 +74,14 @@ namespace Woofy.Controllers
             Strips = _databaseAdapter.ReadStripsForComic(Comics[selectedComicIndex]);
 
             InactiveComicsView = new ListCollectionView(Comics);
-            InactiveComicsView.Filter = new Predicate<object>(delegate(object comic)
-            {
-                return !((Comic)comic).IsActive;
-            });
+            InactiveComicsView.Filter = (comic => !((Comic)comic).IsActive);
 
             ActiveComicsView = new ListCollectionView(Comics);
-            ActiveComicsView.Filter = new Predicate<object>(delegate(object comic)
-            {
-                return ((Comic)comic).IsActive;
-            });
+            ActiveComicsView.Filter = (comic => ((Comic)comic).IsActive);
+
+            ActiveAndSortedComicsView = new ListCollectionView(Comics);
+            ActiveAndSortedComicsView.Filter = (comic => ((Comic)comic).IsActive);
+            ActiveAndSortedComicsView.SortDescriptions.Add(new SortDescription("Priority", ListSortDirection.Descending));
             
             StripsView = new ListCollectionView(Strips);
 
@@ -104,10 +126,12 @@ namespace Woofy.Controllers
             OnRunCodeOnUIThreadRequired(delegate
             {
                 ActiveComicsView.Refresh();
+                ActiveAndSortedComicsView.Refresh();
                 InactiveComicsView.Refresh();
             });
         }
 
+        [Obsolete("Ar trebui sa vad daca pot apela Strips.Add pe ui thread. idem refreshviews.")]
         private void RefreshStrips()
         {
             OnRunCodeOnUIThreadRequired(delegate
@@ -143,6 +167,9 @@ namespace Woofy.Controllers
         {
             foreach (Comic comic in ActiveComicsView)
             {
+                //if (!comic.Name.Contains("Zombie"))
+                //    continue;
+
                 ComicStrip mostRecentStrip = _databaseAdapter.ReadMostRecentStrip(comic);
                 _comicAdapter.CheckComicForUpdates(comic, mostRecentStrip);
             }
@@ -186,6 +213,47 @@ namespace Woofy.Controllers
         public void MoveToLastStrip()
         {
             StripsView.MoveCurrentToLast();
+        }
+
+        public void DeleteStrips(IList strips)
+        {
+            foreach (ComicStrip strip in strips)
+            {
+                _databaseAdapter.DeleteStrip(strip);
+                _file.TryDelete(strip.FilePath);
+
+                Strips.Remove(strip);
+            }
+
+            RefreshStrips();
+        }
+
+        public void MoveComicUp(Comic comic)
+        {
+            int index = ActiveAndSortedComicsView.IndexOf(comic);
+            if (index == 0)
+                return;
+            
+            Comic comicAbove = (Comic)ActiveAndSortedComicsView.GetItemAt(index - 1);
+            int tempPriority = comicAbove.Priority;
+            comicAbove.Priority = comic.Priority;
+            comic.Priority = tempPriority;
+
+            RefreshViews();
+        }
+
+        public void MoveComicDown(Comic comic)
+        {
+            int index = ActiveAndSortedComicsView.IndexOf(comic);
+            if (index == ActiveAndSortedComicsView.Count - 1)
+                return;
+
+            Comic comicAbove = (Comic)ActiveAndSortedComicsView.GetItemAt(index + 1);
+            int tempPriority = comicAbove.Priority;
+            comicAbove.Priority = comic.Priority;
+            comic.Priority = tempPriority;
+
+            RefreshViews();
         }
     }
 }

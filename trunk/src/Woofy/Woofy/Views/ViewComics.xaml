@@ -1,6 +1,7 @@
-﻿<Window x:Class="Woofy.Views.ViewComics"
+﻿<src:BaseWindow x:Class="Woofy.Views.ViewComics"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:src="clr-namespace:Woofy.Views"
                 
         Title="Woofy" 
         Height="600" Width="800"
@@ -25,6 +26,12 @@
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
+            <ListBox.ContextMenu>
+                <ContextMenu>
+                    <MenuItem Header="Move _Up" Click="MenuItem_Click" />
+                    <MenuItem Header="Move _Down" Click="MenuItem_Click_1" />
+                </ContextMenu>
+            </ListBox.ContextMenu>
         </ListBox>
 
         <ListBox Background="AliceBlue" Name="stripsList" 
@@ -73,4 +80,4 @@
         </Grid>
 
     </DockPanel>
-</Window>
+</src:BaseWindow>

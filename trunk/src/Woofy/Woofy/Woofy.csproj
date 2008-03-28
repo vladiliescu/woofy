@@ -14,6 +14,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
+    <StartupObject>Woofy.Program</StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -59,6 +60,7 @@
     <Compile Include="Controllers\ComicsPresenter.cs" />
     <Compile Include="DatabaseAccess\DatabaseAdapter.cs" />
     <Compile Include="DatabaseAccess\DatabaseParameter.cs" />
+    <Compile Include="DatabaseAccess\EntityModel.cs" />
     <Compile Include="DatabaseAccess\ParameterPurposes.cs" />
     <Compile Include="Entities\ApplicationSettings.cs" />
     <Compile Include="Entities\Comic.cs" />
@@ -67,6 +69,8 @@
     <Compile Include="Entities\ComicDefinitionCollection.cs" />
     <Compile Include="Entities\ComicStrip.cs" />
     <Compile Include="Entities\ComicStripCollection.cs" />
+    <Compile Include="EventArguments\DownloadedStripEventArgs.cs" />
+    <Compile Include="EventArguments\DownloadingStripEventArgs.cs" />
     <Compile Include="EventArguments\RunCodeOnUIThreadRequiredEventArgs.cs" />
     <Compile Include="Exceptions\FileAlreadyPresentException.cs" />
     <Compile Include="Hacks\ExtensionAttribute.cs" />

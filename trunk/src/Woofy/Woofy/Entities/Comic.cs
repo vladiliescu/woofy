@@ -21,6 +21,8 @@ namespace Woofy.Entities
         /// </summary>
         public bool IsActive { get; set; }
 
+        public int Priority { get; set; }
+
         /// <summary>
         /// Path to the comic's favicon.
         /// </summary>

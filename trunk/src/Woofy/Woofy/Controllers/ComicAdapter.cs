@@ -6,6 +6,7 @@ using Woofy.Services;
 using Woofy.Other;
 using System.IO;
 using System.Net;
+using Woofy.EventArguments;
 
 namespace Woofy.Controllers
 {
@@ -16,6 +17,12 @@ namespace Woofy.Controllers
         private FileWrapper _file = new FileWrapper();
         private PathWrapper _path = new PathWrapper();
         private WebClientWrapper _webClient = new WebClientWrapper();
+        private bool _isDownloadAborted = false;
+
+        public void AbortDownload()
+        {
+            _isDownloadAborted = true;
+        }
 
         private Uri GetStartAddress(ComicDefinition definition, ComicStrip mostRecentStrip)
         {
@@ -40,6 +47,7 @@ namespace Woofy.Controllers
             string downloadFolder = _path.Combine(ApplicationSettings.DefaultDownloadFolder, comic.Name);
             if (!Directory.Exists(downloadFolder))
                 Directory.CreateDirectory(downloadFolder);
+
             try
             {
                 Uri startAddress = GetStartAddress(definition, mostRecentStrip);
@@ -59,39 +67,26 @@ namespace Woofy.Controllers
                     Uri[] nextStripLinks = _pageParseService.RetrieveLinksFromPageByRegex(definition.NextIssueRegex, pageContent, currentAddress);
 
                     if (!MatchedLinksObeyRules(comicLinks.Length, definition.AllowMissingStrips, definition.AllowMultipleStrips))//, ref downloadOutcome))
-                        break;
+                        return; //break;???
 
-
-                    //bool fileAlreadyDownloaded = false;
-                    //string backButtonStringLink = backButtonLink == null ? null : backButtonLink.AbsoluteUri;
                     foreach (Uri comicLink in comicLinks)
                     {
                         string stripFileName = comicLink.AbsoluteUri.Substring(comicLink.AbsoluteUri.LastIndexOf('/') + 1);
                         string downloadPath = _path.Combine(downloadFolder, stripFileName);
-                       
-                        _fileDownloadService.DownloadFile(comicLink, downloadPath, currentAddress);
 
                         ComicStrip strip = new ComicStrip(comic);
                         strip.SourcePageAddress = currentAddress;
                         strip.FilePath = downloadPath;
 
-                        //if (ActiveComicsView.CurrentItem == comic)
-                        //{
-                        //    Strips.Add(strip);
-                        //    RefreshStrips();
-                        //}
+                        DownloadingStripEventArgs e = OnDownloadingStrip(strip);
+                        if (e.AbortDownload)
+                            return;
 
-                        //_databaseAdapter.InsertStrip(strip);
+                        if (!e.SkipStrip)
+                            _fileDownloadService.DownloadFile(comicLink, downloadPath, currentAddress);
 
-                        //if (fileAlreadyDownloaded && comicsToDownload == ComicsProvider.AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
-                        //break;
-
-                        //OnDownloadComicCompleted(new DownloadStripCompletedEventArgs(i + 1, backButtonStringLink));
+                        OnDownloadedStrip(strip);
                     }
-
-                    //HACK
-                    //if (fileAlreadyDownloaded && comicsToDownload == ComicsProvider.AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
-                    //  break;
 
                     if (nextStripLinks.Length == 0)
                         break;
@@ -141,6 +136,49 @@ namespace Woofy.Controllers
             _file.Move(faviconTempPath, faviconPath);
 
             comic.FaviconPath = faviconPath;
+        }
+
+
+        private event EventHandler<DownloadingStripEventArgs> _downloadingStrip;
+        public event EventHandler<DownloadingStripEventArgs> DownloadingStrip
+        {
+            add { _downloadingStrip += value; }
+            remove { _downloadingStrip -= value; }
+        }
+
+        protected virtual void OnDownloadingStrip(DownloadingStripEventArgs e)
+        {
+            EventHandler<DownloadingStripEventArgs> reference = _downloadingStrip;
+            if (reference != null)
+                reference(this, e);
+        }
+
+        private DownloadingStripEventArgs OnDownloadingStrip(ComicStrip strip)
+        {
+            DownloadingStripEventArgs e = new DownloadingStripEventArgs(strip);
+            OnDownloadingStrip(e);
+
+            return e;
+        }
+
+        private event EventHandler<DownloadedStripEventArgs> _downloadedStrip;
+        public event EventHandler<DownloadedStripEventArgs> DownloadedStrip
+        {
+            add { _downloadedStrip += value; }
+            remove { _downloadedStrip -= value; }
+        }
+
+        protected virtual void OnDownloadedStrip(DownloadedStripEventArgs e)
+        {
+            EventHandler<DownloadedStripEventArgs> reference = _downloadedStrip;
+            if (reference != null)
+                reference(this, e);
+        }
+
+        private void OnDownloadedStrip(ComicStrip strip)
+        {
+            DownloadedStripEventArgs e = new DownloadedStripEventArgs(strip);
+            OnDownloadedStrip(e);
         }
     }
 }

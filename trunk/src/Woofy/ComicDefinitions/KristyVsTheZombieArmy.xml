@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Kristy vs the Zombie Army" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
+	<startAddress><![CDATA[http://kristyvsthezombiearmy.com/strip_display.php?comicID=1]]></startUrl>
+    <stripRegex><![CDATA[/comics/[0-9]{8}\.(gif|jpg|jpeg|png)]]></stripRegex>
+	<nextPageLinkRegex><![CDATA[(?<content>http://kristyvsthezombiearmy\.com/strip_display\.php\?comicID=[\d]*)"><img\ssrc="images/next_page\.png]]></nextPageLinkRegex></comicInfo>

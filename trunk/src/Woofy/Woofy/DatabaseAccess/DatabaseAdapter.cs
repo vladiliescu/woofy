@@ -53,7 +53,7 @@ namespace Woofy.DatabaseAccess
             }
         }        
 
-        public void InsertOrUpdateDefinition(ComicDefinition definition)
+        public void InsertOrUpdateComicAndDefinition(ComicDefinition definition)
         {
             using (DatabaseSession session = DatabaseSession.Create())
             {
