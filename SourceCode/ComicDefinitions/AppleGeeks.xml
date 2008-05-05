@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <comicInfo friendlyName="AppleGeeks" author="Citizen Drago">
     <startUrl><![CDATA[http://www.applegeeks.com]]></startUrl>
+	<rootUrl><![CDATA[http://www.applegeeks.com/comics/]]></rootUrl>
     <firstIssue><![CDATA[http://www.applegeeks.com/comics/issue1.jpg]]></firstIssue>
-    <comicRegex><![CDATA[(/comics/)?issue[\d]{1,4}\.(gif|jpg|jpeg|png)]]></comicRegex>
+    <comicRegex><![CDATA[issue[\d]{1,4}\.(gif|jpg|jpeg|png)]]></comicRegex>
     <backButtonRegex><![CDATA[<div\sclass="caption">Previous\sComic</div>\s+<p><a\shref="(?<content>/comics/viewcomic\.php\?issue=[\d]{1,4})"]]></backButtonRegex>
 </comicInfo>

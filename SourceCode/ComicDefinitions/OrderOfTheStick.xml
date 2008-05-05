@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <comicInfo friendlyName="Order of the Stick" allowMissingStrips="true" author="Justin Wendlandt" authorEmail="jwendl@hotmail.com">
     <startUrl><![CDATA[http://www.giantitp.com/comics/ootslatest.html]]></startUrl>
-    <rootUrl><![CDATA[http://www.giantitp.com]]></rootUrl>
     <latestPageRegex><![CDATA[/comics/oots\d+\.html]]></latestPageRegex>
     <firstIssue><![CDATA[http://www.giantitp.com/comics/images/oots0001.gif]]></firstIssue>
     <comicRegex><![CDATA[/comics/images/[\w\d]+\.(gif|jpg|jpeg|png|swf)]]></comicRegex>

@@ -85,6 +85,9 @@ namespace Woofy.Core
                 else
                     properStartUrl = startUrl;
 
+                string rootUrl = string.IsNullOrEmpty(_comicInfo.RootUrl) ? properStartUrl : _comicInfo.RootUrl;
+                Uri rootUri = new Uri(rootUrl);
+
                 string currentUrl = properStartUrl;
 
                 for (int i = 0; i < comicsToDownload || comicsToDownload == AllAvailableComics; i++)
@@ -111,9 +114,8 @@ namespace Woofy.Core
                     }
 
 
-                    //I pass startUrl instead of properStartUrl because properStartUrlMight be something like http://www.website.com/comic/20070820, and WebPath will think it's a folder (damn mod_rewrite) and combine it with the captured link (e.g. http://www.website.com/comic/20070820/comic/2007/08/18).
-                    Uri[] comicLinks = RetrieveComicLinksFromPage(pageContent, responseUri, _comicInfo);
-                    Uri backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, responseUri, _comicInfo);
+                    Uri[] comicLinks = RetrieveComicLinksFromPage(pageContent, rootUri, _comicInfo);
+                    Uri backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, rootUri, _comicInfo);
 
                     if (!MatchedLinksObeyRules(comicLinks.Length, _comicInfo.AllowMissingStrips, _comicInfo.AllowMultipleStrips, ref downloadOutcome))
                         break;

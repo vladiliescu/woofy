@@ -10,7 +10,7 @@ using Woofy.Settings;
 namespace UnitTests
 {
     [FixtureCategory("Long-running")]
-    [TestFixture(TimeOut = 540)]
+    [TestFixture(TimeOut = 600)]
     public class ComicDefinitionsTest
     {  
         private static readonly string ComicsDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Comics");
@@ -75,7 +75,7 @@ namespace UnitTests
             foreach (string comicInfoFile in Directory.GetFiles(ApplicationSettings.ComicDefinitionsFolder, "*.xml"))
             {
                 //i++;
-                //if (string.Compare(comicInfoFile, @"D:\projects\Woofy\SourceCode\UnitTests\bin\Debug\ComicDefinitions\CastlevaniaRPGSups.xml") > 0  
+                //if (string.Compare(comicInfoFile, @"D:\projects\Woofy\SourceCode\UnitTests\bin\Debug\ComicDefinitions\SilentKimbly.xml") > 0)
                 //    && !comicInfoFile.Contains("CtrlAltDel")
                 //    && !comicInfoFile.Contains("Cyanide")
                 //    && !comicInfoFile.Contains("Darths")
