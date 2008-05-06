@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Commissioned" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
+<comicInfo friendlyName="Commissioned" allowMultipleStrips="true" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
     <startUrl><![CDATA[http://www.commissionedcomic.com/]]></startUrl>
     <firstIssue><![CDATA[http://www.commissionedcomic.com/comics/2004-09-10.jpg]]></firstIssue>
     <comicRegex><![CDATA[http://www.commissionedcomic.com/comics/[\d\w-]*.(gif|jpg|jpeg|png)]]></comicRegex>
