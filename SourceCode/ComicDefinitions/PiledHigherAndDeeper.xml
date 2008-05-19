@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Piled Higher and Deeper" author="Justin Wendlandt" authorEmail="jwendl@hotmail.com">
+    <startUrl><![CDATA[http://www.phdcomics.com/comics/archive.php]]></startUrl>
+    <rootUrl><![CDATA[http://www.phdcomics.com/comics/]]></rootUrl>
+    <firstIssue><![CDATA[http://www.phdcomics.com/comics/archive/phd1027.gif]]></firstIssue>
+    <comicRegex><![CDATA[(?<content>archive/[a-zA-Z0-9]+\.(gif|jpg|jpeg|png|swf))\sborder=\d+]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref=(?<content>archive\.php\?comicid=\d+)><img\sheight=52\swidth=49\ssrc=images/prev_button\.gif]]></backButtonRegex>
+</comicInfo>

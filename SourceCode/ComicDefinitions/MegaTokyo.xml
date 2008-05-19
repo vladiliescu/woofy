@@ -3,5 +3,5 @@
     <startUrl><![CDATA[http://megatokyo.com/]]></startUrl>
     <firstIssue><![CDATA[http://megatokyo.com/strips/0001.gif]]></firstIssue>
     <comicRegex><![CDATA[strips/[0-9]*.(gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[<li\sclass="prev"><a\shref="(?<content>index.php\?strip_id=[0-9]*)">]]></backButtonRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>\./strip/[\d]*)">Prev</a>]]></backButtonRegex>
 </comicInfo>

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Penny Arcade" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
+<comicInfo friendlyName="Penny Arcade" allowMultipleStrips="true"  author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
     <startUrl><![CDATA[http://www.penny-arcade.com/comic]]></startUrl>
-    <firstIssue><![CDATA[http://www.penny-arcade.com/images/1998/19981118h.jpg]]></firstIssue>
-    <comicRegex><![CDATA[<div\sid="comicstrip"><img\ssrc="(?<content>[^\n^"]*)"]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref="(?<content>http://www.penny-arcade.com/comic/[0-9]{4}/[0-9]{2}/[0-9]{2})"><img\salt="Back"]]></backButtonRegex>
+    <firstIssue><![CDATA[http://www.penny-arcade.com/images/1998/19981118.jpg]]></firstIssue>
+    <comicRegex><![CDATA[/images/[\d]{4}/[\d]{8}.(gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>/comic/[\d]{4}/[\d]*/[\d]*/)"><img\salt="Back"]]></backButtonRegex>
 </comicInfo>
