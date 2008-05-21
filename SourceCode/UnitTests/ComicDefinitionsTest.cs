@@ -75,7 +75,7 @@ namespace UnitTests
             foreach (string comicInfoFile in Directory.GetFiles(ApplicationSettings.ComicDefinitionsFolder, "*.xml"))
             {
                 //i++;
-                //if (string.Compare(comicInfoFile, @"D:\projects\Woofy\SourceCode\UnitTests\bin\Debug\ComicDefinitions\SilentKimbly.xml") > 0)
+                if (string.Compare(comicInfoFile, @"D:\projects\Woofy\SourceCode\UnitTests\bin\Debug\ComicDefinitions\PvP.xml") > 0)
                 //    && !comicInfoFile.Contains("CtrlAltDel")
                 //    && !comicInfoFile.Contains("Cyanide")
                 //    && !comicInfoFile.Contains("Darths")

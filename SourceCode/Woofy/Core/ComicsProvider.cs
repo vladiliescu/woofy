@@ -85,9 +85,7 @@ namespace Woofy.Core
                 else
                     properStartUrl = startUrl;
 
-                string rootUrl = string.IsNullOrEmpty(_comicInfo.RootUrl) ? properStartUrl : _comicInfo.RootUrl;
-                Uri rootUri = new Uri(rootUrl);
-
+                Uri rootUri = string.IsNullOrEmpty(_comicInfo.RootUrl) ? null : new Uri(_comicInfo.RootUrl);
                 string currentUrl = properStartUrl;
 
                 for (int i = 0; i < comicsToDownload || comicsToDownload == AllAvailableComics; i++)
@@ -114,8 +112,8 @@ namespace Woofy.Core
                     }
 
 
-                    Uri[] comicLinks = RetrieveComicLinksFromPage(pageContent, rootUri, _comicInfo);
-                    Uri backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, rootUri, _comicInfo);
+                    Uri[] comicLinks = RetrieveComicLinksFromPage(pageContent, rootUri == null ? responseUri : rootUri, _comicInfo);
+                    Uri backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, rootUri == null ? responseUri : rootUri, _comicInfo);
 
                     if (!MatchedLinksObeyRules(comicLinks.Length, _comicInfo.AllowMissingStrips, _comicInfo.AllowMultipleStrips, ref downloadOutcome))
                         break;

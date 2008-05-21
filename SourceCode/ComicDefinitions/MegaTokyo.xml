@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <comicInfo friendlyName="MegaTokyo" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
     <startUrl><![CDATA[http://megatokyo.com/]]></startUrl>
+	<rootUrl><![CDATA[http://megatokyo.com/]]></rootUrl>
     <firstIssue><![CDATA[http://megatokyo.com/strips/0001.gif]]></firstIssue>
     <comicRegex><![CDATA[strips/[0-9]*.(gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref="(?<content>\./strip/[\d]*)">Prev</a>]]></backButtonRegex>
+    <backButtonRegex><![CDATA[<a\shref="\.(?<content>/strip/[\d]*)">Prev</a>]]></backButtonRegex>
 </comicInfo>

@@ -31,7 +31,6 @@
         <!--The comics excluded below are not yet ready for prime time-->
         <CreateItem
             Include="bin\$(Configuration)\ComicDefinitions\*.*"
-            Exclude="bin\$(Configuration)\ComicDefinitions\*Piled*.*; bin\$(Configuration)\ComicDefinitions\*CollegeRoomies*.*;bin\$(Configuration)\ComicDefinitions\*UserFriendly*.*"
             >
             <Output TaskParameter="Include" ItemName="ComicDefinitions"/>
         </CreateItem>
