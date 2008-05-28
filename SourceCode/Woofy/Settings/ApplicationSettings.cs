@@ -5,7 +5,7 @@ namespace Woofy.Settings
 {
     public static class ApplicationSettings
     {
-        public const string VersionNumber = "0.4.2";
+        public const string VersionNumber = "0.4.3";
 
         public const string UpdateDescriptionFileAddress = "http://woofy.sourceforge.net/updatesDescriptionFile.xml";
         public const string ComicDefinitionsFolderName = "ComicDefinitions";
