@@ -69,6 +69,7 @@
     <Compile Include="Entities\ComicDefinitionCollection.cs" />
     <Compile Include="Entities\ComicStrip.cs" />
     <Compile Include="Entities\ComicStripCollection.cs" />
+    <Compile Include="EventArguments\DownloadedAllStripsFromPageEventArgs.cs" />
     <Compile Include="EventArguments\DownloadedStripEventArgs.cs" />
     <Compile Include="EventArguments\DownloadingStripEventArgs.cs" />
     <Compile Include="EventArguments\RunCodeOnUIThreadRequiredEventArgs.cs" />

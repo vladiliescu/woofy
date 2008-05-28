@@ -52,8 +52,9 @@ namespace Woofy.Controllers
             {
                 Uri startAddress = GetStartAddress(definition, mostRecentStrip);
                 Uri currentAddress = startAddress;
+                Uri nextAddress;
 
-                while (true)
+                do
                 {
                     //if (_isDownloadCancelled)
                     //{
@@ -61,38 +62,12 @@ namespace Woofy.Controllers
                     //    break;
                     //}
 
-                    string pageContent = _webClient.DownloadString(currentAddress);
+                    DownloadStrip(currentAddress, definition, downloadFolder, out nextAddress);
+                    OnDownloadedAllStripsFromPage(new DownloadedAllStripsFromPageEventArgs());
 
-                    Uri[] comicLinks = _pageParseService.RetrieveLinksFromPageByRegex(definition.StripRegex, pageContent, currentAddress);
-                    Uri[] nextStripLinks = _pageParseService.RetrieveLinksFromPageByRegex(definition.NextIssueRegex, pageContent, currentAddress);
-
-                    if (!MatchedLinksObeyRules(comicLinks.Length, definition.AllowMissingStrips, definition.AllowMultipleStrips))//, ref downloadOutcome))
-                        return; //break;???
-
-                    foreach (Uri comicLink in comicLinks)
-                    {
-                        string stripFileName = comicLink.AbsoluteUri.Substring(comicLink.AbsoluteUri.LastIndexOf('/') + 1);
-                        string downloadPath = _path.Combine(downloadFolder, stripFileName);
-
-                        ComicStrip strip = new ComicStrip(comic);
-                        strip.SourcePageAddress = currentAddress;
-                        strip.FilePath = downloadPath;
-
-                        DownloadingStripEventArgs e = OnDownloadingStrip(strip);
-                        if (e.AbortDownload)
-                            return;
-
-                        if (!e.SkipStrip)
-                            _fileDownloadService.DownloadFile(comicLink, downloadPath, currentAddress);
-
-                        OnDownloadedStrip(strip);
-                    }
-
-                    if (nextStripLinks.Length == 0)
-                        break;
-
-                    currentAddress = nextStripLinks[0];
+                    currentAddress = nextAddress;
                 }
+                while (nextAddress != null);
             }
             catch (UriFormatException ex)
             {
@@ -101,6 +76,50 @@ namespace Woofy.Controllers
             {
                 //TODO: trebuie sa raportez exceptiile ca erori.
             }
+        }
+
+        private void DownloadStrip(Uri address, ComicDefinition definition, string downloadFolder, out Uri nextAddress)
+        {
+            string pageContent = _webClient.DownloadString(address);
+
+            Uri[] comicLinks = _pageParseService.RetrieveLinksFromPageByRegex(definition.StripRegex, pageContent, address);
+            Uri[] nextStripLinks = _pageParseService.RetrieveLinksFromPageByRegex(definition.NextIssueRegex, pageContent, address);
+
+            if (!MatchedLinksObeyRules(comicLinks.Length, definition.AllowMissingStrips, definition.AllowMultipleStrips))//, ref downloadOutcome))
+            {
+                nextAddress = null;
+                return;
+            }
+
+            foreach (Uri comicLink in comicLinks)
+            {
+                string stripFileName = comicLink.AbsoluteUri.Substring(comicLink.AbsoluteUri.LastIndexOf('/') + 1);
+                string downloadPath = _path.Combine(downloadFolder, stripFileName);
+
+                ComicStrip strip = new ComicStrip(definition.Comic);
+                strip.SourcePageAddress = address;
+                strip.FilePath = downloadPath;
+
+                DownloadingStripEventArgs e = OnDownloadingStrip(strip);
+                if (e.AbortDownload)
+                {
+                    nextAddress = null;
+                    return;
+                }
+
+                if (!e.SkipStrip)
+                    _fileDownloadService.DownloadFile(comicLink, downloadPath, address);
+
+                OnDownloadedStrip(strip);
+            }
+
+            if (nextStripLinks.Length == 0)
+            {
+                nextAddress = null;
+                return;
+            }
+            
+            nextAddress = nextStripLinks[0];
         }
 
         private bool MatchedLinksObeyRules(int linksLength, bool allowMissingStrips, bool allowMultipleStrips)//, ref DownloadOutcome downloadOutcome)
@@ -179,6 +198,20 @@ namespace Woofy.Controllers
         {
             DownloadedStripEventArgs e = new DownloadedStripEventArgs(strip);
             OnDownloadedStrip(e);
+        }
+
+        private event EventHandler<DownloadedAllStripsFromPageEventArgs> _downloadedAllStripsFromPage;
+        public event EventHandler<DownloadedAllStripsFromPageEventArgs> DownloadedAllStripsFromPage
+        {
+            add { _downloadedAllStripsFromPage += value; }
+            remove { _downloadedAllStripsFromPage -= value; }
+        }
+
+        protected virtual void OnDownloadedAllStripsFromPage(DownloadedAllStripsFromPageEventArgs e)
+        {
+            EventHandler<DownloadedAllStripsFromPageEventArgs> reference = _downloadedAllStripsFromPage;
+            if (reference != null)
+                reference(this, e);
         }
     }
 }

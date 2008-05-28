@@ -10,7 +10,7 @@
         KeyDown="Window_KeyDown" MouseWheel="Window_MouseWheel"
         Closing="Window_Closing">
 
-    <DockPanel Name="mainPanel" SizeChanged="mainPanel_SizeChanged" >
+    <DockPanel>
 
         <ListBox Name="comicsList" Background="BlanchedAlmond"
                 HorizontalAlignment="Left"                 
@@ -37,6 +37,7 @@
         <ListBox Background="AliceBlue" Name="stripsList" 
                  SelectionChanged="OnStripSelectionChanged" 
                  IsSynchronizedWithCurrentItem="True"
+                 SelectionMode="Extended"
                   >
             <ListBox.ItemTemplate>
                 <DataTemplate>

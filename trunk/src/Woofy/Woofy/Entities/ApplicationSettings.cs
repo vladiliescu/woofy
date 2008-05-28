@@ -16,7 +16,7 @@ namespace Woofy.Entities
 
         //Folders
         public static readonly string DefaultDownloadFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Comics");
-        public static readonly string FaviconsFolder = Path.Combine(DefaultDownloadFolder, "favicons");
+        public static readonly string FaviconsFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "favicons");
         public static readonly string TempFolder = Path.GetTempPath();
     }
 }

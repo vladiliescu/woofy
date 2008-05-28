@@ -30,7 +30,7 @@ namespace Woofy.Views
 
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
         {
-            comicsList.ItemsSource = Presenter.ActiveAndSortedComicsView;
+            comicsList.ItemsSource = Presenter.ActiveAndSortedComicsView;            
             stripsList.ItemsSource = Presenter.StripsView;
 
             RegisterKeyBindings();
@@ -136,10 +136,6 @@ namespace Woofy.Views
             MoveFocusTo(FocusNavigationDirection.Next);
         }
 
-        private void mainPanel_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-        }
-
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (currentStripPanel.Visibility == Visibility.Visible)
@@ -206,6 +202,17 @@ namespace Woofy.Views
                 MoveFocusToNextElement,
                 Key.Enter
                 );
+
+            KeyboardManager.RegisterKeyBinding(
+                IsKeyboardFocusWithinStripsList,
+                DeleteSelectedStrips,
+                Key.Delete
+                );
+        }
+
+        private void DeleteSelectedStrips()
+        {
+            Presenter.DeleteStrips(stripsList.SelectedItems);
         }
 
         private void DisplayCurrentStripInActualSize()
