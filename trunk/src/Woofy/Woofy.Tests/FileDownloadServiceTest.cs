@@ -7,8 +7,7 @@ using System.ComponentModel;
 using MbUnit.Framework;
 using Rhino.Mocks;
 using Rhino.Mocks.Constraints;
-
-using Woofy.Services;
+using Woofy.Core;
 using Woofy.Other;
 using Woofy.Exceptions;
 using Woofy.Entities;

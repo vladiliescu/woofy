@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using Woofy.Entities;
 
 namespace Woofy.Other
 {
@@ -25,6 +26,11 @@ namespace Woofy.Other
         public virtual string GetFileNameWithoutExtension(string path)
         {
             return Path.GetFileNameWithoutExtension(path);
+        }
+
+        public virtual string GetFaviconPath(string faviconName)
+        {
+            return Combine(ApplicationSettings.FaviconsFolder, faviconName);
         }
     }
 }

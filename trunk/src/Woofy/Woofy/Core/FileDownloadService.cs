@@ -9,7 +9,7 @@ using Woofy.Other;
 using Woofy.Exceptions;
 using Woofy.Entities;
 
-namespace Woofy.Services
+namespace Woofy.Core
 {
     public class FileDownloadService
     {

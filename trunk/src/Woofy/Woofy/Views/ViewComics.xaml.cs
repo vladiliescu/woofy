@@ -1,25 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using Woofy.Controllers;
-using Woofy.EventArguments;
-using System.Windows.Threading;
 using Woofy.Entities;
-using System.Diagnostics;
-using System.Globalization;
 using Woofy.Other;
 
 namespace Woofy.Views
 {
-    public partial class ViewComics : BaseWindow
+    public partial class ViewComics
     {       
 
         public ViewComics(ComicsPresenter presenter)
@@ -122,16 +111,16 @@ namespace Woofy.Views
                 Presenter.MoveToNextStrip();
         }
 
-        private void MoveFocusTo(FocusNavigationDirection direction)
+        private static void MoveFocusTo(FocusNavigationDirection direction)
         {
-            UIElement focusedElement = Keyboard.FocusedElement as UIElement;
+            var focusedElement = Keyboard.FocusedElement as UIElement;
             if (focusedElement == null)
                 return;
 
             focusedElement.MoveFocus(new TraversalRequest(direction));
         }
 
-        private void MoveFocusToNextElement()
+        private static void MoveFocusToNextElement()
         {
             MoveFocusTo(FocusNavigationDirection.Next);
         }

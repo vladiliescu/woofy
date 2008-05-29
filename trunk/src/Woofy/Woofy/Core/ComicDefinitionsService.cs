@@ -6,7 +6,7 @@ using System.IO;
 using Woofy.Entities;
 using System.Xml;
 
-namespace Woofy.Services
+namespace Woofy.Core
 {
     public class ComicDefinitionsService
     {

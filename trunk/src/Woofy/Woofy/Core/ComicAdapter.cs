@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Woofy.Entities;
-using Woofy.Services;
 using Woofy.Other;
 using System.IO;
 using System.Net;
 using Woofy.EventArguments;
 
-namespace Woofy.Controllers
+namespace Woofy.Core
 {
     public class ComicAdapter
     {
@@ -27,18 +24,14 @@ namespace Woofy.Controllers
         private Uri GetStartAddress(ComicDefinition definition, ComicStrip mostRecentStrip)
         {
             if (mostRecentStrip == null)
-            {
                 return _pageParseService.GetLatestPageOrStartAddress(definition.HomePageAddress, definition.LatestIssueRegex);
-            }
-            else
-            {
-                string pageContent = _webClient.DownloadString(mostRecentStrip.SourcePageAddress);
-                Uri[] nextStripLinks = _pageParseService.RetrieveLinksFromPageByRegex(definition.NextIssueRegex, pageContent, mostRecentStrip.SourcePageAddress);
-                if (nextStripLinks.Length == 0)
-                    return null;
 
-                return nextStripLinks[0];
-            }
+            string pageContent = _webClient.DownloadString(mostRecentStrip.SourcePageAddress);
+            Uri[] nextStripLinks = _pageParseService.RetrieveLinksFromPageByRegex(definition.NextIssueRegex, pageContent, mostRecentStrip.SourcePageAddress);
+            if (nextStripLinks.Length == 0)
+                return null;
+
+            return nextStripLinks[0];
         }
 
         public void CheckComicForUpdates(Comic comic, ComicStrip mostRecentStrip)
@@ -56,12 +49,6 @@ namespace Woofy.Controllers
 
                 do
                 {
-                    //if (_isDownloadCancelled)
-                    //{
-                    //    downloadOutcome = DownloadOutcome.Cancelled;
-                    //    break;
-                    //}
-
                     DownloadStrip(currentAddress, definition, downloadFolder, out nextAddress);
                     OnDownloadedAllStripsFromPage(new DownloadedAllStripsFromPageEventArgs());
 
@@ -118,7 +105,7 @@ namespace Woofy.Controllers
                 nextAddress = null;
                 return;
             }
-            
+
             nextAddress = nextStripLinks[0];
         }
 
@@ -154,7 +141,7 @@ namespace Woofy.Controllers
             _file.Delete(faviconPath);
             _file.Move(faviconTempPath, faviconPath);
 
-            comic.FaviconPath = faviconPath;
+            comic.IconPath = faviconPath;
         }
 
 

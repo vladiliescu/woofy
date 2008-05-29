@@ -4,8 +4,6 @@ using System.Text;
 using System.Data.Common;
 using System.Data;
 using System.Data.SQLite;
-using System.ComponentModel;
-
 using Woofy.Entities;
 
 namespace Woofy.DatabaseAccess
@@ -14,12 +12,11 @@ namespace Woofy.DatabaseAccess
     {
         private DbTransaction _transaction;
         private DbConnection _connection;
-        private TypeConverter _typeConverter = new TypeConverter();
 
         #region Static Methods
         public static DatabaseSession Create()
         {
-            DatabaseSession session = new DatabaseSession();
+            var session = new DatabaseSession();
 
             session._connection = new SQLiteConnection(ApplicationSettings.ConnectionString);
             session._connection.Open();
@@ -71,8 +68,7 @@ namespace Woofy.DatabaseAccess
 
         public DatabaseParameter CreateParameter(string name, object value, ParameterPurposes purpose, bool? sortAscending)
         {
-            SQLiteParameter parameter = new SQLiteParameter();
-            parameter.ParameterName = name;
+            var parameter = new SQLiteParameter {ParameterName = name};
 
             if (value is string)
                 parameter.Value = (string.IsNullOrEmpty((string)value) ? DBNull.Value : value);
@@ -99,17 +95,17 @@ namespace Woofy.DatabaseAccess
             finally { _connection.Close(); }
         }
                 
-        private string ColumnName(DatabaseParameter parameter)
+        private static string ColumnName(DatabaseParameter parameter)
         {
             return string.Format("{0}{1}", parameter.DbParameter.ParameterName[1].ToString().ToUpper(), parameter.DbParameter.ParameterName.Substring(2));
         }
 
-        private string ParameterName(DatabaseParameter parameter)
+        private static string ParameterName(DatabaseParameter parameter)
         {
             return parameter.DbParameter.ParameterName;
         }
 
-        private string SortDirection(DatabaseParameter parameter)
+        private static string SortDirection(DatabaseParameter parameter)
         {
             if (!parameter.SortAscending.HasValue)
                 return "ASC";
@@ -122,16 +118,16 @@ namespace Woofy.DatabaseAccess
 
         private delegate string ParameterFormatter(DatabaseParameter parameter);
 
-        private string GetFormattedParameters(DatabaseParameter[] parameters, ParameterPurposes purposes, string format, int charactersToTrim, params ParameterFormatter[] formatters)
+        private static string GetFormattedParameters(IEnumerable<DatabaseParameter> parameters, ParameterPurposes purposes, string format, int charactersToTrim, params ParameterFormatter[] formatters)
         {
-            StringBuilder builder = new StringBuilder();
+            var builder = new StringBuilder();
 
-            foreach (DatabaseParameter parameter in parameters)
+            foreach (var parameter in parameters)
             {
                 if ((parameter.Purpose & purposes) != parameter.Purpose)
                     continue;
 
-                string[] values = new string[formatters.Length];
+                var values = new string[formatters.Length];
 
                 for (int i = 0; i < formatters.Length; i++)
                     values[i] = formatters[i](parameter);

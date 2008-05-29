@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.IO;
 using System.Text;
 
 using MbUnit.Framework;
 
-using Woofy.Entities;
-using Woofy.Services;
-using System.IO;
+using Woofy.Core;
 
 namespace Woofy.Tests
 {
@@ -25,7 +21,7 @@ namespace Woofy.Tests
         [Test]
         public void ShouldInitializeAllFieldsWithCorrectValues()
         {
-            string comicInfoContent = @"<?xml version=""1.0"" encoding=""utf-8"" ?>
+            var comicInfoContent = @"<?xml version=""1.0"" encoding=""utf-8"" ?>
 <comicInfo friendlyName=""some friendly name"" 
             allowMultipleStrips=""true"" 
             allowMissingStrips=""true"" 
@@ -38,7 +34,7 @@ namespace Woofy.Tests
     <backButtonRegex><![CDATA[some back button regex]]></backButtonRegex>    
 </comicInfo>
 ";
-            ComicDefinition definition = _comicDefinitionsService.BuildDefinitionFromStream(new MemoryStream(Encoding.UTF8.GetBytes(comicInfoContent)));
+            var definition = _comicDefinitionsService.BuildDefinitionFromStream(new MemoryStream(Encoding.UTF8.GetBytes(comicInfoContent)));
 
             Assert.AreEqual("some friendly name", definition.Comic.Name);
             Assert.AreEqual(true, definition.AllowMultipleStrips);

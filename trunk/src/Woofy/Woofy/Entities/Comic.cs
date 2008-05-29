@@ -23,10 +23,20 @@ namespace Woofy.Entities
 
         public int Priority { get; set; }
 
+        private string _faviconPath;
+
         /// <summary>
-        /// Path to the comic's favicon.
+        /// Path to the comic's icon.
         /// </summary>
-        public string FaviconPath { get; set; }
+        public string IconPath
+        {
+            get
+            {
+            }
+            set
+            {
+            }
+        }
 
         public ComicDefinition Definition { get; private set; }
 

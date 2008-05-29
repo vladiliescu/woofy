@@ -1,19 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
 using System.Collections;
 using System.Threading;
-
+using Woofy.Core;
 using Woofy.Entities;
-using Woofy.Services;
 using Woofy.Views;
 using System.IO;
 using Woofy.Other;
 using System.Windows.Data;
-using System.Windows.Threading;
 using Woofy.EventArguments;
-using System.Net;
 using Woofy.DatabaseAccess;
 using System.ComponentModel;
 
@@ -33,34 +28,46 @@ namespace Woofy.Controllers
         #endregion
 
         #region Variables
-        private ComicDefinitionsService _comicDefinitionService = new ComicDefinitionsService();
-        private DatabaseAdapter _databaseAdapter = new DatabaseAdapter();
-        private ComicAdapter _comicAdapter = new ComicAdapter();
-        private FileWrapper _file = new FileWrapper();
+        private ComicDefinitionsService _comicDefinitionService;
+        private DatabaseAdapter _databaseAdapter;
+        private ComicAdapter _comicAdapter;
+        private FileWrapper _file;
+        private PathWrapper _path;
         #endregion
 
         public ComicsPresenter()
+            : this (new ComicDefinitionsService(), new DatabaseAdapter(), new ComicAdapter(), new FileWrapper(), new PathWrapper())
         {
-            _comicAdapter.DownloadingStrip += new EventHandler<DownloadingStripEventArgs>(OnDownloadingStrip);
-            _comicAdapter.DownloadedStrip += new EventHandler<DownloadedStripEventArgs>(OnDownloadedStrip);
-            _comicAdapter.DownloadedAllStripsFromPage += new EventHandler<DownloadedAllStripsFromPageEventArgs>(OnDownloadedAllStripsFromPage);
+        }
+
+        public ComicsPresenter(ComicDefinitionsService comicDefinitionsService, DatabaseAdapter databaseAdapter, ComicAdapter comicAdapter, FileWrapper fileWrapper, PathWrapper pathWrapper)
+        {
+            _comicDefinitionService = comicDefinitionsService;
+            _databaseAdapter = databaseAdapter;
+            _comicAdapter = comicAdapter;
+            _file = fileWrapper;
+            _path = pathWrapper;
+
+            _comicAdapter.DownloadingStrip += OnDownloadingStrip;
+            _comicAdapter.DownloadedStrip += OnDownloadedStrip;
+            _comicAdapter.DownloadedAllStripsFromPage += OnDownloadedAllStripsFromPage;
         }
 
         private void OnDownloadedAllStripsFromPage(object sender, DownloadedAllStripsFromPageEventArgs e)
         {
-            Comic downloadingComic = e.Comic;
-            Comic highestPriorityComic = GetHighestPriorityPendingComic();
+            //Comic downloadingComic = e.Comic;
+            //Comic highestPriorityComic = GetHighestPriorityPendingComic();
 
-            if (downloadingComic == highestPriorityComic)
-                return;
+            //if (downloadingComic == highestPriorityComic)
+            //    return;
 
-            ComicStrip strip = _databaseAdapter.ReadMostRecentStrip(highestPriorityComic);
-            e.NextStrip = strip;
+            //ComicStrip strip = _databaseAdapter.ReadMostRecentStrip(highestPriorityComic);
+            //e.NextStrip = strip;
         }
 
         private Comic GetHighestPriorityPendingComic()
         {
-            
+            return null;
         }
 
         private void OnDownloadedStrip(object sender, DownloadedStripEventArgs e)
@@ -75,7 +82,7 @@ namespace Woofy.Controllers
 
         private void OnDownloadingStrip(object sender, DownloadingStripEventArgs e)
         {
-
+            
         }
 
         #region Public Methods
@@ -88,8 +95,9 @@ namespace Woofy.Controllers
             int selectedComicIndex = 1;
             Comics = _databaseAdapter.ReadAllComics();
             foreach (Comic comic in Comics)
-                comic.FaviconPath = Path.Combine(ApplicationSettings.FaviconsFolder, "blank.png");
+                comic.IconPath = _path.GetFaviconPath("blank.png");
             Strips = _databaseAdapter.ReadStripsForComic(Comics[selectedComicIndex]);
+            Comics[0].IconPath = _path.GetFaviconPath("downloading.png");
 
             InactiveComicsView = new ListCollectionView(Comics);
             InactiveComicsView.Filter = (comic => !((Comic)comic).IsActive);
@@ -104,7 +112,7 @@ namespace Woofy.Controllers
 
             StripsView = new ListCollectionView(Strips);
 
-            ThreadPool.QueueUserWorkItem(delegate { CheckActiveComicsForUpdates(); });
+            //ThreadPool.QueueUserWorkItem(delegate { CheckActiveComicsForUpdates(); });
             //CheckActiveComicsForUpdates();
 
             //ThreadPool.UnsafeQueueUserWorkItem(RefreshComicFavicons, null);
@@ -142,7 +150,7 @@ namespace Woofy.Controllers
 
         private void RefreshViews()
         {
-            OnRunCodeOnUIThreadRequired(delegate
+            OnRunCodeOnUIThread(delegate
             {
                 ActiveComicsView.Refresh();
                 ActiveAndSortedComicsView.Refresh();
@@ -153,31 +161,28 @@ namespace Woofy.Controllers
         [Obsolete("Ar trebui sa vad daca pot apela Strips.Add pe ui thread. idem refreshviews.")]
         private void RefreshStrips()
         {
-            OnRunCodeOnUIThreadRequired(delegate
-            {
-                StripsView.Refresh();
-            });
+            OnRunCodeOnUIThread(() => StripsView.Refresh());
         }
 
-        #region Events - RunCodeOnUIThreadRequired
-        private event EventHandler<RunCodeOnUIThreadRequiredEventArgs> _runCodeOnUIThreadRequired;
-        public event EventHandler<RunCodeOnUIThreadRequiredEventArgs> RunCodeOnUIThreadRequired
+        #region Events - RunCodeOnUIThread
+        private event EventHandler<RunCodeOnUIThreadRequiredEventArgs> _runCodeOnUIThread;
+        public event EventHandler<RunCodeOnUIThreadRequiredEventArgs> RunCodeOnUIThread
         {
-            add { _runCodeOnUIThreadRequired += value; }
-            remove { _runCodeOnUIThreadRequired -= value; }
+            add { _runCodeOnUIThread += value; }
+            remove { _runCodeOnUIThread -= value; }
         }
 
-        protected virtual void OnRunCodeOnUIThreadRequired(RunCodeOnUIThreadRequiredEventArgs e)
+        protected virtual void OnRunCodeOnUIThread(RunCodeOnUIThreadRequiredEventArgs e)
         {
-            EventHandler<RunCodeOnUIThreadRequiredEventArgs> reference = _runCodeOnUIThreadRequired;
+            EventHandler<RunCodeOnUIThreadRequiredEventArgs> reference = _runCodeOnUIThread;
             if (reference != null)
                 reference(this, e);
         }
 
-        private void OnRunCodeOnUIThreadRequired(MethodInvoker code)
+        private void OnRunCodeOnUIThread(MethodInvoker code)
         {
             RunCodeOnUIThreadRequiredEventArgs e = new RunCodeOnUIThreadRequiredEventArgs(code);
-            OnRunCodeOnUIThreadRequired(e);
+            OnRunCodeOnUIThread(e);
         }
 
         #endregion

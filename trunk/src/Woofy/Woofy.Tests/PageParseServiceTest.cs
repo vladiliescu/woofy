@@ -5,8 +5,7 @@ using System.Text;
 
 using MbUnit.Framework;
 using Rhino.Mocks;
-
-using Woofy.Services;
+using Woofy.Core;
 using Woofy.Entities;
 using System.Net;
 using Woofy.Other;

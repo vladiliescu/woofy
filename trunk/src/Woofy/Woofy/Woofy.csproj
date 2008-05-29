@@ -56,7 +56,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controllers\ComicAdapter.cs" />
+    <Compile Include="Core\ComicAdapter.cs" />
     <Compile Include="Controllers\ComicsPresenter.cs" />
     <Compile Include="DatabaseAccess\DatabaseAdapter.cs" />
     <Compile Include="DatabaseAccess\DatabaseParameter.cs" />
@@ -97,9 +97,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Services\ComicDefinitionsService.cs" />
-    <Compile Include="Services\FileDownloadService.cs" />
-    <Compile Include="Services\PageParseService.cs" />
+    <Compile Include="Core\ComicDefinitionsService.cs" />
+    <Compile Include="Core\FileDownloadService.cs" />
+    <Compile Include="Core\PageParseService.cs" />
     <Compile Include="DatabaseAccess\DatabaseSession.cs" />
     <Compile Include="Views\BaseWindow.cs" />
     <Compile Include="Views\SelectComics.xaml.cs">
@@ -107,9 +107,6 @@
     </Compile>
     <Compile Include="Views\ViewComics.xaml.cs">
       <DependentUpon>ViewComics.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Window1.xaml.cs">
-      <DependentUpon>Window1.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -131,13 +128,12 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Window1.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicons\blank.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="favicons\downloading.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

@@ -9,11 +9,11 @@ using System.IO;
 using System.Text.RegularExpressions;
 using System.Web;
 
-namespace Woofy.Services
+namespace Woofy.Core
 {
     public class PageParseService
     {
-        private WebClientWrapper _webClient;
+        private readonly WebClientWrapper _webClient;
 
         #region Constructor
         public PageParseService(WebClientWrapper webClient)
@@ -29,7 +29,7 @@ namespace Woofy.Services
 
         public virtual Uri RetrieveFaviconAddressFromPage(Uri address)
         {            
-            string pageContent = "";
+            string pageContent;
             try 
             { 
                 pageContent = _webClient.DownloadString(address); 
@@ -44,7 +44,7 @@ namespace Woofy.Services
             if (links.Length > 0)
                 return links[0];
 
-            Uri defaultFaviconAddress = new Uri(address.Scheme + Uri.SchemeDelimiter + address.Authority + "/favicon.ico");
+            var defaultFaviconAddress = new Uri(address.Scheme + Uri.SchemeDelimiter + address.Authority + "/favicon.ico");
             Stream defaultFaviconStream = null;
 
             try
@@ -64,11 +64,11 @@ namespace Woofy.Services
                 return defaultFaviconAddress;
 
             return null;
-        }        
+        }
 
-        public virtual Uri[] RetrieveLinksFromPageByRegex(string regex, string pageContent, Uri currentUri)
+        public virtual Uri[] RetrieveLinksFromPageByRegex(string regex, string pageContent, Uri uriToCombineLinkWith)
         {
-            List<Uri> links = new List<Uri>();
+            var links = new List<Uri>();
             MatchCollection matches = Regex.Matches(pageContent, regex, ApplicationSettings.RegexOptions);
 
             foreach (Match match in matches)
@@ -86,7 +86,7 @@ namespace Woofy.Services
                 if (Uri.TryCreate(capturedContent, UriKind.Absolute, out newUri))
                     links.Add(newUri);
                 else 
-                    links.Add(new Uri(currentUri, capturedContent));
+                    links.Add(new Uri(uriToCombineLinkWith, capturedContent));
             }
 
             return links.ToArray();

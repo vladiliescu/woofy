@@ -5,6 +5,7 @@ namespace Woofy.Other
 {
     public static class KeyboardManager
     {
+        //TODO: Verificat incapsularea
         private class KeyBinding
         {
             public ConditionalInvoker Condition { get; private set; }

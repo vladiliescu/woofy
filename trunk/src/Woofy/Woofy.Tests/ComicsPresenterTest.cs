@@ -5,7 +5,7 @@ using System.Text;
 
 using MbUnit.Framework;
 using Rhino.Mocks;
-using Woofy.Services;
+using Woofy.Core;
 using Woofy.Controllers;
 using Woofy.Other;
 using Woofy.Entities;
@@ -39,13 +39,13 @@ namespace Woofy.Tests
             _comicsPresenter = _mocks.PartialMock<ComicsPresenter>(_pageParseService, _webClient, _path, _file);
 
             _eventSubscriber = _mocks.CreateMock<IEventSubscriber>();
-            _comicsPresenter.RunCodeOnUIThreadRequired += _eventSubscriber.Handler;
+            _comicsPresenter.RunCodeOnUIThread += _eventSubscriber.Handler;
         }
 
         [TearDown]
         public void TearDown()
         {
-            _comicsPresenter.RunCodeOnUIThreadRequired -= _eventSubscriber.Handler;
+            _comicsPresenter.RunCodeOnUIThread -= _eventSubscriber.Handler;
         }
         #endregion
 
@@ -68,7 +68,7 @@ namespace Woofy.Tests
 
             using (_mocks.Playback())
             {
-                _comicsPresenter.RefreshComicFavicon(new Comic());
+                //_comicsPresenter.RefreshComicFavicon(new Comic());
             }
         }
 
@@ -93,7 +93,7 @@ namespace Woofy.Tests
 
             using (_mocks.Playback())
             {
-                _comicsPresenter.RefreshComicFavicon(new Comic());
+                //_comicsPresenter.RefreshComicFavicon(new Comic());
             }
         }
         #endregion

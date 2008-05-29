@@ -73,7 +73,7 @@ namespace Woofy.DatabaseAccess
                     long comicId = session.Insert<Comic>(
                                     session.CreateParameter(":name", comic.Name),
                                     session.CreateParameter(":isActive", comic.IsActive),
-                                    session.CreateParameter(":faviconPath", comic.FaviconPath)
+                                    session.CreateParameter(":faviconPath", comic.IconPath)
                                     );
 
                     session.Insert<ComicDefinition>(

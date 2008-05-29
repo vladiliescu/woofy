@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using Woofy.Controllers;
 using Woofy.EventArguments;
 using System.Windows.Threading;
@@ -12,13 +9,17 @@ namespace Woofy.Views
     {
         protected ComicsPresenter Presenter { get; private set; }
 
+        public BaseWindow()
+        {
+        }
+
         protected BaseWindow(ComicsPresenter presenter)
         {
             Presenter = presenter;
-            Presenter.RunCodeOnUIThreadRequired += new EventHandler<RunCodeOnUIThreadRequiredEventArgs>(OnRunCodeOnUIThreadRequired);
+            Presenter.RunCodeOnUIThread += OnRunCodeOnUIThread;
         }
 
-        private void OnRunCodeOnUIThreadRequired(object sender, RunCodeOnUIThreadRequiredEventArgs e)
+        private void OnRunCodeOnUIThread(object sender, RunCodeOnUIThreadRequiredEventArgs e)
         {
             Dispatcher.Invoke(DispatcherPriority.Normal, e.Code);
         }
