@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
-using Woofy.Entities;
 using System.Net;
 using Woofy.Other;
 using System.IO;

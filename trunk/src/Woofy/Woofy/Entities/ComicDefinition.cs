@@ -23,7 +23,7 @@ namespace Woofy.Entities
         /// <summary>
         /// Gets the regular expression finding the url for the next page.
         /// </summary>
-        public string NextIssueRegex { get; set; }
+        public string NextPageRegex { get; set; }
         /// <summary>
         /// Gets the regular expression for finding the url to the newest page in the home page. Can be null.
         /// </summary>

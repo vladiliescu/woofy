@@ -4,7 +4,7 @@ using System.Text;
 using System.Data.Common;
 using System.Data;
 using System.Data.SQLite;
-using Woofy.Entities;
+using Woofy.Other;
 
 namespace Woofy.DatabaseAccess
 {

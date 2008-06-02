@@ -4,6 +4,7 @@ using System.Collections;
 using System.Threading;
 using Woofy.Core;
 using Woofy.Entities;
+using Woofy.Lookups;
 using Woofy.Views;
 using System.IO;
 using Woofy.Other;
@@ -50,29 +51,43 @@ namespace Woofy.Controllers
 
             _comicAdapter.DownloadingStrip += OnDownloadingStrip;
             _comicAdapter.DownloadedStrip += OnDownloadedStrip;
-            _comicAdapter.DownloadedAllStripsFromPage += OnDownloadedAllStripsFromPage;
         }
 
-        private void OnDownloadedAllStripsFromPage(object sender, DownloadedAllStripsFromPageEventArgs e)
+
+        private Comic GetNextPendingComic()
         {
-            //Comic downloadingComic = e.Comic;
-            //Comic highestPriorityComic = GetHighestPriorityPendingComic();
+            foreach (Comic comic in ActiveAndSortedComicsView)
+            {
+                if (comic.DownloadState != DownloadState.Pending)
+                    continue;
 
-            //if (downloadingComic == highestPriorityComic)
-            //    return;
+                return comic;
+            }
 
-            //ComicStrip strip = _databaseAdapter.ReadMostRecentStrip(highestPriorityComic);
-            //e.NextStrip = strip;
-        }
-
-        private Comic GetHighestPriorityPendingComic()
-        {
             return null;
         }
 
         private void OnDownloadedStrip(object sender, DownloadedStripEventArgs e)
         {
             _databaseAdapter.InsertStrip(e.Strip);
+
+            if (e.NextPageAddress == null)
+            {
+                var downloadingComic = e.Strip.Comic;
+                var nextComic = GetNextPendingComic();
+
+                nextComic.DownloadState = DownloadState.Downloading;
+                downloadingComic.DownloadState = DownloadState.Finished;
+
+                RefreshViews();
+
+                if (downloadingComic == nextComic)
+                    return;
+                
+                var strip = _databaseAdapter.ReadMostRecentStrip(nextComic);
+                e.OverrideDownloadingComic(strip.SourcePageAddress, nextComic.Definition);
+            }
+
             if (ActiveAndSortedComicsView.CurrentItem != e.Strip.Comic)
                 return;
 
@@ -94,10 +109,7 @@ namespace Woofy.Controllers
 
             int selectedComicIndex = 1;
             Comics = _databaseAdapter.ReadAllComics();
-            foreach (Comic comic in Comics)
-                comic.IconPath = _path.GetFaviconPath("blank.png");
             Strips = _databaseAdapter.ReadStripsForComic(Comics[selectedComicIndex]);
-            Comics[0].IconPath = _path.GetFaviconPath("downloading.png");
 
             InactiveComicsView = new ListCollectionView(Comics);
             InactiveComicsView.Filter = (comic => !((Comic)comic).IsActive);
@@ -110,9 +122,13 @@ namespace Woofy.Controllers
             ActiveAndSortedComicsView.SortDescriptions.Add(new SortDescription("Priority", ListSortDirection.Descending));
             ActiveAndSortedComicsView.MoveCurrentToFirst();
 
+            foreach (Comic comic in ActiveAndSortedComicsView)
+                comic.DownloadState = DownloadState.Pending;
+            ActiveAndSortedComicsView.GetItemAt<Comic>(0).DownloadState = DownloadState.Downloading;
+
             StripsView = new ListCollectionView(Strips);
 
-            //ThreadPool.QueueUserWorkItem(delegate { CheckActiveComicsForUpdates(); });
+            ThreadPool.QueueUserWorkItem(delegate { CheckActiveComicsForUpdates(); });
             //CheckActiveComicsForUpdates();
 
             //ThreadPool.UnsafeQueueUserWorkItem(RefreshComicFavicons, null);
@@ -256,6 +272,9 @@ namespace Woofy.Controllers
             comicAbove.Priority = comic.Priority;
             comic.Priority = tempPriority;
 
+            _databaseAdapter.UpdateComic(comicAbove);
+            _databaseAdapter.UpdateComic(comic);
+
             RefreshViews();
         }
 
@@ -265,10 +284,13 @@ namespace Woofy.Controllers
             if (index == ActiveAndSortedComicsView.Count - 1)
                 return;
 
-            Comic comicAbove = (Comic)ActiveAndSortedComicsView.GetItemAt(index + 1);
-            int tempPriority = comicAbove.Priority;
-            comicAbove.Priority = comic.Priority;
+            Comic comicBelow = (Comic)ActiveAndSortedComicsView.GetItemAt(index + 1);
+            int tempPriority = comicBelow.Priority;
+            comicBelow.Priority = comic.Priority;
             comic.Priority = tempPriority;
+
+            _databaseAdapter.UpdateComic(comicBelow);
+            _databaseAdapter.UpdateComic(comic);
 
             RefreshViews();
         }

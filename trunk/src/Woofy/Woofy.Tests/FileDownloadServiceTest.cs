@@ -10,7 +10,6 @@ using Rhino.Mocks.Constraints;
 using Woofy.Core;
 using Woofy.Other;
 using Woofy.Exceptions;
-using Woofy.Entities;
 using System.Net;
 using System.IO;
 

@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace Woofy.Entities
+namespace Woofy.Other
 {
     public static class ApplicationSettings
     {

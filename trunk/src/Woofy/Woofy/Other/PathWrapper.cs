@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
-using Woofy.Entities;
+﻿using System.IO;
 
 namespace Woofy.Other
 {

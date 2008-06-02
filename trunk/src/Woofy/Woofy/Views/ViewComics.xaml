@@ -21,7 +21,7 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="0, 1, 0, 1" Orientation="Horizontal">
-                        <Image Width="16" Height="16" Source="{Binding FaviconPath}"/>
+                        <Image Width="16" Height="16" Source="{Binding IconPath}"/>
                         <TextBlock Text="{Binding Name}" />
                     </StackPanel>
                 </DataTemplate>

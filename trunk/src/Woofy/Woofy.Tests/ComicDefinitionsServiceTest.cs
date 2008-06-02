@@ -44,7 +44,7 @@ namespace Woofy.Tests
             Assert.AreEqual("http://home.page.com/", definition.HomePageAddress.AbsoluteUri);
             Assert.AreEqual("http://home.page.com/first.png", definition.FirstStripAddress.AbsoluteUri);
             Assert.AreEqual("some comic regex", definition.StripRegex);
-            Assert.AreEqual("some back button regex", definition.NextIssueRegex);
+            Assert.AreEqual("some back button regex", definition.NextPageRegex);
             Assert.AreEqual("some latest page regex", definition.LatestIssueRegex);
         }
     }

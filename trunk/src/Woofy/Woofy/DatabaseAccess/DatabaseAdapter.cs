@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Woofy.Entities;
+﻿using Woofy.Entities;
 using System.Data.Common;
-using System.Data;
 
 namespace Woofy.DatabaseAccess
 {
@@ -85,7 +81,7 @@ namespace Woofy.DatabaseAccess
                         session.CreateParameter(":firstStripAddress", definition.FirstStripAddress == null ? null : definition.FirstStripAddress.OriginalString),
                         session.CreateParameter(":homePageAddress", definition.HomePageAddress == null ? null : definition.HomePageAddress.OriginalString),
                         session.CreateParameter(":latestIssueRegex", definition.LatestIssueRegex),
-                        session.CreateParameter(":nextIssueRegex", definition.NextIssueRegex),
+                        session.CreateParameter(":nextIssueRegex", definition.NextPageRegex),
                         session.CreateParameter(":sourceFileName", definition.SourceFileName),
                         session.CreateParameter(":stripRegex", definition.StripRegex)
                         );
@@ -105,7 +101,7 @@ namespace Woofy.DatabaseAccess
                         session.CreateParameter(":firstStripAddress", definition.FirstStripAddress == null ? null : definition.FirstStripAddress.OriginalString),
                         session.CreateParameter(":homePageAddress", definition.HomePageAddress == null ? null : definition.HomePageAddress.OriginalString),
                         session.CreateParameter(":latestIssueRegex", definition.LatestIssueRegex),
-                        session.CreateParameter(":nextIssueRegex", definition.NextIssueRegex),
+                        session.CreateParameter(":nextIssueRegex", definition.NextPageRegex),
                         session.CreateParameter(":stripRegex", definition.StripRegex),
                         session.CreateParameter(":sourceFileName", definition.SourceFileName),
                         session.CreateParameter(":comicId", existingDefinition.ComicId, ParameterPurposes.Where)
@@ -160,6 +156,7 @@ namespace Woofy.DatabaseAccess
          * {
          *      Session.Delete<ComicStrip>(
          *          CreateParameter(Model.ComicStrip.Id, strip.Id, ParameterPurposes.Where)
+         *                              ^^Eventual, sa ii spun doar numele coloanei, si sa stie el singur sa ia valoarea din entitate :D ^^
          *      );
          * }
          * 
@@ -171,6 +168,19 @@ namespace Woofy.DatabaseAccess
             {
                 session.Delete<ComicStrip>(
                     session.CreateParameter(":id", strip.Id, ParameterPurposes.Where)
+                    );
+
+                session.Commit();
+            }
+        }
+
+        public void UpdateComic(Comic comic)
+        {
+            using (var session = DatabaseSession.Create())
+            {
+                session.Update<Comic>(
+                    session.CreateParameter(":priority", comic.Priority),
+                    session.CreateParameter(":id", comic.Id, ParameterPurposes.Where)
                     );
 
                 session.Commit();

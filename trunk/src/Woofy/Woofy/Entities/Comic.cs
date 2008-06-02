@@ -1,13 +1,14 @@
-﻿using System;
-using System.IO;
-using System.Xml;
+﻿using System.ComponentModel;
 using System.Diagnostics;
+using Woofy.Lookups;
+using Woofy.Other;
 
 namespace Woofy.Entities
 {
     [DebuggerDisplay("{Name}")]
     public class Comic
     {
+        private readonly PathWrapper _path = new PathWrapper();
 
         public long Id { get; set; }
         
@@ -23,18 +24,35 @@ namespace Woofy.Entities
 
         public int Priority { get; set; }
 
-        private string _faviconPath;
-
         /// <summary>
-        /// Path to the comic's icon.
+        /// Gets the path to the comic's icon.
         /// </summary>
-        public string IconPath
+        public string IconPath { get; private set; }
+
+        private DownloadState _downloadState = DownloadState.Pending;
+        public DownloadState DownloadState
         {
             get
             {
+                return _downloadState;
             }
             set
             {
+                switch (value)
+                {
+                    case DownloadState.Pending:
+                        IconPath = _path.GetFaviconPath("pending.png");
+                        break;
+                    case DownloadState.Downloading:
+                        IconPath = _path.GetFaviconPath("downloading.png");
+                        break;
+                    case DownloadState.Finished:
+                        IconPath = _path.GetFaviconPath("blank.png");
+                        break;
+                    default:
+                        throw new InvalidEnumArgumentException("value", (int)value, typeof(DownloadState));
+                }
+                _downloadState = value;
             }
         }
 

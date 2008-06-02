@@ -72,7 +72,6 @@ namespace Woofy.DatabaseAccess
                                 Id = reader.GetValue<long>("Id"),
                                 Name = reader.GetValue<string>("Name"),
                                 IsActive = reader.GetValue<bool>("IsActive"),
-                                IconPath = reader.GetValue<string>("FaviconPath"),
                                 Priority = reader.GetValue<int>("Priority")
                             };
 
@@ -90,7 +89,7 @@ namespace Woofy.DatabaseAccess
                                      AuthorEmail = reader.GetValue<string>("AuthorEmail"),
                                      HomePageAddress = new Uri(reader.GetValue<string>("HomePageAddress")),
                                      LatestIssueRegex = reader.GetValue<string>("LatestIssueRegex"),
-                                     NextIssueRegex = reader.GetValue<string>("NextIssueRegex"),
+                                     NextPageRegex = reader.GetValue<string>("NextIssueRegex"),
                                      SourceFileName = reader.GetValue<string>("SourceFileName"),
                                      StripRegex = reader.GetValue<string>("StripRegex")
                                  };

@@ -5,6 +5,7 @@ using System.IO;
 
 using Woofy.Entities;
 using System.Xml;
+using Woofy.Other;
 
 namespace Woofy.Core
 {
@@ -60,7 +61,7 @@ namespace Woofy.Core
                             definition.StripRegex = reader.ReadElementContentAsString();
                             break;
                         case "nextPageLinkRegex":
-                            definition.NextIssueRegex = reader.ReadElementContentAsString();
+                            definition.NextPageRegex = reader.ReadElementContentAsString();
                             break;
                         case "firstIssue":
                             definition.FirstStripAddress = new Uri(reader.ReadElementContentAsString());
@@ -78,7 +79,7 @@ namespace Woofy.Core
                 throw new InvalidOperationException("The comic definition does not specify a home url.");
             if (string.IsNullOrEmpty(definition.StripRegex))
                 throw new InvalidOperationException("The comic definition does not specify a strip regular expression.");
-            if (string.IsNullOrEmpty(definition.NextIssueRegex))
+            if (string.IsNullOrEmpty(definition.NextPageRegex))
                 throw new InvalidOperationException("The comic definition does not specify a next issue regular expression.");
 
             return definition;

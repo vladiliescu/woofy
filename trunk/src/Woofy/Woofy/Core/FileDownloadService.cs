@@ -7,7 +7,6 @@ using System.ComponentModel;
 
 using Woofy.Other;
 using Woofy.Exceptions;
-using Woofy.Entities;
 
 namespace Woofy.Core
 {
