@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Windows;
 using System.Collections;
-using System.Threading;
-using Woofy.Core;
-using Woofy.Entities;
-using Woofy.Lookups;
-using Woofy.Views;
-using System.IO;
-using Woofy.Other;
-using System.Windows.Data;
-using Woofy.EventArguments;
-using Woofy.DatabaseAccess;
 using System.ComponentModel;
+using System.Threading;
+using System.Windows;
+using System.Windows.Data;
+using Woofy.Core;
+using Woofy.DatabaseAccess;
+using Woofy.Entities;
+using Woofy.EventArguments;
+using Woofy.Lookups;
+using Woofy.Other;
+using Woofy.Views;
 
 namespace Woofy.Controllers
 {
@@ -51,6 +50,27 @@ namespace Woofy.Controllers
 
             _comicAdapter.DownloadingStrip += OnDownloadingStrip;
             _comicAdapter.DownloadedStrip += OnDownloadedStrip;
+            _comicAdapter.OverrideDownloadingComic += OnOverrideDownloadingComic;
+        }
+
+        private void OnOverrideDownloadingComic(object sender, OverrideDownloadingComicEventArgs e)
+        {
+            if (!e.ComicHasFinishedDownloading)
+                return;
+
+            var downloadingComic = e.DownloadingComic;
+            var nextComic = GetNextPendingComic();
+
+            nextComic.DownloadState = DownloadState.Downloading;
+            downloadingComic.DownloadState = DownloadState.Finished;
+
+            RefreshViews();
+
+            if (downloadingComic == nextComic)
+                return;
+
+            var strip = _databaseAdapter.ReadMostRecentStrip(nextComic);
+            e.OverrideComic(nextComic, strip);
         }
 
 
@@ -70,24 +90,7 @@ namespace Woofy.Controllers
         private void OnDownloadedStrip(object sender, DownloadedStripEventArgs e)
         {
             _databaseAdapter.InsertStrip(e.Strip);
-
-            if (e.NextPageAddress == null)
-            {
-                var downloadingComic = e.Strip.Comic;
-                var nextComic = GetNextPendingComic();
-
-                nextComic.DownloadState = DownloadState.Downloading;
-                downloadingComic.DownloadState = DownloadState.Finished;
-
-                RefreshViews();
-
-                if (downloadingComic == nextComic)
-                    return;
-                
-                var strip = _databaseAdapter.ReadMostRecentStrip(nextComic);
-                e.OverrideDownloadingComic(strip.SourcePageAddress, nextComic.Definition);
-            }
-
+            
             if (ActiveAndSortedComicsView.CurrentItem != e.Strip.Comic)
                 return;
 

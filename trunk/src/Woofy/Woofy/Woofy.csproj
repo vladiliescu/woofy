@@ -62,6 +62,7 @@
     <Compile Include="DatabaseAccess\DatabaseParameter.cs" />
     <Compile Include="DatabaseAccess\EntityModel.cs" />
     <Compile Include="DatabaseAccess\ParameterPurposes.cs" />
+    <Compile Include="EventArguments\OverrideDownloadingComicEventArgs.cs" />
     <Compile Include="Extensions\ListCollectionViewExtensions.cs" />
     <Compile Include="Lookups\DownloadState.cs" />
     <Compile Include="Other\ApplicationSettings.cs" />

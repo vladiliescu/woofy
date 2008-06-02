@@ -16,7 +16,7 @@ namespace Woofy.Core
         private readonly WebClientWrapper _webClient = new WebClientWrapper();
 
 
-        private Uri GetStartAddress(ComicDefinition definition, ComicStrip mostRecentStrip)
+        private Uri GetComicStartAddress(ComicDefinition definition, ComicStrip mostRecentStrip)
         {
             if (mostRecentStrip == null)
                 return _pageParseService.GetLatestPageOrStartAddress(definition.HomePageAddress, definition.LatestIssueRegex);
@@ -30,69 +30,56 @@ namespace Woofy.Core
         }
 
 
+        private Uri GetFirstAvailableStartAddress(ComicDefinition definition, ComicStrip mostRecentStrip)
+        {
+            Uri currentAddress;
+            OverrideDownloadingComicEventArgs e;
+            do
+            {
+                currentAddress = GetComicStartAddress(definition, mostRecentStrip);
+                if (currentAddress != null)
+                    break;
 
+                e = OnOverrideDownloadingComic(definition.Comic, true);
+                if (e.OverridingComic == null)
+                    break;
 
+                definition = e.OverridingComic.Definition;
+                mostRecentStrip = e.MostRecentStrip;
+            }
+            while (true);
 
-
-
+            return currentAddress;
+        }
 
 
         public void CheckComicForUpdates(Comic comic, ComicStrip mostRecentStrip)
         {
-            ComicDefinition definition = comic.Definition;
-            string downloadFolder = _path.Combine(ApplicationSettings.DefaultDownloadFolder, comic.Name);
+            var definition = comic.Definition;
+            var downloadFolder = _path.Combine(ApplicationSettings.DefaultDownloadFolder, comic.Name);
             if (!Directory.Exists(downloadFolder))
                 Directory.CreateDirectory(downloadFolder);
 
             try
             {
-                Uri currentAddress = GetStartAddress(definition, mostRecentStrip);
-                if (currentAddress == null)
-                    OnDownloadedStrip(;
-
+                OverrideDownloadingComicEventArgs e;
                 do
                 {
-                    var pageContent = _webClient.DownloadString(currentAddress);
-                    Uri overridingNextPageAddress = null;
+                    var currentAddress = GetFirstAvailableStartAddress(definition, mostRecentStrip);
+                    if (currentAddress == null)
+                        return;
 
-                    var stripAddresses = _pageParseService.RetrieveLinksFromPageByRegex(definition.StripRegex, pageContent, currentAddress);
-                    var nextPageAddresses = _pageParseService.RetrieveLinksFromPageByRegex(definition.NextPageRegex, pageContent, currentAddress);
-                    var nextPageAddress = (nextPageAddresses.Length == 0 ? null : nextPageAddresses[0]);
 
-                    if (!MatchedLinksObeyRules(stripAddresses.Length, definition.AllowMissingStrips, definition.AllowMultipleStrips))//, ref downloadOutcome))
-                    {
-                        //nextAddress = null;
+                    DownloadStrips(definition, currentAddress, downloadFolder, out e);
+
+                    if (e.OverridingComic == null)
                         break;
-                    }
 
-                    
-
-                    foreach (var stripAddress in stripAddresses)
-                    {
-                        var stripFileName = stripAddress.AbsoluteUri.Substring(stripAddress.AbsoluteUri.LastIndexOf('/') + 1);
-                        var downloadPath = _path.Combine(downloadFolder, stripFileName);
-
-                        var strip = new ComicStrip(definition.Comic)
-                                        {
-                                            SourcePageAddress = currentAddress,
-                                            FilePath = downloadPath
-                                        };
-
-                        _fileDownloadService.DownloadFile(stripAddress, downloadPath, currentAddress);
-
-                        DownloadedStripEventArgs e = OnDownloadedStrip(strip, nextPageAddress);
-
-                        if (e.ComicIsOverriden)
-                        {
-                            overridingNextPageAddress = e.NextPageAddress;
-                            definition = e.OverridingDefinition;
-                            break;
-                        }
-                    }
-                    
-                    currentAddress = overridingNextPageAddress ?? nextPageAddress;
+                    definition = e.OverridingComic.Definition;
+                    mostRecentStrip = e.MostRecentStrip;
                 }
-                while (currentAddress != null);
+                while (true);
+                
             }
             catch (UriFormatException ex)
             {
@@ -103,18 +90,47 @@ namespace Woofy.Core
             }
         }
 
+        private void DownloadStrips(ComicDefinition definition, Uri currentAddress, string downloadFolder, out OverrideDownloadingComicEventArgs e)
+        {
+            e = new OverrideDownloadingComicEventArgs(null);
+            do
+            {
+                var pageContent = _webClient.DownloadString(currentAddress);
 
+                var stripAddresses = _pageParseService.RetrieveLinksFromPageByRegex(definition.StripRegex, pageContent, currentAddress);
+                var nextPageAddresses = _pageParseService.RetrieveLinksFromPageByRegex(definition.NextPageRegex, pageContent, currentAddress);
+                var nextPageAddress = (nextPageAddresses.Length == 0 ? null : nextPageAddresses[0]);
 
+                if (!MatchedLinksObeyRules(stripAddresses.Length, definition.AllowMissingStrips, definition.AllowMultipleStrips))//, ref downloadOutcome))
+                {
+                    //nextAddress = null;
+                    break;
+                }
 
+                foreach (var stripAddress in stripAddresses)
+                {
+                    var stripFileName = stripAddress.AbsoluteUri.Substring(stripAddress.AbsoluteUri.LastIndexOf('/') + 1);
+                    var downloadPath = _path.Combine(downloadFolder, stripFileName);
 
+                    var strip = new ComicStrip(definition.Comic)
+                                    {
+                                        SourcePageAddress = currentAddress,
+                                        FilePath = downloadPath
+                                    };
 
+                    _fileDownloadService.DownloadFile(stripAddress, downloadPath, currentAddress);
 
+                    OnDownloadedStrip(strip, nextPageAddress);
+                    e = OnOverrideDownloadingComic(definition.Comic, nextPageAddress == null);
 
-
-
-
-
-
+                    if (e.OverridingComic != null)
+                        return;
+                }
+                    
+                currentAddress = nextPageAddress;
+            }
+            while (currentAddress != null);
+        }
 
 
         private bool MatchedLinksObeyRules(int linksLength, bool allowMissingStrips, bool allowMultipleStrips)//, ref DownloadOutcome downloadOutcome)
@@ -152,6 +168,7 @@ namespace Woofy.Core
         }
 
 
+        #region Event - DownloadingStrip
         private event EventHandler<DownloadingStripEventArgs> _downloadingStrip;
         public event EventHandler<DownloadingStripEventArgs> DownloadingStrip
         {
@@ -173,7 +190,9 @@ namespace Woofy.Core
 
             return e;
         }
+        #endregion
 
+        #region Event - DownloadedStrip
         private event EventHandler<DownloadedStripEventArgs> _downloadedStrip;
         public event EventHandler<DownloadedStripEventArgs> DownloadedStrip
         {
@@ -195,19 +214,33 @@ namespace Woofy.Core
 
             return e;
         }
+        #endregion
 
-        private event EventHandler<DownloadedAllStripsFromPageEventArgs> _downloadedAllStripsFromPage;
-        public event EventHandler<DownloadedAllStripsFromPageEventArgs> DownloadedAllStripsFromPage
+        #region Event - OverrideDownloadingComic
+
+        private event EventHandler<OverrideDownloadingComicEventArgs> overrideDownloadingComic;
+
+        public event EventHandler<OverrideDownloadingComicEventArgs> OverrideDownloadingComic
         {
-            add { _downloadedAllStripsFromPage += value; }
-            remove { _downloadedAllStripsFromPage -= value; }
+            add { overrideDownloadingComic += value; }
+            remove { overrideDownloadingComic -= value; }
         }
 
-        protected virtual void OnDownloadedAllStripsFromPage(DownloadedAllStripsFromPageEventArgs e)
+        protected virtual void OnOverrideDownloadingComic(OverrideDownloadingComicEventArgs e)
         {
-            EventHandler<DownloadedAllStripsFromPageEventArgs> reference = _downloadedAllStripsFromPage;
+            var reference = overrideDownloadingComic;
             if (reference != null)
                 reference(this, e);
         }
+
+        private OverrideDownloadingComicEventArgs OnOverrideDownloadingComic(Comic comic, bool comicHasFinishedDownloading)
+        {
+            var e = new OverrideDownloadingComicEventArgs(comic) { ComicHasFinishedDownloading = comicHasFinishedDownloading };
+            OnOverrideDownloadingComic(e);
+
+            return e;
+        }
+
+        #endregion
     }
 }
