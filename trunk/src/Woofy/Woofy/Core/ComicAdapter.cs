@@ -47,6 +47,8 @@ namespace Woofy.Core
             try
             {
                 Uri currentAddress = GetStartAddress(definition, mostRecentStrip);
+                if (currentAddress == null)
+                    OnDownloadedStrip(;
 
                 do
                 {

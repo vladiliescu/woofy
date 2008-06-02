@@ -13,6 +13,9 @@ namespace Woofy.Core
     {
         public ComicDefinitionCollection BuildComicDefinitionsFromFiles()
         {
+            if (!Directory.Exists(ApplicationSettings.ComicDefinitionsFolder))
+                return new ComicDefinitionCollection();
+
             return BuildComicDefinitionsFromFiles(Directory.GetFiles(ApplicationSettings.ComicDefinitionsFolder));
         }
 
