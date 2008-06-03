@@ -55,27 +55,25 @@ namespace Woofy.Core
 
         public void CheckComicForUpdates(Comic comic, ComicStrip mostRecentStrip)
         {
-            var definition = comic.Definition;
-            var downloadFolder = _path.Combine(ApplicationSettings.DefaultDownloadFolder, comic.Name);
-            if (!Directory.Exists(downloadFolder))
-                Directory.CreateDirectory(downloadFolder);
-
             try
             {
                 OverrideDownloadingComicEventArgs e;
                 do
                 {
-                    var currentAddress = GetFirstAvailableStartAddress(definition, mostRecentStrip);
+                    var currentAddress = GetFirstAvailableStartAddress(comic.Definition, mostRecentStrip);
                     if (currentAddress == null)
                         return;
 
-
-                    DownloadStrips(definition, currentAddress, downloadFolder, out e);
+                    var downloadFolder = _path.Combine(ApplicationSettings.DefaultDownloadFolder, comic.Name);
+                    if (!Directory.Exists(downloadFolder))
+                        Directory.CreateDirectory(downloadFolder);
+                    
+                    DownloadStrips(comic.Definition, currentAddress, downloadFolder, out e);
 
                     if (e.OverridingComic == null)
                         break;
 
-                    definition = e.OverridingComic.Definition;
+                    comic = e.OverridingComic;
                     mostRecentStrip = e.MostRecentStrip;
                 }
                 while (true);

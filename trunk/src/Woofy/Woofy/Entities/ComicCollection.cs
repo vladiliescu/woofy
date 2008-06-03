@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Collections.ObjectModel;
 
 namespace Woofy.Entities
@@ -9,7 +7,7 @@ namespace Woofy.Entities
     {
         public Comic FindBySourceFileName(string sourceFileName)
         {
-            foreach (Comic comic in this)
+            foreach (var comic in this)
             {
                 if (comic.Definition.SourceFileName.Equals(sourceFileName, StringComparison.OrdinalIgnoreCase))
                     return comic;

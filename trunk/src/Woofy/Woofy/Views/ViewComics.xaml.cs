@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Threading;
 using Woofy.Controllers;
 using Woofy.Entities;
 using Woofy.Other;
@@ -14,7 +15,7 @@ namespace Woofy.Views
         public ViewComics(ComicsPresenter presenter)
             : base (presenter)
         {
-            InitializeComponent();            
+            InitializeComponent();
         }
 
         private void OnWindowLoaded(object sender, RoutedEventArgs e)
