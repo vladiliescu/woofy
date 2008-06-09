@@ -1,2 +1,6 @@
 Implement zooming and panning when displaying strips.
+Implement name, date and description for comics.
+
+Implement parsing already downloaded strips in order to avoid redownloading them.
+
 Implement read/unread functionality.
