@@ -1,9 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
 using System.Threading;
 
@@ -90,6 +86,8 @@ namespace Woofy.Gui
                 comicDefinitionsList.Items.Add(item);
             }
             comicDefinitionsList.SelectedIndices.Add(0);
+
+            SetFoundComics(0);
         }
 
         private void PauseDebugging()
@@ -124,9 +122,15 @@ namespace Woofy.Gui
                 MessageBox.Show("You have to specify a start url.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            
+            lblFoundStrips.Visible = true;
 
             if (this.currentMode == TestMode.StandBy)
+            {
                 eventsRichTextBox.Clear();
+                SetFoundComics(0);
+            }
+
             eventsRichTextBox.Focus();
 
             string selectedFile = (string)comicDefinitionsList.SelectedItems[0].Tag;
@@ -135,10 +139,8 @@ namespace Woofy.Gui
             string startupUrl;
             if (this.currentMode == TestMode.Paused)
                 startupUrl = this.currentUrl;
-            else if (chkOverrideStartUrl.Checked)
-                startupUrl = txtOverrideStartUrl.Text;
             else
-                startupUrl = comicDefinition.StartUrl;
+                startupUrl = chkOverrideStartUrl.Checked ? txtOverrideStartUrl.Text : comicDefinition.StartUrl;
 
             this.currentMode = TestMode.Running;
             DisplayAppropriateControlsForCurrentMode();
@@ -212,22 +214,39 @@ namespace Woofy.Gui
 
         private void MonitorDebugMessages()
         {
-            while (this.currentMode == TestMode.Running)
+            try
             {
-                CheckForLatestDebugMessages();
+                while (this.currentMode == TestMode.Running)
+                {
+                    CheckForLatestDebugMessages();
 
-                Thread.Sleep(500);
+                    Thread.Sleep(500);
+                }
+
+                CheckForLatestDebugMessages();
+            }
+            catch (InvalidOperationException)
+            {
+                //like when closing the form in the middle of a debug session
             }
         }
 
         private void CheckForLatestDebugMessages()
         {
             LoggingEvent[] latestEvents = Logger.GetLatestDebugMessages();
+            
+
             this.Invoke(new MethodInvoker(
                 delegate
                 {
                     foreach (LoggingEvent loggingEvent in latestEvents)
-                        eventsRichTextBox.AppendText(string.Format("[{0:T}] {1}\n", loggingEvent.TimeStamp, loggingEvent.MessageObject));
+                    {
+                        if (loggingEvent.MessageObject is int)
+                            SetFoundComics((int)loggingEvent.MessageObject);
+                        else
+                            eventsRichTextBox.AppendText(string.Format("[{0:T}] {1}\n", loggingEvent.TimeStamp,
+                                                                   loggingEvent.MessageObject));
+                    }
                 }
             ));
         }
@@ -239,7 +258,7 @@ namespace Woofy.Gui
                 {
                     CountingFileDownloader countingFileDownloader = new CountingFileDownloader();
                     this.comicsProvider = new ComicsProvider(comicDefinition, countingFileDownloader);
-                    this.comicsProvider.DownloadComicCompleted += new EventHandler<DownloadStripCompletedEventArgs>(comicsProvider_DownloadComicCompleted);
+                    this.comicsProvider.DownloadComicCompleted += comicsProvider_DownloadComicCompleted;
 
                     DownloadOutcome downloadOutcome = this.comicsProvider.DownloadComics(ComicsProvider.AllAvailableComics, startupUrl);
 
@@ -275,6 +294,12 @@ namespace Woofy.Gui
                 }
             , null);
         }
+
+        private void SetFoundComics(int foundComics)
+        {
+            lblFoundStrips.Text = string.Format("I've found <{0:d3}> strips.", foundComics);
+        }
+
         #endregion
 
         #region Events - comicsProvider

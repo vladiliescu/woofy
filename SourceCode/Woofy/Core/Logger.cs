@@ -4,9 +4,6 @@ using log4net;
 using log4net.Core;
 using log4net.Config;
 using log4net.Appender;
-using log4net.Repository.Hierarchy;
-using System.IO;
-using System.Text;
 
 namespace Woofy.Core
 {
@@ -56,6 +53,11 @@ namespace Woofy.Core
             logger.InfoFormat(messageFormat, args);
         }
 
+        public static void LogDebug(string message, params object[] args)
+        {
+            logger.DebugFormat(message, args);
+        }
+
         /// <summary>
         /// Logs an exception
         /// </summary>
@@ -75,7 +77,7 @@ namespace Woofy.Core
             logger.Error(message, ex);
         }
 
-        private static object debugLock = new object();
+        private static readonly object debugLock = new object();
 
         public static void Debug(string message, params object[] args)
         {
@@ -85,6 +87,17 @@ namespace Woofy.Core
             lock (debugLock)
             {
                 debugLogger.DebugFormat(message, args);
+            }
+        }
+
+        public static void Debug(int count)
+        {
+            if (!isDebugging)
+                return;
+
+            lock (debugLock)
+            {
+                debugLogger.Debug(count);
             }
         }
 
@@ -107,7 +120,7 @@ namespace Woofy.Core
             }
         }
 
-        private static bool isDebugging = false;
+        private static bool isDebugging;
         public static bool IsDebugging
         {
             get { return isDebugging; }

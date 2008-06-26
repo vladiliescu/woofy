@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Net;
 
 namespace Woofy.Core
 {
     public class CountingFileDownloader : IFileDownloader
     {
-        private List<string> comicLinks = new List<string>();
+        private readonly List<string> comicLinks = new List<string>();
         public string[] ComicLinks
         {
             get { return comicLinks.ToArray(); }
@@ -16,6 +17,7 @@ namespace Woofy.Core
         public void DownloadFile(string comicLink, string referrer, out bool comicAlreadyDownloaded)
         {
             comicLinks.Add(comicLink);
+            Logger.Debug(comicLinks.Count);
 
             comicAlreadyDownloaded = false;
         }

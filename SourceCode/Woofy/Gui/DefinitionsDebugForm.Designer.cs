@@ -39,6 +39,7 @@ namespace Woofy.Gui
             this.closeButton = new System.Windows.Forms.Button();
             this.pauseButton = new System.Windows.Forms.Button();
             this.abortButton = new System.Windows.Forms.Button();
+            this.lblFoundStrips = new System.Windows.Forms.Label();
             this.eventsRichTextBox = new Woofy.Core.ExRichTextBox();
             columnHeader1 = new System.Windows.Forms.ColumnHeader();
             columnHeader2 = new System.Windows.Forms.ColumnHeader();
@@ -179,6 +180,16 @@ namespace Woofy.Gui
             this.abortButton.Visible = false;
             this.abortButton.Click += new System.EventHandler(this.abortButton_Click);
             // 
+            // lblFoundStrips
+            // 
+            this.lblFoundStrips.AutoSize = true;
+            this.lblFoundStrips.Location = new System.Drawing.Point(12, 663);
+            this.lblFoundStrips.Name = "lblFoundStrips";
+            this.lblFoundStrips.Size = new System.Drawing.Size(117, 13);
+            this.lblFoundStrips.TabIndex = 7;
+            this.lblFoundStrips.Text = "I\'ve found <009> strips.";
+            this.lblFoundStrips.Visible = false;
+            // 
             // eventsRichTextBox
             // 
             this.eventsRichTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -188,7 +199,7 @@ namespace Woofy.Gui
             this.eventsRichTextBox.Location = new System.Drawing.Point(6, 19);
             this.eventsRichTextBox.Name = "eventsRichTextBox";
             this.eventsRichTextBox.ReadOnly = true;
-            this.eventsRichTextBox.Size = new System.Drawing.Size(596, 275);
+            this.eventsRichTextBox.Size = new System.Drawing.Size(596, 280);
             this.eventsRichTextBox.TabIndex = 6;
             this.eventsRichTextBox.Text = "";
             this.eventsRichTextBox.TextColor = Woofy.Core.RtfColor.Black;
@@ -198,6 +209,7 @@ namespace Woofy.Gui
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(632, 698);
+            this.Controls.Add(this.lblFoundStrips);
             this.Controls.Add(this.abortButton);
             this.Controls.Add(this.pauseButton);
             this.Controls.Add(groupBox2);
@@ -210,12 +222,13 @@ namespace Woofy.Gui
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Debug Comic Definitions";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DefinitionsDebugForm_FormClosing);
             this.Load += new System.EventHandler(this.DefinitionsDebugForm_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.DefinitionsDebugForm_FormClosing);
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -229,5 +242,6 @@ namespace Woofy.Gui
         private System.Windows.Forms.CheckBox chkOverrideStartUrl;
         private System.Windows.Forms.Button pauseButton;
         private System.Windows.Forms.Button abortButton;
+        private System.Windows.Forms.Label lblFoundStrips;
     }
 }
