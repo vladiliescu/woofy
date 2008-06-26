@@ -78,6 +78,11 @@ namespace Woofy.Gui
             Clipboard.SetText(eventsRichTextBox.SelectedText);
         }
 
+        private void chkOverrideStartUrl_CheckedChanged(object sender, EventArgs e)
+        {
+            txtOverrideStartUrl.Enabled = chkOverrideStartUrl.Checked;
+        }
+
         #endregion
 
         #region Helper Methods
@@ -311,13 +316,6 @@ namespace Woofy.Gui
         void comicsProvider_DownloadComicCompleted(object sender, DownloadStripCompletedEventArgs e)
         {
             this.currentUrl = e.CurrentUrl;
-        }
-        #endregion
-
-        #region Events - chkOverrideStartUrl
-        private void chkOverrideStartUrl_CheckedChanged(object sender, EventArgs e)
-        {
-            txtOverrideStartUrl.Enabled = chkOverrideStartUrl.Checked;
         }
         #endregion
 

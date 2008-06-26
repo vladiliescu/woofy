@@ -17,6 +17,9 @@ namespace Woofy.Core
         public void DownloadFile(string comicLink, string referrer, out bool comicAlreadyDownloaded)
         {
             comicLinks.Add(comicLink);
+
+            WebConnectionFactory.GetNewWebRequestInstance(comicLink).GetResponse().Close();
+
             Logger.Debug(comicLinks.Count);
 
             comicAlreadyDownloaded = false;
