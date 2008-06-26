@@ -155,6 +155,7 @@
     <Content Include="license.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\page_copy.png" />
     <None Include="Resources\bug_delete.png" />
     <None Include="Resources\warning.png" />
     <None Include="Resources\error.png" />

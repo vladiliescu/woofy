@@ -28,6 +28,7 @@ namespace Woofy.Gui
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.ColumnHeader columnHeader1;
             System.Windows.Forms.ColumnHeader columnHeader2;
             System.Windows.Forms.GroupBox groupBox1;
@@ -40,6 +41,8 @@ namespace Woofy.Gui
             this.pauseButton = new System.Windows.Forms.Button();
             this.abortButton = new System.Windows.Forms.Button();
             this.lblFoundStrips = new System.Windows.Forms.Label();
+            this.outputContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.eventsRichTextBox = new Woofy.Core.ExRichTextBox();
             columnHeader1 = new System.Windows.Forms.ColumnHeader();
             columnHeader2 = new System.Windows.Forms.ColumnHeader();
@@ -47,6 +50,7 @@ namespace Woofy.Gui
             groupBox2 = new System.Windows.Forms.GroupBox();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
+            this.outputContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // columnHeader1
@@ -190,11 +194,28 @@ namespace Woofy.Gui
             this.lblFoundStrips.Text = "I\'ve found <009> strips.";
             this.lblFoundStrips.Visible = false;
             // 
+            // outputContextMenu
+            // 
+            this.outputContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyToolStripMenuItem});
+            this.outputContextMenu.Name = "outputContextMenu";
+            this.outputContextMenu.Size = new System.Drawing.Size(149, 26);
+            // 
+            // copyToolStripMenuItem
+            // 
+            this.copyToolStripMenuItem.Image = global::Woofy.Properties.Resources.Copy;
+            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+            this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.copyToolStripMenuItem.Text = "&Copy";
+            this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
+            // 
             // eventsRichTextBox
             // 
             this.eventsRichTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.eventsRichTextBox.ContextMenuStrip = this.outputContextMenu;
             this.eventsRichTextBox.HiglightColor = Woofy.Core.RtfColor.White;
             this.eventsRichTextBox.Location = new System.Drawing.Point(6, 19);
             this.eventsRichTextBox.Name = "eventsRichTextBox";
@@ -227,6 +248,7 @@ namespace Woofy.Gui
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             groupBox2.ResumeLayout(false);
+            this.outputContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -243,5 +265,7 @@ namespace Woofy.Gui
         private System.Windows.Forms.Button pauseButton;
         private System.Windows.Forms.Button abortButton;
         private System.Windows.Forms.Label lblFoundStrips;
+        private System.Windows.Forms.ContextMenuStrip outputContextMenu;
+        private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem;
     }
 }

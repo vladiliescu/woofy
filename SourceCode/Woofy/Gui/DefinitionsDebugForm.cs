@@ -73,6 +73,11 @@ namespace Woofy.Gui
             AbortDebugging();
         }
 
+        private void copyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(eventsRichTextBox.SelectedText);
+        }
+
         #endregion
 
         #region Helper Methods
@@ -324,5 +329,6 @@ namespace Woofy.Gui
             Paused
         }
         #endregion
+        
     }
 }
