@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Windows.Forms;
 using System.Threading;
 
@@ -81,6 +82,11 @@ namespace Woofy.Gui
         private void chkOverrideStartUrl_CheckedChanged(object sender, EventArgs e)
         {
             txtOverrideStartUrl.Enabled = chkOverrideStartUrl.Checked;
+        }
+
+        private void eventsRichTextBox_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            Process.Start(e.LinkText);
         }
 
         #endregion

@@ -36,14 +36,14 @@ namespace Woofy.Gui
             this.comicDefinitionsList = new System.Windows.Forms.ListView();
             this.txtOverrideStartUrl = new System.Windows.Forms.TextBox();
             this.chkOverrideStartUrl = new System.Windows.Forms.CheckBox();
+            this.eventsRichTextBox = new Woofy.Core.ExRichTextBox();
+            this.outputContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startButton = new System.Windows.Forms.Button();
             this.closeButton = new System.Windows.Forms.Button();
             this.pauseButton = new System.Windows.Forms.Button();
             this.abortButton = new System.Windows.Forms.Button();
             this.lblFoundStrips = new System.Windows.Forms.Label();
-            this.outputContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.eventsRichTextBox = new Woofy.Core.ExRichTextBox();
             columnHeader1 = new System.Windows.Forms.ColumnHeader();
             columnHeader2 = new System.Windows.Forms.ColumnHeader();
             groupBox1 = new System.Windows.Forms.GroupBox();
@@ -136,6 +136,38 @@ namespace Woofy.Gui
             groupBox2.TabStop = false;
             groupBox2.Text = "Output";
             // 
+            // eventsRichTextBox
+            // 
+            this.eventsRichTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.eventsRichTextBox.ContextMenuStrip = this.outputContextMenu;
+            this.eventsRichTextBox.HiglightColor = Woofy.Core.RtfColor.White;
+            this.eventsRichTextBox.Location = new System.Drawing.Point(6, 19);
+            this.eventsRichTextBox.Name = "eventsRichTextBox";
+            this.eventsRichTextBox.ReadOnly = true;
+            this.eventsRichTextBox.Size = new System.Drawing.Size(596, 280);
+            this.eventsRichTextBox.TabIndex = 6;
+            this.eventsRichTextBox.Text = "";
+            this.eventsRichTextBox.TextColor = Woofy.Core.RtfColor.Black;
+            this.eventsRichTextBox.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.eventsRichTextBox_LinkClicked);
+            // 
+            // outputContextMenu
+            // 
+            this.outputContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyToolStripMenuItem});
+            this.outputContextMenu.Name = "outputContextMenu";
+            this.outputContextMenu.Size = new System.Drawing.Size(149, 26);
+            // 
+            // copyToolStripMenuItem
+            // 
+            this.copyToolStripMenuItem.Image = global::Woofy.Properties.Resources.Copy;
+            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
+            this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.copyToolStripMenuItem.Text = "&Copy";
+            this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
+            // 
             // startButton
             // 
             this.startButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
@@ -193,37 +225,6 @@ namespace Woofy.Gui
             this.lblFoundStrips.TabIndex = 7;
             this.lblFoundStrips.Text = "I\'ve found <009> strips.";
             this.lblFoundStrips.Visible = false;
-            // 
-            // outputContextMenu
-            // 
-            this.outputContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.copyToolStripMenuItem});
-            this.outputContextMenu.Name = "outputContextMenu";
-            this.outputContextMenu.Size = new System.Drawing.Size(149, 26);
-            // 
-            // copyToolStripMenuItem
-            // 
-            this.copyToolStripMenuItem.Image = global::Woofy.Properties.Resources.Copy;
-            this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
-            this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
-            this.copyToolStripMenuItem.Text = "&Copy";
-            this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
-            // 
-            // eventsRichTextBox
-            // 
-            this.eventsRichTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.eventsRichTextBox.ContextMenuStrip = this.outputContextMenu;
-            this.eventsRichTextBox.HiglightColor = Woofy.Core.RtfColor.White;
-            this.eventsRichTextBox.Location = new System.Drawing.Point(6, 19);
-            this.eventsRichTextBox.Name = "eventsRichTextBox";
-            this.eventsRichTextBox.ReadOnly = true;
-            this.eventsRichTextBox.Size = new System.Drawing.Size(596, 280);
-            this.eventsRichTextBox.TabIndex = 6;
-            this.eventsRichTextBox.Text = "";
-            this.eventsRichTextBox.TextColor = Woofy.Core.RtfColor.Black;
             // 
             // DefinitionsDebugForm
             // 
