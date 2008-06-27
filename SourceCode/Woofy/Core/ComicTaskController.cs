@@ -1,12 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Windows.Forms;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-
-using Woofy.Properties;
 using Woofy.Settings;
 
 namespace Woofy.Core
@@ -14,9 +11,9 @@ namespace Woofy.Core
     public class ComicTasksController
     {
         #region Instance Members
-        private List<ComicsProvider> _comicProviders = new List<ComicsProvider>();
-        private DataGridView _tasksGrid;
-        private ComicTasksComparer _tasksComparer = new ComicTasksComparer();
+        private readonly List<ComicsProvider> _comicProviders = new List<ComicsProvider>();
+        private readonly DataGridView _tasksGrid;
+
         #endregion
 
         #region Public Properties
@@ -158,8 +155,8 @@ namespace Woofy.Core
             ComicsProvider comicsProvider = new ComicsProvider(comicInfo, task.DownloadFolder);
             _comicProviders.Add(comicsProvider);
 
-            comicsProvider.DownloadComicCompleted += new EventHandler<DownloadStripCompletedEventArgs>(DownloadComicCompletedCallback);
-            comicsProvider.DownloadCompleted += new EventHandler<DownloadCompletedEventArgs>(DownloadComicsCompletedCallback);
+            comicsProvider.DownloadComicCompleted += DownloadComicCompletedCallback;
+            comicsProvider.DownloadCompleted += DownloadComicsCompletedCallback;
 
             if (task.Status == TaskStatus.Running)
             {
@@ -176,15 +173,15 @@ namespace Woofy.Core
         private void DownloadComicCompletedCallback(object sender, DownloadStripCompletedEventArgs e)
         {
             _tasksGrid.Invoke(new MethodInvoker(
-                delegate()
-                {
+                delegate
+                    {
                     ComicsProvider provider = (ComicsProvider)sender;
 
                     int index = _comicProviders.IndexOf(provider);
                     if (index == -1)    //in case the task has already been deleted.
                         return;
 
-                    ComicTask task = (ComicTask)_tasks[index];
+                    ComicTask task = _tasks[index];
                     task.DownloadedComics++;
                     task.CurrentUrl = e.CurrentUrl;
                     task.Update();
@@ -212,6 +209,13 @@ namespace Woofy.Core
                         task.Status = TaskStatus.Finished;
                     task.DownloadOutcome = e.DownloadOutcome;
                     task.Delete();
+
+                    /* test case pentru finished tasks
+                     *  1. resume daca am inchis Woofy in timp ce rula
+                     *  2. resume daca am inchis Woofy in timp ce e pus pe pauza
+                     *  3. daca a terminat strip-urile si inchid aplicatia => data viitoare o ia de la cel mai nou strip; cu alte cuvinte, in loc sa sterg task-ul, ii actualizez latest strip in baza.
+                     *  4. mai e ceva?
+                     */
 
                     ResetTasksBindings();
 

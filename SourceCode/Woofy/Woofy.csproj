@@ -1,4 +1,4 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -12,6 +12,11 @@
     <ApplicationIcon>Woofy.ico</ApplicationIcon>
     <StartupObject>
     </StartupObject>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -63,7 +68,6 @@
     <Compile Include="Core\FileDownloader.cs" />
     <Compile Include="Core\ComicDefinition.cs" />
     <Compile Include="Core\ComicsProvider.cs" />
-    <Compile Include="Core\ComicTasksComparer.cs" />
     <Compile Include="Core\ComicTasksList.cs" />
     <Compile Include="Core\ComicTask.cs" />
     <Compile Include="Core\ComicTaskController.cs" />

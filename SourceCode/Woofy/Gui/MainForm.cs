@@ -21,7 +21,7 @@ namespace Woofy.Gui
         #endregion
 
         #region Instance Members
-        private ComicTasksController _tasksController;
+        private readonly ComicTasksController _tasksController;
         #endregion
 
         #region Events - Form
@@ -168,11 +168,11 @@ namespace Woofy.Gui
             dgvwTasks.DataSource = _tasksController.Tasks;
 
             ToolStripSplitButton splitButton = new ToolStripSplitButton("Check for updates", Resources.CheckForUpdates);
-            splitButton.DropDown.Items.Add("Check for updates", Resources.CheckForUpdates, new EventHandler(CheckForUpdates_Click));
-            splitButton.DropDown.Items.Add("Debug comic definitions..", Resources.DebugDefinitions, new EventHandler(DebugDefinitions_Click));
-            splitButton.DropDown.Items.Add("About..", Resources.About, new EventHandler(About_Click));
+            splitButton.DropDown.Items.Add("Check for updates", Resources.CheckForUpdates, CheckForUpdates_Click);
+            splitButton.DropDown.Items.Add("Debug comic definitions..", Resources.DebugDefinitions, DebugDefinitions_Click);
+            splitButton.DropDown.Items.Add("About..", Resources.About, About_Click);
             splitButton.Alignment = ToolStripItemAlignment.Right;
-            splitButton.ButtonClick += new EventHandler(CheckForUpdates_Click);
+            splitButton.ButtonClick += CheckForUpdates_Click;
 
             toolStrip.Items.Insert(0, splitButton);
         }
