@@ -150,7 +150,7 @@ namespace Woofy.Core
         #region Helper Methods
         private void AddComicsProviderAndStartDownload(ComicTask task)
         {
-            ComicDefinition comicInfo = new ComicDefinition(task.ComicInfoFile);
+            var comicInfo = new ComicDefinition(task.ComicInfoFile);
 
             ComicsProvider comicsProvider = new ComicsProvider(comicInfo, task.DownloadFolder);
             _comicProviders.Add(comicsProvider);
@@ -158,14 +158,20 @@ namespace Woofy.Core
             comicsProvider.DownloadComicCompleted += DownloadComicCompletedCallback;
             comicsProvider.DownloadCompleted += DownloadComicsCompletedCallback;
 
-            if (task.Status == TaskStatus.Running)
+            if (task.Status == TaskStatus.Finished)
             {
-                int comicsToDownload = task.ComicsToDownload.HasValue ? (int)(task.ComicsToDownload.Value - task.DownloadedComics) : ComicsProvider.AllAvailableComics;
-                if (string.IsNullOrEmpty(task.CurrentUrl))//TODO: intra vreodata pe ramura asta?
-                    comicsProvider.DownloadComicsAsync(comicsToDownload);
-                else
-                    comicsProvider.DownloadComicsAsync(comicsToDownload, task.CurrentUrl);
+                task.Status = TaskStatus.Running;
+                task.Update();
             }
+
+            if (task.Status != TaskStatus.Running) 
+                return;
+
+            var comicsToDownload = task.ComicsToDownload.HasValue ? (int)(task.ComicsToDownload.Value - task.DownloadedComics) : ComicsProvider.AllAvailableComics;
+            if (string.IsNullOrEmpty(task.CurrentUrl))
+                comicsProvider.DownloadComicsAsync(comicsToDownload);
+            else
+                comicsProvider.DownloadComicsAsync(comicsToDownload, task.CurrentUrl);
         }        
         #endregion
 
@@ -208,14 +214,8 @@ namespace Woofy.Core
                     else
                         task.Status = TaskStatus.Finished;
                     task.DownloadOutcome = e.DownloadOutcome;
-                    task.Delete();
-
-                    /* test case pentru finished tasks
-                     *  1. resume daca am inchis Woofy in timp ce rula
-                     *  2. resume daca am inchis Woofy in timp ce e pus pe pauza
-                     *  3. daca a terminat strip-urile si inchid aplicatia => data viitoare o ia de la cel mai nou strip; cu alte cuvinte, in loc sa sterg task-ul, ii actualizez latest strip in baza.
-                     *  4. mai e ceva?
-                     */
+                    task.CurrentUrl = null;
+                    task.Update();
 
                     ResetTasksBindings();
 
