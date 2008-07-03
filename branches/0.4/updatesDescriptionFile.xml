@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<updateDescription>
+    <woofy>
+		<release versionNumber="0.4.3" downloadAddress="http://downloads.sourceforge.net/woofy/Woofy-0.4.3-setup.exe" releaseDate="2008-05-21" size="1034487">
+            <changes>
+                <change>A little.</change>
+            </changes>
+        </release>
+    </woofy>
+    <comicPack>
+		<release versionNumber="@VERSION@" downloadAddress="http://downloads.sourceforge.net/woofy/ComicPack-@VERSION@-setup.exe" releaseDate="@TODAY@" size="@COMICPACKZIPSIZE@">
+            <changes>
+                <change>Some new comics.</change>
+            </changes>
+        </release>   
+    </comicPack>
+</updateDescription>

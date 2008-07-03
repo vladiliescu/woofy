@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd"
+         name="Woofy"
+         default="all">
+
+    <property name="buildDir" value="build" />
+    <property name="version" value="0.4.3.1" />
+    <property name="now" value="${datetime::now()}"/>
+    <property name="today" value="${datetime::get-year(now)}-${datetime::get-month(now)}-${datetime::get-day(now)}"/>
+    <property name="comicPackZipFile" value="${buildDir}\ComicPack-${version}-raw.zip"/>
+    
+    <target name="clean">
+        <delete dir="${buildDir}" if="${directory::exists('${buildDir}')}" />
+    </target>
+
+    <target name="init" depends="clean">
+        <mkdir dir="${buildDir}"/>
+    </target>
+
+    <target name="compile"
+            depends="init"
+            >
+        <msbuild project="SourceCode\Woofy\Woofy.csproj" target="Rebuild" >
+            <property name="Configuration" value="Release" />
+        </msbuild>        
+    </target>
+
+    <target name="copyToBuild"
+            depends="init"
+            >
+        <copy todir="${buildDir}\ComicDefinitions">
+            <fileset basedir="SourceCode\ComicDefinitions">
+                <include name="*.xml"/>
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="zipFiles"
+            depends="copyToBuild"
+            >
+        <zip zipfile="${comicPackZipFile}">
+            <fileset basedir="${buildDir}">
+                <include name="**\*"/>
+            </fileset>
+        </zip>
+        
+    </target>
+
+    <target name="createInstallers"
+            depends="zipFiles"
+            >
+        
+    </target>
+
+    
+
+    <target name="updateAutoUpdateFiles" 
+            depends="createInstallers">
+
+        <property name="comicPackZipSize" value="${file::get-length(comicPackZipFile)}"/>
+        
+        <copy file="updatesDescriptionFile.xml" todir="${buildDir}">
+            <filterchain>
+                <replacetokens>
+                    <token key="VERSION" value="${version}" />
+                    <token key="TODAY" value="${today}" />
+                    <token key="COMICPACKZIPSIZE" value="${comicPackZipSize}" />
+                </replacetokens>
+            </filterchain>
+        </copy>
+    </target>
+
+    <target name="all" 
+            depends="updateAutoUpdateFiles">
+        
+    </target>
+    
+</project>
