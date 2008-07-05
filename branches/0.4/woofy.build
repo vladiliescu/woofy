@@ -3,18 +3,22 @@
          name="Woofy"
          default="all">
 
-    <property name="buildDir" value="build" />
-    <property name="version" value="0.4.3.1" />
-    <property name="now" value="${datetime::now()}"/>
-    <property name="today" value="${datetime::get-year(now)}-${datetime::get-month(now)}-${datetime::get-day(now)}"/>
-    <property name="comicPackZipFile" value="${buildDir}\ComicPack-${version}-raw.zip"/>
+    <property name="dir.Build" value="build" />
+    <property name="dir.BuildTemplates" value="BuildFiles"/>
     
-    <target name="clean">
-        <delete dir="${buildDir}" if="${directory::exists('${buildDir}')}" />
-    </target>
+    <property name="date.Now" value="${datetime::now()}"/>
+    <property name="date.Today" value="${datetime::get-year(date.Now)}-${datetime::get-month(date.Now)}-${datetime::get-day(date.Now)}"/>
+    
+    <property name="comicPack.Version" value="0.4.3.1" />
+    <property name="comicPack.ZipFileName" value="ComicPack-${comicPack.Version}-zipped.zip"/>
+    <property name="comicPack.ZipFile" value="${dir.Build}\${comicPack.ZipFileName}"/>
+    <property name="comicPack.ExeFileName" value="ComicPack-${comicPack.Version}-setup.exe"/>
+    <property name="comicPack.ExeFile" value="${dir.Build}\${comicPack.ExeFileName}" />
+    
 
-    <target name="init" depends="clean">
-        <mkdir dir="${buildDir}"/>
+    <target name="init">
+        <delete dir="${dir.Build}"  />
+        <mkdir dir="${dir.Build}"/>
     </target>
 
     <target name="compile"
@@ -28,19 +32,34 @@
     <target name="copyToBuild"
             depends="init"
             >
-        <copy todir="${buildDir}\ComicDefinitions">
+        <copy todir="${dir.Build}\ComicDefinitions">
             <fileset basedir="SourceCode\ComicDefinitions">
                 <include name="*.xml"/>
             </fileset>
         </copy>
-    </target>
 
+
+        <copy todir="${dir.Build}">
+            <fileset basedir="${dir.BuildTemplates}">
+                <include name="*.*" />
+            </fileset>
+            <filterchain>
+                <replacetokens>
+                    <token key="COMICPACKVERSION" value="${comicPack.Version}" />
+                    <token key="TODAY" value="${date.Today}" />
+                    <token key="COMICPACKEXEFILENAME" value="${comicPack.ExeFileName}" />
+                </replacetokens>
+            </filterchain>
+        </copy>
+        
+    </target>
+    
     <target name="zipFiles"
             depends="copyToBuild"
             >
-        <zip zipfile="${comicPackZipFile}">
-            <fileset basedir="${buildDir}">
-                <include name="**\*"/>
+        <zip zipfile="${comicPack.ZipFile}">
+            <fileset basedir="${dir.Build}">
+                <include name="ComicDefinitions\*.*" />
             </fileset>
         </zip>
         
@@ -49,6 +68,8 @@
     <target name="createInstallers"
             depends="zipFiles"
             >
+
+        <exec program="Tools\NSIS\makensis.exe" commandline="..\..\${dir.Build}\setupComicPack.nsi" workingdir="Tools\NSIS" />
         
     </target>
 
@@ -57,14 +78,14 @@
     <target name="updateAutoUpdateFiles" 
             depends="createInstallers">
 
-        <property name="comicPackZipSize" value="${file::get-length(comicPackZipFile)}"/>
-        
-        <copy file="updatesDescriptionFile.xml" todir="${buildDir}">
+        <property name="comicPack.ExeFileSize" value="${file::get-length(comicPack.ExeFile)}"/>
+        <!-- After the installers are created, copy the auto-update files again because we now have the the file size tokens -->
+        <copy todir="${dir.Build}" file="${dir.BuildTemplates}\updatesDescriptionFile.xml" overwrite="true">            
             <filterchain>
                 <replacetokens>
-                    <token key="VERSION" value="${version}" />
-                    <token key="TODAY" value="${today}" />
-                    <token key="COMICPACKZIPSIZE" value="${comicPackZipSize}" />
+                    <token key="COMICPACKVERSION" value="${comicPack.Version}" />
+                    <token key="TODAY" value="${date.Today}" />
+                    <token key="COMICPACKEXEFILESIZE" value="${comicPack.ExeFileSize}" />
                 </replacetokens>
             </filterchain>
         </copy>

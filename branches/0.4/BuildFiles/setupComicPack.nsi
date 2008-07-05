@@ -4,9 +4,10 @@ SetCompressor bzip2
 !define NAME "ComicPack"
 !define NAMEWOOFY "Woofy"
 !define REGKEY "SOFTWARE\${NAMEWOOFY}"
-!define VERSION 0.4.2.1
+!define VERSION @COMICPACKVERSION@
 !define COMPANY "Vlad Iliescu"
 !define URL "http://woofy.sourceforge.net"
+!define FILENAME "@COMICPACKEXEFILENAME@"
 
 
 # MUI defines
@@ -51,7 +52,7 @@ SetCompressor bzip2
 Name "${NAME} ${VERSION}"
 BrandingText "${NAME} ${VERSION}"
 
-OutFile "Drop\${NAME}-${VERSION}-setup.exe"
+OutFile "${FILENAME}"
 InstallDir $PROGRAMFILES\${NAMEWOOFY}
 InstallDirRegKey HKLM "${REGKEY}" "Path"
 CRCCheck on
@@ -64,5 +65,5 @@ ShowUninstDetails show
 Section "-Default"
     SetOutPath $INSTDIR\ComicDefinitions
     SetOverwrite on
-    File /r Files\ComicDefinitions\*
+    File /r ComicDefinitions\*
 SectionEnd
