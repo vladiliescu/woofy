@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Girls With Slingshots" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
+    <startUrl><![CDATA[http://www.daniellecorsetto.com]]></startUrl>
+    <firstIssue><![CDATA[http://www.daniellecorsetto.com/images/gws/GWS001.jpg]]></firstIssue>
+    <comicRegex><![CDATA[images/gws/GWS[\d]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>GWS[\d]{1,4}\.html)"\sonMouseOver="imgOn\('img2'\)]]></backButtonRegex>
+    <latestPageRegex><![CDATA[<a\shref="(?<content>gws\.html)">girls\swith\sslingshots!</a>]]></latestPageRegex>
+</comicInfo>

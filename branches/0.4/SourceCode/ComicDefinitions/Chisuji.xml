@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Chisuji" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
+    <startUrl><![CDATA[http://www.chisuji.com]]></startUrl>
+    <latestPageRegex><![CDATA[]]></latestPageRegex>
+    <rootUrl><![CDATA[]]></rootUrl>
+    <comicRegex><![CDATA[/comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[href="http://www\.chisuji\.com/(?<content>archive\.php\?comicID=[\d]{1,4})"><img\ssrc="\.\./site_images/comicnav-prev01\.gif"]]></backButtonRegex>
+    <firstIssue><![CDATA[http://www.chisuji.com/comics/00000001.jpg]]></firstIssue>
+</comicInfo>

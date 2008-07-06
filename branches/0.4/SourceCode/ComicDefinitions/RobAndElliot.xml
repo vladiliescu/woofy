@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Rob And Elliot" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
+    <startUrl><![CDATA[http://www.robandelliot.cycomics.com/]]></startUrl>
+    <firstIssue><![CDATA[http://www.robandelliot.cycomics.com/webcomics/2004/comic1.gif]]></firstIssue>
+    <comicRegex><![CDATA[<img\ssrc="(?<content>webcomics/(?:guestweek1|\d{4})/.+\.(?:gif|jpg|jpeg|png))"b And]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>archive\.php\?id=\d{1,4})">Previous</a>]]></backButtonRegex>
+</comicInfo>

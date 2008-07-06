@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="The Institute of Metaphysics" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="true">
+    <startUrl><![CDATA[http://iofm.comicgenesis.com]]></startUrl>
+    <firstIssue><![CDATA[http://iofm.comicgenesis.com/comics/20060903.jpg]]></firstIssue>
+    <comicRegex><![CDATA[src="http://iofm\.comicgenesis\.com(?<content>/comics/[^.]+\.(?:gif|jpg|jpeg|png))"\swidth="[^1]]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref="http://iofm\.comicgenesis\.com(?<content>/d/\d{8}\.html)"><img\sborder="0"\sname="previous_day"\salt="Previous\scomic"]]></backButtonRegex>
+</comicInfo>

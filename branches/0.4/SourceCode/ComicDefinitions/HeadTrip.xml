@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Head Trip" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
+    <startUrl><![CDATA[http://headtripcomics.comicgenesis.com]]></startUrl>
+    <firstIssue><![CDATA[http://headtripcomics.comicgenesis.com/comics/20060303.jpg]]></firstIssue>
+    <comicRegex><![CDATA[/comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[(?<content>/d/[\d]{8}\.html)"><img\sborder="0"\sname="previous_day"]]></backButtonRegex>
+</comicInfo>

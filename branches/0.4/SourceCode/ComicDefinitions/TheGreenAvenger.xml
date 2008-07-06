@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="The Green Avenger" author="Citizen Drago" allowMultipleStrips="true" allowMissingStrips="false">
+    <startUrl><![CDATA[http://www.green-avenger.com]]></startUrl>
+    <firstIssue><![CDATA[http://www.green-avenger.com/comics/20040924.png]]></firstIssue>
+    <comicRegex><![CDATA[/comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[(?<content>/d/[\d]{8}\.html)"><img\sborder="0"\sname="previous_day"]]></backButtonRegex>
+</comicInfo>

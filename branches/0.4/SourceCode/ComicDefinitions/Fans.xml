@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Fans!" author="Citizen Drago" allowMultipleStrips="true" allowMissingStrips="true">
+    <startUrl><![CDATA[http://www.faans.com]]></startUrl>
+    <firstIssue><![CDATA[http://www.faans.com/comics/1.gif]]></firstIssue>
+    <comicRegex><![CDATA[comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[href='(?<content>index\.php\?p=[\d]{1,4})'><IMG\sSRC=http://ripandteri\.com/images/previous_day]]></backButtonRegex>
+</comicInfo>

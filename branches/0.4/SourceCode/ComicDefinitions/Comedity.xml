@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Comedity" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
+    <startUrl><![CDATA[http://www.comedity.com]]></startUrl>
+    <firstIssue><![CDATA[http://www.comedity.com/Comedity_files/1.jpg]]></firstIssue>
+    <comicRegex><![CDATA[Comedity_files/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>index\.php\?strip_id=[\d]{1,4})"><img\salt="Prior\sStrip"]]></backButtonRegex>
+</comicInfo>

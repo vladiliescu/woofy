@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Rip &amp; Teri" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
+    <startUrl><![CDATA[http://www.ripandteri.com]]></startUrl>
+    <firstIssue><![CDATA[http://www.ripandteri.com/comics/1my.jpg]]></firstIssue>
+    <comicRegex><![CDATA[img\sclass="comicImage"\ssrc="http://www\.ripandteri\.com(?<content>/comics/[^.]+\.(?:gif|jpg|jpeg|png))"]]></comicRegex>
+    <backButtonRegex><![CDATA[a\shref='(?<content>index\.php\?p=[\d]{1,4})'><IMG\sSRC=http://ripandteri\.com/images/previous_day\.gif]]></backButtonRegex>
+</comicInfo>

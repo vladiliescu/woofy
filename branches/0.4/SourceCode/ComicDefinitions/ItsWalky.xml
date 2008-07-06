@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="It's Walky!" author="Citizen Drago" allowMultipleStrips="true" allowMissingStrips="false">
+    <startUrl><![CDATA[http://www.itswalky.com]]></startUrl>
+    <comicRegex><![CDATA[/comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[href="(?<content>/d/[\d]{8}\.html)"\starget="_self"><img\sborder=0\ssrc="/images/previous_day\.gif"]]></backButtonRegex>
+    <firstIssue><![CDATA[http://www.itswalky.com/comics/19970908a.gif]]></firstIssue>
+</comicInfo>

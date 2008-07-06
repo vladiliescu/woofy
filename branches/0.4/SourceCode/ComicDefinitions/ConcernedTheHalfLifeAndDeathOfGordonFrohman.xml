@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Concerned - The Half-Life and Death of Gordon Frohman" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
+    <startUrl><![CDATA[http://www.hlcomic.com]]></startUrl>
+    <firstIssue><![CDATA[http://www.hlcomic.com/comics/concerned000.jpg]]></firstIssue>
+    <latestPageRegex><![CDATA[index\.php\?date=2006-10-31]]></latestPageRegex>
+    <comicRegex><![CDATA[comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[a\shref="(?<content>index\.php\?date=[\d]{4}-[\d]{2}-[\d]{2})"><img\sborder="0"\ssrc="\.\./templates/prevbutton\.jpg"]]></backButtonRegex>
+</comicInfo>
