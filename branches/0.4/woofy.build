@@ -3,11 +3,16 @@
          name="Woofy"
          default="all">
 
-    <property name="dir.Build" value="build" />
+    <property name="dir.Current" value="${directory::get-current-directory()}"/>
+    <property name="dir.Build" value="${dir.Current}\build" />
     <property name="dir.BuildTemplates" value="BuildFiles"/>
+    <property name="dir.ComicDefinitions" value="${dir.Current}\SourceCode\ComicDefinitions" />
+    <property name="file.NewDefinitions" value="${dir.Current}\newDefinitions.txt"/>
+    <property name="file.PlaintextChangelog" value="${dir.Build}\changelog.txt"/>
     
     <property name="date.Now" value="${datetime::now()}"/>
     <property name="date.Today" value="${datetime::get-year(date.Now)}-${datetime::get-month(date.Now)}-${datetime::get-day(date.Now)}"/>
+    <property name="date.Today2" value="${datetime::get-year(date.Now)}.${datetime::get-month(date.Now)}.${datetime::get-day(date.Now)}"/>
     
     <property name="comicPack.Version" value="0.4.3.1" />
     <property name="comicPack.ZipFileName" value="ComicPack-${comicPack.Version}-zipped.zip"/>
@@ -33,7 +38,7 @@
             depends="init"
             >
         <copy todir="${dir.Build}\ComicDefinitions">
-            <fileset basedir="SourceCode\ComicDefinitions">
+            <fileset basedir="${dir.ComicDefinitions}">
                 <include name="*.xml"/>
             </fileset>
         </copy>
@@ -47,6 +52,7 @@
                 <replacetokens>
                     <token key="COMICPACKVERSION" value="${comicPack.Version}" />
                     <token key="TODAY" value="${date.Today}" />
+                    <token key="TODAY2" value="${date.Today2}" />
                     <token key="COMICPACKEXEFILENAME" value="${comicPack.ExeFileName}" />
                 </replacetokens>
             </filterchain>
@@ -69,7 +75,9 @@
             depends="zipFiles"
             >
 
-        <exec program="Tools\NSIS\makensis.exe" commandline="..\..\${dir.Build}\setupComicPack.nsi" workingdir="Tools\NSIS" />
+        <exec program="Tools\ComicDefListGenerator\ComicDefListGenerator.exe" commandline='"${dir.ComicDefinitions}" "${file.NewDefinitions}" "${file.PlaintextChangelog}"'  />
+
+        <exec program="Tools\NSIS\makensis.exe" commandline='"${dir.Build}\setupComicPack.nsi"' workingdir="Tools\NSIS" />
         
     </target>
 
@@ -89,6 +97,10 @@
                 </replacetokens>
             </filterchain>
         </copy>
+
+
+        
+        
     </target>
 
     <target name="all" 
