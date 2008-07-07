@@ -9,6 +9,8 @@
     <property name="dir.ComicDefinitions" value="${dir.Current}\SourceCode\ComicDefinitions" />
     <property name="file.NewDefinitions" value="${dir.Current}\newDefinitions.txt"/>
     <property name="file.PlaintextChangelog" value="${dir.Build}\changelog.txt"/>
+    <property name="file.HtmlChangelog" value="${dir.Build}\changelog.html"/>
+    <property name="file.FrontPageComics" value="${dir.Build}\frontpage.html" />
     
     <property name="date.Now" value="${datetime::now()}"/>
     <property name="date.Today" value="${datetime::get-year(date.Now)}-${datetime::get-month(date.Now)}-${datetime::get-day(date.Now)}"/>
@@ -75,7 +77,8 @@
             depends="zipFiles"
             >
 
-        <exec program="Tools\ComicDefListGenerator\ComicDefListGenerator.exe" commandline='"${dir.ComicDefinitions}" "${file.NewDefinitions}" "${file.PlaintextChangelog}"'  />
+        <exec program="Tools\ComicDefListGenerator\ComicDefListGenerator.exe" 
+              commandline='"${dir.ComicDefinitions}" "${file.NewDefinitions}" "${file.PlaintextChangelog}" "${file.HtmlChangelog}" "${comicPack.Version}" "${date.Today2}" "${file.FrontPageComics}"'   />
 
         <exec program="Tools\NSIS\makensis.exe" commandline='"${dir.Build}\setupComicPack.nsi"' workingdir="Tools\NSIS" />
         

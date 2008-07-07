@@ -16,21 +16,98 @@ namespace ComicDefListGenerator
             var definitionsFolder = args[0];
             var newDefinitionsFile = args[1];
             var plaintextChangelogFile = args[2];
+            var htmlChangelogFile = args[3];
+            var comicPackVersion = args[4];
+            var date = args[5];
+            var frontPageComicsFile = args[6];
 
             InitializeDefinitions(definitionsFolder, newDefinitionsFile);
-
             GeneratePlaintextChangelog(plaintextChangelogFile);
+            GenerateHtmlChangelog(htmlChangelogFile, comicPackVersion, date);
+            GenerateFrontPageComics(frontPageComicsFile);
+        }
 
-            return;
+        private static void GenerateFrontPageComics(string frontPageComicsFile)
+        {
+            var builder = new StringBuilder();
+            builder.AppendLine(@"<ul style=""float:left; display:inline; width: 320px"">");
 
-            using (var writer = new StreamWriter("defsList.html"))
+            var i = 0;
+            for (; i < definitions.Count / 2; i++)
             {
-                foreach (ComicDefinition comicDefinition in ComicDefinition.GetAvailableComicDefinitions())
-                {
-                    writer.WriteLine(string.Format("<li><a target=\"_blank\" rel=\"nofollow\" href=\"{0}\">{1}</a></li>",
-                                                    comicDefinition.StartUrl, comicDefinition.FriendlyName));
-                }
+                var definition = definitions[i];
+                builder.AppendFormat(@"<li><a  target=""_blank""  rel=""nofollow"" href=""{0}"">{1}</a></li>
+",
+                        definition.StartUrl, definition.FriendlyName);
             }
+            builder.AppendLine(@"</ul><ul style=""float:right; display:inline; width: 320px"">");
+
+            for (; i < definitions.Count; i++)
+            {
+                var definition = definitions[i];
+                builder.AppendFormat(@"<li><a  target=""_blank""  rel=""nofollow"" href=""{0}"">{1}</a></li>
+",
+                    definition.StartUrl, definition.FriendlyName);
+            }
+            builder.AppendLine("</ul>");
+
+            using (var writer = new StreamWriter(frontPageComicsFile))
+            {
+                writer.Write(builder.ToString());
+            }
+        }
+
+        private static void GenerateHtmlChangelog(string htmlChangelogFile, string comicPackVersion, string date)
+        {
+            var builder = new StringBuilder();
+            builder.AppendFormat(@"<div class=""story"">
+                    <h3>
+                        <strong>ComicPack {0}</strong>
+                    </h3>
+                    <div class=""date"">{1}</div>
+                    <p>
+                        Added:
+                        <ul>", comicPackVersion, date);
+            foreach (var definition in definitions)
+            {
+                if (definition.Status != DefinitionStatus.Added)
+                    continue;
+
+                builder.AppendFormat(@"<li><a  target=""_blank""  rel=""nofollow"" href=""{0}"">{1}</a></li>
+",
+                    definition.StartUrl, definition.FriendlyName);
+            }
+
+            builder.Append("</ul>");
+            
+            var areUpdated = false;
+            foreach (var definition in definitions)
+            {
+                if (definition.Status != DefinitionStatus.Updated)
+                    continue;
+
+                if (!areUpdated)
+                {
+                    areUpdated = true;
+                    builder.Append(@"
+                    Updated:
+                        <ul>");
+                }
+
+                builder.AppendFormat(@"<li><a  target=""_blank""  rel=""nofollow"" href=""{0}"">{1}</a></li>
+",
+                    definition.StartUrl, definition.FriendlyName);
+            }
+
+            builder.Append(@"       </ul>
+                    </p>
+                </div>");
+
+            using (var writer = new StreamWriter(htmlChangelogFile))
+            {
+                writer.Write(builder.ToString());
+            }
+
         }
 
         private static void GeneratePlaintextChangelog(string plaintextChangelogFile)
