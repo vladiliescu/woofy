@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Xml;
 using System.IO;
@@ -12,77 +13,46 @@ namespace Woofy.Core
     public class ComicDefinition
     {
         #region Public Properties
-        private string _startUrl;
+
         /// <summary>
         /// Gets the comic's base url.
         /// </summary>
-        public string StartUrl
-        {
-            get { return _startUrl; }
-        }
+        public string StartUrl { get; private set; }
 
-        private string _firstIssue;
         /// <summary>
         /// Gets the url of the comic's first issue.
         /// </summary>
-        public string FirstIssue
-        {
-            get { return _firstIssue; }
-        }
+        public string FirstIssue { get; private set; }
 
-        private string _comicRegex;
         /// <summary>
         /// Gets the regular expression that will find the comic.
         /// </summary>
-        public string ComicRegex
-        {
-            get { return _comicRegex; }
-        }
+        public string ComicRegex { get; private set; }
 
-        private string _backButtonRegex;
         /// <summary>
         /// Gets the regular expression that will find the back button.
         /// </summary>
-        public string BackButtonRegex
-        {
-            get { return _backButtonRegex; }
-        }
+        public string BackButtonRegex { get; private set; }
 
-        private string _friendlyName;
         /// <summary>
         /// Gets the comic info's friendly name.
         /// </summary>
-        public string FriendlyName
-        {
-            get { return _friendlyName; }
-        }
+        public string FriendlyName { get; private set; }
 
-        private string _latestPageRegex;
         /// <summary>
         /// Gets the regular expression that matches the link to the latest comic page. Can be null.
         /// </summary>
-        public string LatestPageRegex
-        {
-            get { return _latestPageRegex; }
-        }
+        public string LatestPageRegex { get; private set; }
 
-        private string _authorEmail;
         /// <summary>
         /// Gets the comic definition's author email.
         /// </summary>
-        public string AuthorEmail
-        {
-            get { return _authorEmail; }
-        }
+        public string AuthorEmail { get; private set; }
 
-        private string _author;
         /// <summary>
         /// Gets the comic definition's author.
         /// </summary>
-        public string Author
-        {
-            get { return _author; }
-        }
+        public string Author { get; private set; }
 
         private bool _allowMissingStrips;
         /// <summary>
@@ -102,77 +72,57 @@ namespace Woofy.Core
             get { return _allowMultipleStrips; }
         }
 
-        private string rootUrl;
         /// <summary>
         /// Returns the root path that should be combined with relative content.
         /// </summary>
-        public string RootUrl
-        {
-            get { return rootUrl; }
-        }
+        public string RootUrl { get; private set; }
 
+        public string ComicInfoFile { get; private set; }
 
-        private string _comicInfoFile;
-        public string ComicInfoFile
-        {
-            get { return _comicInfoFile; }
-        }
+        public Collection<Capture> Captures { get; private set; }
+
+        public string RenamePattern { get; private set; }
 
         #endregion
 
         #region .ctor
         /// <summary>
-        /// Initializes a new instance of the <see cref="ComicInfo"/> class.
+        /// Initializes a new instance of the <see cref="ComicDefinition"/> class.
         /// </summary>
         /// <param name="comicInfoStream">Stream containing the data necessary to create a new instance.</param>
         public ComicDefinition(Stream comicInfoStream)
         {
-            //XmlReaderSettings readerSettings = new XmlReaderSettings();
-            //readerSettings.IgnoreWhitespace = true;
+            var doc = new XmlDocument();
+            doc.Load(comicInfoStream);
+            var comicInfo = doc.SelectSingleNode("comicInfo");
 
-            using (XmlReader reader = XmlReader.Create(comicInfoStream))
+            FriendlyName = comicInfo.Attributes["friendlyName"].Value;
+            Author = comicInfo.Attributes["author"] == null ? null : comicInfo.Attributes["author"].Value;
+            AuthorEmail = comicInfo.Attributes["authorEmail"] == null ? null : comicInfo.Attributes["authorEmail"].Value;
+            var allowMissingStrips = comicInfo.Attributes["allowMissingStrips"] == null ? null : comicInfo.Attributes["allowMissingStrips"].Value;
+            var allowMultipleStrips = comicInfo.Attributes["allowMultipleStrips"] == null ? null : comicInfo.Attributes["allowMultipleStrips"].Value;
+            bool.TryParse(allowMissingStrips, out _allowMissingStrips);
+            bool.TryParse(allowMultipleStrips, out _allowMultipleStrips);
+            StartUrl = GetInnerText(comicInfo, "startUrl");
+            ComicRegex = GetInnerText(comicInfo, "comicRegex");
+            BackButtonRegex = GetInnerText(comicInfo, "backButtonRegex");
+            FirstIssue = GetInnerText(comicInfo, "firstIssue");
+            LatestPageRegex = GetInnerText(comicInfo, "latestPageRegex");
+            RootUrl = GetInnerText(comicInfo, "rootUrl");
+            RenamePattern = GetInnerText(comicInfo, "renamePattern");
+
+            Captures = new Collection<Capture>();
+
+            foreach (XmlNode capture in comicInfo.SelectNodes("captures/capture"))
             {
-                reader.Read();  //<?xml..
-                reader.Read();  //Whitespace..
-                reader.Read();  //<comicInfo..
-                _friendlyName = reader.GetAttribute("friendlyName");
-                _author = reader.GetAttribute("author");
-                _authorEmail = reader.GetAttribute("authorEmail");
-
-                string allowMissingStrips = reader.GetAttribute("allowMissingStrips");
-                string allowMultipleStrips = reader.GetAttribute("allowMultipleStrips");
-                bool.TryParse(allowMissingStrips, out _allowMissingStrips);
-                bool.TryParse(allowMultipleStrips, out _allowMultipleStrips);
-
-                while (reader.Read())
-                {
-                    switch (reader.Name)
-                    {
-                        case "startUrl":
-                            _startUrl = reader.ReadElementContentAsString();
-                            break;
-                        case "comicRegex":
-                            _comicRegex = reader.ReadElementContentAsString();
-                            break;
-                        case "backButtonRegex":
-                            _backButtonRegex = reader.ReadElementContentAsString();
-                            break;
-                        case "firstIssue":
-                            _firstIssue = reader.ReadElementContentAsString();
-                            break;
-                        case "latestPageRegex":
-                            _latestPageRegex = reader.ReadElementContentAsString();
-                            break;
-                        case "rootUrl":
-                            this.rootUrl = reader.ReadElementContentAsString();
-                            break;
-
-                    }
-                }
+                Captures.Add(new Capture(capture.Attributes["name"].Value, capture.InnerText));
             }
+        }
 
-            if (string.IsNullOrEmpty(_friendlyName))
-                throw new MissingFriendlyNameException();
+        private string GetInnerText(XmlNode comicInfo, string xpath)
+        {
+            var node = comicInfo.SelectSingleNode(xpath);
+            return node == null ? null : node.InnerText;
         }
 
         /// <summary>
@@ -182,7 +132,7 @@ namespace Woofy.Core
         public ComicDefinition(string comicInfoFile)
             : this (new FileStream(comicInfoFile, FileMode.Open, FileAccess.Read))
         {
-            _comicInfoFile = comicInfoFile;
+            ComicInfoFile = comicInfoFile;
         }
         #endregion
 

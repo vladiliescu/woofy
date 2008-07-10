@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{25F085AE-B31D-40E6-9546-0D357ECD18FE}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -54,6 +54,7 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Capture.cs" />
     <Compile Include="Core\CountingFileDownloader.cs" />
     <Compile Include="Core\ExRichTextBox.cs">
       <SubType>Component</SubType>
@@ -186,68 +187,4 @@
     <None Include="Resources\accept.png" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <ComicDefinitionFiles Include="..\ComicDefinitions\8BitTheater.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\AppleGeeks.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\AppleGeeksLite.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\ArloAndJanis.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\Atland.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\BeaverAndSteve.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\CastlevaniaRPG.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\CastlevaniaRPGDMoon.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\CastlevaniaRPGFrankie.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\CastlevaniaRPGHoly.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\CastlevaniaRPGSups.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\Commissioned.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\CtrlAltDel.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\CyanideAndHappiness.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\DarthsAndDroids.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\DieselSweeties.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\DieselSweetiesPrint.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\DMFA.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\ExterminatusNow.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\FullFrontalNerdity.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\GirlGeniusOnline.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\Girly.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\Goblins.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\GodMode.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\GoneWithTheBlastwave.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\GunnerkriggCourt.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\IrregularWebcomic.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\KristyVsTheZombieArmy.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\LasLindas.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\LeastICouldDo.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\LittleGamers.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\LookingForGroup.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\Lowroad.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\MegaTokyo.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\Nodwick.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\OrderOfTheStick.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\PastExpiry.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\PennyArcade.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\Ps238.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\PvPOnline.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\QuestionableContent.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\RealLifeComics.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\SamAndFuzzy.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\Sheldon.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\SilentKimbly.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\Sinfest.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\SoreThumbs.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\StarslipCrisis.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\Striptease.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\TheNoob.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\TheWotch.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\TwoKinds.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\UglyHill.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\VGCats.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\WallyAndOsborne.xml" />
-    <ComicDefinitionFiles Include="..\ComicDefinitions\xkcd.xml" />
-  </ItemGroup>
-  <Target Name="BeforeBuild">
-    <CreateItem Include="@(ComicDefinitionFiles)">
-      <Output TaskParameter="Include" ItemName="ComicDefinitions" />
-    </CreateItem>
-    <Copy SourceFiles="@(ComicDefinitions)" DestinationFolder="bin\$(Configuration)\ComicDefinitions" />
-  </Target>
 </Project>
