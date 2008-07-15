@@ -14,7 +14,7 @@ namespace Woofy.Core
 
         #region IFileDownloader Members
 
-        public void DownloadFile(string comicLink, string referrer, out bool comicAlreadyDownloaded)
+        public string DownloadFile(string comicLink, string referrer, string fileName, out bool comicAlreadyDownloaded)
         {
             comicLinks.Add(comicLink);
 
@@ -23,6 +23,8 @@ namespace Woofy.Core
             Logger.Debug(comicLinks.Count);
 
             comicAlreadyDownloaded = false;
+
+            return "";
         }
 
         public void DownloadFileAsync(string comicLink)

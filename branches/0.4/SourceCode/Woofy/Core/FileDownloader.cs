@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Net;
+using System.Text.RegularExpressions;
 
 namespace Woofy.Core
 {
@@ -58,13 +59,13 @@ namespace Woofy.Core
         /// <param name="fileLink">Link to the file to be downloaded.</param>
         /// <param name="referrer">The page that refers the file. Used to prevent hotlink protection mechanisms.</param>
         /// <param name="fileAlreadyDownloaded">True if the file was already downloaded, false otherwise.</param>
-        public void DownloadFile(string fileLink, string referrer, out bool fileAlreadyDownloaded)
+        public string DownloadFile(string fileLink, string referrer, string fileName, out bool fileAlreadyDownloaded)
         {
-            string filePath = GetFilePath(fileLink, null, _downloadDirectory);
+            string filePath = GetFilePath(fileLink, fileName, _downloadDirectory);
             if (File.Exists(filePath))
             {
                 fileAlreadyDownloaded = true;
-                return;
+                return null;
             }
 
             HttpWebRequest request = (HttpWebRequest)WebConnectionFactory.GetNewWebRequestInstance(fileLink);
@@ -106,6 +107,7 @@ namespace Woofy.Core
             }
 
             fileAlreadyDownloaded = false;
+            return filePath;
         }
 
         /// <summary>
@@ -300,6 +302,11 @@ namespace Woofy.Core
             {
                 return Path.Combine(directoryName, downloadedFileName);
             }
+        }
+
+        private string GetFileName(string fileLink)
+        {
+            return fileLink.Substring(fileLink.LastIndexOf('/') + 1);
         }
 
         /// <summary>

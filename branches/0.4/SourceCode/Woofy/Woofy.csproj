@@ -59,6 +59,7 @@
     <Compile Include="Core\ExRichTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Core\PageParser.cs" />
     <Compile Include="Settings\UserSettingsBase.cs" />
     <Compile Include="EventArgs\DownloadCompletedEventArgs.cs" />
     <Compile Include="EventArgs\DownloadedFileChunkEventArgs.cs" />
