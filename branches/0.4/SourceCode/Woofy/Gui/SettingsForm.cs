@@ -24,13 +24,21 @@ namespace Woofy.Gui
             chkAutomaticallyCheckForUpdates.Checked = UserSettings.AutomaticallyCheckForUpdates;
             chkMinimizeToTray.Checked = UserSettings.MinimizeToTray;
 
-            if (string.IsNullOrEmpty(UserSettings.ProxyAddress))
-                return;
+            if (!string.IsNullOrEmpty(UserSettings.ProxyAddress))
+            {
+                txtProxyAddress.Text = UserSettings.ProxyAddress;
+                txtProxyPort.Text = UserSettings.ProxyPort.ToString();
 
-            txtProxyAddress.Text = UserSettings.ProxyAddress;
-            txtProxyPort.Text = UserSettings.ProxyPort.ToString();
+                chkUseProxy.Checked = true;
+            }
 
-            chkUseProxy.Checked = true;
+            if (!string.IsNullOrEmpty(UserSettings.ProxyUsername))
+            {
+                txtUsername.Text = UserSettings.ProxyUsername;
+                txtPassword.Text = UserSettings.ProxyPassword;
+
+                chkUseCredentials.Checked = true;
+            }
 
         }
         #endregion
@@ -63,6 +71,18 @@ namespace Woofy.Gui
                 UserSettings.ProxyPort = null;
             }
 
+            if (chkUseCredentials.Checked)
+            {
+                UserSettings.ProxyUsername = txtUsername.Text;
+                UserSettings.ProxyPassword = txtPassword.Text;
+            }
+            else
+            {
+                txtUsername.Text = UserSettings.ProxyUsername;
+                txtPassword.Text = UserSettings.ProxyPassword;
+            }
+
+
             UserSettings.DefaultDownloadFolder = txtDefaultDownloadFolder.Text;
             UserSettings.AutomaticallyCheckForUpdates = chkAutomaticallyCheckForUpdates.Checked;
             UserSettings.MinimizeToTray = chkMinimizeToTray.Checked;
@@ -82,7 +102,7 @@ namespace Woofy.Gui
         }
         #endregion
 
-        #region Events - chkUseProxy
+        #region Events - Checked Changed
         private void chkUseProxy_CheckedChanged(object sender, EventArgs e)
         {
             lblAddress.Enabled =
@@ -90,6 +110,15 @@ namespace Woofy.Gui
                 txtProxyAddress.Enabled =
                 txtProxyPort.Enabled = chkUseProxy.Checked;
         }
+
+        private void chkUseCredentials_CheckedChanged(object sender, EventArgs e)
+        {
+            lblUsername.Enabled =
+                lblPassword.Enabled =
+                txtUsername.Enabled =
+                txtPassword.Enabled = chkUseCredentials.Checked;
+        }
+
         #endregion
 
         #region Events - Validation
@@ -102,5 +131,7 @@ namespace Woofy.Gui
                 errorProvider.SetError(txtProxyPort, null);
         }
         #endregion
+
+        
     }
 }

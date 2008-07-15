@@ -84,6 +84,21 @@ namespace Woofy.Settings
             get { return Settings.CloseWhenAllComicsHaveFinished; }
             set { Settings.CloseWhenAllComicsHaveFinished = value; }
         }
+
+        [DefaultValue(null)]
+        public static string ProxyUsername
+        {
+            get { return Settings.ProxyUsername; }
+            set { Settings.ProxyUsername = value; }
+        }
+
+        [DefaultValue(null)]
+        public static string ProxyPassword
+        {
+            get { return Settings.ProxyPassword; }
+            set { Settings.ProxyPassword = value; }
+        }
+
         #endregion
 
         #region Public Methods
@@ -129,77 +144,29 @@ namespace Woofy.Settings
 
         public class SettingsContainer
         {
-            private string lastUsedComicDefinitionFile;
-            public string LastUsedComicDefinitionFile
-            {
-                get { return this.lastUsedComicDefinitionFile; }
-                set { this.lastUsedComicDefinitionFile = value; }
-            }
+            public string LastUsedComicDefinitionFile { get; set; }
 
-            private long? lastNumberOfComicsToDownload;
-            public long? LastNumberOfComicsToDownload
-            {
-                get { return this.lastNumberOfComicsToDownload; }
-                set { this.lastNumberOfComicsToDownload = value; }
-            }
+            public long? LastNumberOfComicsToDownload { get; set; }
 
-            private string proxyAddress;
-            public string ProxyAddress
-            {
-                get { return this.proxyAddress; }
-                set { this.proxyAddress = value; }
-            }
+            public string ProxyAddress { get; set; }
 
-            private int? proxyPort;
-            public int? ProxyPort
-            {
-                get { return this.proxyPort; }
-                set { this.proxyPort = value; }
-            }
+            public int? ProxyPort { get; set; }
 
-            private bool minimizeToTray;
-            public bool MinimizeToTray
-            {
-                get { return this.minimizeToTray; }
-                set { this.minimizeToTray = value; }
-            }
+            public bool MinimizeToTray { get; set; }
 
-            private string defaultDownloadFolder;
-            public string DefaultDownloadFolder
-            {
-                get { return this.defaultDownloadFolder; }
-                set { this.defaultDownloadFolder = value; }
-            }
+            public string DefaultDownloadFolder { get; set; }
 
-            private bool automaticallyCheckForUpdates;
-            public bool AutomaticallyCheckForUpdates
-            {
-                get { return this.automaticallyCheckForUpdates; }
-                set { this.automaticallyCheckForUpdates = value; }
-            }
+            public bool AutomaticallyCheckForUpdates { get; set; }
 
-            private string lastReportedWoofyVersion;
-            public string LastReportedWoofyVersion
-            {
-                get { return this.lastReportedWoofyVersion; }
-                set { this.lastReportedWoofyVersion = value; }
-            }
+            public string LastReportedWoofyVersion { get; set; }
 
-            private string lastReportedComicPackVersion;
-            public string LastReportedComicPackVersion
-            {
-                get { return this.lastReportedComicPackVersion; }
-                set { this.lastReportedComicPackVersion = value; }
-            }
+            public string LastReportedComicPackVersion { get; set; }
 
-            private bool closeWhenAllComicsHaveFinished;
-            public bool CloseWhenAllComicsHaveFinished
-            {
-                get { return this.closeWhenAllComicsHaveFinished; }
-                set { this.closeWhenAllComicsHaveFinished = value; }
-            }
+            public bool CloseWhenAllComicsHaveFinished { get; set; }
 
+            public string ProxyUsername { get; set; }
 
+            public string ProxyPassword { get; set; }
         }
         #endregion
     }

@@ -29,8 +29,6 @@ namespace Woofy.Gui
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.GroupBox groupBox1;
-            System.Windows.Forms.GroupBox groupBox2;
             this.label1 = new System.Windows.Forms.Label();
             this.txtDefaultDownloadFolder = new System.Windows.Forms.TextBox();
             this.chkAutomaticallyCheckForUpdates = new System.Windows.Forms.CheckBox();
@@ -44,31 +42,24 @@ namespace Woofy.Gui
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            groupBox1 = new System.Windows.Forms.GroupBox();
-            groupBox2 = new System.Windows.Forms.GroupBox();
-            groupBox1.SuspendLayout();
-            groupBox2.SuspendLayout();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.chkUseCredentials = new System.Windows.Forms.CheckBox();
+            this.txtPassword = new System.Windows.Forms.TextBox();
+            this.txtUsername = new System.Windows.Forms.TextBox();
+            this.lblPassword = new System.Windows.Forms.Label();
+            this.lblUsername = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // groupBox1
-            // 
-            groupBox1.Controls.Add(this.label1);
-            groupBox1.Controls.Add(this.txtDefaultDownloadFolder);
-            groupBox1.Controls.Add(this.chkAutomaticallyCheckForUpdates);
-            groupBox1.Controls.Add(this.btnBrowse);
-            groupBox1.Controls.Add(this.chkMinimizeToTray);
-            groupBox1.Location = new System.Drawing.Point(12, 12);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(455, 110);
-            groupBox1.TabIndex = 13;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "General Settings";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(18, 16);
+            this.label1.Location = new System.Drawing.Point(2, 3);
             this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(119, 13);
@@ -77,7 +68,7 @@ namespace Woofy.Gui
             // 
             // txtDefaultDownloadFolder
             // 
-            this.txtDefaultDownloadFolder.Location = new System.Drawing.Point(20, 33);
+            this.txtDefaultDownloadFolder.Location = new System.Drawing.Point(4, 20);
             this.txtDefaultDownloadFolder.Margin = new System.Windows.Forms.Padding(2);
             this.txtDefaultDownloadFolder.Name = "txtDefaultDownloadFolder";
             this.txtDefaultDownloadFolder.Size = new System.Drawing.Size(335, 20);
@@ -88,7 +79,7 @@ namespace Woofy.Gui
             this.chkAutomaticallyCheckForUpdates.AutoSize = true;
             this.chkAutomaticallyCheckForUpdates.Checked = true;
             this.chkAutomaticallyCheckForUpdates.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkAutomaticallyCheckForUpdates.Location = new System.Drawing.Point(20, 81);
+            this.chkAutomaticallyCheckForUpdates.Location = new System.Drawing.Point(4, 68);
             this.chkAutomaticallyCheckForUpdates.Name = "chkAutomaticallyCheckForUpdates";
             this.chkAutomaticallyCheckForUpdates.Size = new System.Drawing.Size(177, 17);
             this.chkAutomaticallyCheckForUpdates.TabIndex = 12;
@@ -97,7 +88,7 @@ namespace Woofy.Gui
             // 
             // btnBrowse
             // 
-            this.btnBrowse.Location = new System.Drawing.Point(359, 32);
+            this.btnBrowse.Location = new System.Drawing.Point(343, 19);
             this.btnBrowse.Margin = new System.Windows.Forms.Padding(2);
             this.btnBrowse.Name = "btnBrowse";
             this.btnBrowse.Size = new System.Drawing.Size(75, 23);
@@ -111,31 +102,17 @@ namespace Woofy.Gui
             this.chkMinimizeToTray.AutoSize = true;
             this.chkMinimizeToTray.Checked = true;
             this.chkMinimizeToTray.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkMinimizeToTray.Location = new System.Drawing.Point(20, 58);
+            this.chkMinimizeToTray.Location = new System.Drawing.Point(4, 45);
             this.chkMinimizeToTray.Name = "chkMinimizeToTray";
             this.chkMinimizeToTray.Size = new System.Drawing.Size(98, 17);
             this.chkMinimizeToTray.TabIndex = 11;
             this.chkMinimizeToTray.Text = "Minimize to tray";
             this.chkMinimizeToTray.UseVisualStyleBackColor = true;
             // 
-            // groupBox2
-            // 
-            groupBox2.Controls.Add(this.chkUseProxy);
-            groupBox2.Controls.Add(this.txtProxyAddress);
-            groupBox2.Controls.Add(this.txtProxyPort);
-            groupBox2.Controls.Add(this.lblAddress);
-            groupBox2.Controls.Add(this.lblPort);
-            groupBox2.Location = new System.Drawing.Point(12, 128);
-            groupBox2.Name = "groupBox2";
-            groupBox2.Size = new System.Drawing.Size(455, 82);
-            groupBox2.TabIndex = 14;
-            groupBox2.TabStop = false;
-            groupBox2.Text = "Proxy Settings";
-            // 
             // chkUseProxy
             // 
             this.chkUseProxy.AutoSize = true;
-            this.chkUseProxy.Location = new System.Drawing.Point(20, 19);
+            this.chkUseProxy.Location = new System.Drawing.Point(6, 6);
             this.chkUseProxy.Name = "chkUseProxy";
             this.chkUseProxy.Size = new System.Drawing.Size(114, 17);
             this.chkUseProxy.TabIndex = 3;
@@ -146,7 +123,7 @@ namespace Woofy.Gui
             // txtProxyAddress
             // 
             this.txtProxyAddress.Enabled = false;
-            this.txtProxyAddress.Location = new System.Drawing.Point(95, 42);
+            this.txtProxyAddress.Location = new System.Drawing.Point(81, 29);
             this.txtProxyAddress.Name = "txtProxyAddress";
             this.txtProxyAddress.Size = new System.Drawing.Size(196, 20);
             this.txtProxyAddress.TabIndex = 5;
@@ -155,7 +132,7 @@ namespace Woofy.Gui
             // 
             this.txtProxyPort.Enabled = false;
             this.errorProvider.SetIconPadding(this.txtProxyPort, 2);
-            this.txtProxyPort.Location = new System.Drawing.Point(333, 42);
+            this.txtProxyPort.Location = new System.Drawing.Point(319, 29);
             this.txtProxyPort.Name = "txtProxyPort";
             this.txtProxyPort.Size = new System.Drawing.Size(99, 20);
             this.txtProxyPort.TabIndex = 10;
@@ -164,7 +141,7 @@ namespace Woofy.Gui
             // lblAddress
             // 
             this.lblAddress.AutoSize = true;
-            this.lblAddress.Location = new System.Drawing.Point(42, 45);
+            this.lblAddress.Location = new System.Drawing.Point(28, 32);
             this.lblAddress.Name = "lblAddress";
             this.lblAddress.Size = new System.Drawing.Size(48, 13);
             this.lblAddress.TabIndex = 4;
@@ -173,7 +150,7 @@ namespace Woofy.Gui
             // lblPort
             // 
             this.lblPort.AutoSize = true;
-            this.lblPort.Location = new System.Drawing.Point(297, 45);
+            this.lblPort.Location = new System.Drawing.Point(283, 32);
             this.lblPort.Name = "lblPort";
             this.lblPort.Size = new System.Drawing.Size(29, 13);
             this.lblPort.TabIndex = 6;
@@ -181,7 +158,7 @@ namespace Woofy.Gui
             // 
             // btnOK
             // 
-            this.btnOK.Location = new System.Drawing.Point(313, 229);
+            this.btnOK.Location = new System.Drawing.Point(292, 169);
             this.btnOK.Margin = new System.Windows.Forms.Padding(2);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
@@ -193,7 +170,7 @@ namespace Woofy.Gui
             // btnCancel
             // 
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(392, 229);
+            this.btnCancel.Location = new System.Drawing.Point(371, 169);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
@@ -206,15 +183,106 @@ namespace Woofy.Gui
             // 
             this.errorProvider.ContainerControl = this;
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(12, 12);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(434, 152);
+            this.tabControl1.TabIndex = 15;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.label1);
+            this.tabPage1.Controls.Add(this.txtDefaultDownloadFolder);
+            this.tabPage1.Controls.Add(this.chkAutomaticallyCheckForUpdates);
+            this.tabPage1.Controls.Add(this.chkMinimizeToTray);
+            this.tabPage1.Controls.Add(this.btnBrowse);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(426, 126);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "General";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.txtPassword);
+            this.tabPage2.Controls.Add(this.txtUsername);
+            this.tabPage2.Controls.Add(this.lblPassword);
+            this.tabPage2.Controls.Add(this.lblUsername);
+            this.tabPage2.Controls.Add(this.chkUseCredentials);
+            this.tabPage2.Controls.Add(this.chkUseProxy);
+            this.tabPage2.Controls.Add(this.txtProxyPort);
+            this.tabPage2.Controls.Add(this.txtProxyAddress);
+            this.tabPage2.Controls.Add(this.lblPort);
+            this.tabPage2.Controls.Add(this.lblAddress);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(426, 126);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Advanced";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // chkUseCredentials
+            // 
+            this.chkUseCredentials.AutoSize = true;
+            this.chkUseCredentials.Location = new System.Drawing.Point(4, 57);
+            this.chkUseCredentials.Name = "chkUseCredentials";
+            this.chkUseCredentials.Size = new System.Drawing.Size(99, 17);
+            this.chkUseCredentials.TabIndex = 11;
+            this.chkUseCredentials.Text = "Use credentials";
+            this.chkUseCredentials.UseVisualStyleBackColor = true;
+            this.chkUseCredentials.CheckedChanged += new System.EventHandler(this.chkUseCredentials_CheckedChanged);
+            // 
+            // txtPassword
+            // 
+            this.txtPassword.Enabled = false;
+            this.errorProvider.SetIconPadding(this.txtPassword, 2);
+            this.txtPassword.Location = new System.Drawing.Point(293, 80);
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.Size = new System.Drawing.Size(125, 20);
+            this.txtPassword.TabIndex = 15;
+            this.txtPassword.UseSystemPasswordChar = true;
+            // 
+            // txtUsername
+            // 
+            this.txtUsername.Enabled = false;
+            this.txtUsername.Location = new System.Drawing.Point(92, 80);
+            this.txtUsername.Name = "txtUsername";
+            this.txtUsername.Size = new System.Drawing.Size(133, 20);
+            this.txtUsername.TabIndex = 13;
+            // 
+            // lblPassword
+            // 
+            this.lblPassword.AutoSize = true;
+            this.lblPassword.Location = new System.Drawing.Point(231, 83);
+            this.lblPassword.Name = "lblPassword";
+            this.lblPassword.Size = new System.Drawing.Size(56, 13);
+            this.lblPassword.TabIndex = 14;
+            this.lblPassword.Text = "Password:";
+            // 
+            // lblUsername
+            // 
+            this.lblUsername.AutoSize = true;
+            this.lblUsername.Location = new System.Drawing.Point(28, 83);
+            this.lblUsername.Name = "lblUsername";
+            this.lblUsername.Size = new System.Drawing.Size(58, 13);
+            this.lblUsername.TabIndex = 12;
+            this.lblUsername.Text = "Username:";
+            // 
             // SettingsForm
             // 
             this.AcceptButton = this.btnOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(478, 262);
-            this.Controls.Add(groupBox2);
-            this.Controls.Add(groupBox1);
+            this.ClientSize = new System.Drawing.Size(455, 204);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
@@ -226,11 +294,12 @@ namespace Woofy.Gui
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Settings";
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
-            groupBox2.ResumeLayout(false);
-            groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -250,5 +319,13 @@ namespace Woofy.Gui
         private System.Windows.Forms.ErrorProvider errorProvider;
         private System.Windows.Forms.CheckBox chkMinimizeToTray;
         private System.Windows.Forms.CheckBox chkAutomaticallyCheckForUpdates;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TextBox txtPassword;
+        private System.Windows.Forms.TextBox txtUsername;
+        private System.Windows.Forms.Label lblPassword;
+        private System.Windows.Forms.Label lblUsername;
+        private System.Windows.Forms.CheckBox chkUseCredentials;
     }
 }
