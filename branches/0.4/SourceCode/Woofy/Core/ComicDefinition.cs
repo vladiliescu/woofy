@@ -19,6 +19,8 @@ namespace Woofy.Core
         /// </summary>
         public string StartUrl { get; private set; }
 
+        public bool FailedToInitialize { get; private set; }
+
         /// <summary>
         /// Gets the url of the comic's first issue.
         /// </summary>
@@ -134,6 +136,11 @@ namespace Woofy.Core
         {
             ComicInfoFile = comicInfoFile;
         }
+
+        public ComicDefinition()
+        {
+        }
+
         #endregion
 
         #region Public Static Methods
@@ -142,11 +149,27 @@ namespace Woofy.Core
         /// </summary>
         public static ComicDefinition[] GetAvailableComicDefinitions()
         {
-            List<ComicDefinition> availableComicInfos = new List<ComicDefinition>();
+            var availableComicInfos = new List<ComicDefinition>();
 
-            foreach (string comicInfoFile in Directory.GetFiles(ApplicationSettings.ComicDefinitionsFolder, "*.xml"))
+            foreach (var comicInfoFile in Directory.GetFiles(ApplicationSettings.ComicDefinitionsFolder, "*.xml"))
             {
-                availableComicInfos.Add(new ComicDefinition(comicInfoFile));
+                ComicDefinition definition;
+                try
+                { 
+                    definition = new ComicDefinition(comicInfoFile);
+                }
+                catch (Exception ex)
+                {
+                    Logger.LogException("Error initializing definition " + comicInfoFile, ex);
+
+                    definition = new ComicDefinition {
+                        ComicInfoFile = comicInfoFile,
+                        FriendlyName = string.Format("--- Failed to initialize definition {0} ---", Path.GetFileName(comicInfoFile)),
+                        FailedToInitialize = true
+                    };
+                }
+
+                availableComicInfos.Add(definition);
             }
 
             return availableComicInfos.ToArray();
