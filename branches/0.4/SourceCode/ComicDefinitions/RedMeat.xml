@@ -9,5 +9,5 @@
 		<capture name="day" ><![CDATA[<div\sclass="stripDate">[\w]*\s*(?<content>[\d]*)]]></capture>
 		<capture name="year" ><![CDATA[<div\sclass="stripDate">[\w]*\s*[\d]*,\s*(?<content>[\d]*)]]></capture>
 	</captures>
-	<renamePattern><![CDATA[${year}_${month}_${day}.gif]]></renamePattern>
+	<renamePattern><![CDATA[${year}_${month}_${day}]]></renamePattern>
 </comicInfo>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<comicInfo friendlyName="Misfile" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
+    <startUrl><![CDATA[http://www.misfile.com/]]></startUrl>
+    <firstIssue><![CDATA[http://www.misfile.com/overlay.php?pageCalled=1]]></firstIssue>
+    <comicRegex><![CDATA[overlay.php\?pageCalled=[\d]*]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>\?page=[\d]*)"><img\ssrc="/images/back.gif"]]></backButtonRegex>
+	<captures>
+		<capture name="id" ><![CDATA[overlay.php\?pageCalled=(?<content>[\d]*)]]></capture>
+	</captures>
+	<renamePattern><![CDATA[${id}.jpg]]></renamePattern>
+</comicInfo>
