@@ -78,8 +78,8 @@ namespace Woofy.Gui
             }
             else
             {
-                txtUsername.Text = UserSettings.ProxyUsername;
-                txtPassword.Text = UserSettings.ProxyPassword;
+                UserSettings.ProxyUsername = string.Empty;
+                UserSettings.ProxyPassword = string.Empty;
             }
 
 
