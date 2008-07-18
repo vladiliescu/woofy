@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="The Phoenix Requiem" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
+    <startUrl><![CDATA[http://requiem.seraph-inn.com/viewcomic.php?page=1]]></startUrl>
+    <latestPageRegex><![CDATA[href="(?<content>viewcomic\.php\?page=[\d]{1,4})"><img\salt='Last']]></latestPageRegex>
+    <rootUrl><![CDATA[http://requiem.seraph-inn.com]]></rootUrl>
+    <comicRegex><![CDATA[pages/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[href="(?<content>viewcomic\.php\?page=[\d]{1,4})"><img\salt='Back']]></backButtonRegex>
+    <firstIssue><![CDATA[http://requiem.seraph-inn.com/pages/1.jpg]]></firstIssue>
+</comicInfo>

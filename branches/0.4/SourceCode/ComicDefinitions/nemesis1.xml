@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="[nemesis] chapter 1" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
+    <startUrl><![CDATA[http://www.webcomicsnation.com/inkbrush/entry/series.php?name=entry&view=current]]></startUrl>
+    <rootUrl><![CDATA[http://www.webcomicsnation.com/inkbrush/entry/]]></rootUrl>
+    <comicRegex><![CDATA[http://www\.webcomicsnation\.com/memberimages/page[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[redirect\.php\?name=entry&type=comic&installment_ID=[\d]+&whichbutton=prev&view=(?:archive|current)&counter=1]]></backButtonRegex>
+    <firstIssue><![CDATA[http://www.webcomicsnation.com/memberimages/page_1.jpg]]></firstIssue>
+</comicInfo>

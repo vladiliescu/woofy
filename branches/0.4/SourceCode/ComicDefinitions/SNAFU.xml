@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="SNAFU" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
+    <startUrl><![CDATA[http://www.snafu-comics.com]]></startUrl>
+    <comicRegex><![CDATA[comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>\?strip_id=[\d]{1,4})">[\s\n]*PREVIOUS]]></backButtonRegex>
+    <firstIssue><![CDATA[http://www.snafu-comics.com/comics/020809.jpg]]></firstIssue>
+</comicInfo>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<comicInfo friendlyName="Awfully Generic" author="Lisalover1" allowMultipleStrips="true">
+	<startUrl><![CDATA[http://awfullygeneric.comicgenesis.com/]]></startUrl>
+	<comicRegex><![CDATA[http://awfullygeneric\.comicgenesis\.com/comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
+	<backButtonRegex><![CDATA[<a\shref="(?<content>http://awfullygeneric\.comicgenesis\.com/d/[\d]{8}\.html)"><img\sborder="0"\sname="previous_day"]]></backButtonRegex>
+	<firstIssue><![CDATA[http://awfullygeneric.comicgenesis.com/comics/20051027.PNG]]></firstIssue>
+</comicInfo>

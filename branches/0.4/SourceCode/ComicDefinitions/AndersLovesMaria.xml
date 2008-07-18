@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Anders Loves Maria" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
+    <startUrl><![CDATA[http://anderslovesmaria.reneengstrom.com]]></startUrl>
+    <comicRegex><![CDATA[src="(?<content>http://reneengstrom\.com/comicfolder/[^.]+\.(?:gif|jpg|jpeg|png))"\salt="Comic"]]></comicRegex>
+    <backButtonRegex><![CDATA[href="(?<content>http://anderslovesmaria\.reneengstrom\.com/[\d]{4}/[\d]{2}/[\d]{2}/[^/]+/)">&laquo;]]></backButtonRegex>
+    <firstIssue><![CDATA[http://reneengstrom.com/comicfolder/2006-09-11.jpg]]></firstIssue>
+</comicInfo>

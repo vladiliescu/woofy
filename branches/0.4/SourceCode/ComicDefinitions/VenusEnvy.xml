@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Venus Envy" author="Citizen Drago" allowMultipleStrips="true" allowMissingStrips="false">
+    <startUrl><![CDATA[http://venusenvy.comicgenesis.com]]></startUrl>
+    <comicRegex><![CDATA[border="0"\ssrc="(?<content>http://venusenvy\.comicgenesis\.com/comics/[^.]+\.(?:gif|jpg|jpeg|png))]]></comicRegex>
+    <backButtonRegex><![CDATA[href="(?<content>http://venusenvy\.comicgenesis\.com/d/[\d]{8}\.html)"><img\sborder="0"\sname="previous_day"]]></backButtonRegex>
+    <firstIssue><![CDATA[http://venusenvy.comicgenesis.com/comics/20011106.jpg]]></firstIssue>
+</comicInfo>

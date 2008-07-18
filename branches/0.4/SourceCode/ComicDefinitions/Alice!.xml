@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Alice!" author="Citizen Drago" allowMultipleStrips="true" allowMissingStrips="false">
+    <startUrl><![CDATA[http://www.alicecomics.com/comics/]]></startUrl>
+    <comicRegex><![CDATA[href="(?<content>[^.>]+\.(?:gif|jpg|jpeg|png))"]]></comicRegex>
+    <backButtonRegex><![CDATA[href="(?<content>/)">Parent\sDirectory]]></backButtonRegex>
+    <firstIssue><![CDATA[http://www.alicecomics.com/moose.jpg]]></firstIssue>
+</comicInfo>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="The Wotch - Cheer!" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
+    <startUrl><![CDATA[http://cheer.thewotch.com/]]></startUrl>
+    <comicRegex><![CDATA[/strips/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[href=".(?<content>/index\.php\?date=[\d]{8})"><img\ssrc="\./images/left\.jpg"]]></backButtonRegex>
+    <firstIssue><![CDATA[http://cheer.thewotch.com/strips/20050809.jpg]]></firstIssue>
+</comicInfo>

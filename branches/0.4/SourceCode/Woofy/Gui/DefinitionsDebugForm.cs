@@ -313,7 +313,7 @@ namespace Woofy.Gui
 
         private void SetFoundComics(int foundComics)
         {
-            lblFoundStrips.Text = string.Format("I've found <{0:d3}> strips.", foundComics);
+            lblFoundStrips.Text = string.Format("Found <{0:d3}> strips.", foundComics);
         }
 
         #endregion

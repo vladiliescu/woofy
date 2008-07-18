@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Wasted Talent" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
+    <startUrl><![CDATA[http://www.wastedtalent.ca]]></startUrl>
+    <firstIssue><![CDATA[http://www.wastedtalent.ca/comics/Art/wt_animecrack.jpg]]></firstIssue>
+    <comicRegex><![CDATA[comics/[^./]+/[^./]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>index\.php\?view=[\d]{1,4})">Previous\sComic</a>]]></backButtonRegex>
+	<captures>
+		<capture name="date"><![CDATA[<strong\sclass="grey">(?<content>[\d-]*)\s</strong>]]></capture>
+	</captures>
+	<renamePattern>${date}</renamePattern>
+</comicInfo>

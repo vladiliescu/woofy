@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Uncubed" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
+    <startUrl><![CDATA[http://www.uncubedthecomic.com]]></startUrl>
+    <comicRegex><![CDATA[/comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[href="(?<content>http://www\.uncubedthecomic\.com/[\d]{4}/[\d]{2}/[\d]{2}/[^/]+/)">&laquo;]]></backButtonRegex>
+    <firstIssue><![CDATA[http://www.uncubedthecomic.com/comics/2007-08-25-uncubed.jpg]]></firstIssue>
+</comicInfo>

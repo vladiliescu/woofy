@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Magellan" author="Citizen Drago" allowMultipleStrips="true" allowMissingStrips="false">
+    <startUrl><![CDATA[http://www.graphicsmash.com/comics/magellan.php?view=current]]></startUrl>
+    <latestPageRegex><![CDATA[redirect\.php\?name=magellan&type=comic&installment_ID=[\d]{4,7}&whichbutton=prev&view=current&counter=1]]></latestPageRegex>
+    <rootUrl><![CDATA[http://www.graphicsmash.com//comics/]]></rootUrl>
+    <comicRegex><![CDATA[(?:http://www.graphicsmash.com/(?:memberimages/|users/stephencrowley/comix/(?:[\d]{2}|history)/)[\d]{2}|http://www.webcomicsnation.com/)[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[redirect\.php\?name=magellan&type=comic&installment_ID=[\d]{4,7}&whichbutton=prev&view=archive&counter=1]]></backButtonRegex>
+    <firstIssue><![CDATA[http://www.graphicsmash.com/users/stephencrowley/comix/01/20040924mum.jpg]]></firstIssue>
+</comicInfo>

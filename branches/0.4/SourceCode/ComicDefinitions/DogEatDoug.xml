@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Dog Eat Doug" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
+    <startUrl><![CDATA[http://dogeatdoug.com/comic/index.php]]></startUrl>
+    <comicRegex><![CDATA[http://www.dogeatdoug\.com/comic/comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[href="(?<content>http://dogeatdoug\.com/comic/index.php\?paged=[\d]{1,4})">&laquo;]]></backButtonRegex>
+    <firstIssue><![CDATA[http://www.dogeatdoug.com/comic/comics/2005-11-27.gif]]></firstIssue>
+</comicInfo>
