@@ -4,4 +4,4 @@
     <comicRegex><![CDATA[http://imaginethiscomic.com/comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
     <backButtonRegex><![CDATA[href="(?<content>http://imaginethiscomic\.com/\?p=[\d]{1,4})">&laquo;\sPrevious]]></backButtonRegex>
     <firstIssue><![CDATA[http://imaginethiscomic.com/comics/2008-03-03-first.jpg]]></firstIssue>
-</comicInfo><
+</comicInfo>

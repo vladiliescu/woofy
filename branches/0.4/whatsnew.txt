@@ -1,0 +1,6 @@
+* Woofy can automatically rename the downloaded strips.
+* Completed tasks are kept through Woofy's restarts.
+* Some usability fixes to the definition debugger.
+* Around thirty new comics are supported.
+* Implemented proxy authentication.
+* Other miscellaneous bugfixes.

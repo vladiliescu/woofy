@@ -3,10 +3,11 @@ SetCompressor bzip2
 # Defines
 !define NAME "Woofy"
 !define REGKEY "SOFTWARE\${NAME}"
-!define VERSION 0.4.3
+!define VERSION @WOOFYVERSION@
 !define COMPANY "Vlad Iliescu"
 !define URL "http://woofy.sourceforge.net"
-
+!define FILENAME "@WOOFYEXEFILENAME@"
+!define DIRECTORY "Woofy"
 
 # MUI defines
 !define MUI_ABORTWARNING
@@ -32,7 +33,7 @@ Var StartMenuGroup
 
 # Installer pages
 !insertmacro MUI_PAGE_WELCOME
-!insertmacro MUI_PAGE_LICENSE Files\license.txt
+!insertmacro MUI_PAGE_LICENSE ${DIRECTORY}\license.txt
 !insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_STARTMENU Application $StartMenuGroup
@@ -48,7 +49,7 @@ Var StartMenuGroup
 Name "${NAME} ${VERSION}"
 BrandingText "${NAME} ${VERSION}"
 
-OutFile "Drop\${NAME}-${VERSION}-setup.exe"
+OutFile "${FILENAME}"
 InstallDir $PROGRAMFILES\${NAME}
 InstallDirRegKey HKLM "${REGKEY}" "Path"
 CRCCheck on
@@ -75,27 +76,27 @@ Section Woofy SEC0000
     SetOutPath $INSTDIR
 
     SetOverwrite off
-    File Files\data.s3db
+    File ${DIRECTORY}\data.s3db
     
     SetOverwrite on
-    File Files\license.txt
-    File Files\log4net.dll
-    File Files\Woofy.exe
-    File Files\Woofy.exe.config
+    File ${DIRECTORY}\license.txt
+    File ${DIRECTORY}\log4net.dll
+    File ${DIRECTORY}\Woofy.exe
+    File ${DIRECTORY}\Woofy.exe.config
     
 
 StrCmp $%PROCESSOR_ARCHITECTURE% "x86" x86 x64
 x64:
-    File Files\x64\System.Data.SQLite.DLL
+    File ${DIRECTORY}\x64\System.Data.SQLite.DLL
     Goto endif
 x86:
-    File Files\System.Data.SQLite.DLL
+    File ${DIRECTORY}\System.Data.SQLite.DLL
 endif:
 
 
     SetOutPath $INSTDIR\ComicDefinitions
     SetOverwrite on
-    File /r Files\ComicDefinitions\*
+    File /r ${DIRECTORY}\ComicDefinitions\*
 
     ExecWait '"$WINDIR\Microsoft.NET\Framework\v2.0.50727\ngen.exe" install "$INSTDIR\System.Data.SQLite.DLL"'
     ExecWait '"$WINDIR\Microsoft.NET\Framework\v2.0.50727\ngen.exe" install "$INSTDIR\log4net.dll"'
@@ -107,7 +108,7 @@ SectionEnd
 Section /o "Debug Symbols" SEC0001
     SetOutPath $INSTDIR
     SetOverwrite on
-    File Files\Woofy.pdb
+    File ${DIRECTORY}\Woofy.pdb
     WriteRegStr HKLM "${REGKEY}\Components" "Debug Symbols" 1
 SectionEnd
 
