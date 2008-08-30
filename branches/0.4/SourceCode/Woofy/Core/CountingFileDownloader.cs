@@ -17,13 +17,11 @@ namespace Woofy.Core
         public string DownloadFile(string comicLink, string referrer, string fileName, out bool comicAlreadyDownloaded)
         {
             comicLinks.Add(comicLink);
-
             WebConnectionFactory.GetNewWebRequestInstance(comicLink).GetResponse().Close();
 
             Logger.Debug(comicLinks.Count);
 
             comicAlreadyDownloaded = false;
-
             return "";
         }
 

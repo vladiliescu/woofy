@@ -5,6 +5,7 @@ using System.Text.RegularExpressions;
 using System.Net;
 using System.Threading;
 using System.Web;
+using Woofy.Exceptions;
 
 namespace Woofy.Core
 {
@@ -160,6 +161,11 @@ namespace Woofy.Core
 
                 downloadOutcome = DownloadOutcome.Error;
             }
+            catch (RegexException ex)
+            {
+                Logger.Debug("Encountered an exception while searching for regex matches: {0}.", ex.Message);
+                downloadOutcome = DownloadOutcome.Error;
+            }
 
             OnDownloadCompleted(downloadOutcome);
 
@@ -223,7 +229,16 @@ namespace Woofy.Core
         public static Uri[] RetrieveLinksFromPage(string pageContent, Uri currentUri, string regex)
         {
             List<Uri> links = new List<Uri>();
-            MatchCollection matches = Regex.Matches(pageContent, regex, RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace);
+            MatchCollection matches;
+
+            try
+            {
+                matches = Regex.Matches(pageContent, regex, RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace);
+            }
+            catch (ArgumentException ex)
+            {
+                throw new RegexException(ex.Message, ex);
+            }
 
             foreach (Match match in matches)
             {
