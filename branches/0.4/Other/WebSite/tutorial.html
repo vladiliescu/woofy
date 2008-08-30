@@ -176,8 +176,95 @@ Released for free under a Creative Commons Attribution 2.5 License
 
 <p>Enjoy.</p>
 
+<hr />
+<h2>RegEx quick reference (contributed by Citizen Drago)</h2>
+<p>Because a RegEx search can do much more than only match literal pieces of text, there are certain characters reserved for special use, which are usually called "metacharacters".  If you need to match any metacharacters as a literal character in a regex you have to "escape" them by putting a backslash \ in front of them.</p>
 
-			
+<p>The following metacharacters that must be escaped if you want to literally match them in a RegEx, their names and their metacharacter functions are as follows:</p>
+
+<table>
+	<tr>
+		<td>[</td>
+		<td>"Opening Bracket" or "(Box or Square) Bracket"</td>
+		<td>Starts a "Character Class"</td>
+	</tr>
+	<tr>
+		<td>(</td>
+		<td>"Opening Parenthesis" or "Opening Round Bracket"</td>
+		<td>Starts a "Capture Group"</td>
+	</tr>
+	<tr>
+		<td>)</td>
+		<td>"Closing Parenthesis" or "Closing Round Bracket"</td>
+		<td>Closes a "Capture Group"</td>
+	</tr>
+	<tr>
+		<td>\</td>
+		<td>"Backslant" or "Backslash"</td>
+		<td>Indicates a literal character or a RegEx token with a special meaning</td>
+	</tr>
+	<tr>
+		<td>|</td>
+		<td>"Pipe" or "Vertical Bar"</td>
+		<td>Separates alternate match choices</td>
+	</tr>
+	<tr>
+		<td>?</td>
+		<td>"Question Mark"</td>
+		<td>Preceding item is optional, it can match 0 or 1 times</td>
+	</tr>
+	<tr>
+		<td>*</td>
+		<td>"Asterisk" "Star" or "Splat"</td>
+		<td>Preceding item will match 0 or more times</td>
+	</tr>
+	<tr>
+		<td>+</td>
+		<td>"Plus" or "Plus Sign"</td>
+		<td>Preceding item will match 1 or more times</td>
+	</tr>
+	<tr>
+		<td>{</td>
+		<td>"Opening Brace" or "Opening Curly Bracket"</td>
+		<td>Starts a repetition sequence</td>
+	</tr>
+	<tr>
+		<td>}</td>
+		<td>"Closing Brace" or "Closing Curly Bracket"</td>
+		<td>Ends a repetition sequence</td>
+	</tr>
+	<tr>
+		<td>^</td>
+		<td>"Caret" or "Circumflex"</td>
+		<td>Start of String Anchor</td>
+	</tr>
+	<tr>
+		<td>$</td>
+		<td>"Dollar Sign"</td>
+		<td>End of String Anchor</td>
+	</tr>
+	<tr>
+		<td>.</td>
+		<td>"Period" or "Dot"</td>
+		<td>Matches (almost) ANY character  (Use sparingly, especially with repetition!!)</td>
+	</tr>
+</table>
+
+<p>Additionally, since the IgnorePatternWhitespace RegEx option is enabled in Woofy, two more characters must be escaped to be used in a match:<p>
+<table>
+	<tr>
+		<td></td>
+		<td>"Space"</td>
+		<td>A Space character - Can be matched by "\ " or by "\s" but "\s" will also match "Tab", "Line Feed" and "Carriage Return" characters</td>
+	</tr>
+	<tr>
+		<td>#</td>
+		<td>"Number Sign" or "Pound Sign"</td>
+		<td>Comment character - # and anything following are ignored until the next non-comment character after an "End of Line" character is reached</td>
+	</tr>
+</table>
+
+<p>Also, you should remember - especially when testing - that Woofy enables the following options when matching regular expressions <strong>IgnoreCase</strong>, <strong>Multiline</strong> and <strong>IgnorePatternWhitespace</strong>. </p>
 			</div>
 		</div>
 	</div>
