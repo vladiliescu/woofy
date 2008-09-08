@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Courting Disaster" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
+    <startUrl><![CDATA[http://www.courting-disaster.com/]]></startUrl>
+    <comicRegex><![CDATA[/comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[href="(?<content>/archive/[\d]{8}\.html)"><img\ssrc="/images/previous\.gif"]]></backButtonRegex>
+    <firstIssue><![CDATA[http://www.courting-disaster.com/comics/cd20050112.gif]]></firstIssue>
+</comicInfo>

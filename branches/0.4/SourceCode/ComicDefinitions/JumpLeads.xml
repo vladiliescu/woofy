@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Jump Leads" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
+    <startUrl><![CDATA[http://www.jump-leads.com/]]></startUrl>
+    <rootUrl><![CDATA[http://www.jump-leads.com/]]></rootUrl>
+    <comicRegex><![CDATA[comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[href="(?<content>comic/[\d]{1,4})"><img\ssrc="images/navigation-prev\.gif"]]></backButtonRegex>
+    <firstIssue><![CDATA[http://www.jump-leads.com/comics/20070704comicuyBpmuF.png]]></firstIssue>
+</comicInfo>

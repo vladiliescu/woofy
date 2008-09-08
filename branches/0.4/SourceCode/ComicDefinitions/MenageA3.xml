@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Ménage à 3" author="Kolja Geldmacher">
+    <startUrl><![CDATA[http://www.menagea3.net]]></startUrl>
+    <firstIssue><![CDATA[http://www.menagea3.net/comics/mat20080517.png]]></firstIssue>
+    <comicRegex><![CDATA[/comics/mat[0-9]{8}\.(gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>/d/[0-9]{8}.html)"><img\sborder=0\sname="previous_day"\salt="Previous\scomic"\ssrc="/images/previous_day.gif"\swidth=102\sheight=30></a>]]></backButtonRegex>
+</comicInfo>

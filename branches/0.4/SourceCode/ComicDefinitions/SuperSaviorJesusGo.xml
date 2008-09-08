@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Super Savior Jesus Go!" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
+    <startUrl><![CDATA[http://supersaviorjesusgo.comicgenesis.com/]]></startUrl>
+    <comicRegex><![CDATA[http://supersaviorjesusgo\.comicgenesis\.com/comics/(?:supersaviorjesusgo.)?[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[(?<content>http://supersaviorjesusgo\.comicgenesis\.com/d/[\d]{8}.html)">Previous]]></backButtonRegex>
+    <firstIssue><![CDATA[http://supersaviorjesusgo.comicgenesis.com/comics/supersaviorjesusgo.20070320.jpg]]></firstIssue>
+</comicInfo>

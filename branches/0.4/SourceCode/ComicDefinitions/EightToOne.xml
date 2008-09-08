@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Eight to One" author="Citizen Drago" allowMultipleStrips="true" allowMissingStrips="true">
+    <startUrl><![CDATA[http://yeahduff.comicgenesis.com/]]></startUrl>
+    <comicRegex><![CDATA[http://yeahduff.comicgenesis.com/comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[href="(?<content>http://yeahduff\.comicgenesis\.com/d/[\d]{8}\.html)"><img\sborder="0"\sname="previous]]></backButtonRegex>
+    <firstIssue><![CDATA[http://yeahduff.comicgenesis.com/comics/20030725.gif]]></firstIssue>
+</comicInfo>

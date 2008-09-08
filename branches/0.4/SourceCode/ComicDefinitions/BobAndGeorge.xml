@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Bob And George" author="Citizen Drago" allowMultipleStrips="true" allowMissingStrips="true">
+    <startUrl><![CDATA[http://www.bobandgeorge.com/archives/index.php?date=070728]]></startUrl>
+    <rootUrl><![CDATA[http://www.bobandgeorge.com/archives/]]></rootUrl>
+    <comicRegex><![CDATA[([\d]{4})/\1[\d]{2}[\w]?\.(?:gif|jpg|jpeg|png|swf)]]></comicRegex>
+    <backButtonRegex><![CDATA[<!--\sBEGIN\sLAST_LINK\s-->\s+<a\shref="(?<content>index.php\?date=[\d]{6})"><img\ssrc="/images/last\.png"]]></backButtonRegex>
+    <firstIssue><![CDATA[http://www.bobandgeorge.com/archives/0004/000401.png]]></firstIssue>
+</comicInfo>

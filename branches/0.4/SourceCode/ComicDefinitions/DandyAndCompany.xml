@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Dandy &amp; Company" author="Citizen Drago" allowMultipleStrips="true" allowMissingStrips="false">
+    <startUrl><![CDATA[http://www.dandyandcompany.com/]]></startUrl>
+    <comicRegex><![CDATA[http://www\.dandyandcompany\.com/strips/[\d]{2}-[\d]{2}-[\d]{2}\.(?:gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[id="prevstrip"\sname='[\d]{1,5}'\shref='(?<content>http://www\.dandyandcompany\.com/[\d]{4}/[\d]{2}/[\d]{2}/[^/]+/)]]></backButtonRegex>
+    <firstIssue><![CDATA[http://www.dandyandcompany.com/strips/10-11-01.gif]]></firstIssue>
+</comicInfo>

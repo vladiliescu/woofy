@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Exiern" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
+    <startUrl><![CDATA[http://www.exiern.com/]]></startUrl>
+    <comicRegex><![CDATA[istrip_files/strips/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[href="(?<content>/index\.php\?strip_id=[\d]{1,5})"><img\ssrc="themes/exiern1/images/active_prev\.png"]]></backButtonRegex>
+    <firstIssue><![CDATA[http://www.exiern.com/istrip_files/strips/20050906.jpg]]></firstIssue>
+</comicInfo>

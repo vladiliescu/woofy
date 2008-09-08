@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="True Magic" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
+    <startUrl><![CDATA[http://www.true-magic.com/comic/]]></startUrl>
+    <latestPageRegex><![CDATA[<H2>The\snewest\spage\sis\s<A\sHREF="(?<content>view\.php\?id=[\d]{1,5})">]]></latestPageRegex>
+    <comicRegex><![CDATA[HREF="view\.php(?:\?id=[\d]{1,5})?"><IMG\sSRC="(?<content>pages/[^.]+\.(?:gif|jpg|jpeg|png))]]></comicRegex>
+    <backButtonRegex><![CDATA[HREF="(?<content>view\.php\?id=[\d]{1,5})">Back]]></backButtonRegex>
+    <firstIssue><![CDATA[http://www.true-magic.com/comic/pages/1.jpg]]></firstIssue>
+</comicInfo>

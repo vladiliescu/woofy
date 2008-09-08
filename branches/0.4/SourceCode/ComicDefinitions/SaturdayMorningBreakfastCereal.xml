@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Saturday Morning Breakfast Cereal" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
+    <startUrl><![CDATA[http://www.smbc-comics.com/#comic]]></startUrl>
+	<rootUrl><![CDATA[http://www.smbc-comics.com/]]></rootUrl>
+    <comicRegex><![CDATA[src="(?<content>http://www.smbc-comics.com/comics/[^.]+\.(?:gif|jpg|jpeg|png))]]></comicRegex>
+    <backButtonRegex><![CDATA[coords="131,13,216,84"\s+href="(?<content>/index.php\?db=comics&id=[\d]{1,5}\#comic)"]]></backButtonRegex>
+    <firstIssue><![CDATA[http://www.smbc-comics.com/comics/20060520.gif]]></firstIssue>
+</comicInfo>

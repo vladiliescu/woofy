@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Terror Island" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
+    <startUrl><![CDATA[http://www.terrorisland.net/]]></startUrl>
+    <comicRegex><![CDATA[http://www\.terrorisland\.net/images/strips/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[href="(?<content>http://www\.terrorisland\.net/strips/[\d]+\.html)"><img\s+src="http://www\.terrorisland\.net/images/buttons/previous\.png"]]></backButtonRegex>
+    <firstIssue><![CDATA[http://www.terrorisland.net/images/strips/001.jpg]]></firstIssue>
+</comicInfo>

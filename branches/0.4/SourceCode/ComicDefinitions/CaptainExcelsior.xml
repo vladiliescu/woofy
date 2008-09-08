@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Captain Excelsior" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
+    <startUrl><![CDATA[http://www.captainexcelsior.com/]]></startUrl>
+    <comicRegex><![CDATA[comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[(?<content>/\?id=[\d]{1,4})><img\ src="nav/NAV_previous\.png"]]></backButtonRegex>
+    <firstIssue><![CDATA[http://www.captainexcelsior.com/comics/20070102ce.jpg]]></firstIssue>
+</comicInfo>

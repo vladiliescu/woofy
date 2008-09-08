@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Innies and Outties" author="Kolja Geldmacher">
+    <startUrl><![CDATA[http://www.webcomicsnation.com/lcachola/innies4/series.php]]></startUrl>
+    <firstIssue><![CDATA[http://www.webcomicsnation.com/memberimages/20000214.jpg]]></firstIssue>
+    <comicRegex><![CDATA[/memberimages/[0-9]{8}[^.]*\.(gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>http://www\.webcomicsnation\.com/lcachola/innies4/series\.php\?view=single&ID=[0-9]{5,6})">Previous</a>]]></backButtonRegex>
+</comicInfo>

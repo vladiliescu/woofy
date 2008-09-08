@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Insane Undertakings" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
+    <startUrl><![CDATA[http://insaneundertakings.comicgenesis.com/]]></startUrl>
+    <comicRegex><![CDATA[http://insaneundertakings.comicgenesis.com/comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[href="(?<content>http://insaneundertakings\.comicgenesis\.com/d/[\d]{8}\.html)"><img\sborder="0"\sname="previous_day]]></backButtonRegex>
+    <firstIssue><![CDATA[http://insaneundertakings.comicgenesis.com/comics/20030902.jpg]]></firstIssue>
+</comicInfo>
