@@ -3,5 +3,5 @@
     <startUrl><![CDATA[http://katbox.net/laslindas/]]></startUrl>
     <firstIssue><![CDATA[http://katbox.net/laslindas/istrip_files/strips/20040906.JPG]]></firstIssue>
     <comicRegex><![CDATA[istrip_files/strips/[\d]{8}.(gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref="(?<content>index.php\?strip_id=[\d]*)"><img\ssrc="/images/laslindas/active_prev.gif"]]></backButtonRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>index.php\?strip_id=[\d]*)"><img\ssrc="images/bt_back_01.png"]]></backButtonRegex>
 </comicInfo>
