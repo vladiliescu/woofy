@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Ménage à 3" author="Kolja Geldmacher">
+<comicInfo friendlyName="Menage a 3" author="Kolja Geldmacher">
     <startUrl><![CDATA[http://www.menagea3.net]]></startUrl>
     <firstIssue><![CDATA[http://www.menagea3.net/comics/mat20080517.png]]></firstIssue>
     <comicRegex><![CDATA[/comics/mat[0-9]{8}\.(gif|jpg|jpeg|png)]]></comicRegex>

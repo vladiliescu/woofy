@@ -138,7 +138,7 @@ namespace ComicDefListGenerator
                     builder.AppendLine("Updated:");
                 }
 
-                builder.AppendFormat(">> {0}\n", definition.FriendlyName);
+                builder.AppendFormat("  * {0}\n", definition.FriendlyName);
             }
 
             using (var writer = new StreamWriter(plaintextChangelogFile))
