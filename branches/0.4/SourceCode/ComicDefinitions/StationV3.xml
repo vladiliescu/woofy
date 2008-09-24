@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<comicInfo friendlyName="Station V3" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
+    <startUrl><![CDATA[http://www.stationv3.com/]]></startUrl>
+    <firstIssue><![CDATA[http://www.stationv3.com/comics/20030506sv3.gif]]></firstIssue>
+    <comicRegex><![CDATA[<img\ssrc="(?<content>/comics/[\w\d]*?\.(gif|jpg|jpeg|png|swf))"><p>]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>/d/[\d]*\.html)"><img\ssrc="/images/previous.gif"]]></backButtonRegex>
+</comicInfo>

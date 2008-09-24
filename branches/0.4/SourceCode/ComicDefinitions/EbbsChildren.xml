@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<comicInfo friendlyName="Ebb's Children" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
+    <startUrl><![CDATA[http://ebb.comicostrich.com/]]></startUrl>
+    <firstIssue><![CDATA[http://ebb.comicostrich.com/comics/20031020ebc.gif]]></firstIssue>
+    <comicRegex><![CDATA[<img\ssrc="(?<content>comics/[\w\d]*?\.(gif|jpg|jpeg|png|swf))"><p>]]></comicRegex>
+    <backButtonRegex><![CDATA[href="(?<content>comic.php\?cdate=[\d]*)"><img\ssrc="./images/previous.gif"]]></backButtonRegex>
+</comicInfo>
