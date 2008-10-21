@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Something Positive"  allowMultipleStrips="true" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
+    <startUrl><![CDATA[http://www.somethingpositive.net/]]></startUrl>
+    <comicRegex><![CDATA[<img\ssrc="(?<content>/arch/[\w\d]*.(gif|jpg|jpeg|png|swf))"]]></comicRegex>
+    <backButtonRegex><![CDATA[(<a\shref="(?<content>[\w\d]*.shtml)"><font\ssize=1[\s\n]*face="verdana,helvetica,arial"[\s\n]*STYLE="font-size:10px">Previous)|(<a\shref="(?<content>[\w\d]*.shtml)"><img\ssrc="images2/previous.gif")]]></backButtonRegex>
+    <firstIssue><![CDATA[http://www.somethingpositive.net/arch/sp12192001.gif]]></firstIssue>
+</comicInfo>
