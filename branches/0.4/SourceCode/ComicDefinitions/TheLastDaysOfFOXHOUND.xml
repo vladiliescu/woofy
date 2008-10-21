@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<comicInfo friendlyName="The Last Days of FOXHOUND" allowMultipleStrips="true" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
+    <startUrl><![CDATA[http://gigaville.com/comic.php]]></startUrl>
+    <firstIssue><![CDATA[http://gigaville.com/images/foxhound_001.png]]></firstIssue>
+    <comicRegex><![CDATA[<img\ssrc="(?<content>images/[\w\d]*.(gif|jpg|jpeg|png|swf))">]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>comic.php\?id=[\d\.\w]*)"><\sPrevious</a>]]></backButtonRegex>
+</comicInfo>
