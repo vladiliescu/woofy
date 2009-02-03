@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Dork Tower" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com" allowMultipleStrips="false" allowMissingStrips="true">
+    <startUrl><![CDATA[http://www.dorktower.com]]></startUrl>
+    <comicRegex><![CDATA[/images/comics/[\w\W]*?.(gif|jpg|jpeg|png|swf|mp4|gig)]]></comicRegex>
+    <backButtonRegex><![CDATA[/previous.php\?cat=[\d]*&id=[\d]*&time=[\d\-:\s]*]]></backButtonRegex>
+    <firstIssue><![CDATA[http://www.dorktower.com/images/comics/shadis01.jpg]]></firstIssue>
+</comicInfo>

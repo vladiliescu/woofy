@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Flipside" allowMultipleStrips="false" allowMissingStrips="false" author="XRagnar" authorEmail="xragnar@sourceforge.net" >
+    <startUrl><![CDATA[http://www.flipsidecomics.com/chapters.php]]></startUrl>
+    <firstIssue><![CDATA[http://www.flipsidecomics.com/comic/com-flip01-00.jpg]]></firstIssue>
+    <comicRegex><![CDATA[comic/.*?\.\w{3,4}]]></comicRegex>
+    <backButtonRegex><![CDATA[<A\sHREF="(?<content>[^"]+)">&lt;\sPrevious</A>]]></backButtonRegex>
+    <latestPageRegex><![CDATA[<a\shref="(?<content>[^"]+)">\d+</a></td></tr></table><div\sstyle="margin-left:\s\d+px;"></divs></td></tr></table>\s+<p><A\sHREF="http://www.flipsidecomics.com/email.html">]]></latestPageRegex>
+</comicInfo>

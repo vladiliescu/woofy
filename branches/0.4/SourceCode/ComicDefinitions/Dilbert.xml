@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<comicInfo friendlyName="Dilbert" author="Michael Hurwood" authorEmail="mhurwood@gmail.com">
+    <startUrl><![CDATA[http://www.dilbert.com/]]></startUrl>
+    <firstIssue><![CDATA[]]></firstIssue>
+    <rootUrl><![CDATA[]]></rootUrl>
+    <comicRegex><![CDATA[http://dilbert.com/dyn/str_strip/[0-9/]*\.strip\.(sunday.)*(gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[href="(?<content>/[0-9-]{10}/)"\sclass="STR_Prev">]]></backButtonRegex>
+    <captures>
+        <capture name="date"><![CDATA[/strips/comic/(?<content>[0-9-]{10})/">]]></capture>
+    </captures>
+    <renamePattern><![CDATA[Dilbert${date}]]></renamePattern>
+</comicInfo>
