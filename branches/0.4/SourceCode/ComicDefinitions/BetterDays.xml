@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Better Days" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
+    <startUrl><![CDATA[http://www.jaynaylor.com/betterdays/]]></startUrl>
+    <firstIssue><![CDATA[http://www.jaynaylor.com/betterdays/comic/BD1.gif]]></firstIssue>
+    <comicRegex><![CDATA[/betterdays/comic/[-\d\w.]*.(gif|jpg|jpeg|png|swf)]]></comicRegex>
+    <backButtonRegex><![CDATA[(?<content>http://www.jaynaylor.com/betterdays/archives/[-./\d\w]*.html)">&laquo;\sPrevious]]></backButtonRegex>
+</comicInfo>

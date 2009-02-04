@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Zap!" allowMultipleStrips="true" allowMissingStrips="true" author="gbuteler89" >
+    <startUrl><![CDATA[http://zapinspace.com/]]></startUrl>
+    <firstIssue><![CDATA[http://zapinspace.com/comics/20030713.jpg]]></firstIssue>
+    <comicRegex><![CDATA[/comics/[0-9]{8}.(gif|jpg|jpeg|png)]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>/d/[\d]*.html)"><img\sborder="0px"\sname="previous_day"]]></backButtonRegex>
+</comicInfo>

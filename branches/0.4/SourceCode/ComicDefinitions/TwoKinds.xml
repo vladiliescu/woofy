@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <comicInfo friendlyName="TwoKinds" allowMultipleStrips="true" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
     <startUrl><![CDATA[http://2kinds.com/]]></startUrl>
-    <firstIssue><![CDATA[http://twokinds.comicgenesis.com/comics/20031022.jpg]]></firstIssue>
-	<latestPageRegex><![CDATA["(?<content>http://twokinds.comicgenesis.com/d/[\w]{8}.html)"\salt="Previous\sComic"]]></latestPageRegex>
-    <comicRegex><![CDATA[http://twokinds.comicgenesis.com/comics/[\w]*.(gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref="(?<content>http://twokinds.comicgenesis.com/d/[0-9]*.html)"><img\sborder="0"\sname="previous_day"]]></backButtonRegex>
+    <firstIssue><![CDATA[http://twokindscomic.com/images/20031022.jpg]]></firstIssue>
+	<latestPageRegex><![CDATA[href="(?<content>http://twokindscomic.com/\?p=[\d]*)"\salt="Previous\sComic">]]></latestPageRegex>
+    <comicRegex><![CDATA[images/[\d\w]*.(gif|jpg|jpeg|png|swf)]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>\?p=[\d]*)"\sid="cg_back">]]></backButtonRegex>
 </comicInfo>

@@ -4,4 +4,8 @@
     <comicRegex><![CDATA[/images/comics/[\w\W]*?.(gif|jpg|jpeg|png|swf|mp4|gig)]]></comicRegex>
     <backButtonRegex><![CDATA[/previous.php\?cat=[\d]*&id=[\d]*&time=[\d\-:\s]*]]></backButtonRegex>
     <firstIssue><![CDATA[http://www.dorktower.com/images/comics/shadis01.jpg]]></firstIssue>
+	<captures>
+		<capture name="postId"><![CDATA[<div\sclass="post"\sid="post-(?<content>[\d]*)">]]></capture>
+	</captures>
+	<renamePattern>DorkTower_${postId}_${fileName}</renamePattern>
 </comicInfo>
