@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<comicInfo friendlyName="Grim Tales" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
+    <startUrl><![CDATA[http://www.grim.snafu-comics.com/]]></startUrl>
+	<firstIssue><![CDATA[http://grim.snafu-comics.com/comics/041220_grim.jpg]]></firstIssue>
+    <comicRegex><![CDATA[(?<content>http://grim.snafu-comics.com/comics/[\d\w]*.(gif|jpg|jpeg|png|swf))\salt="Snafu\sComics"]]></comicRegex>
+    <backButtonRegex><![CDATA[<a\shref="(?<content>\?comic_id=[\d]*)">Previous</a>]]></backButtonRegex>    
+</comicInfo>
