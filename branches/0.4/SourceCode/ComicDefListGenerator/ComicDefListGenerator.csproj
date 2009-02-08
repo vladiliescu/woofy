@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{C7E1E6B5-FC47-4079-89A0-5D9AF8351F03}</ProjectGuid>
     <OutputType>Exe</OutputType>
@@ -61,7 +61,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>del "..\..\..\..\Tools\ComicDefListGenerator\*.*" /q
-copy "$(TargetDir)\*.*" "..\..\..\..\Tools\ComicDefListGenerator"</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>
