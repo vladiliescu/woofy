@@ -4,4 +4,8 @@
     <firstIssue><![CDATA[http://imgs.xkcd.com/comics/barrel_cropped_(1).jpg]]></firstIssue>
     <comicRegex><![CDATA[<img\ssrc="(?<content>http://imgs.xkcd.com/comics/[\w()-]*\.(gif|jpg|jpeg|png))]]></comicRegex> 
     <backButtonRegex><![CDATA[<a\shref="(?<content>/[\d]*/)"\saccesskey="p">]]></backButtonRegex>
+	<captures>
+		<capture name="id" ><![CDATA[http://xkcd.com/(?<content>[\d]*)/</h3>]]></capture>
+	</captures>
+	<renamePattern><![CDATA[${id}_${fileName}]]></renamePattern>
 </comicInfo>
