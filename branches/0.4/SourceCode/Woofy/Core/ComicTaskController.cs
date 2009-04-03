@@ -210,11 +210,15 @@ namespace Woofy.Core
 
                     ComicTask task = _tasks[index];
                     if (e.DownloadOutcome == DownloadOutcome.Cancelled)
+                    {
                         task.Status = TaskStatus.Stopped;
+                    }
                     else
+                    {
                         task.Status = TaskStatus.Finished;
+                        task.CurrentUrl = null;
+                    }
                     task.DownloadOutcome = e.DownloadOutcome;
-                    task.CurrentUrl = null;
                     task.Update();
 
                     ResetTasksBindings();

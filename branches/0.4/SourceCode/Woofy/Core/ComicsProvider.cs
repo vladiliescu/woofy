@@ -22,8 +22,8 @@ namespace Woofy.Core
         #endregion
 
         #region Instance Members
-        private IFileDownloader _comicsDownloader;
-        private ComicDefinition _comicInfo;
+        private readonly IFileDownloader _comicsDownloader;
+        private readonly ComicDefinition _comicInfo;
         //private WebClient _client;
         private bool _isDownloadCancelled;
         #endregion
@@ -33,20 +33,11 @@ namespace Woofy.Core
         #endregion
 
         #region .ctor
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ComicsProvider"/> class.
-        /// </summary>
-        /// <param name="comicInfo">An instance of the <see cref="ComicDefinition"/> class, used to determine how to get the comic links.</param>
-        /// <param name="downloadFolder">The folder to which the comics should be downloaded.</param>
         public ComicsProvider(ComicDefinition comicInfo, string downloadFolder)
             : this(comicInfo, new FileDownloader(downloadFolder))
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ComicsProvider"/> class.
-        /// </summary>
-        /// <param name="comicInfo">An instance of the <see cref="ComicInfo"/> class, used to determine how to get the comic links.</param>
         public ComicsProvider(ComicDefinition comicInfo, IFileDownloader comicsDownloader)
         {
             _comicInfo = comicInfo;
@@ -81,7 +72,7 @@ namespace Woofy.Core
             {
                 Logger.Debug("Downloading comic {0}.", _comicInfo.FriendlyName);
                 string properStartUrl;
-                if (startUrl.Equals(_comicInfo.StartUrl, StringComparison.OrdinalIgnoreCase))
+                if (string.IsNullOrEmpty(startUrl) || startUrl.Equals(_comicInfo.StartUrl, StringComparison.OrdinalIgnoreCase))
                     properStartUrl = GetProperStartUrl(startUrl, _comicInfo.LatestPageRegex);
                 else
                     properStartUrl = startUrl;
@@ -133,14 +124,14 @@ namespace Woofy.Core
 
                         _comicsDownloader.DownloadFile(comicLink.AbsoluteUri, currentUrl, fileName, out fileAlreadyDownloaded);
 
-                        if (fileAlreadyDownloaded && comicsToDownload == ComicsProvider.AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
+                        if (fileAlreadyDownloaded && comicsToDownload == AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
                             break;
 
                         OnDownloadComicCompleted(new DownloadStripCompletedEventArgs(i + 1, backButtonStringLink));
                     }
 
                     //HACK
-                    if (fileAlreadyDownloaded && comicsToDownload == ComicsProvider.AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
+                    if (fileAlreadyDownloaded && comicsToDownload == AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
                         break;
 
                     if (backButtonLink == null)
