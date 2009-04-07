@@ -160,7 +160,7 @@ namespace Woofy.Gui
             this.lblIconCredit.Name = "lblIconCredit";
             this.lblIconCredit.Size = new System.Drawing.Size(325, 13);
             this.lblIconCredit.TabIndex = 3;
-            this.lblIconCredit.Text = "Jeremy James for the permission to use his creation as Woofy\'s icon";
+            this.lblIconCredit.Text = "Jeremy James for allowing me to use his artwork as Woofy\'s icon";
             // 
             // lnkFamFamFam
             // 
