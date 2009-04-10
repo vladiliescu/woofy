@@ -152,7 +152,7 @@ namespace Woofy.Core
         {
             var comicInfo = new ComicDefinition(task.ComicInfoFile);
 
-            ComicsProvider comicsProvider = new ComicsProvider(comicInfo, task.DownloadFolder);
+            var comicsProvider = new ComicsProvider(comicInfo, task.DownloadFolder);
             _comicProviders.Add(comicsProvider);
 
             comicsProvider.DownloadComicCompleted += DownloadComicCompletedCallback;
@@ -181,7 +181,7 @@ namespace Woofy.Core
             _tasksGrid.Invoke(new MethodInvoker(
                 delegate
                     {
-                    ComicsProvider provider = (ComicsProvider)sender;
+                    var provider = (ComicsProvider)sender;
 
                     int index = _comicProviders.IndexOf(provider);
                     if (index == -1)    //in case the task has already been deleted.
@@ -202,22 +202,19 @@ namespace Woofy.Core
             _tasksGrid.Invoke(new MethodInvoker(
                 delegate
                 {
-                    ComicsProvider comicsProvider = (ComicsProvider)sender;
+                    var comicsProvider = (ComicsProvider)sender;
 
-                    int index = _comicProviders.IndexOf(comicsProvider);
+                    var index = _comicProviders.IndexOf(comicsProvider);
                     if (index == -1)    //in case the task has already been deleted.
                         return;
 
-                    ComicTask task = _tasks[index];
-                    if (e.DownloadOutcome == DownloadOutcome.Cancelled)
-                    {
-                        task.Status = TaskStatus.Stopped;
-                    }
-                    else
-                    {
-                        task.Status = TaskStatus.Finished;
+                    var task = _tasks[index];
+                    task.Status = e.DownloadOutcome == DownloadOutcome.Cancelled ? TaskStatus.Stopped : TaskStatus.Finished;
+
+                    //only set the currentUrl to null if the outcome is successful
+                    if (e.DownloadOutcome == DownloadOutcome.Successful)
                         task.CurrentUrl = null;
-                    }
+
                     task.DownloadOutcome = e.DownloadOutcome;
                     task.Update();
 
@@ -226,14 +223,14 @@ namespace Woofy.Core
                     if (!UserSettings.CloseWhenAllComicsHaveFinished)
                         return;
 
-                    bool allTasksHaveFinished = true;
-                    foreach (ComicTask _task in _tasks)
+                    var allTasksHaveFinished = true;
+                    foreach (var _task in _tasks)
                     {
-                        if (_task.Status == TaskStatus.Running)
-                        {
-                            allTasksHaveFinished = false;
-                            break;
-                        }
+                        if (_task.Status != TaskStatus.Running) 
+                            continue;
+
+                        allTasksHaveFinished = false;
+                        break;
                     }
 
                     if (allTasksHaveFinished)

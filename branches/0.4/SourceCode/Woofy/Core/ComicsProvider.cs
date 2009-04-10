@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net.Sockets;
 using System.Text.RegularExpressions;
 using System.Net;
 using System.Threading;
@@ -97,7 +98,7 @@ namespace Woofy.Core
                     Uri responseUri;
                     using (var response = (HttpWebResponse)request.GetResponse())
                     {
-                        StreamReader reader = new StreamReader(response.GetResponseStream());
+                        var reader = new StreamReader(response.GetResponseStream());
                         pageContent = reader.ReadToEnd();
 
                         responseUri = response.ResponseUri;
@@ -157,36 +158,20 @@ namespace Woofy.Core
                 Logger.Debug("Encountered an exception while searching for regex matches: {0}.", ex.Message);
                 downloadOutcome = DownloadOutcome.Error;
             }
+            catch (IOException ex)
+            {
+                //if the network goes down while downloading a strip, the FileDownloader will throw an IOException containing a SocketException
+                //yummy
+                if (!(ex.InnerException is SocketException))
+                    throw;
+                Logger.Debug("Could not access the network.");
+                downloadOutcome = DownloadOutcome.Error;
+            }
 
             OnDownloadCompleted(downloadOutcome);
 
             return downloadOutcome;
         }
-
-        private string GetFileName(string fileLink, string renamePattern, Dictionary<string, string> captures)
-        {
-            var baseFileName = fileLink.Substring(fileLink.LastIndexOf('/') + 1);
-            var fileName = baseFileName;
-            if (!string.IsNullOrEmpty(renamePattern))
-            {
-                fileName = Regex.Replace(renamePattern, @"\$\{(?<name>[\w\d]*)\}",
-                    delegate(Match match)
-                    {
-                        var name = match.Groups["name"].Value;
-                        if (name == "fileName")
-                            return Path.GetFileNameWithoutExtension(baseFileName);
-
-                        return captures[name];
-                    }
-                );
-
-                if (!fileName.Contains("."))
-                    fileName += Path.GetExtension(baseFileName);
-            }
-
-            return fileName;
-        }
-
 
         /// <summary>
         /// Downloads the specified number of comic strips asynchronously.
@@ -217,9 +202,34 @@ namespace Woofy.Core
         #endregion
 
         #region Helper Methods
+
+        private string GetFileName(string fileLink, string renamePattern, IDictionary<string, string> captures)
+        {
+            var baseFileName = fileLink.Substring(fileLink.LastIndexOf('/') + 1);
+            var fileName = baseFileName;
+            if (!string.IsNullOrEmpty(renamePattern))
+            {
+                fileName = Regex.Replace(renamePattern, @"\$\{(?<name>[\w\d]*)\}",
+                    delegate(Match match)
+                    {
+                        var name = match.Groups["name"].Value;
+                        if (name == "fileName")
+                            return Path.GetFileNameWithoutExtension(baseFileName);
+
+                        return captures[name];
+                    }
+                );
+
+                if (!fileName.Contains("."))
+                    fileName += Path.GetExtension(baseFileName);
+            }
+
+            return fileName;
+        }
+
         public static Uri[] RetrieveLinksFromPage(string pageContent, Uri currentUri, string regex)
         {
-            List<Uri> links = new List<Uri>();
+            var links = new List<Uri>();
             MatchCollection matches;
 
             try
@@ -233,11 +243,7 @@ namespace Woofy.Core
 
             foreach (Match match in matches)
             {
-                string capturedContent;
-                if (match.Groups[ContentGroup].Success)
-                    capturedContent = match.Groups[ContentGroup].Value;
-                else
-                    capturedContent = match.Value;
+                string capturedContent = match.Groups[ContentGroup].Success ? match.Groups[ContentGroup].Value : match.Value;
 
                 //just in case someone html-encoded the link; happened with Gone With The Blastwave;
                 capturedContent = HttpUtility.HtmlDecode(capturedContent);
@@ -254,9 +260,7 @@ namespace Woofy.Core
         /// <summary>
         /// Checks if the matched comic links obey the comic's download rules (i.e. no multiple strip matches).
         /// </summary>
-        /// <param name="comicLinks">The list of matched comic links.</param>
         /// <param name="downloadOutcome">If a rule is not obeyed, then this parameter will contain the respective outcome.</param>
-        /// <returns>True if the matched links obey the rules, false otherwise.</returns>
         public static bool MatchedLinksObeyRules(int linksLength, bool allowMissingStrips, bool allowMultipleStrips, ref DownloadOutcome downloadOutcome)
         {
             if (linksLength == 0 && !allowMissingStrips)
@@ -281,11 +285,11 @@ namespace Woofy.Core
 
             Logger.Debug("Visiting page {0}.", startUrl);
             string pageContent;
-            HttpWebRequest request = (HttpWebRequest)WebConnectionFactory.GetNewWebRequestInstance(startUrl);
+            var request = (HttpWebRequest)WebConnectionFactory.GetNewWebRequestInstance(startUrl);
             Uri uri;
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            using (var response = (HttpWebResponse)request.GetResponse())
             {
-                StreamReader reader = new StreamReader(response.GetResponseStream());
+                var reader = new StreamReader(response.GetResponseStream());
                 pageContent = reader.ReadToEnd();
 
                 uri = response.ResponseUri;
@@ -329,9 +333,11 @@ namespace Woofy.Core
         /// Returns the back button link from the specified page, or, if there are several back button links in the page, it returns null.
         /// </summary>
         /// <param name="pageContent">Page content.</param>
+        /// <param name="currentUri"></param>
         /// <returns></returns>
         private Uri RetrieveBackButtonLinkFromPage(string pageContent, Uri currentUri, ComicDefinition comicInfo)
         {
+            if (comicInfo == null) throw new ArgumentNullException("comicInfo");
             Uri[] backButtonLinks = RetrieveLinksFromPage(pageContent, currentUri, comicInfo.BackButtonRegex);
 
             if (backButtonLinks.Length > 0)
@@ -353,12 +359,10 @@ namespace Woofy.Core
 
                 return backButtonLinks[0];
             }
-            else
-            {
-                Logger.Debug("No links match the backButtonRegex element. The comic has completed.");
+            
+            Logger.Debug("No links match the backButtonRegex element. The comic has completed.");
 
-                return null;
-            }
+            return null;
         }
 
         private Uri[] RetrieveComicLinksFromPage(string pageContent, Uri pageUri, ComicDefinition comicInfo)

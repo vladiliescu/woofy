@@ -39,8 +39,8 @@ namespace Woofy.Gui
             if (!UserSettings.MinimizeToTray)
                 return;
 
-            if (this.WindowState == FormWindowState.Minimized)
-                this.Hide();
+            if (WindowState == FormWindowState.Minimized)
+                Hide();
         }
         #endregion
 
@@ -49,7 +49,7 @@ namespace Woofy.Gui
         {
             foreach (DataGridViewRow row in dgvwTasks.Rows)
             {
-                ComicTask task = (ComicTask)row.DataBoundItem;
+                var task = (ComicTask)row.DataBoundItem;
 
                 string comicsToDownload = task.ComicsToDownload.HasValue ? task.ComicsToDownload.Value.ToString() : "-";
 
@@ -95,7 +95,9 @@ namespace Woofy.Gui
                     break;
                 case DownloadOutcome.Error:
                     icon = Resources.Error;
-                    toolTip = string.Format("An error has occurred while downloading the strip at {0}.", url);
+                    toolTip = string.IsNullOrEmpty(url) ? 
+                        "An error has occurred while downloading the latest strip." :
+                        string.Format("An error has occurred while downloading the strip at {0}.", url);
                     break;
                 default:
                     throw new System.ComponentModel.InvalidEnumArgumentException("downloadOutcome", (int)downloadOutcome, typeof(DownloadOutcome));
@@ -113,7 +115,7 @@ namespace Woofy.Gui
             if (dgvwTasks.SelectedRows.Count == 0)
                 return;
 
-            ComicTask task = (ComicTask)dgvwTasks.SelectedRows[0].DataBoundItem;
+            var task = (ComicTask)dgvwTasks.SelectedRows[0].DataBoundItem;
             if (task.Status == TaskStatus.Finished)
                 _tasksController.OpenTaskFolder(task);
             else
@@ -133,7 +135,7 @@ namespace Woofy.Gui
             toolStripButtonDeleteTask.Enabled = true;
             toolStripButtonOpenFolder.Enabled = true;
 
-            ComicTask task = (ComicTask)dgvwTasks.SelectedRows[0].DataBoundItem;
+            var task = (ComicTask)dgvwTasks.SelectedRows[0].DataBoundItem;
 
             switch (task.Status)
             {
@@ -157,9 +159,9 @@ namespace Woofy.Gui
         #region Initialization Methods
         private void InitControls()
         {
-            Icon appIcon = new Icon(typeof(Program), "Woofy.ico");
+            var appIcon = new Icon(typeof(Program), "Woofy.ico");
 
-            this.Icon = 
+            Icon = 
                 notifyIcon.Icon = appIcon;
 
             _tasksController.Initialize();
@@ -167,7 +169,7 @@ namespace Woofy.Gui
             dgvwTasks.AutoGenerateColumns = false;
             dgvwTasks.DataSource = _tasksController.Tasks;
 
-            ToolStripSplitButton splitButton = new ToolStripSplitButton("Check for updates", Resources.CheckForUpdates);
+            var splitButton = new ToolStripSplitButton("Check for updates", Resources.CheckForUpdates);
             splitButton.DropDown.Items.Add("Check for updates", Resources.CheckForUpdates, CheckForUpdates_Click);
             splitButton.DropDown.Items.Add("Debug comic definitions..", Resources.DebugDefinitions, DebugDefinitions_Click);
             splitButton.DropDown.Items.Add("About..", Resources.About, About_Click);
@@ -181,7 +183,7 @@ namespace Woofy.Gui
         #region Helper Methods
         private void AddTask()
         {
-            TaskDetailsForm taskDetails = new TaskDetailsForm(_tasksController);
+            var taskDetails = new TaskDetailsForm(_tasksController);
             taskDetails.ShowDialog();
         }
 
@@ -199,7 +201,7 @@ namespace Woofy.Gui
 
             foreach (DataGridViewRow selectedRow in dgvwTasks.SelectedRows)
             {
-                ComicTask task = (ComicTask)selectedRow.DataBoundItem;
+                var task = (ComicTask)selectedRow.DataBoundItem;
                 _tasksController.DeleteTask(task);
             }
         }
@@ -211,7 +213,7 @@ namespace Woofy.Gui
 
             foreach (DataGridViewRow selectedRow in dgvwTasks.SelectedRows)
             {
-                ComicTask task = (ComicTask)selectedRow.DataBoundItem;
+                var task = (ComicTask)selectedRow.DataBoundItem;
                 _tasksController.ToggleTaskState(task, false);
             }
 
@@ -223,7 +225,7 @@ namespace Woofy.Gui
             if (dgvwTasks.SelectedRows.Count == 0)
                 return;
 
-            ComicTask task = (ComicTask)dgvwTasks.SelectedRows[0].DataBoundItem;
+            var task = (ComicTask)dgvwTasks.SelectedRows[0].DataBoundItem;
 
             _tasksController.OpenTaskFolder(task);
         }
@@ -235,7 +237,7 @@ namespace Woofy.Gui
         {
             foreach (DataGridViewRow row in dgvwTasks.Rows)
             {
-                ComicTask task = (ComicTask)row.DataBoundItem;
+                var task = (ComicTask)row.DataBoundItem;
                 _tasksController.StartTask(task);
             }
 
@@ -249,7 +251,7 @@ namespace Woofy.Gui
         {
             foreach (DataGridViewRow row in dgvwTasks.Rows)
             {
-                ComicTask task = (ComicTask)row.DataBoundItem;
+                var task = (ComicTask)row.DataBoundItem;
                 _tasksController.StopTask(task);
             }
 
@@ -303,13 +305,13 @@ namespace Woofy.Gui
 
         private void About_Click(object sender, EventArgs e)
         {
-            AboutForm aboutForm = new AboutForm();
+            var aboutForm = new AboutForm();
             aboutForm.ShowDialog();
         }
 
         private void toolStripButtonSettings_Click(object sender, EventArgs e)
         {
-            SettingsForm settingsForm = new SettingsForm();
+            var settingsForm = new SettingsForm();
             settingsForm.ShowDialog();
         }
 
@@ -322,7 +324,7 @@ namespace Woofy.Gui
         {
             StopAllTasks();
 
-            DefinitionsDebugForm definitionsDebugForm = new DefinitionsDebugForm();            
+            var definitionsDebugForm = new DefinitionsDebugForm();            
             definitionsDebugForm.ShowDialog();
         }
         #endregion        
@@ -330,15 +332,15 @@ namespace Woofy.Gui
         #region Events - Tray Tool Strip Menus
         private void hideShowWoofyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (this.Visible)
+            if (Visible)
             {
-                this.WindowState = FormWindowState.Minimized;
-                this.Visible = false;
+                WindowState = FormWindowState.Minimized;
+                Visible = false;
             }
             else
             {
-                this.Visible = true;
-                this.WindowState = FormWindowState.Normal;
+                Visible = true;
+                WindowState = FormWindowState.Normal;
             }
         }
 
@@ -361,8 +363,8 @@ namespace Woofy.Gui
         #region Events - notifyIcon
         private void notifyIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            this.Visible = true;
-            this.WindowState = FormWindowState.Normal;
+            Visible = true;
+            WindowState = FormWindowState.Normal;
         } 
         #endregion
 
@@ -373,13 +375,13 @@ namespace Woofy.Gui
         /// <param name="downloadFileSize">The size of the file to download. Needed for initializing the download progress form.</param>
         public void InitializeUpdatesDownloadProgressForm(int downloadFileSize)
         {
-            this.Invoke(new MethodInvoker(
+            Invoke(new MethodInvoker(
                 delegate
                 {
-                    DownloadProgressForm downloadProgressForm = new DownloadProgressForm(downloadFileSize);
+                    var downloadProgressForm = new DownloadProgressForm(downloadFileSize);
                     downloadProgressForm.Show();
 
-                    this.Hide();
+                    Hide();
                 }
             ));            
         }
@@ -390,19 +392,17 @@ namespace Woofy.Gui
         /// <param name="errorMessage">The error message to report to the user.</param>
         public void ReportError(string errorMessage)
         {
-            this.Invoke(new MethodInvoker(
-                delegate
-                {
-                    MessageBox.Show(errorMessage, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            ));
+            Invoke(new MethodInvoker(
+                       () =>
+                       MessageBox.Show(errorMessage, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                       ));
         }
 
         public DialogResult DisplayMessageBox(string message, MessageBoxButtons buttons, MessageBoxIcon icon)
         {
-            DialogResult result = DialogResult.None;
+            var result = DialogResult.None;
             
-            this.Invoke(new MethodInvoker(
+            Invoke(new MethodInvoker(
                 delegate
                 {
                     result = MessageBox.Show(message, Application.ProductName, buttons, icon);
