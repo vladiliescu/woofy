@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Xylia" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
-    <startUrl><![CDATA[http://xyliatales.com]]></startUrl>
-    <comicRegex><![CDATA[http://xyliatales.com/comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[href="(?<content>http://xyliatales.com/[\d]{8}/)">&#9668;\sPrevious]]></backButtonRegex>
-    <firstIssue><![CDATA[http://xyliatales.com/comics/2007-10-03.jpg]]></firstIssue>
-</comicInfo>
