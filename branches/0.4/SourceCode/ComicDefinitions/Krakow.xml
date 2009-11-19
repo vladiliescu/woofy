@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Krakow" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
-    <startUrl><![CDATA[http://www.krakowstudios.com/]]></startUrl>
-    <comicRegex><![CDATA[comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[href="(?<content>archive\.php\?date=[\d]{8})"><img\sborder=0\sname=previous_day]]></backButtonRegex>
-    <firstIssue><![CDATA[http://www.krakowstudios.com/comics/20001005.gif]]></firstIssue>
-</comicInfo>

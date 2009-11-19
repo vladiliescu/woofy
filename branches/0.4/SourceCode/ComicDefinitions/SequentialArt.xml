@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Sequential Art" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
-    <startUrl><![CDATA[http://www.collectedcurios.com/sequentialart.php]]></startUrl>
-    <rootUrl><![CDATA[http://www.collectedcurios.com/]]></rootUrl>
-    <comicRegex><![CDATA[img\sid="strip"\ssrc="(?<content>[^.]+\.(?:gif|jpg|jpeg|png))]]></comicRegex>
-    <backButtonRegex><![CDATA[href="(?<content>/sequentialart\.php\?s=[\d]{1,6})"><img\ssrc="Nav_BackOne\.gif"]]></backButtonRegex>
-    <firstIssue><![CDATA[http://www.collectedcurios.com/SA_0001_small.jpg]]></firstIssue>
-</comicInfo>

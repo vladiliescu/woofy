@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="The Adventures of Dr. McNinja #000" author="Citizen Drago" allowMultipleStrips="true" allowMissingStrips="false">
-    <startUrl><![CDATA[http://www.drmcninja.com/mcdonalds.html]]></startUrl>
-    <comicRegex><![CDATA[mcdonalds/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[/about.html]]></backButtonRegex>
-    <firstIssue><![CDATA[http://www.drmcninja.com/mcdonalds/mcd15.jpg]]></firstIssue>
-</comicInfo>

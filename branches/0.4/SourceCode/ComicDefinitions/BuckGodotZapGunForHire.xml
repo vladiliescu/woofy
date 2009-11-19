@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Buck Godot Zap Gun for Hire" author="Citizen Drago" allowMultipleStrips="true" allowMissingStrips="false">
-    <startUrl><![CDATA[http://www.airshipentertainment.com/buck.html]]></startUrl>
-    <firstIssue><![CDATA[http://www.airshipentertainment.com/buck/buckcomic/strips/buck20070111.jpg]]></firstIssue>
-    <rootUrl><![CDATA[http://www.airshipentertainment.com]]></rootUrl>
-    <latestPageRegex><![CDATA[/buckcomic.php]]></latestPageRegex>
-    <comicRegex><![CDATA[/buck/buckcomic/strips/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[(?<content>/buckcomic\.php\?date=[\d]{8})'><img\sborder=0\salt='The\sPrevious\sComic']]></backButtonRegex>
-</comicInfo>

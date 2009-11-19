@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="General Protection Fault" allowMultipleStrips="true" allowMissingStrips="false" author="kumorikage" authorEmail="j_sassinak@hotmail.com" >
-    <startUrl><![CDATA[http://www.gpf-comics.com/]]></startUrl>
-    <firstIssue><![CDATA[http://www.gpf-comics.com/comics/gpf19981102fA_rY.png]]></firstIssue>
-    <comicRegex><![CDATA[/comics/gpf[0-9]{8}[^.]{5}\.(gif|jpg|png|jpeg)]]></comicRegex>
-    <backButtonRegex><![CDATA[<a.*(?<content>/archive\.php\?d=[0-9]{8})".*alt="Previous\sComic".*/a>]]></backButtonRegex>
-</comicInfo>

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Irregular Webcomic" allowMultipleStrips="true" author="Citizen Drago">
-    <startUrl><![CDATA[http://www.irregularwebcomic.net]]></startUrl>
-    <firstIssue><![CDATA[http://www.irregularwebcomic.net/comics/irreg0001.jpg]]></firstIssue>
-    <comicRegex><![CDATA[(src="(?<content>/comics/irreg[\w]*\.(gif|jpg|jpeg|png))")|(?<content>/comics/irreg[0-9]{4}[a-z]+\.(gif|jpg|jpeg|png))]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref="(?<content>/[\d]{1,5}\.html)">Previous\s\([\d]{1,5}\)</a>]]></backButtonRegex>
-</comicInfo>

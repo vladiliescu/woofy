@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Antihero for Hire" allowMultipleStrips="false" allowMissingStrips="true" author="kumorikage" authorEmail="j_sassinak@hotmail.com" >
-    <startUrl><![CDATA[http://www.antiheroforhire.com/]]></startUrl>
-    <firstIssue><![CDATA[http://www.antiheroforhire.com/comics/afh20030601.gif]]></firstIssue>
-    <comicRegex><![CDATA[/comics/afh[0-9]{8}.?\.(jpg|jpeg|png|gif)]]></comicRegex>
-    <backButtonRegex><![CDATA[<a.*(?<content>/d/[0-9]{8}\.html).*alt="Previous\scomic".*/a>]]></backButtonRegex>
-</comicInfo>

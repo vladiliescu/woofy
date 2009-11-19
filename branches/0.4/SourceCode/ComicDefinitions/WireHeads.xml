@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="WireHeads" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
-    <startUrl><![CDATA[http://www.wire-heads.com/istrip/]]></startUrl>
-    <comicRegex><![CDATA[istrip_files/strips/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[HREF="/istrip/(?<content>index\.php\?strip_id=[\d]{1,4})"[\s\n]+ONMOUSEOVER="window\.status='Previous']]></backButtonRegex>
-    <firstIssue><![CDATA[http://www.wire-heads.com/istrip/istrip_files/strips/20060515.jpg]]></firstIssue>
-</comicInfo>

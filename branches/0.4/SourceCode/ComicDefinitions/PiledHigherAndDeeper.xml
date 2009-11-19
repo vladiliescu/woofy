@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Piled Higher and Deeper" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
-    <startUrl><![CDATA[http://www.phdcomics.com/comics.php]]></startUrl>
-    <rootUrl><![CDATA[http://www.phdcomics.com/comics/]]></rootUrl>
-    <firstIssue><![CDATA[http://www.phdcomics.com/comics/archive/phd1027.gif]]></firstIssue>
-    <comicRegex><![CDATA['(?<content>http://www.phdcomics.com/comics/archive/[\w\d]*\.(gif|jpg|jpeg|png|swf))']]></comicRegex>
-    <backButtonRegex><![CDATA[(?<content>archive\.php\?comicid=[\d]*)><img\sheight=52\swidth=49\ssrc=[\w/]*?prev_button.gif]]></backButtonRegex>
-</comicInfo>

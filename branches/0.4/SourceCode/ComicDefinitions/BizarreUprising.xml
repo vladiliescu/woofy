@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Bizarre Uprising" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
-    <startUrl><![CDATA[http://www.bizarreuprising.com/view.php]]></startUrl>
-    <rootUrl><![CDATA[http://www.bizarreuprising.com]]></rootUrl>
-    <comicRegex><![CDATA[comic/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[href="(?<content>view\.php\?id=[\d]{1,4})"><img\ssrc="images/b_prev\.gif"]]></backButtonRegex>
-    <firstIssue><![CDATA[http://www.bizarreuprising.com/comic/020304.gif]]></firstIssue>
-</comicInfo>

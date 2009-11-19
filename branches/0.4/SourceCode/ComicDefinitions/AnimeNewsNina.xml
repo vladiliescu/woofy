@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Anime News Nina" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
-    <startUrl><![CDATA[http://www.animenewsnetwork.com/anime-news-nina]]></startUrl>
-    <firstIssue><![CDATA[http://www.animenewsnetwork.com/images/cms/column/20006/animenewsnina1.jpg]]></firstIssue>
-    <latestPageRegex><![CDATA[<li><a\shref="(?<content>/anime-news-nina/[\d\-]*)">]]></latestPageRegex>
-    <comicRegex><![CDATA[<a\shref="(?<content>/images/cms/[\w\d\-]*/[\d]*/[\w\d\-]*.(gif|jpg|jpeg|png|swf))">]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref="(?<content>/anime-news-nina/[\d\-/]*?)">previous</a>]]></backButtonRegex>
-</comicInfo>

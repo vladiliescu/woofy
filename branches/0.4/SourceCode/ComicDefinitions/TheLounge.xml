@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="The Lounge" allowMultipleStrips="true" allowMissingStrips="false" author="kumorikage" authorEmail="j_sassinak@hotmail.com" >
-    <startUrl><![CDATA[http://thelounge.comicgenesis.com/]]></startUrl>
-    <firstIssue><![CDATA[http://thelounge.comicgenesis.com/comics/20020601.jpg]]></firstIssue>
-    <comicRegex><![CDATA[/comics/[0-9]{8}\w?\.(jpg|jpeg|png|gif)]]></comicRegex>
-    <backButtonRegex><![CDATA[<a.*(?<content>/d/[0-9]{8}\.html).*Previous\scomic.*/a>]]></backButtonRegex>
-</comicInfo>

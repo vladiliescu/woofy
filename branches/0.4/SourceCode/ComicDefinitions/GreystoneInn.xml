@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Greystone Inn" author="Citizen Drago" allowMultipleStrips="true" allowMissingStrips="false">
-    <startUrl><![CDATA[http://www.greystoneinn.net/]]></startUrl>
-    <comicRegex><![CDATA[/comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[href="(?<content>(?:http://www\.greystoneinn\.net)?/d/[\d]{8}.html)"\starget="_self"><img\sborder=0\ssrc="/images/previous_day]]></backButtonRegex>
-    <firstIssue><![CDATA[http://www.greystoneinn.net/comics/20000214.gif]]></firstIssue>
-</comicInfo>

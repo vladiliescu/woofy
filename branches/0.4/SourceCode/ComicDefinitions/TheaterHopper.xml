@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Theater Hopper" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
-    <startUrl><![CDATA[http://www.theaterhopper.com/]]></startUrl>
-    <firstIssue><![CDATA[http://www.theaterhopper.com/vault/020805.jpg]]></firstIssue>
-    <comicRegex><![CDATA[<img\ssrc="(?<content>/vault/\d{6}\.(?:gif|jpg|jpeg|png))"]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref="(?<content>\?date=20\d{6})">BACK</a>]]></backButtonRegex>
-</comicInfo>

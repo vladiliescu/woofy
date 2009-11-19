@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Hookie Dookie Panic!" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
-    <startUrl><![CDATA[http://www.hookiedookiepanic.com]]></startUrl>
-    <firstIssue><![CDATA[http://www.hookiedookiepanic.com/pics/1.jpg]]></firstIssue>
-    <latestPageRegex><![CDATA[a\shref="(?<content>comic\.php\?ID=[\d]{1,4})"><img\ssrc="latestthumb\.jpg"]]></latestPageRegex>
-    <comicRegex><![CDATA[pics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[a\shref="(?<content>comic\.php\?ID=[\d]{1,4})"><img\ssrc="pagegraphics/naviprevious\.gif"]]></backButtonRegex>
-</comicInfo>

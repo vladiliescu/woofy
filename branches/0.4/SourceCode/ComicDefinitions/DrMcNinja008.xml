@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="The Adventures of Dr. McNinja #008" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
-    <startUrl><![CDATA[http://www.drmcninja.com/page.php?pageNum=49&issue=8]]></startUrl>
-    <comicRegex><![CDATA[/issue[\d]{1,3}[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[href="(?<content>page\.php\?pageNum=[\d]{1,3}\&issue=[\d]{1,3})">\s<img\ssrc="/graphics/previous\.gif"]]></backButtonRegex>
-    <firstIssue><![CDATA[http://www.drmcninja.com/issue8/8p1.jpg]]></firstIssue>
-</comicInfo>

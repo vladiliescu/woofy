@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Goblins" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com" allowMultipleStrips="true">
-    <startUrl><![CDATA[http://www.goblinscomic.com/]]></startUrl>
-    <firstIssue><![CDATA[http://www.goblinscomic.com/comics/20050626a.jpg]]></firstIssue>
-    <comicRegex><![CDATA[/comics/[\w\d]*.(gif|jpg|jpeg|png|swf)]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref="(?<content>/d/[\d]*.html)"><img\sborder="0px"\sname="previous_day"]]></backButtonRegex>
-</comicInfo>

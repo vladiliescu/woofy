@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="The Lightbringer" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
-    <startUrl><![CDATA[http://lightbringer.comicgenesis.com/]]></startUrl>
-    <comicRegex><![CDATA[http://lightbringer.comicgenesis.com/comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[href="(?<content>http://lightbringer\.comicgenesis\.com/d/[\d]{8}\.html)"><img\sborder="0"\sname="previous_day"]]></backButtonRegex>
-    <firstIssue><![CDATA[http://lightbringer.comicgenesis.com/comics/20060315.jpg]]></firstIssue>
-</comicInfo>

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Darths and Droids" allowMultipleStrips="true" author="Citizen Drago">
-    <startUrl><![CDATA[http://www.darthsanddroids.net]]></startUrl>
-    <firstIssue><![CDATA[http://www.darthsanddroids.net/comics/darths0001.jpg]]></firstIssue>
-    <comicRegex><![CDATA[("(?<content>/comics/darths[\d]{4}[\w]+\.(gif|jpg|jpeg|png))";)|(src="(?<content>/comics/darths[\d]{4}\.(gif|jpg|jpeg|png))")]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\sclass="darth"\shref="(?<content>/episodes/[\d]{4}\.html)">&lt;PREVIOUS</a>]]></backButtonRegex>
-</comicInfo>

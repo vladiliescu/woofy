@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="MSF High" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
-    <startUrl><![CDATA[http://www.msfhigh.com]]></startUrl>
-    <comicRegex><![CDATA[/comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[href="http://www\.msfhigh\.com(?<content>/daily\.php\?date=[\d]{6})"><img\sborder="0"\ssrc="/images/prevbutton\.jpg"]]></backButtonRegex>
-    <firstIssue><![CDATA[http://www.msfhigh.com/comics/050826.jpg]]></firstIssue>
-</comicInfo>

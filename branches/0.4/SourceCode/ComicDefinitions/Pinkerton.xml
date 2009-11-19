@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Pinkerton" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="true">
-    <startUrl><![CDATA[http://www.pinkertonpark.com]]></startUrl>
-    <comicRegex><![CDATA[http://www.pinkertonpark.com/comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[(?<content>http://www.pinkertonpark.com/[\d]{1,4}/[\d]{1,2}/[\d]{1,2}/[^/]+/)">&laquo;\sPrevious]]></backButtonRegex>
-    <firstIssue><![CDATA[http://www.pinkertonpark.com/comics/2007-07-04.gif]]></firstIssue>
-</comicInfo>

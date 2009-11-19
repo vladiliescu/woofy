@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Sluggy Freelance" allowMultipleStrips="true" allowMissingStrips="true" author="kumorikage" authorEmail="j_sassinak@hotmail.com">
-    <startUrl><![CDATA[http://www.sluggy.com/]]></startUrl>
-    <firstIssue><![CDATA[http://www.sluggy.com/images/comics/970825a.gif]]></firstIssue>
-    <comicRegex><![CDATA[/images/comics/([0-9]{6}\w?\w?\w?|[0-9]{6}\w?\w?-[0-9]{4})\.(gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[<a.*(?<content>/daily\.php\?date=[0-9]{6}).*alt="Previous\sComic".*/a>]]></backButtonRegex>
-</comicInfo>

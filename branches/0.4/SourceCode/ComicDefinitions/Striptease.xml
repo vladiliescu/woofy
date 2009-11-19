@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Striptease" allowMultipleStrips="true"  author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
-    <startUrl><![CDATA[http://stripteasecomic.com/]]></startUrl>
-    <firstIssue><![CDATA[http://stripteasecomic.com/comics/20000930.gif]]></firstIssue>
-    <comicRegex><![CDATA[<IMG\sALT="[\w]*"\sBORDER=0\sSRC="(?<content>/comics/[\w]*.(gif|jpg|jpeg|png))]]></comicRegex>
-    <backButtonRegex><![CDATA[<li\sid="previous"><a\shref="(?<content>/d/[0-9]{8}.html)">]]></backButtonRegex>
-</comicInfo>

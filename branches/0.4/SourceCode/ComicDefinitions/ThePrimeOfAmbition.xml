@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="The Prime of Ambition" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
-    <startUrl><![CDATA[http://jaadrih.comicgenesis.com/]]></startUrl>
-    <comicRegex><![CDATA[http://jaadrih.comicgenesis.com/comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[href="(?<content>http://jaadrih\.comicgenesis\.com/d/[\d]{8}\.html)"><img\sborder="0"\sname="previous_day"]]></backButtonRegex>
-    <firstIssue><![CDATA[http://jaadrih.comicgenesis.com/comics/20060107.jpg]]></firstIssue>
-</comicInfo>

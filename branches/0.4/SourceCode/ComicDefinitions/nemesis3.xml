@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="[nemesis] chapter 3" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
-    <startUrl><![CDATA[http://www.webcomicsnation.com/inkbrush/distraction/series.php?name=entry&view=current]]></startUrl>
-    <rootUrl><![CDATA[http://www.webcomicsnation.com/inkbrush/distraction/]]></rootUrl>
-    <comicRegex><![CDATA[http://www\.webcomicsnation\.com/memberimages/c3\.page[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[redirect\.php\?name=distraction&type=comic&installment_ID=[\d]+&whichbutton=prev&view=(?:archive|current)&counter=1]]></backButtonRegex>
-    <firstIssue><![CDATA[http://www.webcomicsnation.com/memberimages/c3.page_1_web_optimized.jpg]]></firstIssue>
-</comicInfo>

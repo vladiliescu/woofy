@@ -1,1 +1,0 @@
-Tools\nant\bin\nant.exe -buildfile:woofy.build

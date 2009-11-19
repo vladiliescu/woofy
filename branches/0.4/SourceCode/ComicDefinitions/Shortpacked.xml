@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Shortpacked!" author="Citizen Drago" allowMultipleStrips="true" allowMissingStrips="false">
-    <startUrl><![CDATA[http://www.shortpacked.com]]></startUrl>
-    <comicRegex><![CDATA[/comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[href="(?<content>/d/[\d]{8}\.html)"\starget="_self"><img\sborder=0\ssrc="/images/previous_day\.gif]]></backButtonRegex>
-    <firstIssue><![CDATA[http://www.shortpacked.com/comics/20050117a.gif]]></firstIssue>
-</comicInfo>

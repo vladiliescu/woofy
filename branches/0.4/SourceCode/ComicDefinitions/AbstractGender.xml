@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Abstract Gender" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
-    <startUrl><![CDATA[http://www.abstractgender.com]]></startUrl>
-    <comicRegex><![CDATA[comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[href="(?<content>\?comic=[\d]{1,4})"><img\sid="comic_menu_prev"]]></backButtonRegex>
-    <firstIssue><![CDATA[http://www.abstractgender.com/comics/20050530.jpg]]></firstIssue>
-</comicInfo>
