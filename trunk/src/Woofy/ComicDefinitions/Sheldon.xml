@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Sheldon" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
-    <startAddress><![CDATA[http://www.sheldoncomics.com/archive/011130.html]]></startAddress>
-    <stripRegex><![CDATA[/strips/sd[0-9]{6}\.(gif|jpg|jpeg|png|tif)]]></stripRegex>
-    <nextPageLinkRegex><![CDATA[<a\shref="(?<content>/archive/[0-9]{6}\.html)"><img\sborder="0"\ssrc="/images/navig_04\.gif"]]></nextPageLinkRegex>
-</comicInfo>
