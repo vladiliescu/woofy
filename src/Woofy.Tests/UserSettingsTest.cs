@@ -1,22 +1,21 @@
 using System.IO;
 using System.Text;
 
-using MbUnit.Framework;
 
 using Woofy.Settings;
+using Xunit;
 
 namespace UnitTests
 {
-    [TestFixture]
     public class UserSettingsTest
     {
-        [SetUp]
-        public void ResetMembersToTheirDefaultValues()
-        {
-            UserSettingsMemory.Reset();
-        }
+    	public UserSettingsTest()
+    	{
+			UserSettingsMemory.Reset();
+    	}
 
-        [Test]
+    	
+        [Fact]
         public void TestProperlySavesAndLoadsAllSettings()
         {
             string proxyAddress = "proxy address";
@@ -49,15 +48,15 @@ namespace UnitTests
             stream.Position = 0;
             UserSettingsMemory.LoadData();
 
-            Assert.AreEqual(proxyAddress, UserSettingsMemory.ProxyAddress);
-            Assert.AreEqual(proxyPort, UserSettingsMemory.ProxyPort);
-            Assert.AreEqual(minimizeToTray, UserSettingsMemory.MinimizeToTray);
-            Assert.AreEqual(lastNumberOfComicsToDownload, UserSettingsMemory.LastNumberOfComicsToDownload);
-            Assert.AreEqual(defaultDownloadFolder, UserSettingsMemory.DefaultDownloadFolder);
-            Assert.AreEqual(automaticallyCheckForUpdates, UserSettingsMemory.AutomaticallyCheckForUpdates);
+            Assert.Equal(proxyAddress, UserSettingsMemory.ProxyAddress);
+            Assert.Equal(proxyPort, UserSettingsMemory.ProxyPort);
+            Assert.Equal(minimizeToTray, UserSettingsMemory.MinimizeToTray);
+            Assert.Equal(lastNumberOfComicsToDownload, UserSettingsMemory.LastNumberOfComicsToDownload);
+            Assert.Equal(defaultDownloadFolder, UserSettingsMemory.DefaultDownloadFolder);
+            Assert.Equal(automaticallyCheckForUpdates, UserSettingsMemory.AutomaticallyCheckForUpdates);
         }
 
-        [Test]
+        [Fact]
         public void TestResetSetsMembersToDefaultValues()
         {
             string savedSettings = @"<?xml version=""1.0""?>
@@ -73,13 +72,13 @@ namespace UnitTests
 
             UserSettingsMemory.Reset();
 
-            Assert.IsNull(UserSettingsMemory.LastNumberOfComicsToDownload);
-            Assert.IsNull(UserSettingsMemory.ProxyAddress);
-            Assert.IsNull(UserSettingsMemory.ProxyPort);
-            Assert.IsTrue(UserSettingsMemory.MinimizeToTray);
+            Assert.Null(UserSettingsMemory.LastNumberOfComicsToDownload);
+            Assert.Null(UserSettingsMemory.ProxyAddress);
+            Assert.Null(UserSettingsMemory.ProxyPort);
+            Assert.True(UserSettingsMemory.MinimizeToTray);
         }
 
-        [Test]
+        [Fact]
         public void TestDoesntCrashOnMissingMember()
         {
             string savedSettings = @"<?xml version=""1.0""?>
@@ -93,13 +92,13 @@ namespace UnitTests
             UserSettingsMemory.InitializeStream(stream);
             UserSettingsMemory.LoadData();
 
-            Assert.AreEqual(5, UserSettingsMemory.LastNumberOfComicsToDownload);
-            Assert.AreEqual("proxy address", UserSettingsMemory.ProxyAddress);
-            Assert.AreEqual(null, UserSettingsMemory.ProxyPort);
-            Assert.AreEqual(true, UserSettingsMemory.MinimizeToTray);
+            Assert.Equal(5, UserSettingsMemory.LastNumberOfComicsToDownload);
+            Assert.Equal("proxy address", UserSettingsMemory.ProxyAddress);
+            Assert.Equal(null, UserSettingsMemory.ProxyPort);
+            Assert.Equal(true, UserSettingsMemory.MinimizeToTray);
         }
 
-        [Test]
+        [Fact]
         public void TestDoesntCrashOnUnknownMember()
         {
             string savedSettings = @"<?xml version=""1.0""?>
@@ -114,10 +113,10 @@ namespace UnitTests
             UserSettingsMemory.InitializeStream(stream);
             UserSettingsMemory.LoadData();
 
-            Assert.AreEqual(5, UserSettingsMemory.LastNumberOfComicsToDownload);
-            Assert.AreEqual("proxy address", UserSettingsMemory.ProxyAddress);
-            Assert.AreEqual(null, UserSettingsMemory.ProxyPort);
-            Assert.AreEqual(true, UserSettingsMemory.MinimizeToTray);
+            Assert.Equal(5, UserSettingsMemory.LastNumberOfComicsToDownload);
+            Assert.Equal("proxy address", UserSettingsMemory.ProxyAddress);
+            Assert.Equal(null, UserSettingsMemory.ProxyPort);
+            Assert.Equal(true, UserSettingsMemory.MinimizeToTray);
         }
     }
 }

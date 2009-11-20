@@ -1,168 +1,161 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
-
-using MbUnit.Framework;
-
 using Woofy.Core;
+using Xunit;
 
 namespace UnitTests
 {
-    [TestFixture]
     public class WebPathTest
     {
         #region GetDirectory
-        [Test]
-        [ExpectedArgumentException]
+        [Fact]
         public void TestThrowsIfDirectoryDoesntStartWithHttp()
         {
-            WebPath.GetDirectory("woofy.sourceforge.net");
+			Assert.Throws<ArgumentException>(() => WebPath.GetDirectory("woofy.sourceforge.net"));
         }
 
-        [Test]
+        [Fact]
         public void TestWorksOnSimpleDirectories()
         {
             string directory = WebPath.GetDirectory("http://woofy.sourceforge.net");
-            Assert.AreEqual("http://woofy.sourceforge.net", directory);
+            Assert.Equal("http://woofy.sourceforge.net", directory);
         }
 
-        [Test]
+        [Fact]
         public void TestWorksOnSimpleDirectoriesThatEndWithSlash()
         {
             string directory = WebPath.GetDirectory("http://woofy.sourceforge.net/");
-            Assert.AreEqual("http://woofy.sourceforge.net", directory);
+            Assert.Equal("http://woofy.sourceforge.net", directory);
         }
 
-        [Test]
+        [Fact]
         public void TestWorksOnFiles()
         {
             string directory = WebPath.GetDirectory("http://woofy.sourceforge.net/favicon.ico");
-            Assert.AreEqual("http://woofy.sourceforge.net", directory);
+            Assert.Equal("http://woofy.sourceforge.net", directory);
         }
 
-        [Test]
+        [Fact]
         public void TestWorksOnHttps()
         {
             string directory = WebPath.GetDirectory("https://woofy.sourceforge.net");
-            Assert.AreEqual("https://woofy.sourceforge.net", directory);
+            Assert.Equal("https://woofy.sourceforge.net", directory);
         }
 
-        [Test]
+        [Fact]
         public void TestWorksOnComplexDirectories()
         {
             string directory = WebPath.GetDirectory("https://woofy.sourceforge.net/dir1/dir2");
-            Assert.AreEqual("https://woofy.sourceforge.net/dir1/dir2", directory);
+            Assert.Equal("https://woofy.sourceforge.net/dir1/dir2", directory);
         }
 
-        [Test]
+        [Fact]
         public void TestWorksOnComplexDirectoriesEndingWithSlash()
         {
             string directory = WebPath.GetDirectory("https://woofy.sourceforge.net/dir1/dir2/");
-            Assert.AreEqual("https://woofy.sourceforge.net/dir1/dir2", directory);
+            Assert.Equal("https://woofy.sourceforge.net/dir1/dir2", directory);
         }
 
-        [Test]
+        [Fact]
         public void TestWorksOnComplexFiles()
         {
             string directory = WebPath.GetDirectory("https://woofy.sourceforge.net/dir1/dir2/favicon.ico");
-            Assert.AreEqual("https://woofy.sourceforge.net/dir1/dir2", directory);
+            Assert.Equal("https://woofy.sourceforge.net/dir1/dir2", directory);
         }
 
         #endregion
 
         #region Combine
-        [Test]
-        [ExpectedArgumentException]
+        [Fact]
         public void TestThrowsIfFirstPathDoesntStartWithHttp()
         {
-            WebPath.Combine("woofy.sourceforge.net", "favicon.ico");
+            Assert.Throws<ArgumentException>(() => WebPath.Combine("woofy.sourceforge.net", "favicon.ico"));
         }
 
-        [Test]
+        [Fact]
         public void TestCombinesPathsWithNoSlashes()
         {
             string path = WebPath.Combine("http://woofy.sourceforge.net", "favicon.ico");
-            Assert.AreEqual("http://woofy.sourceforge.net/favicon.ico", path);
+            Assert.Equal("http://woofy.sourceforge.net/favicon.ico", path);
         }
 
-        [Test]
+        [Fact]
         public void TestCombinesPathsWithAlternatingSlashes()
         {
             string path = WebPath.Combine("http://woofy.sourceforge.net/", "favicon.ico");
-            Assert.AreEqual("http://woofy.sourceforge.net/favicon.ico", path);
+            Assert.Equal("http://woofy.sourceforge.net/favicon.ico", path);
 
             path = WebPath.Combine("http://woofy.sourceforge.net", "/favicon.ico");
-            Assert.AreEqual("http://woofy.sourceforge.net/favicon.ico", path);
+            Assert.Equal("http://woofy.sourceforge.net/favicon.ico", path);
         }
 
-        [Test]
+        [Fact]
         public void TestCombinesPathsWithBothSlashes()
         {
             string path = WebPath.Combine("http://woofy.sourceforge.net/", "/favicon.ico");
-            Assert.AreEqual("http://woofy.sourceforge.net/favicon.ico", path);
+            Assert.Equal("http://woofy.sourceforge.net/favicon.ico", path);
         }
 
-        [Test]
+        [Fact]
         public void TestCombinesComplexPaths()
         {
             string path = WebPath.Combine("https://woofy.sourceforge.net/dir1/dir2", "/dir3/dir4/favicon.ico");
-            Assert.AreEqual("https://woofy.sourceforge.net/dir1/dir2/dir3/dir4/favicon.ico", path);
+            Assert.Equal("https://woofy.sourceforge.net/dir1/dir2/dir3/dir4/favicon.ico", path);
         }
 
-        [Test]
+        [Fact]
         public void TestCombinesIfFirstPathIsNotADirectory()
         {
             string resultedPath = WebPath.Combine("http://woofy.sourceforge.net/favicon.ico", "favicon4.ico");
-            Assert.AreEqual("http://woofy.sourceforge.net/favicon4.ico", resultedPath);
+            Assert.Equal("http://woofy.sourceforge.net/favicon4.ico", resultedPath);
         }
 
-        [Test]
+        [Fact]
         public void ShouldCombineRelativePaths()
         {
             string resultedPath = WebPath.Combine("http://woofy.sourceforge.net/comics/mycomic", "../favicon.ico");
-            Assert.AreEqual("http://woofy.sourceforge.net/comics/favicon.ico", resultedPath);
+            Assert.Equal("http://woofy.sourceforge.net/comics/favicon.ico", resultedPath);
         }
 
         #endregion
 
         #region IsAbsolute
 
-        [Test]
+        [Fact]
         public void TestWorksOnAbsolutePath()
         {
             bool isAbsolute = WebPath.IsAbsolute("http://woofy.sourceforge.net");
-            Assert.AreEqual(true, isAbsolute);
+            Assert.Equal(true, isAbsolute);
         }
 
-        [Test]
+        [Fact]
         public void TestWorksOnAbsoluteHttpsPath()
         {
             bool isAbsolute = WebPath.IsAbsolute("https://woofy.sourceforge.net");
-            Assert.AreEqual(true, isAbsolute);
+            Assert.Equal(true, isAbsolute);
         }
 
-        [Test]
+        [Fact]
         public void TestWorksOnRelativePath()
         {
             bool isAbsolute = WebPath.IsAbsolute("/comics/mycomic.png");
-            Assert.AreEqual(false, isAbsolute);
+            Assert.Equal(false, isAbsolute);
         }
 
         #endregion
 
         #region GetRootPath
-        [Test]
+        [Fact]
         public void TestWorksOnRootPath()
         {
             string rootPath = WebPath.GetRootPath("http://woofy.sourceforge.net");
-            Assert.AreEqual("http://woofy.sourceforge.net", rootPath);
+            Assert.Equal("http://woofy.sourceforge.net", rootPath);
         }
 
-        [Test]
+        [Fact]
         public void TestWorksOnComplexPath()
         {
             string rootPath = WebPath.GetRootPath("http://woofy.sourceforge.net/comics/mycomic");
-            Assert.AreEqual("http://woofy.sourceforge.net", rootPath);
+            Assert.Equal("http://woofy.sourceforge.net", rootPath);
         }
         #endregion
     }
