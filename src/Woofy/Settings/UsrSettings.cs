@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using Newtonsoft.Json;
 
@@ -12,7 +13,7 @@ namespace Woofy.Settings
 			ProxyAddress = null,
 			ProxyPort = null,
 			MinimizeToTray = true,
-			DefaultDownloadFolder = "",
+			DefaultDownloadFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Comics"),
 			AutomaticallyCheckForUpdates = true,
 			LastReportedWoofyVersion = null,
 			LastReportedComicPackVersion = null,
