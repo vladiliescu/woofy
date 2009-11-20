@@ -65,7 +65,7 @@ namespace Woofy.Core
         {
             WebRequest request = WebRequest.Create(requestUriString);
 
-			request.Headers.Add("user-agent", string.Format("Woofy/{0}", AppSettings.VersionNumber));
+			((HttpWebRequest)request).UserAgent = string.Format("Woofy/{0}", AppSettings.VersionNumber);
             request.Credentials = CredentialCache.DefaultNetworkCredentials;
             request.Proxy = Proxy;
 
