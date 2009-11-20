@@ -47,8 +47,9 @@ namespace Woofy.Core
         /// <returns>A new <see cref="WebClient"/> instance.</returns>
         public static WebClient GetNewWebClientInstance()
         {
-            WebClient client = new WebClient();
-            
+            var client = new WebClient();
+			
+			client.Headers.Add("user-agent", string.Format("Woofy/{0}", AppSettings.VersionNumber));
             client.Credentials = CredentialCache.DefaultNetworkCredentials;
             client.Proxy = Proxy;
 
@@ -63,7 +64,8 @@ namespace Woofy.Core
         public static WebRequest GetNewWebRequestInstance(string requestUriString)
         {
             WebRequest request = WebRequest.Create(requestUriString);
-            
+
+			request.Headers.Add("user-agent", string.Format("Woofy/{0}", AppSettings.VersionNumber));
             request.Credentials = CredentialCache.DefaultNetworkCredentials;
             request.Proxy = Proxy;
 
