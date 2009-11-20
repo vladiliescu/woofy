@@ -1,0 +1,5 @@
+:title Woofy's download algorithm
+
+Woofy's download algorithm is pretty much straight-forward: it visits a comic's web pages one by one, from the current strip to the first one, and it downloads the strips from each page.
+
+When visiting a page, it searches it in order to find a link to the comic strip, and a link to the next page. If either of those isn't found then it assumes that it has reached the first strip, so it stops and reports that the download has finished.
