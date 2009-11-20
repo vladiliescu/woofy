@@ -151,7 +151,7 @@ namespace Woofy.Core
         {
             var availableComicInfos = new List<ComicDefinition>();
 
-            foreach (var comicInfoFile in Directory.GetFiles(ApplicationSettings.ComicDefinitionsFolder, "*.xml"))
+            foreach (var comicInfoFile in Directory.GetFiles(AppSettings.ComicDefinitionsFolder, "*.xml"))
             {
                 ComicDefinition definition;
                 try

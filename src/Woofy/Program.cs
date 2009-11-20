@@ -1,35 +1,24 @@
 using System;
 using System.Windows.Forms;
-using Microsoft.Win32;
 using Woofy.Core;
 using Woofy.Gui;
-using Woofy.Properties;
-using Woofy.Settings;
 
 namespace Woofy
 {
     static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-            UserSettings.Initialize();
-
-            //TODO:conditia e gresita
-
-            
+			Bootstrapper.BootstrapApplication();
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(Application_ThreadException);
-            AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
+            Application.ThreadException += Application_ThreadException;
+            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
             Application.Run(new MainForm());
-            //Application.Run(new AboutForm());
         }
 
         /// <summary>

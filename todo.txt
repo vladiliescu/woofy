@@ -8,6 +8,6 @@
 - more specific error messages -> must be able to copy them to clipboard
 - display favicons for the comics
 - simplify auto-update code
-- simplify user-settings code
+
 - auto-update should no longer run the installer => instead, the zip version should be downloaded and unpacked.
 - set a meaningful user-agent

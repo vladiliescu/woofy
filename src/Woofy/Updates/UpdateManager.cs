@@ -45,7 +45,7 @@ namespace Woofy.Updates
 
         private static void CheckForUpdates()
         {
-            WebRequest request = WebConnectionFactory.GetNewWebRequestInstance(ApplicationSettings.UpdateDescriptionFileAddress);
+            WebRequest request = WebConnectionFactory.GetNewWebRequestInstance(AppSettings.UpdateDescriptionFileAddress);
             Stream responseStream;
 
             try
@@ -74,8 +74,8 @@ namespace Woofy.Updates
 
             if (release == updateDescription.Woofy[0])
             {
-                UserSettings.LastReportedWoofyVersion = release.VersionNumber;
-                UserSettings.SaveData();
+                UsrSettings.LastReportedWoofyVersion = release.VersionNumber;
+                UsrSettings.SaveData();
                 if (mainForm.DisplayMessageBox(GetNewVersionText("Woofy", release), MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 {
                     DoCleanup();
@@ -84,8 +84,8 @@ namespace Woofy.Updates
             }
             else if (release == updateDescription.ComicPack[0])
             {
-                UserSettings.LastReportedComicPackVersion = release.VersionNumber;
-                UserSettings.SaveData();
+                UsrSettings.LastReportedComicPackVersion = release.VersionNumber;
+                UsrSettings.SaveData();
                 if (mainForm.DisplayMessageBox(GetNewVersionText("ComicPack", release), MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 {
                     DoCleanup();
@@ -124,9 +124,9 @@ namespace Woofy.Updates
             Release latestWoofyRelease = updateDescription.Woofy[0];
             Release latestComicPackRelease = updateDescription.ComicPack[0];
 
-            if (IsUpgradeCandidate(latestWoofyRelease, ApplicationSettings.VersionNumber, UserSettings.LastReportedWoofyVersion, initiatedByUser))
+            if (IsUpgradeCandidate(latestWoofyRelease, AppSettings.VersionNumber, UsrSettings.LastReportedWoofyVersion, initiatedByUser))
                 return latestWoofyRelease;
-            else if (IsUpgradeCandidate(latestComicPackRelease, ApplicationSettings.VersionNumber, UserSettings.LastReportedComicPackVersion, initiatedByUser))
+            else if (IsUpgradeCandidate(latestComicPackRelease, AppSettings.VersionNumber, UsrSettings.LastReportedComicPackVersion, initiatedByUser))
                 return latestComicPackRelease;
             else 
                 return null;

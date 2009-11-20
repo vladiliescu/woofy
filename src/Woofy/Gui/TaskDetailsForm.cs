@@ -27,12 +27,12 @@ namespace Woofy.Gui
         {
             cbComics.DataSource = ComicDefinition.GetAvailableComicDefinitions();
 
-            if (!string.IsNullOrEmpty(UserSettings.LastUsedComicDefinitionFile))
+            if (!string.IsNullOrEmpty(UsrSettings.LastUsedComicDefinitionFile))
             {
                 int i = 0;
                 foreach (ComicDefinition comicInfo in cbComics.Items)
                 {
-                    if (comicInfo.ComicInfoFile.Equals(UserSettings.LastUsedComicDefinitionFile, StringComparison.OrdinalIgnoreCase))
+                    if (comicInfo.ComicInfoFile.Equals(UsrSettings.LastUsedComicDefinitionFile, StringComparison.OrdinalIgnoreCase))
                     {
                         cbComics.SelectedIndex = i;
                         break;
@@ -42,10 +42,10 @@ namespace Woofy.Gui
                 }
             }
 
-            if (UserSettings.LastNumberOfComicsToDownload.HasValue)
+            if (UsrSettings.LastNumberOfComicsToDownload.HasValue)
             {
                 rbDownloadLast.Checked = true;
-                numComicsToDownload.Value = (decimal)UserSettings.LastNumberOfComicsToDownload;
+                numComicsToDownload.Value = (decimal)UsrSettings.LastNumberOfComicsToDownload;
             }
             else
             {
@@ -91,7 +91,7 @@ namespace Woofy.Gui
 
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            UserSettings.LoadData();
+            UsrSettings.LoadData();
         }
 
         private void btnBrowse_Click(object sender, EventArgs e)
@@ -106,20 +106,20 @@ namespace Woofy.Gui
         #region Helper Methods
         private void UpdateUserSettings()
         {
-            UserSettings.LastUsedComicDefinitionFile = ((ComicDefinition)cbComics.SelectedValue).ComicInfoFile;
+            UsrSettings.LastUsedComicDefinitionFile = ((ComicDefinition)cbComics.SelectedValue).ComicInfoFile;
 
             if (rbDownloadOnlyNew.Checked)
-                UserSettings.LastNumberOfComicsToDownload = null;
+                UsrSettings.LastNumberOfComicsToDownload = null;
             else
-                UserSettings.LastNumberOfComicsToDownload = (long)numComicsToDownload.Value;
+                UsrSettings.LastNumberOfComicsToDownload = (long)numComicsToDownload.Value;
 
-            UserSettings.SaveData();
+            UsrSettings.SaveData();
         }
 
         private void UpdateDownloadFolder()
         {
             ComicDefinition comicInfo = (ComicDefinition)cbComics.SelectedValue;
-            txtDownloadFolder.Text = Path.Combine(UserSettings.DefaultDownloadFolder, comicInfo.FriendlyName);
+            txtDownloadFolder.Text = Path.Combine(UsrSettings.DefaultDownloadFolder, comicInfo.FriendlyName);
         }
         #endregion
 

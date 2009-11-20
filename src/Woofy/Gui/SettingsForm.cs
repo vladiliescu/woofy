@@ -20,22 +20,22 @@ namespace Woofy.Gui
         #region Helper Methods
         private void InitControls()
         {
-            txtDefaultDownloadFolder.Text = UserSettings.DefaultDownloadFolder;
-            chkAutomaticallyCheckForUpdates.Checked = UserSettings.AutomaticallyCheckForUpdates;
-            chkMinimizeToTray.Checked = UserSettings.MinimizeToTray;
+            txtDefaultDownloadFolder.Text = UsrSettings.DefaultDownloadFolder;
+            chkAutomaticallyCheckForUpdates.Checked = UsrSettings.AutomaticallyCheckForUpdates;
+            chkMinimizeToTray.Checked = UsrSettings.MinimizeToTray;
 
-            if (!string.IsNullOrEmpty(UserSettings.ProxyAddress))
+            if (!string.IsNullOrEmpty(UsrSettings.ProxyAddress))
             {
-                txtProxyAddress.Text = UserSettings.ProxyAddress;
-                txtProxyPort.Text = UserSettings.ProxyPort.ToString();
+                txtProxyAddress.Text = UsrSettings.ProxyAddress;
+                txtProxyPort.Text = UsrSettings.ProxyPort.ToString();
 
                 chkUseProxy.Checked = true;
             }
 
-            if (!string.IsNullOrEmpty(UserSettings.ProxyUsername))
+            if (!string.IsNullOrEmpty(UsrSettings.ProxyUsername))
             {
-                txtUsername.Text = UserSettings.ProxyUsername;
-                txtPassword.Text = UserSettings.ProxyPassword;
+                txtUsername.Text = UsrSettings.ProxyUsername;
+                txtPassword.Text = UsrSettings.ProxyPassword;
 
                 chkUseCredentials.Checked = true;
             }
@@ -46,7 +46,7 @@ namespace Woofy.Gui
         #region Events - clicks
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            UserSettings.LoadData();
+            UsrSettings.LoadData();
             this.DialogResult = DialogResult.Cancel;
         }
 
@@ -57,37 +57,37 @@ namespace Woofy.Gui
 
             if (chkUseProxy.Checked)
             {
-                UserSettings.ProxyAddress = txtProxyAddress.Text;
+                UsrSettings.ProxyAddress = txtProxyAddress.Text;
                 
                 int tempProxyPort;
                 if (int.TryParse(txtProxyPort.Text, out tempProxyPort))
-                    UserSettings.ProxyPort = tempProxyPort;
+                    UsrSettings.ProxyPort = tempProxyPort;
                 else 
-                    UserSettings.ProxyPort = null;
+                    UsrSettings.ProxyPort = null;
             }
             else
             {
-                UserSettings.ProxyAddress = string.Empty;
-                UserSettings.ProxyPort = null;
+                UsrSettings.ProxyAddress = string.Empty;
+                UsrSettings.ProxyPort = null;
             }
 
             if (chkUseCredentials.Checked)
             {
-                UserSettings.ProxyUsername = txtUsername.Text;
-                UserSettings.ProxyPassword = txtPassword.Text;
+                UsrSettings.ProxyUsername = txtUsername.Text;
+                UsrSettings.ProxyPassword = txtPassword.Text;
             }
             else
             {
-                UserSettings.ProxyUsername = string.Empty;
-                UserSettings.ProxyPassword = string.Empty;
+                UsrSettings.ProxyUsername = string.Empty;
+                UsrSettings.ProxyPassword = string.Empty;
             }
 
 
-            UserSettings.DefaultDownloadFolder = txtDefaultDownloadFolder.Text;
-            UserSettings.AutomaticallyCheckForUpdates = chkAutomaticallyCheckForUpdates.Checked;
-            UserSettings.MinimizeToTray = chkMinimizeToTray.Checked;
+            UsrSettings.DefaultDownloadFolder = txtDefaultDownloadFolder.Text;
+            UsrSettings.AutomaticallyCheckForUpdates = chkAutomaticallyCheckForUpdates.Checked;
+            UsrSettings.MinimizeToTray = chkMinimizeToTray.Checked;
 
-            UserSettings.SaveData();
+            UsrSettings.SaveData();
 
             this.DialogResult = DialogResult.OK;
         }

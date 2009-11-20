@@ -11,8 +11,8 @@ namespace Woofy.Core
 
 		static ComicTask()
 		{
-			EnsureFileExists(ApplicationSettings.DatabaseConnectionString);
-			var json = File.ReadAllText(ApplicationSettings.DatabaseConnectionString);
+			EnsureFileExists(AppSettings.DatabaseConnectionString);
+			var json = File.ReadAllText(AppSettings.DatabaseConnectionString);
 			TaskCache = JsonConvert.DeserializeObject<List<ComicTask>>(json) ?? new List<ComicTask>();
 		}
 
@@ -77,7 +77,7 @@ namespace Woofy.Core
 
     	private void PersistTasks()
     	{
-			File.WriteAllText(ApplicationSettings.DatabaseConnectionString, JsonConvert.SerializeObject(TaskCache, Formatting.Indented));
+			File.WriteAllText(AppSettings.DatabaseConnectionString, JsonConvert.SerializeObject(TaskCache, Formatting.Indented));
     	}
 
     	public void Update()

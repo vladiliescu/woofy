@@ -54,6 +54,7 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Bootstrapper.cs" />
     <Compile Include="Core\Capture.cs" />
     <Compile Include="Core\CountingFileDownloader.cs" />
     <Compile Include="Core\ExRichTextBox.cs">
@@ -145,9 +146,8 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
-    <Compile Include="Settings\ApplicationSettings.cs" />
-    <Compile Include="Settings\UserSettings.cs" />
-    <Compile Include="Settings\UserSettingsMemory.cs" />
+    <Compile Include="Settings\AppSettings.cs" />
+    <Compile Include="Settings\UsrSettings.cs" />
     <Compile Include="Updates\ChangeCollection.cs" />
     <Compile Include="Updates\Release.cs" />
     <Compile Include="Updates\ReleaseCollection.cs" />

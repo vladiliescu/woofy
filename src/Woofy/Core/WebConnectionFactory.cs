@@ -27,16 +27,16 @@ namespace Woofy.Core
         /// </summary>
         static WebConnectionFactory()
         {
-            if (string.IsNullOrEmpty(UserSettings.ProxyAddress)) 
+            if (string.IsNullOrEmpty(UsrSettings.ProxyAddress)) 
                 return;
 
-            if (UserSettings.ProxyPort.HasValue)
-                _proxy = new WebProxy(UserSettings.ProxyAddress, UserSettings.ProxyPort.Value);
+            if (UsrSettings.ProxyPort.HasValue)
+                _proxy = new WebProxy(UsrSettings.ProxyAddress, UsrSettings.ProxyPort.Value);
             else 
-                _proxy = new WebProxy(UserSettings.ProxyAddress);
+                _proxy = new WebProxy(UsrSettings.ProxyAddress);
 
-            if (!string.IsNullOrEmpty(UserSettings.ProxyUsername))
-                _proxy.Credentials = new NetworkCredential(UserSettings.ProxyUsername, UserSettings.ProxyPassword);
+            if (!string.IsNullOrEmpty(UsrSettings.ProxyUsername))
+                _proxy.Credentials = new NetworkCredential(UsrSettings.ProxyUsername, UsrSettings.ProxyPassword);
             else
                 _proxy.Credentials = CredentialCache.DefaultNetworkCredentials;
         }
