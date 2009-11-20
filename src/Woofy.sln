@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Woofy", "Woofy\Woofy.csproj", "{25F085AE-B31D-40E6-9546-0D357ECD18FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{2F3A2ADE-0B08-4CBD-8C69-6CD3A995FCF1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComicDefListGenerator", "ComicDefListGenerator\ComicDefListGenerator.csproj", "{C7E1E6B5-FC47-4079-89A0-5D9AF8351F03}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Woofy.Tests", "Woofy.Tests\Woofy.Tests.csproj", "{2F3A2ADE-0B08-4CBD-8C69-6CD3A995FCF1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
