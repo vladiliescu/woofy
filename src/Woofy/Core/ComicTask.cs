@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
@@ -12,7 +11,6 @@ namespace Woofy.Core
 
 		static ComicTask()
 		{
-			//TaskCache = new List<ComicTask>();
 			EnsureFileExists(ApplicationSettings.DatabaseConnectionString);
 			var json = File.ReadAllText(ApplicationSettings.DatabaseConnectionString);
 			TaskCache = JsonConvert.DeserializeObject<List<ComicTask>>(json) ?? new List<ComicTask>();
@@ -27,89 +25,46 @@ namespace Woofy.Core
     	}
 
     	#region Properties
-        private long _id;
-        public long Id
-        {
-            get { return _id; }
-        }
 
-        private DownloadOutcome downloadOutcome;
-        public DownloadOutcome DownloadOutcome
-        {
-            get { return downloadOutcome; }
-            set { downloadOutcome = value; }
-        }
+    	public long Id { get; private set; }
 
-        private string _name;
-        public string Name
-        {
-            get { return _name; }
-        }
+    	public DownloadOutcome DownloadOutcome { get; set; }
 
-        private string _comicInfoFile;
-        public string ComicInfoFile
-        {
-            get { return _comicInfoFile; }
-        }
+    	public string Name { get; private set; }
 
-        private long _downloadedComics;
-        public long DownloadedComics
-        {
-            get { return _downloadedComics; }
-            set { _downloadedComics = value; }
-        }
+    	public string ComicInfoFile { get; private set; }
 
-        private long? _comicsToDownload;
-        public long? ComicsToDownload
-        {
-            get { return _comicsToDownload; }
-        }
+    	public long DownloadedComics { get; set; }
 
-        private string _downloadFolder;
-        public string DownloadFolder
-        {
-            get { return _downloadFolder; }
-        }
+    	public long? ComicsToDownload { get; private set; }
 
-        private long _orderNumber;
-        public long OrderNumber
-        {
-            get { return _orderNumber; }
-            set { _orderNumber = value; }
-        }
+    	public string DownloadFolder { get; private set; }
 
-        private TaskStatus _status;
-        public TaskStatus Status
-        {
-            get { return _status; }
-            set { _status = value; }
-        }
+    	public long OrderNumber { get; set; }
 
-        private string _currentUrl;
-        public string CurrentUrl
-        {
-            get { return _currentUrl; }
-            set { _currentUrl = value; }
-        }
-        #endregion
+    	public TaskStatus Status { get; set; }
+
+    	public string CurrentUrl { get; set; }
+
+    	#endregion
 
         #region .ctors
         public ComicTask(string name, string comicInfoFile, long? comicsToDownload, string downloadFolder, string currentUrl)
-            : this(-1, name, comicInfoFile, 0, comicsToDownload, downloadFolder, /*GetLargestOrderNumber() +*/ 1, currentUrl, TaskStatus.Running)
+            : this(-1, name, comicInfoFile, 0, comicsToDownload, downloadFolder, 1, currentUrl, TaskStatus.Running)
         {
         }
 
         private ComicTask(long id, string name, string comicInfoFile, long downloadedComics, long? comicsToDownload, string downloadFolder, long orderNumber, string currentUrl, TaskStatus status)
         {
-            _id = id;
-            _name = name;
-            _comicInfoFile = comicInfoFile;
-            _downloadedComics = downloadedComics;
-            _comicsToDownload = comicsToDownload;
-            _downloadFolder = downloadFolder;
-            _orderNumber = orderNumber;
-            _currentUrl = currentUrl;
-            _status = status;
+            Id = id;
+            Name = name;
+            ComicInfoFile = comicInfoFile;
+            DownloadedComics = downloadedComics;
+            ComicsToDownload = comicsToDownload;
+            DownloadFolder = downloadFolder;
+            OrderNumber = orderNumber;
+            CurrentUrl = currentUrl;
+            Status = status;
         }
         #endregion
 
@@ -158,31 +113,6 @@ namespace Woofy.Core
 
 			return tasks;
         }
-        #endregion
-
-        #region Helper Static Methods
-		//private static long GetLargestOrderNumber()
-		//{
-		//    SQLiteConnection connection = new SQLiteConnection(ConnectionString);
-		//    SQLiteCommand command = new SQLiteCommand("SELECT max(OrderNumber) FROM [ComicTasks] WHERE Status <> ?", connection);
-		//    command.Parameters.Add("Status", DbType.Int64);
-		//    command.Parameters["Status"].Value = (long)TaskStatus.Finished;
-
-		//    connection.Open();
-		//    try
-		//    {
-		//        object o = command.ExecuteScalar();
-		//        if (o == DBNull.Value)
-		//            return 0;
-		//        else
-		//            return (long)o;
-		//    }
-		//    finally
-		//    {
-		//        connection.Close();
-		//    }
-		//}
-
         #endregion
 
         #region Overrides

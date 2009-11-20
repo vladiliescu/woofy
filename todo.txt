@@ -1,5 +1,5 @@
 - ask for every supported comic's permision to be included in Woofy
-- replace SQLite with xml/json
+
 - support multiple definition formats -> by default they should be written using json, as it is easier to read and harder to mess-up than xml.
 - the user settings/tasks db should be stored under Local Settings
 - an option whether to install in portable-mode - without writing anything to the registry, and keeping the settings/comics in the same directory

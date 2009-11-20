@@ -71,7 +71,6 @@
     <Compile Include="Core\FileDownloader.cs" />
     <Compile Include="Core\ComicDefinition.cs" />
     <Compile Include="Core\ComicsProvider.cs" />
-    <Compile Include="Core\ComicTasksList.cs" />
     <Compile Include="Core\ComicTask.cs" />
     <Compile Include="Core\ComicTaskController.cs" />
     <Compile Include="Core\Logger.cs" />
@@ -146,9 +145,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
-    <None Include="data.s3db">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <Compile Include="Settings\ApplicationSettings.cs" />
     <Compile Include="Settings\UserSettings.cs" />
     <Compile Include="Settings\UserSettingsMemory.cs" />
