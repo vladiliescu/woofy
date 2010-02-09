@@ -8,7 +8,7 @@
         </release>
     </woofy>
     <comicPack>
-		<release versionNumber="@COMICPACKVERSION@" downloadAddress="http://downloads.sourceforge.net/woofy/ComicPack-@COMICPACKVERSION@-setup.exe" releaseDate="@TODAY@" size="@COMICPACKEXEFILESIZE@">
+		<release versionNumber="0.1" downloadAddress="http://downloads.sourceforge.net/woofy/ComicPack-0.1-setup.exe" releaseDate="@TODAY@" size="100">
             <changes>
                 <change>Some new comics.</change>
             </changes>

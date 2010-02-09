@@ -8,19 +8,12 @@
     <property name="dir.BuildTemplates" value="build-files"/>
     <property name="dir.ComicDefinitions" value="${dir.Current}\src\ComicDefinitions" />
     <property name="dir.Woofy" value="${dir.Current}\src\Woofy\bin\Release" />
-    <property name="file.NewDefinitions" value="${dir.Current}\newDefinitions.txt"/>
     <property name="file.PlaintextChangelog" value="${dir.Build}\changelog.txt"/>
     
     <property name="date.Now" value="${datetime::now()}"/>
     <property name="date.Today" value="${datetime::get-year(date.Now)}-${datetime::get-month(date.Now)}-${datetime::get-day(date.Now)}"/>
     <property name="date.Today2" value="${datetime::get-year(date.Now)}.${datetime::get-month(date.Now)}.${datetime::get-day(date.Now)}"/>
     
-    <property name="comicPack.Version" value="0.5.1" />
-    <property name="comicPack.ZipFileName" value="ComicPack-${comicPack.Version}-zipped.zip"/>
-    <property name="comicPack.ZipFile" value="${dir.Build}\${comicPack.ZipFileName}"/>
-    <property name="comicPack.ExeFileName" value="ComicPack-${comicPack.Version}-setup.exe"/>
-    <property name="comicPack.ExeFile" value="${dir.Build}\${comicPack.ExeFileName}" />
-
     <property name="woofy.Version" value="0.5" />
     <property name="woofy.ZipFileName" value="Woofy-${woofy.Version}-zipped.zip"/>
     <property name="woofy.ZipFile" value="${dir.Build}\${woofy.ZipFileName}"/>
@@ -79,9 +72,6 @@
                     <token key="WOOFYVERSION" value="${woofy.Version}" />
                     <token key="WOOFYEXEFILENAME" value="${woofy.ExeFileName}" />
                     
-                    <token key="COMICPACKVERSION" value="${comicPack.Version}" />
-                    <token key="COMICPACKEXEFILENAME" value="${comicPack.ExeFileName}" />
-
                     <token key="TODAY" value="${date.Today}" />
                     <token key="TODAY2" value="${date.Today2}" />                    
                 </replacetokens>
@@ -93,35 +83,23 @@
     <target name="zipFiles"
             depends="copyToBuild"
             >
-        <zip zipfile="${comicPack.ZipFile}">
-            <fileset basedir="${dir.Build}">
-                <include name="definitions\*.*" />
-            </fileset>
-        </zip>
-
         <zip zipfile="${woofy.ZipFile}">
             <fileset basedir="${dir.Build}">
                 <include name="Woofy\**.*"/>
             </fileset>
-        </zip>
-        
+        </zip>        
     </target>
 
     <target name="createInstallers"
             depends="zipFiles"
             >
-
-        <exec program="Tools\NSIS\makensis.exe" commandline='"${dir.Build}\setupComicPack.nsi"' workingdir="Tools\NSIS" />
-        <exec program="Tools\NSIS\makensis.exe" commandline='"${dir.Build}\setupWoofy.nsi"' workingdir="Tools\NSIS" />
-        
+        <exec program="Tools\NSIS\makensis.exe" commandline='"${dir.Build}\setupWoofy.nsi"' workingdir="Tools\NSIS" />        
     </target>
 
     
 
     <target name="updateAutoUpdateFiles" 
             depends="createInstallers">
-
-        <property name="comicPack.ExeFileSize" value="${file::get-length(comicPack.ExeFile)}"/>
         <property name="woofy.ExeFileSize" value="${file::get-length(woofy.ExeFile)}"/>
 
         <!-- After the installers are created, copy the auto-update files again because we now have the the file size tokens -->
@@ -131,10 +109,7 @@
                 <include name="pad_file.xml" />
             </fileset>
             <filterchain>
-                <replacetokens>
-                    <token key="COMICPACKVERSION" value="${comicPack.Version}" />
-                    <token key="COMICPACKEXEFILESIZE" value="${comicPack.ExeFileSize}" />
-                    
+                <replacetokens>                   
                     <token key="WOOFYVERSION" value="${woofy.Version}" />
                     <token key="WOOFYEXEFILESIZE" value="${woofy.ExeFileSize}" />
                     
