@@ -1,5 +1,4 @@
 glob:*/obj/*
 glob:*/bin/*
 glob:build/*
-glob:*.suo
 glob:*.user
