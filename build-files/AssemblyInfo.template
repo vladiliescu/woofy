@@ -1,0 +1,22 @@
+﻿using System.Reflection;
+using System.Runtime.InteropServices;
+
+[assembly: AssemblyTitle("Woofy")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("Vlad Iliescu")]
+[assembly: AssemblyProduct("Woofy")]
+[assembly: AssemblyCopyright("© 2010")]
+[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCulture("")]
+[assembly: ComVisible(false)]
+
+// Version information for an assembly consists of the following four values:
+//
+//      Major Version
+//      Minor Version 
+//      Build Number
+//      Revision
+//
+[assembly: AssemblyVersion("@MAJOR@.@MINOR@.@BUILDNUMBER@.@REVISION@")]
+[assembly: AssemblyFileVersion("@MAJOR@.@MINOR@.@BUILDNUMBER@.@REVISION@")]

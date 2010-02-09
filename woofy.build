@@ -3,6 +3,11 @@
          name="Woofy"
          default="all">
 
+	<property name="version.Major" value="0" />
+	<property name="version.Minor" value="6" />
+	<property name="version.BuildNumber" value="0" />
+	<property name="version.Revision" value="0" />
+
     <property name="dir.Current" value="${directory::get-current-directory()}"/>
 	<property name="dir.App" value="${dir.Current}\src\Woofy"/>
     <property name="dir.Build" value="${dir.Current}\build" />
@@ -16,7 +21,7 @@
     <property name="date.Today" value="${datetime::get-year(date.Now)}-${datetime::get-month(date.Now)}-${datetime::get-day(date.Now)}"/>
     <property name="date.Today2" value="${datetime::get-year(date.Now)}.${datetime::get-month(date.Now)}.${datetime::get-day(date.Now)}"/>
     
-    <property name="woofy.Version" value="0.5" />
+    <property name="woofy.Version" value="${version.Major}.${version.Minor}.${version.BuildNumber}" />
     <property name="woofy.ZipFileName" value="Woofy-${woofy.Version}-zipped.zip"/>
     <property name="woofy.ZipFile" value="${dir.Build}\${woofy.ZipFileName}"/>
     <property name="woofy.ExeFileName" value="Woofy-${woofy.Version}-setup.exe"/>
@@ -35,6 +40,17 @@
 				<exclude name="bin\**" />
 				<exclude name="obj\**" />
 			</fileset>
+		</copy>
+
+		<copy file="${dir.BuildTemplates}\AssemblyInfo.template" tofile="${dir.Source}\Properties\AssemblyInfo.cs">
+			<filterchain>			
+				<replacetokens>
+					<token key="MAJOR" value="${version.Major}" />
+					<token key="MINOR" value="${version.Minor}" />
+					<token key="BUILDNUMBER" value="${version.BuildNumber}" />
+					<token key="REVISION" value="${version.Revision}" />
+				</replacetokens>
+			</filterchain>
 		</copy>
 	</target>
 
@@ -57,6 +73,7 @@
                 <include name="**.*"/>
                 <exclude name="*.xml"/>
             </fileset>
+			<!--TODO: to remove-->
             <filterchain>
                 <replacetokens>
                     <token key="WOOFYVERSION" value="${woofy.Version}" />
