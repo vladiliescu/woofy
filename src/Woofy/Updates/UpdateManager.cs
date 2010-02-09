@@ -74,8 +74,8 @@ namespace Woofy.Updates
 
             if (release == updateDescription.Woofy[0])
             {
-                UsrSettings.LastReportedWoofyVersion = release.VersionNumber;
-                UsrSettings.SaveData();
+                UserSettings.LastReportedWoofyVersion = release.VersionNumber;
+                UserSettings.SaveData();
                 if (mainForm.DisplayMessageBox(GetNewVersionText("Woofy", release), MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 {
                     DoCleanup();
@@ -84,8 +84,8 @@ namespace Woofy.Updates
             }
             else if (release == updateDescription.ComicPack[0])
             {
-                UsrSettings.LastReportedComicPackVersion = release.VersionNumber;
-                UsrSettings.SaveData();
+                UserSettings.LastReportedComicPackVersion = release.VersionNumber;
+                UserSettings.SaveData();
                 if (mainForm.DisplayMessageBox(GetNewVersionText("ComicPack", release), MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 {
                     DoCleanup();
@@ -124,9 +124,9 @@ namespace Woofy.Updates
             Release latestWoofyRelease = updateDescription.Woofy[0];
             Release latestComicPackRelease = updateDescription.ComicPack[0];
 
-            if (IsUpgradeCandidate(latestWoofyRelease, AppSettings.VersionNumber, UsrSettings.LastReportedWoofyVersion, initiatedByUser))
+            if (IsUpgradeCandidate(latestWoofyRelease, AppSettings.VersionNumber, UserSettings.LastReportedWoofyVersion, initiatedByUser))
                 return latestWoofyRelease;
-            else if (IsUpgradeCandidate(latestComicPackRelease, AppSettings.VersionNumber, UsrSettings.LastReportedComicPackVersion, initiatedByUser))
+            else if (IsUpgradeCandidate(latestComicPackRelease, AppSettings.VersionNumber, UserSettings.LastReportedComicPackVersion, initiatedByUser))
                 return latestComicPackRelease;
             else 
                 return null;

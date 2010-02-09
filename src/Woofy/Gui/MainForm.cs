@@ -29,14 +29,14 @@ namespace Woofy.Gui
         {
             InitControls();
 
-            if (UsrSettings.AutomaticallyCheckForUpdates)
+            if (UserSettings.AutomaticallyCheckForUpdates)
                 //UpdateController.CheckForUpdatesAsync(this, false);
                 UpdateManager.CheckForUpdatesAsync(false, this);
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
         {
-            if (!UsrSettings.MinimizeToTray)
+            if (!UserSettings.MinimizeToTray)
                 return;
 
             if (WindowState == FormWindowState.Minimized)

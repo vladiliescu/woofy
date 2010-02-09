@@ -4,9 +4,9 @@ using Newtonsoft.Json;
 
 namespace Woofy.Settings
 {
-	public class UsrSettings
+	public class UserSettings
 	{
-		private static readonly UserSettings defaultSettings = new UserSettings()
+		private static readonly UserSettingsData defaultSettings = new UserSettingsData()
 		{
 			LastUsedComicDefinitionFile = null,
 			LastNumberOfComicsToDownload = null,
@@ -17,12 +17,12 @@ namespace Woofy.Settings
 			AutomaticallyCheckForUpdates = true,
 			LastReportedWoofyVersion = null,
 			LastReportedComicPackVersion = null,
-			CloseWhenAllComicsHaveFinished = false,
+			CloseWhenAllComicsHaveFinishedDownloading = false,
 			ProxyUsername = null,
 			ProxyPassword = null
 
 		};
-		private static UserSettings currentSettings;
+		private static UserSettingsData currentSettings;
 
 		public static string LastUsedComicDefinitionFile
 		{
@@ -80,8 +80,8 @@ namespace Woofy.Settings
 
 		public static bool CloseWhenAllComicsHaveFinished
 		{
-			get { return currentSettings.CloseWhenAllComicsHaveFinished; }
-			set { currentSettings.CloseWhenAllComicsHaveFinished = value; }
+			get { return currentSettings.CloseWhenAllComicsHaveFinishedDownloading; }
+			set { currentSettings.CloseWhenAllComicsHaveFinishedDownloading = value; }
 		}
 
 		public static string ProxyUsername
@@ -109,7 +109,7 @@ namespace Woofy.Settings
 
 		public static void LoadData()
 		{
-			currentSettings = JsonConvert.DeserializeObject<UserSettings>(File.ReadAllText(AppSettings.UserSettingsFile));
+			currentSettings = JsonConvert.DeserializeObject<UserSettingsData>(File.ReadAllText(AppSettings.UserSettingsFile));
 		}
 
 		private static void EnsureSettingsFileExists()

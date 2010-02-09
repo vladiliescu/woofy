@@ -20,22 +20,23 @@ namespace Woofy.Gui
         #region Helper Methods
         private void InitControls()
         {
-            txtDefaultDownloadFolder.Text = UsrSettings.DefaultDownloadFolder;
-            chkAutomaticallyCheckForUpdates.Checked = UsrSettings.AutomaticallyCheckForUpdates;
-            chkMinimizeToTray.Checked = UsrSettings.MinimizeToTray;
+            txtDefaultDownloadFolder.Text = UserSettings.DefaultDownloadFolder;
+            chkAutomaticallyCheckForUpdates.Checked = UserSettings.AutomaticallyCheckForUpdates;
+            chkMinimizeToTray.Checked = UserSettings.MinimizeToTray;
+			chkCloseWhenAllComicsHaveFinished.Checked = UserSettings.CloseWhenAllComicsHaveFinished;
 
-            if (!string.IsNullOrEmpty(UsrSettings.ProxyAddress))
+            if (!string.IsNullOrEmpty(UserSettings.ProxyAddress))
             {
-                txtProxyAddress.Text = UsrSettings.ProxyAddress;
-                txtProxyPort.Text = UsrSettings.ProxyPort.ToString();
+                txtProxyAddress.Text = UserSettings.ProxyAddress;
+                txtProxyPort.Text = UserSettings.ProxyPort.ToString();
 
                 chkUseProxy.Checked = true;
             }
 
-            if (!string.IsNullOrEmpty(UsrSettings.ProxyUsername))
+            if (!string.IsNullOrEmpty(UserSettings.ProxyUsername))
             {
-                txtUsername.Text = UsrSettings.ProxyUsername;
-                txtPassword.Text = UsrSettings.ProxyPassword;
+                txtUsername.Text = UserSettings.ProxyUsername;
+                txtPassword.Text = UserSettings.ProxyPassword;
 
                 chkUseCredentials.Checked = true;
             }
@@ -46,7 +47,7 @@ namespace Woofy.Gui
         #region Events - clicks
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            UsrSettings.LoadData();
+            UserSettings.LoadData();
             this.DialogResult = DialogResult.Cancel;
         }
 
@@ -57,37 +58,38 @@ namespace Woofy.Gui
 
             if (chkUseProxy.Checked)
             {
-                UsrSettings.ProxyAddress = txtProxyAddress.Text;
+                UserSettings.ProxyAddress = txtProxyAddress.Text;
                 
                 int tempProxyPort;
                 if (int.TryParse(txtProxyPort.Text, out tempProxyPort))
-                    UsrSettings.ProxyPort = tempProxyPort;
+                    UserSettings.ProxyPort = tempProxyPort;
                 else 
-                    UsrSettings.ProxyPort = null;
+                    UserSettings.ProxyPort = null;
             }
             else
             {
-                UsrSettings.ProxyAddress = string.Empty;
-                UsrSettings.ProxyPort = null;
+                UserSettings.ProxyAddress = string.Empty;
+                UserSettings.ProxyPort = null;
             }
 
             if (chkUseCredentials.Checked)
             {
-                UsrSettings.ProxyUsername = txtUsername.Text;
-                UsrSettings.ProxyPassword = txtPassword.Text;
+                UserSettings.ProxyUsername = txtUsername.Text;
+                UserSettings.ProxyPassword = txtPassword.Text;
             }
             else
             {
-                UsrSettings.ProxyUsername = string.Empty;
-                UsrSettings.ProxyPassword = string.Empty;
+                UserSettings.ProxyUsername = string.Empty;
+                UserSettings.ProxyPassword = string.Empty;
             }
 
 
-            UsrSettings.DefaultDownloadFolder = txtDefaultDownloadFolder.Text;
-            UsrSettings.AutomaticallyCheckForUpdates = chkAutomaticallyCheckForUpdates.Checked;
-            UsrSettings.MinimizeToTray = chkMinimizeToTray.Checked;
+            UserSettings.DefaultDownloadFolder = txtDefaultDownloadFolder.Text;
+            UserSettings.AutomaticallyCheckForUpdates = chkAutomaticallyCheckForUpdates.Checked;
+            UserSettings.MinimizeToTray = chkMinimizeToTray.Checked;
+			UserSettings.CloseWhenAllComicsHaveFinished = chkCloseWhenAllComicsHaveFinished.Checked;
 
-            UsrSettings.SaveData();
+            UserSettings.SaveData();
 
             this.DialogResult = DialogResult.OK;
         }

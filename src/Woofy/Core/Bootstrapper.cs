@@ -6,7 +6,7 @@ namespace Woofy.Core
 	{
 		public static void BootstrapApplication()
 		{
-			UsrSettings.Initialize();
+			UserSettings.Initialize();
 		}
 	}
 }

@@ -2,7 +2,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{25F085AE-B31D-40E6-9546-0D357ECD18FE}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -62,7 +62,7 @@
     </Compile>
     <Compile Include="Core\PageParser.cs" />
     <Compile Include="Exceptions\RegexException.cs" />
-    <Compile Include="Settings\UserSettingsBase.cs" />
+    <Compile Include="Settings\UserSettingsData.cs" />
     <Compile Include="EventArgs\DownloadCompletedEventArgs.cs" />
     <Compile Include="EventArgs\DownloadedFileChunkEventArgs.cs" />
     <Compile Include="EventArgs\DownloadErrorEventArgs.cs" />
@@ -147,7 +147,7 @@
     </Compile>
     <None Include="app.config" />
     <Compile Include="Settings\AppSettings.cs" />
-    <Compile Include="Settings\UsrSettings.cs" />
+    <Compile Include="Settings\UserSettings.cs" />
     <Compile Include="Updates\ChangeCollection.cs" />
     <Compile Include="Updates\Release.cs" />
     <Compile Include="Updates\ReleaseCollection.cs" />
