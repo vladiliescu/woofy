@@ -9,13 +9,15 @@ namespace Woofy.Gui
 {
     partial class AboutForm : Form
     {
+		private readonly IApplicationInfo applicationInfo = new ApplicationInfo();
+
         #region .ctor
         public AboutForm()
         {
             InitializeComponent();
 
-            Text = string.Format("About {0}", AssemblyTitle);
-            lblProductInfo.Text = string.Format("{0} {1} Copyright {2} {3}", AssemblyTitle, AssemblyShortVersion, AssemblyCopyright, AssemblyCompany);
+            Text = string.Format("About {0}", applicationInfo.Name);
+            lblProductInfo.Text = string.Format("{0} {1} {2} {3}", applicationInfo.Name, applicationInfo.Version, applicationInfo.Copyright, applicationInfo.Company);
 
             btnOK.Focus();
 
@@ -39,81 +41,6 @@ namespace Woofy.Gui
             definitionAuthors.Groups.Clear();
             Array.Sort(groups, (a, b) => a.Name.CompareTo(b.Name));
             definitionAuthors.Groups.AddRange(groups);
-
-        }
-        #endregion
-
-        #region Assembly Attribute Accessors
-
-        public string AssemblyTitle
-        {
-            get
-            {
-                // Get all Title attributes on this assembly
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyTitleAttribute), false);
-                // If there is at least one Title attribute
-                if (attributes.Length > 0)
-                {
-                    // Select the first one
-                    AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
-                    // If it is not an empty string, return it
-                    if (titleAttribute.Title != "")
-                        return titleAttribute.Title;
-                }
-                // If there was no Title attribute, or if the Title attribute was the empty string, return the .exe name
-                return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
-            }
-        }
-
-        public string AssemblyShortVersion
-        {
-            get
-            {
-                AssemblyName assemblyName = Assembly.GetExecutingAssembly().GetName();
-                return assemblyName.Version.ToString();
-            }
-        }
-
-        public string AssemblyProduct
-        {
-            get
-            {
-                // Get all Product attributes on this assembly
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
-                // If there aren't any Product attributes, return an empty string
-                if (attributes.Length == 0)
-                    return "";
-                // If there is a Product attribute, return its value
-                return ((AssemblyProductAttribute)attributes[0]).Product;
-            }
-        }
-
-        public string AssemblyCopyright
-        {
-            get
-            {
-                // Get all Copyright attributes on this assembly
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
-                // If there aren't any Copyright attributes, return an empty string
-                if (attributes.Length == 0)
-                    return "";
-                // If there is a Copyright attribute, return its value
-                return ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
-            }
-        }
-
-        public string AssemblyCompany
-        {
-            get
-            {
-                // Get all Company attributes on this assembly
-                object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
-                // If there aren't any Company attributes, return an empty string
-                if (attributes.Length == 0)
-                    return "";
-                // If there is a Company attribute, return its value
-                return ((AssemblyCompanyAttribute)attributes[0]).Company;
-            }
         }
         #endregion
 

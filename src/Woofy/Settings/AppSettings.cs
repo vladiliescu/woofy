@@ -1,11 +1,12 @@
 using System;
 using System.IO;
+using System.Reflection;
 
 namespace Woofy.Settings
 {
     public static class AppSettings
     {
-        public static readonly string VersionNumber = "0.5";
+        public static readonly string VersionNumber = Assembly.GetAssembly(typeof(Program)).GetName().Version.ToString();
 
 		public static readonly string UpdateDescriptionFileAddress = "http://woofy.sourceforge.net/updatesDescriptionFile.xml";
 		public static readonly string DatabaseConnectionString = BaseDirectory("comics.json");
