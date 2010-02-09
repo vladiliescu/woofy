@@ -3,6 +3,7 @@
          name="Woofy"
          default="all">
 
+	<property name="configuration" value="Release"/>
 	<property name="version.Major" value="0" />
 	<property name="version.Minor" value="6" />
 	<property name="version.BuildNumber" value="0" />
@@ -20,7 +21,7 @@
 	<property name="dir.Source" value="${dir.Build}\src" />
     <property name="dir.BuildTemplates" value="${dir.Current}\build-files"/>
     <property name="dir.ComicDefinitions" value="${dir.Current}\src\ComicDefinitions" />
-    <property name="dir.Woofy" value="${dir.Current}\src\Woofy\bin\Release" />
+    <property name="dir.Woofy" value="${dir.Source}\bin\${configuration}" />
     <property name="file.PlaintextChangelog" value="${dir.Build}\changelog.txt"/>
     
     <property name="date.Now" value="${datetime::now()}"/>
@@ -48,7 +49,7 @@
 			</fileset>
 		</copy>
 
-		<copy file="${dir.BuildTemplates}\AssemblyInfo.template" tofile="${dir.Source}\Properties\AssemblyInfo.cs">
+		<copy file="${dir.BuildTemplates}\AssemblyInfo.template" tofile="${dir.Source}\Properties\AssemblyInfo.cs" overwrite="true">
 			<filterchain>			
 				<replacetokens>
 					<token key="MAJOR" value="${version.Major}" />
@@ -63,7 +64,7 @@
     <target name="compile" depends="copy-sources-to-intermediary-folder" >
 		<msbuild project="${dir.Source}\Woofy.csproj" target="Clean"/>
 		<msbuild project="${dir.Source}\Woofy.csproj" target="Build">
-			<property name="Configuration" value="Release" />
+			<property name="Configuration" value="${configuration}" />
 		</msbuild>
     </target>
 
