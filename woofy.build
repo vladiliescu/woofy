@@ -4,8 +4,10 @@
          default="all">
 
     <property name="dir.Current" value="${directory::get-current-directory()}"/>
+	<property name="dir.App" value="${dir.Current}\src\Woofy"/>
     <property name="dir.Build" value="${dir.Current}\build" />
-    <property name="dir.BuildTemplates" value="build-files"/>
+	<property name="dir.Source" value="${dir.Build}\src" />
+    <property name="dir.BuildTemplates" value="${dir.Current}\build-files"/>
     <property name="dir.ComicDefinitions" value="${dir.Current}\src\ComicDefinitions" />
     <property name="dir.Woofy" value="${dir.Current}\src\Woofy\bin\Release" />
     <property name="file.PlaintextChangelog" value="${dir.Build}\changelog.txt"/>
@@ -21,23 +23,29 @@
     <property name="woofy.ExeFile" value="${dir.Build}\${woofy.ExeFileName}" />
     
 
-    <target name="init">
+    <target name="recreate-build-folder">
         <delete dir="${dir.Build}"  />
         <mkdir dir="${dir.Build}"/>
     </target>
 
-    <target name="compile"
-            depends="init"
-            >
-		<msbuild project="src\Woofy\Woofy.csproj" target="Clean"/>
-		<msbuild project="src\Woofy\Woofy.csproj" target="Build">
+	<target name="copy-sources-to-intermediary-folder" depends="recreate-build-folder">
+		<copy todir="${dir.Source}">
+			<fileset basedir="${dir.App}" >
+				<include name="**.*" />
+				<exclude name="bin\**" />
+				<exclude name="obj\**" />
+			</fileset>
+		</copy>
+	</target>
+
+    <target name="compile" depends="copy-sources-to-intermediary-folder" >
+		<msbuild project="${dir.Source}\Woofy.csproj" target="Clean"/>
+		<msbuild project="${dir.Source}\Woofy.csproj" target="Build">
 			<property name="Configuration" value="Release" />
 		</msbuild>
     </target>
 
-    <target name="copyToBuild"
-            depends="compile"
-            >
+    <target name="copyToBuild" depends="compile">
         <copy todir="${dir.Build}\definitions">
             <fileset basedir="${dir.ComicDefinitions}">
                 <include name="*.xml"/>
@@ -80,9 +88,7 @@
         
     </target>
     
-    <target name="zipFiles"
-            depends="copyToBuild"
-            >
+    <target name="zipFiles" depends="copyToBuild" >
         <zip zipfile="${woofy.ZipFile}">
             <fileset basedir="${dir.Build}">
                 <include name="Woofy\**.*"/>
@@ -90,16 +96,12 @@
         </zip>        
     </target>
 
-    <target name="createInstallers"
-            depends="zipFiles"
+    <target name="createInstallers" depends="zipFiles"
             >
         <exec program="Tools\NSIS\makensis.exe" commandline='"${dir.Build}\setupWoofy.nsi"' workingdir="Tools\NSIS" />        
-    </target>
+    </target>    
 
-    
-
-    <target name="updateAutoUpdateFiles" 
-            depends="createInstallers">
+    <target name="updateAutoUpdateFiles"  depends="createInstallers">
         <property name="woofy.ExeFileSize" value="${file::get-length(woofy.ExeFile)}"/>
 
         <!-- After the installers are created, copy the auto-update files again because we now have the the file size tokens -->
@@ -120,15 +122,9 @@
                 </replacetokens>
             </filterchain>
         </copy>
-
-
-        
-        
     </target>
 
-    <target name="all" 
-            depends="updateAutoUpdateFiles">
-        
+    <target name="all"  depends="updateAutoUpdateFiles">
     </target>
     
 </project>
