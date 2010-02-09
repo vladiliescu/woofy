@@ -6,7 +6,13 @@
 	<property name="version.Major" value="0" />
 	<property name="version.Minor" value="6" />
 	<property name="version.BuildNumber" value="0" />
-	<property name="version.Revision" value="0" />
+	<property name="version.Revision" value="0"  />
+	<!--TODO: i should use hg tip when i find out its template syntax.-->
+	<exec program="hg" resultproperty="version.Revision" >
+		<arg value="identify" />
+		<arg value="-n" />
+	</exec>
+	<echo message="${version.Revision}"/>
 
     <property name="dir.Current" value="${directory::get-current-directory()}"/>
 	<property name="dir.App" value="${dir.Current}\src\Woofy"/>
