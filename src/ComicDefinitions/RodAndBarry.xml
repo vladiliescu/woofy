@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Rod &amp; Barry" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
-    <startUrl><![CDATA[http://www.rodandbarrycomic.com]]></startUrl>
-    <comicRegex><![CDATA[http://www.rodandbarrycomic.com/comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[coords="223,15,268,49"\shref="(?<content>http://www\.rodandbarrycomic\.com/\?p=[\d]{1,3})"]]></backButtonRegex>
-    <firstIssue><![CDATA[http://www.rodandbarrycomic.com/comics/2008-03-06.jpg]]></firstIssue>
-</comicInfo>

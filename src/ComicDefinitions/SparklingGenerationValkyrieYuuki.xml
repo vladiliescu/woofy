@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Sparkling Generation Valkyrie Yuuki" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
-    <startUrl><![CDATA[http://www.sgvy.com]]></startUrl>
-    <latestPageRegex><![CDATA[href="(?<content>archives/Edda[\d]{1,4}/Issue[\d]{1,4}/Page[\d]{1,4}\.html)"><img\swidth="[\d]{1,4}px"\sheight="[\d]{1,4}px"\sborder="[\d]{1,4}px"\ssrc="images/thumb\.jpg"]]></latestPageRegex>
-    <rootUrl><![CDATA[http://www.sgvy.com/archives/]]></rootUrl>
-    <comicRegex><![CDATA[id="comic"\ssrc="\.\./(?:\.\./)?(?<content>images/sgvy/[^.]+\.(?:gif|jpg|jpeg|png))]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref="\.\./(?:\.\./)?(?<content>Edda[\d]{1,3}/(?:Issue[\d]{1,3}/Page[\d]{1,3}|Cover)\.html)">Prev</a>]]></backButtonRegex>
-    <firstIssue><![CDATA[http://www.sgvy.com/archives/images/sgvy/sgvy-e1.jpg]]></firstIssue>
-</comicInfo>

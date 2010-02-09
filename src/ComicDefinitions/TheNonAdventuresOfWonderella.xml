@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="The Non-Adventures of Wonderella" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
-    <startUrl><![CDATA[http://nonadventures.com]]></startUrl>
-    <comicRegex><![CDATA[http://nonadventures.com/comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[href="(?<content>http://nonadventures\.com/[\d]{4}/[\d]{2}/[\d]{2}/[^/]+/)">&#9668;\sPrevious]]></backButtonRegex>
-    <firstIssue><![CDATA[http://nonadventures.com/comics/2006-09-09-1.gif]]></firstIssue>
-</comicInfo>

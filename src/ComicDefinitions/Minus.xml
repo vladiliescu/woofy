@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Minus" author="Citizen Drago" allowMultipleStrips="true" allowMissingStrips="false">
-    <startUrl><![CDATA[http://www.kiwisbybeat.com/minus.html]]></startUrl>
-    <firstIssue><![CDATA[http://www.kiwisbybeat.com/minus/minus1.jpg]]></firstIssue>
-    <rootUrl><![CDATA[http://www.kiwisbybeat.com]]></rootUrl>
-    <comicRegex><![CDATA[minus/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref="(?<content>minus\d{1,4}\.html)">previous</a>]]></backButtonRegex>
-</comicInfo>

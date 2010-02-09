@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Black Tapestries" allowMultipleStrips="false" allowMissingStrips="false" author="kumorikage" authorEmail="j_sassinak@hotmail.com" >
-    <startUrl><![CDATA[http://blacktapestries.comicgenesis.com/]]></startUrl>
-    <firstIssue><![CDATA[http://blacktapestries.comicgenesis.com/comics/20020711.jpg]]></firstIssue>
-    <comicRegex><![CDATA[/comics/[0-9]{8}\.(jpg|png|jpeg|gif)]]></comicRegex>
-    <backButtonRegex><![CDATA[<a.*(?<content>/d/[0-9]{8}\.html).*alt="Previous\scomic".*/a>]]></backButtonRegex>
-</comicInfo>

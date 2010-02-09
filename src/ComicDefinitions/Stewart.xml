@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Stewart" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
-    <startUrl><![CDATA[http://www.stewartthebison.com]]></startUrl>
-    <comicRegex><![CDATA[http://stewartthebison.com/comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[href="(?<content>http://stewartthebison.com/\?p=[\d]{1,4})">&laquo;\sPrevious]]></backButtonRegex>
-    <firstIssue><![CDATA[http://stewartthebison.com/comics/2007-10-30-movingout.jpg]]></firstIssue>
-</comicInfo>

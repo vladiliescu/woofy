@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="The Dreamland Chronicles" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
-    <startUrl><![CDATA[http://www.thedreamlandchronicles.com]]></startUrl>
-    <firstIssue><![CDATA[http://www.thedreamlandchronicles.com/comics/2006-01-05.jpg]]></firstIssue>
-    <comicRegex><![CDATA[img\ssrc="http://www.thedreamlandchronicles.com(?<content>/comics/\d{4}-\d{2}-\d{2}(?:-\d+)?\.(gif|jpg|jpeg|png))]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref="http://www.thedreamlandchronicles.com(?<content>/\?p=[\d]{1,4})">&#9668;\sPrevious</a>]]></backButtonRegex>
-</comicInfo>

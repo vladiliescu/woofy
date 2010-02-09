@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Gene's Journal" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
-    <startUrl><![CDATA[http://www.genesjournalcomic.com]]></startUrl>
-    <comicRegex><![CDATA[http://www\.genesjournalcomic\.com/comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[coords="255,17,300,51"\shref="(?<content>http://www\.genesjournalcomic\.com/\?p=[\d]{1,3})"]]></backButtonRegex>
-    <firstIssue><![CDATA[http://www.genesjournalcomic.com/comics/2008-01-11.jpg]]></firstIssue>
-</comicInfo>

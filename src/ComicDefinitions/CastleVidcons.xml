@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Castle Vidcons" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
-    <startUrl><![CDATA[http://www.castle-vidcons.com]]></startUrl>
-    <comicRegex><![CDATA[src="(?<content>http://www.castle-vidcons.com/comics/[\d]{4}/[\d]{2}/[^.]+\.(?:gif|jpg|jpeg|png))]]></comicRegex>
-    <backButtonRegex><![CDATA[(?<content>http://www.castle-vidcons.com/page/[\d]{1,4}/)"><\sPrevious\sComic]]></backButtonRegex>
-    <firstIssue><![CDATA[http://www.castle-vidcons.com/comics/2008/06/cv0001.gif]]></firstIssue>
-</comicInfo>

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Dueling Analogs" author="kb">
-    <startUrl><![CDATA[http://www.duelinganalogs.com/]]></startUrl>
-    <firstIssue><![CDATA[http://www.duelinganalogs.com/comics/2005-11-17.png]]></firstIssue>
-    <comicRegex><![CDATA[/comics/[0-9]{4}-[0-9]{2}-[0-9]{2}\.(gif|jpg|jpeg|png)|/oddity/[0-9]{4}-[0-9]{2}-[0-9]{2}\.(gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref="(?<content>/comic/[0-9]{4}/[0-9]{2}/[0-9]{2}/[\w\d-%]*/)"><img\ssrc="/version3/previous-on.gif"]]></backButtonRegex>
-</comicInfo>

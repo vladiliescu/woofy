@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="The Eight" author="rave90" allowMultipleStrips="false" allowMissingStrips="false">
-    <startUrl><![CDATA[http://theeight.comicgenesis.com]]></startUrl>
-    <firstIssue><![CDATA[http://theeight.comicgenesis.com/comics/20060508.jpg]]></firstIssue>
-    <comicRegex><![CDATA[/comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref="http://theeight\.comicgenesis\.com(?<content>/d/\d{8}.html)"><img\sborder="0"\sname="previous_day"]]></backButtonRegex>
-</comicInfo>

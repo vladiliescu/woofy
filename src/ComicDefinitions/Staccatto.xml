@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Staccato" author="Citizen Drago" allowMultipleStrips="true" allowMissingStrips="true">
-    <startUrl><![CDATA[http://www.staccatocomic.com/2008-003.php]]></startUrl>
-    <rootUrl><![CDATA[http://www.staccatocomic.com]]></rootUrl>
-    <comicRegex><![CDATA[comics(?:-fy)?/[^\?.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[<area\sshape="rect"\scoords="[\d]{1,3},[\d]{1,3},[\d]{1,3},[\d]{1,3}"\shref="archive-[\d]{1,4}\.php"\salt=""><area\sshape="rect"\scoords="[\d]{1,3},[\d]{1,3},[\d]{1,3},[\d]{1,3}"\shref="(?<content>[^-"]+-[\d]{1,4}\.php)"\salt="">]]></backButtonRegex>
-    <firstIssue><![CDATA[http://www.staccatocomic.com/comics/2002-005.gif]]></firstIssue>
-</comicInfo>

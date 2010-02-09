@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="SailorSun" author="Lisalover1" allowMultipleStrips="true" allowMissingStrips="false">
-    <startUrl><![CDATA[http://www.sailorsun.org/]]></startUrl>
-    <comicRegex><![CDATA[/comics/[^.]+\.(?:gif|jpg|jpeg|png|swf)]]></comicRegex>
-    <backButtonRegex><![CDATA[href="http://www\.sailorsun\.org(?<content>/index\.php\?comicID=[\d]{1,4})"><img\ssrc="layout-images/prev\.gif"]]></backButtonRegex>
-    <firstIssue><![CDATA[http://www.sailorsun.org/comics/2006-08-05.gif]]></firstIssue>
-</comicInfo>

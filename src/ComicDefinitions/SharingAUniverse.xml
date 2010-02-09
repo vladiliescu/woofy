@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Sharing a Universe" allowMultipleStrips="true" allowMissingStrips="true" author="kumorikage" authorEmail="j_sassinak@hotmail.com">
-    <startUrl><![CDATA[http://sharingauniverse.comicgenesis.com/]]></startUrl>
-    <firstIssue><![CDATA[http://sharingauniverse.comicgenesis.com/comics/20030120-00-001.jpg]]></firstIssue>
-    <comicRegex><![CDATA[/comics/[0-9]{8}[^.]*\.(jpg|png|gif|jpeg)]]></comicRegex>
-    <backButtonRegex><![CDATA[<a.*(?<content>/d/[0-9]{8}\.html).*alt="Previous\scomic".*/a>]]></backButtonRegex>
-</comicInfo>

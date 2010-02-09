@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="AppleGeeks Lite" author="Citizen Drago">
-    <startUrl><![CDATA[http://www.applegeeks.com/lite/]]></startUrl>
-	<rootUrl><![CDATA[http://www.applegeeks.com/lite/]]></rootUrl>
-    <firstIssue><![CDATA[http://www.applegeeks.com/lite/strips/aglite1.jpg]]></firstIssue>
-    <comicRegex><![CDATA[strips/aglite[\d]{1,4}\.(gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref="(?<content>index\.php\?aglitecomic=[\d]{4}-[\d]{2}-[\d]{2})"><img\ssrc="images/back\.gif"]]></backButtonRegex>
-</comicInfo>

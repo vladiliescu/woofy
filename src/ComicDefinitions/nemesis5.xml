@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="[nemesis] chapter 5" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
-    <startUrl><![CDATA[http://www.webcomicsnation.com/inkbrush/gone/series.php?name=entry&view=current]]></startUrl>
-    <rootUrl><![CDATA[http://www.webcomicsnation.com/inkbrush/gone/]]></rootUrl>
-    <comicRegex><![CDATA[http://www\.webcomicsnation\.com/memberimages/c?5[_p][\d]+(?:_copy1)?\.(?:gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[redirect\.php\?name=gone&type=comic&installment_ID=[\d]+&whichbutton=prev&view=(?:archive|current)&counter=1]]></backButtonRegex>
-    <firstIssue><![CDATA[http://www.webcomicsnation.com/memberimages/c5_1.jpg]]></firstIssue>
-</comicInfo>

@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Evil Inc." author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
-    <startUrl><![CDATA[http://www.evil-comic.com/]]></startUrl>
-    <firstIssue><![CDATA[http://www.evil-comic.com/comics/e20050530.gif]]></firstIssue>
-    <comicRegex><![CDATA[<img\ssrc="(?<content>/comics/e[\d]{8}[_a-z0-9]*\.(gif|jpg|jpeg|png))"\swidth="[78]]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref="(?<content>/archive/[\d]{8}\.html)"\starget="_self"><img\ssrc="/images/previous.gif"]]></backButtonRegex>
-</comicInfo>

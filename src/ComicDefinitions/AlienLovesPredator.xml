@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Alien Loves Predator" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="true">
-    <startUrl><![CDATA[http://www.alienlovespredator.com]]></startUrl>
-    <firstIssue><![CDATA[http://alp.humor.gamespy.com/strips/strip_011.jpg]]></firstIssue>
-    <comicRegex><![CDATA[<img\ssrc="(?<content>http://alp\.humor\.gamespy\.com/strips/[^.]+\.(?:gif|jpg|jpeg|png))"]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref="(?<content>http://alienlovespredator\.com/\?id=[\d]{1,4})"><img\ssrc="http://alp\.humor\.gamespy\.com/images/nav_previous\.jpg"]]></backButtonRegex>
-</comicInfo>

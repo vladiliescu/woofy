@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="College Roomies from Hell" allowMissingStrips="true" allowMultipleStrips="true" author="Citizen Drago">
-    <startUrl><![CDATA[http://www.crfh.net]]></startUrl>
-    <firstIssue><![CDATA[http://www.crfh.net/comics/crfh19990101.gif]]></firstIssue>
-    <comicRegex><![CDATA[(((/)?[\d]*)|(/comics))/crfh[\d\w]*.(gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref="(?<content>/?(d/)?[\d]*.html)"><img\sborder=0\sname="previous_day"]]></backButtonRegex>
-</comicInfo>

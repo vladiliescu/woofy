@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Wayfarer's Moon" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
-    <startUrl><![CDATA[http://www.wayfarersmoon.com]]></startUrl>
-    <comicRegex><![CDATA[/admin/uploads/wm-page[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[href="(?<content>index\.php\?page=[\d]{1,4})"><img\ssrc="images/btn_back\.gif"]]></backButtonRegex>
-    <firstIssue><![CDATA[http://www.wayfarersmoon.com/admin/uploads/wm-page-00.jpg]]></firstIssue>
-</comicInfo>

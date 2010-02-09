@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Good Ship Chronicles" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
-    <startUrl><![CDATA[http://www.goodshipchronicles.com/index.php]]></startUrl>
-    <rootUrl><![CDATA[http://www.goodshipchronicles.com/]]></rootUrl>
-    <comicRegex><![CDATA[comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[href="(?<content>comic\.php\?cid=[\d]{6}.gif)"\salt="Previous\sComic"]]></backButtonRegex>
-    <firstIssue><![CDATA[http://www.goodshipchronicles.com/comics/070618.gif]]></firstIssue>
-</comicInfo>

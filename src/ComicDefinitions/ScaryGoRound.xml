@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Scary Go Round" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
-    <startUrl><![CDATA[http://www.scarygoround.com]]></startUrl>
-    <firstIssue><![CDATA[http://www.scarygoround.com/strips/20020604.png]]></firstIssue>
-    <comicRegex><![CDATA[strips/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref="(?<content>\?date=\d{8})"\sclass='newmenus'>Previous</a>]]></backButtonRegex>
-</comicInfo>

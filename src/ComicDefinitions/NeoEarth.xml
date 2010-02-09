@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Neo-Earth" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
-    <startUrl><![CDATA[http://www.neo-earth.com/latest.php]]></startUrl>
-    <rootUrl><![CDATA[http://www.neo-earth.com/]]></rootUrl>
-    <comicRegex><![CDATA[http://www.neo-earth.com/comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[href="(?<content>http://www\.neo-earth\.com/daily\.php\?date=[\d]{6})"><img\ssrc="/images/button-prev\.jpg"]]></backButtonRegex>
-    <firstIssue><![CDATA[http://www.neo-earth.com/comics/070323.gif]]></firstIssue>
-</comicInfo>

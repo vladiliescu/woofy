@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Super Stupor" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
-    <startUrl><![CDATA[http://www.superstupor.com]]></startUrl>
-    <firstIssue><![CDATA[http://www.superstupor.com/sust11262007.gif]]></firstIssue>
-    <comicRegex><![CDATA[<img\ssrc="(?<content>sust[\d]{8}\.(?:gif|jpg|jpeg|png))">]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref="(?<content>sust[\d]{8}\.shtml)">Previous]]></backButtonRegex>
-</comicInfo>

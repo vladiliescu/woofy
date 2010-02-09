@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Powerpuff Girls Doujinshi" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
-    <startUrl><![CDATA[http://ppg.snafu-comics.com]]></startUrl>
-    <comicRegex><![CDATA[comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref="(?<content>\?strip_id=[\d]{1,4})">]]></backButtonRegex>
-    <firstIssue><![CDATA[http://ppg.snafu-comics.com/comics/040118.jpg]]></firstIssue>
-</comicInfo>

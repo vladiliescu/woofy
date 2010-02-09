@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Undertow" author="Vlad Iliescu" authorEmail="vlad.iliescu@gmail.com">
-    <startUrl><![CDATA[http://undertow.dreamshards.org/]]></startUrl>
-    <firstIssue><![CDATA[http://undertow.dreamshards.org/0/u0_c.jpg]]></firstIssue>
-	<latestPageRegex><![CDATA[<a\shref="(?<content>[\w\W]*?.html)"\starget="_blank">]]></latestPageRegex>
-    <comicRegex><![CDATA["(?<content>u[\w]+_[\w]+.(gif|jpg|jpeg|png))"]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref="(?<content>[\w:/.]*u[\w]+_[\w]*.html)"><img\ssrc="[\w.:/]*?teynpoint.JPG"\sborder=0></a>]]></backButtonRegex>
-</comicInfo>

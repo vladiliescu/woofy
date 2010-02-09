@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Edge the Devilhunter" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
-    <startUrl><![CDATA[http://edgeknight.comicgenesis.com]]></startUrl>
-    <firstIssue><![CDATA[http://edgeknight.comicgenesis.com/comics/20040101.gif]]></firstIssue>
-    <comicRegex><![CDATA[/comics/[^.]+\.(?:gif|jpg|jpeg|png)]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref="http://edgeknight\.comicgenesis\.com(?<content>/d/\d{8}\.html)">Previous\scomic</a>]]></backButtonRegex>
-</comicInfo>

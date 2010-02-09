@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<comicInfo friendlyName="Keychains of Creation" author="Piotr Tomaszewski" authorEmail="malek.deneith@trioptimum.com" allowMissingStrips="true">
-    <startUrl><![CDATA[http://keychain.patternspider.net/]]></startUrl>
-    <firstIssue><![CDATA[http://keychain.patternspider.net/comics/koc0001.gif]]></firstIssue>
-    <comicRegex><![CDATA[\.?\.?/?comics/koc[0-9]{4}\.(png|jpg|jpeg|gif)]]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref="(?<content>a?r?c?h?i?v?e?\.?/?koc[0-9]{4}\.html)[^>]*><img[^i]*images/back\.gif[^>]*></a>]]></backButtonRegex>
-</comicInfo>

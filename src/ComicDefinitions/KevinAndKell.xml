@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Kevin &amp; Kell" author="Citizen Drago" allowMultipleStrips="false" allowMissingStrips="false">
-    <startUrl><![CDATA[http://www.kevinandkell.com]]></startUrl>
-    <firstIssue><![CDATA[http://www.kevinandkell.com/1995/strips/kk19950904.gif]]></firstIssue>
-    <comicRegex><![CDATA[img\ssrc="(?<content>/\d{4}/strips/[^.]+\.(?:gif|jpg|jpeg|png))"\sid="comicstrip"]]></comicRegex>
-    <backButtonRegex><![CDATA[a\shref="(?<content>/\d{4}/kk\d{4}\.html)"><span>Previous\sStrip</span></a>]]></backButtonRegex>
-</comicInfo>

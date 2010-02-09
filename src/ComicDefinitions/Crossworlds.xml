@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<comicInfo friendlyName="Crossworlds" author="Piotr Tomaszewski" authorEmail="malek.deneith@trioptimum.com">
-    <startUrl><![CDATA[http://www.crossworlds.ws/]]></startUrl>
-    <firstIssue><![CDATA[http://www.crossworlds.ws/comics/2007/08/20070806_tkye.jpg]]></firstIssue>
-    <comicRegex><![CDATA[img\ssrc='(?<content>comics/[0-9]{4}/[0-9]{2}/[0-9]{8}[^.]*\.(gif|jpg|jpeg|png))']]></comicRegex>
-    <backButtonRegex><![CDATA[<a\shref='(?<content>/\?date=[0-9]{4}\-[0-9]{2}\-[0-9]{2})'\sclass='navimg'><img\sid='navimg2']]></backButtonRegex>
-</comicInfo>
