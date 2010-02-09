@@ -63,7 +63,7 @@ ShowUninstDetails show
 
 # Installer sections
 Section "-Default"
-    SetOutPath $INSTDIR\ComicDefinitions
+    SetOutPath $INSTDIR\definitions
     SetOverwrite on
-    File /r ComicDefinitions\*
+    File /r definitions\*
 SectionEnd

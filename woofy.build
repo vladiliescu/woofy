@@ -5,13 +5,11 @@
 
     <property name="dir.Current" value="${directory::get-current-directory()}"/>
     <property name="dir.Build" value="${dir.Current}\build" />
-    <property name="dir.BuildTemplates" value="BuildFiles"/>
-    <property name="dir.ComicDefinitions" value="${dir.Current}\SourceCode\ComicDefinitions" />
-    <property name="dir.Woofy" value="${dir.Current}\SourceCode\Woofy\bin\Release" />
+    <property name="dir.BuildTemplates" value="build-files"/>
+    <property name="dir.ComicDefinitions" value="${dir.Current}\src\ComicDefinitions" />
+    <property name="dir.Woofy" value="${dir.Current}\src\Woofy\bin\Release" />
     <property name="file.NewDefinitions" value="${dir.Current}\newDefinitions.txt"/>
     <property name="file.PlaintextChangelog" value="${dir.Build}\changelog.txt"/>
-    <property name="file.HtmlChangelog" value="${dir.Build}\changelog.html"/>
-    <property name="file.FrontPageComics" value="${dir.Build}\frontpage.html" />
     
     <property name="date.Now" value="${datetime::now()}"/>
     <property name="date.Today" value="${datetime::get-year(date.Now)}-${datetime::get-month(date.Now)}-${datetime::get-day(date.Now)}"/>
@@ -38,15 +36,16 @@
     <target name="compile"
             depends="init"
             >
-        <msbuild project="SourceCode\Woofy\Woofy.csproj" target="Rebuild" >
-            <property name="Configuration" value="Release" />
-        </msbuild>        
+		<msbuild project="src\Woofy\Woofy.csproj" target="Clean"/>
+		<msbuild project="src\Woofy\Woofy.csproj" target="Build">
+			<property name="Configuration" value="Release" />
+		</msbuild>
     </target>
 
     <target name="copyToBuild"
             depends="compile"
             >
-        <copy todir="${dir.Build}\ComicDefinitions">
+        <copy todir="${dir.Build}\definitions">
             <fileset basedir="${dir.ComicDefinitions}">
                 <include name="*.xml"/>
             </fileset>
@@ -62,11 +61,9 @@
                     <token key="WOOFYVERSION" value="${woofy.Version}" />
                 </replacetokens>
             </filterchain>
-        </copy>
+        </copy>        
 
-        <copy file="Libraries\System.Data.SQLite.x64.DLL" tofile="${dir.Build}\Woofy\x64\System.Data.SQLite.DLL" />
-
-        <copy todir="${dir.Build}\Woofy\ComicDefinitions">
+        <copy todir="${dir.Build}\Woofy\definitions">
             <fileset basedir="${dir.ComicDefinitions}">
                 <include name="*.xml"/>
             </fileset>
@@ -98,7 +95,7 @@
             >
         <zip zipfile="${comicPack.ZipFile}">
             <fileset basedir="${dir.Build}">
-                <include name="ComicDefinitions\*.*" />
+                <include name="definitions\*.*" />
             </fileset>
         </zip>
 
@@ -113,9 +110,6 @@
     <target name="createInstallers"
             depends="zipFiles"
             >
-
-        <exec program="Tools\ComicDefListGenerator\ComicDefListGenerator.exe" 
-              commandline='"${dir.ComicDefinitions}" "${file.NewDefinitions}" "${file.PlaintextChangelog}" "${file.HtmlChangelog}" "${comicPack.Version}" "${date.Today2}" "${file.FrontPageComics}"'   />
 
         <exec program="Tools\NSIS\makensis.exe" commandline='"${dir.Build}\setupComicPack.nsi"' workingdir="Tools\NSIS" />
         <exec program="Tools\NSIS\makensis.exe" commandline='"${dir.Build}\setupWoofy.nsi"' workingdir="Tools\NSIS" />

@@ -73,32 +73,17 @@ SectionEnd
 Section Woofy SEC0000
     SectionIn RO
 
-    SetOutPath $INSTDIR
-
-    SetOverwrite off
-    File ${DIRECTORY}\data.s3db
-    
+    SetOutPath $INSTDIR   
     SetOverwrite on
     File ${DIRECTORY}\license.txt
     File ${DIRECTORY}\log4net.dll
     File ${DIRECTORY}\Woofy.exe
     File ${DIRECTORY}\Woofy.exe.config
     
-
-StrCmp $%PROCESSOR_ARCHITECTURE% "x86" x86 x64
-x64:
-    File ${DIRECTORY}\x64\System.Data.SQLite.DLL
-    Goto endif
-x86:
-    File ${DIRECTORY}\System.Data.SQLite.DLL
-endif:
-
-
-    SetOutPath $INSTDIR\ComicDefinitions
+    SetOutPath $INSTDIR\definitions
     SetOverwrite on
-    File /r ${DIRECTORY}\ComicDefinitions\*
+    File /r ${DIRECTORY}\definitions\*
 
-    ExecWait '"$WINDIR\Microsoft.NET\Framework\v2.0.50727\ngen.exe" install "$INSTDIR\System.Data.SQLite.DLL"'
     ExecWait '"$WINDIR\Microsoft.NET\Framework\v2.0.50727\ngen.exe" install "$INSTDIR\log4net.dll"'
     ExecWait '"$WINDIR\Microsoft.NET\Framework\v2.0.50727\ngen.exe" install "$INSTDIR\Woofy.exe"'
     
