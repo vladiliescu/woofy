@@ -8,23 +8,17 @@
 	<property name="version.Minor" value="6" />
 	<property name="version.BuildNumber" value="0" />
 	<property name="version.Revision" value="0"  />
-	<!--TODO: i should use hg tip when i find out its template syntax.-->
-	<exec program="hg" resultproperty="version.Revision" >
-		<arg value="identify" />
-		<arg value="-n" />
-	</exec>
-	<echo message="${version.Revision}"/>
-
-    <property name="dir.Current" value="${directory::get-current-directory()}"/>
+	
+	<property name="dir.Current" value="${directory::get-current-directory()}"/>
 	<property name="dir.App" value="${dir.Current}\src\Woofy"/>
-    <property name="dir.Build" value="${dir.Current}\build" />
+	<property name="dir.Build" value="${dir.Current}\build" />
 	<property name="dir.Source" value="${dir.Build}\src" />
-    <property name="dir.BuildTemplates" value="${dir.Current}\build-files"/>
-    <property name="dir.ComicDefinitions" value="${dir.Current}\src\ComicDefinitions" />
-    <property name="dir.Woofy" value="${dir.Source}\bin\${configuration}" />
-    <property name="file.PlaintextChangelog" value="${dir.Build}\changelog.txt"/>
-    
-    <property name="date.Now" value="${datetime::now()}"/>
+	<property name="dir.BuildTemplates" value="${dir.Current}\build-files"/>
+	<property name="dir.ComicDefinitions" value="${dir.Current}\src\ComicDefinitions" />
+	<property name="dir.Woofy" value="${dir.Source}\bin\${configuration}" />
+	<property name="file.PlaintextChangelog" value="${dir.Build}\changelog.txt"/>	
+
+	<property name="date.Now" value="${datetime::now()}"/>
     <property name="date.Today" value="${datetime::get-year(date.Now)}-${datetime::get-month(date.Now)}-${datetime::get-day(date.Now)}"/>
     <property name="date.Today2" value="${datetime::get-year(date.Now)}.${datetime::get-month(date.Now)}.${datetime::get-day(date.Now)}"/>
     
@@ -40,7 +34,12 @@
         <mkdir dir="${dir.Build}"/>
     </target>
 
-	<target name="copy-sources-to-intermediary-folder" depends="recreate-build-folder">
+	<target name="read-hg-revision" depends="recreate-build-folder">
+		<exec program="hg" commandline="tip -g --template {rev}" output="${dir.Build}\hg-rev.txt" />
+		<loadfile file="${dir.Build}\hg-rev.txt" property="version.Revision" />
+	</target>
+
+	<target name="copy-sources-to-intermediary-folder" depends="read-hg-revision">
 		<copy todir="${dir.Source}">
 			<fileset basedir="${dir.App}" >
 				<include name="**.*" />
