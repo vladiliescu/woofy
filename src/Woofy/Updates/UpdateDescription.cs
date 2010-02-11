@@ -8,7 +8,7 @@ using System.Xml;
 namespace Woofy.Updates
 {
     /// <summary>
-    /// Contains data about the available updates for Woofy and ComicPack.
+    /// Contains data about the available updates for Woofy.
     /// </summary>
     public class UpdateDescription
     {
@@ -19,15 +19,6 @@ namespace Woofy.Updates
         public ReleaseCollection Woofy
         {
             get { return this.woofy; }
-        }
-
-        private ReleaseCollection comicPack;
-        /// <summary>
-        /// Releases for the ComicPack package.
-        /// </summary>
-        public ReleaseCollection ComicPack
-        {
-            get { return this.comicPack; }
         }
 
         #region .ctor
@@ -53,9 +44,6 @@ namespace Woofy.Updates
             {
                 reader.ReadToFollowing("woofy");
                 this.woofy = new ReleaseCollection(reader.ReadSubtree());
-
-                reader.ReadToFollowing("comicPack");
-                this.comicPack = new ReleaseCollection(reader.ReadSubtree());
             }
         }        
         #endregion        

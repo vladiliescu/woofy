@@ -16,7 +16,6 @@ namespace Woofy.Settings
 			DefaultDownloadFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Comics"),
 			AutomaticallyCheckForUpdates = true,
 			LastReportedWoofyVersion = null,
-			LastReportedComicPackVersion = null,
 			CloseWhenAllComicsHaveFinishedDownloading = false,
 			ProxyUsername = null,
 			ProxyPassword = null
@@ -70,12 +69,6 @@ namespace Woofy.Settings
 		{
 			get { return currentSettings.LastReportedWoofyVersion; }
 			set { currentSettings.LastReportedWoofyVersion = value; }
-		}
-
-		public static string LastReportedComicPackVersion
-		{
-			get { return currentSettings.LastReportedComicPackVersion; }
-			set { currentSettings.LastReportedComicPackVersion = value; }
 		}
 
 		public static bool CloseWhenAllComicsHaveFinished

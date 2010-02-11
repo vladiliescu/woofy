@@ -82,16 +82,6 @@ namespace Woofy.Updates
                     return;
                 }
             }
-            else if (release == updateDescription.ComicPack[0])
-            {
-                UserSettings.LastReportedComicPackVersion = release.VersionNumber;
-                UserSettings.SaveData();
-                if (mainForm.DisplayMessageBox(GetNewVersionText("ComicPack", release), MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
-                {
-                    DoCleanup();
-                    return;
-                }
-            }
 
             UpgradeToRelease(release);
         }
@@ -122,12 +112,9 @@ namespace Woofy.Updates
         public static Release GetReleaseToUpgradeTo(UpdateDescription updateDescription)
         {
             Release latestWoofyRelease = updateDescription.Woofy[0];
-            Release latestComicPackRelease = updateDescription.ComicPack[0];
 
             if (IsUpgradeCandidate(latestWoofyRelease, AppSettings.VersionNumber, UserSettings.LastReportedWoofyVersion, initiatedByUser))
                 return latestWoofyRelease;
-            else if (IsUpgradeCandidate(latestComicPackRelease, AppSettings.VersionNumber, UserSettings.LastReportedComicPackVersion, initiatedByUser))
-                return latestComicPackRelease;
             else 
                 return null;
         }

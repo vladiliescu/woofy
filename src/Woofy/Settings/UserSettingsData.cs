@@ -10,7 +10,6 @@ namespace Woofy.Settings
 		public string DefaultDownloadFolder { get; set; }
 		public bool AutomaticallyCheckForUpdates { get; set; }
 		public string LastReportedWoofyVersion { get; set; }
-		public string LastReportedComicPackVersion { get; set; }
 		public bool CloseWhenAllComicsHaveFinishedDownloading { get; set; }
 		public string ProxyUsername { get; set; }
 		public string ProxyPassword { get; set; }
