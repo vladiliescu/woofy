@@ -1,6 +1,5 @@
 using System;
 using System.Windows.Forms;
-using System.Reflection;
 using System.Diagnostics;
 
 using Woofy.Core;
@@ -11,7 +10,6 @@ namespace Woofy.Gui
     {
 		private readonly IApplicationInfo applicationInfo = new ApplicationInfo();
 
-        #region .ctor
         public AboutForm()
         {
             InitializeComponent();
@@ -24,57 +22,32 @@ namespace Woofy.Gui
             InitComicDefinitionsList();
         }
 
-        private void InitComicDefinitionsList()
+    	private void OnLinkLabelClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            ComicDefinition[] comicDefinitions = ComicDefinition.GetAvailableComicDefinitions();
-            foreach (ComicDefinition comicDefinition in comicDefinitions)
-            {
-                if (string.IsNullOrEmpty(comicDefinition.Author))
-                    continue;
-                ListViewGroup authorGroup = ObtainAuthorGroup(comicDefinition.Author);
-                AddComicDefinitionToAuthor(comicDefinition, authorGroup);                    
-            }
-
-
-            ListViewGroup[] groups = new ListViewGroup[definitionAuthors.Groups.Count];
-            definitionAuthors.Groups.CopyTo(groups, 0);
-            definitionAuthors.Groups.Clear();
-            Array.Sort(groups, (a, b) => a.Name.CompareTo(b.Name));
-            definitionAuthors.Groups.AddRange(groups);
-        }
-        #endregion
-
-        #region Events - clicks
-        private void lnkFamFamFam_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Process.Start("http://www.famfamfam.com/lab/icons/silk/");
+			Process.Start(((LinkLabel)sender).Text);
         }
 
-        private void lnkWebAddress_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Process.Start("http://woofy.sourceforge.net");
-        }
+    	private void definitionAuthors_DoubleClick(object sender, EventArgs e)
+    	{
+    		if (definitionAuthors.SelectedItems.Count == 0)
+    			return;
 
-        private void lnkIconCredits_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            Process.Start("http://hobbit1978.deviantart.com/");
-        }
+    		Process.Start((string)definitionAuthors.SelectedItems[0].Tag);
+    	}
 
-        private void btnOK_Click(object sender, EventArgs e)
+    	private void btnOK_Click(object sender, EventArgs e)
         {
             Close();
         }
-        #endregion
 
-        #region Helper Methods
-        private void AddComicDefinitionToAuthor(ComicDefinition comicDefinition, ListViewGroup authorGroup)
+    	private void AddComicDefinitionToAuthor(ComicDefinition comicDefinition, ListViewGroup authorGroup)
         {
             ListViewItem definition = new ListViewItem(comicDefinition.FriendlyName, authorGroup);
             definition.Tag = comicDefinition.StartUrl;
             definitionAuthors.Items.Add(definition);
         }
 
-        private ListViewGroup ObtainAuthorGroup(string author)
+    	private ListViewGroup ObtainAuthorGroup(string author)
         {
             string trimmedAuthor = author.Trim();
             foreach (ListViewGroup group in definitionAuthors.Groups)
@@ -87,15 +60,25 @@ namespace Woofy.Gui
             definitionAuthors.Groups.Add(authorGroup);
 
             return authorGroup;
-        } 
-        #endregion
-
-        private void definitionAuthors_DoubleClick(object sender, EventArgs e)
-        {
-            if (definitionAuthors.SelectedItems.Count == 0)
-                return;
-
-            Process.Start((string)definitionAuthors.SelectedItems[0].Tag);
         }
+
+    	private void InitComicDefinitionsList()
+    	{
+    		ComicDefinition[] comicDefinitions = ComicDefinition.GetAvailableComicDefinitions();
+    		foreach (ComicDefinition comicDefinition in comicDefinitions)
+    		{
+    			if (string.IsNullOrEmpty(comicDefinition.Author))
+    				continue;
+    			ListViewGroup authorGroup = ObtainAuthorGroup(comicDefinition.Author);
+    			AddComicDefinitionToAuthor(comicDefinition, authorGroup);                    
+    		}
+
+
+    		ListViewGroup[] groups = new ListViewGroup[definitionAuthors.Groups.Count];
+    		definitionAuthors.Groups.CopyTo(groups, 0);
+    		definitionAuthors.Groups.Clear();
+    		Array.Sort(groups, (a, b) => a.Name.CompareTo(b.Name));
+    		definitionAuthors.Groups.AddRange(groups);
+    	}
     }
 }
