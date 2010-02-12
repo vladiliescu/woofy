@@ -1,4 +1,6 @@
 glob:*/obj/*
 glob:*/bin/*
 glob:build/*
-glob:*.user
+glob:**.user
+glob:**.orig
+glob:**.suo

@@ -37,6 +37,7 @@
 	<target name="read-hg-revision" depends="recreate-build-folder">
 		<exec program="hg" commandline="tip -g --template {rev}" output="${dir.Build}\hg-rev.txt" />
 		<loadfile file="${dir.Build}\hg-rev.txt" property="version.Revision" />
+		
 	</target>
 
 	<target name="copy-sources-to-intermediary-folder" depends="read-hg-revision">
@@ -54,7 +55,7 @@
 					<token key="MAJOR" value="${version.Major}" />
 					<token key="MINOR" value="${version.Minor}" />
 					<token key="BUILDNUMBER" value="${version.BuildNumber}" />
-					<token key="REVISION" value="${version.Revision}" />
+					<token key="REVISION" value="${string::trim(version.Revision)}" />
 				</replacetokens>
 			</filterchain>
 		</copy>
