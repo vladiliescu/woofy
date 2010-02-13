@@ -1,7 +1,8 @@
 ; NSIS LOGIC LIBRARY - LogicLib.nsh
-; Version 2.5 - 23/08/2004
+; Version 2.6 - 08/12/2007
 ; By dselkirk@hotmail.com
 ; and eccles@users.sf.net
+; with IfNot support added by Message
 ;
 ; Questions/Comments -
 ; See http://forums.winamp.com/showthread.php?s=&postid=1116241
@@ -11,13 +12,14 @@
 ;
 ; Usage:
 ;   The following "statements" are available:
-;       If|Unless..{ElseIf|ElseUnless}..[Else]..EndIf|EndUnless
+;       If|IfNot|Unless..{ElseIf|ElseIfNot|ElseUnless}..[Else]..EndIf|EndUnless
 ;         - Conditionally executes a block of statements, depending on the value
-;           of an expression.
-;       AndIf|AndUnless|OrIf|OrUnless
-;         - Adds any number of extra conditions to If, Unless, ElseIf and
-;           ElseUnless statements.
-;       IfThen..|..|
+;           of an expression. IfNot and Unless are equivalent and
+;           interchangeable, as are ElseIfNot and ElseUnless.
+;       AndIf|AndIfNot|AndUnless|OrIf|OrIfNot|OrUnless
+;         - Adds any number of extra conditions to If, IfNot, Unless, ElseIf,
+;           ElseIfNot and ElseUnless statements.
+;       IfThen|IfNotThen..|..|
 ;         - Conditionally executes an inline statement, depending on the value
 ;           of an expression.
 ;       IfCmd..||..|
@@ -334,12 +336,13 @@
   !macroend
   !define If     `!insertmacro _If true`
   !define Unless `!insertmacro _If false`
+  !define IfNot  `!insertmacro _If false`
 
   !macro _And _c _a _o _b
     !verbose push
     !verbose ${LOGICLIB_VERBOSITY}
     !ifndef _Logic | ${_Logic}If
-      !error "Cannot use And without a preceding If or Unless"
+      !error "Cannot use And without a preceding If or IfNot/Unless"
     !endif
     !ifndef ${_Logic}Else
       !error "Cannot use And following an Else"
@@ -355,12 +358,13 @@
   !macroend
   !define AndIf     `!insertmacro _And true`
   !define AndUnless `!insertmacro _And false`
+  !define AndIfNot  `!insertmacro _And false`
 
   !macro _Or _c _a _o _b
     !verbose push
     !verbose ${LOGICLIB_VERBOSITY}
     !ifndef _Logic | ${_Logic}If
-      !error "Cannot use Or without a preceding If or Unless"
+      !error "Cannot use Or without a preceding If or IfNot/Unless"
     !endif
     !ifndef ${_Logic}Else
       !error "Cannot use Or following an Else"
@@ -385,12 +389,13 @@
   !macroend
   !define OrIf     `!insertmacro _Or true`
   !define OrUnless `!insertmacro _Or false`
+  !define OrIfNot  `!insertmacro _Or false`
 
   !macro _Else
     !verbose push
     !verbose ${LOGICLIB_VERBOSITY}
     !ifndef _Logic | ${_Logic}If
-      !error "Cannot use Else without a preceding If or Unless"
+      !error "Cannot use Else without a preceding If or IfNot/Unless"
     !endif
     !ifndef ${_Logic}Else
       !error "Cannot use Else following an Else"
@@ -423,12 +428,13 @@
   !macroend
   !define ElseIf     `!insertmacro _ElseIf true`
   !define ElseUnless `!insertmacro _ElseIf false`
+  !define ElseIfNot  `!insertmacro _ElseIf false`
 
   !macro _EndIf _n
     !verbose push
     !verbose ${LOGICLIB_VERBOSITY}
     !ifndef _Logic | ${_Logic}If
-      !error "Cannot use End${_n} without a preceding If or Unless"
+      !error "Cannot use End${_n} without a preceding If or IfNot/Unless"
     !endif
     !ifdef ${_Logic}Else
       ${${_Logic}Else}:                                   ; Place the Else label
@@ -454,6 +460,16 @@
     !verbose pop
   !macroend
   !define IfThen `!insertmacro _IfThen`
+
+  !macro _IfNotThen _a _o _b _t
+    !verbose push
+    !verbose ${LOGICLIB_VERBOSITY}
+    ${IfNot} `${_a}` `${_o}` `${_b}`
+      ${_t}
+    ${EndIf}
+    !verbose pop
+  !macroend
+  !define IfNotThen `!insertmacro _IfNotThen`
 
   !macro _ForEach _v _f _t _o _s
     !verbose push
@@ -560,6 +576,7 @@
     !endif
     !undef _c=${_c}
     Goto ${_Continue}                                     ; Just to ensure it is referenced at least once
+	Goto ${_Exit${_n}}                                    ; Just to ensure it is referenced at least once
     ${_Exit${_n}}:                                        ; Place the loop exit point
     !undef ${_Logic}Condition
     !insertmacro _PopScope Continue
