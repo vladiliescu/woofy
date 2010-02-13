@@ -45,12 +45,12 @@ namespace Woofy.Gui
 			this.txtPassword = new System.Windows.Forms.TextBox();
 			this.tabControl1 = new System.Windows.Forms.TabControl();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
+			this.chkCloseWhenAllComicsHaveFinished = new System.Windows.Forms.CheckBox();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.txtUsername = new System.Windows.Forms.TextBox();
 			this.lblPassword = new System.Windows.Forms.Label();
 			this.lblUsername = new System.Windows.Forms.Label();
 			this.chkUseCredentials = new System.Windows.Forms.CheckBox();
-			this.chkCloseWhenAllComicsHaveFinished = new System.Windows.Forms.CheckBox();
 			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
 			this.tabControl1.SuspendLayout();
 			this.tabPage1.SuspendLayout();
@@ -80,7 +80,7 @@ namespace Woofy.Gui
 			this.chkAutomaticallyCheckForUpdates.AutoSize = true;
 			this.chkAutomaticallyCheckForUpdates.Checked = true;
 			this.chkAutomaticallyCheckForUpdates.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.chkAutomaticallyCheckForUpdates.Location = new System.Drawing.Point(7, 68);
+			this.chkAutomaticallyCheckForUpdates.Location = new System.Drawing.Point(7, 72);
 			this.chkAutomaticallyCheckForUpdates.Name = "chkAutomaticallyCheckForUpdates";
 			this.chkAutomaticallyCheckForUpdates.Size = new System.Drawing.Size(177, 17);
 			this.chkAutomaticallyCheckForUpdates.TabIndex = 3;
@@ -103,7 +103,7 @@ namespace Woofy.Gui
 			this.chkMinimizeToTray.AutoSize = true;
 			this.chkMinimizeToTray.Checked = true;
 			this.chkMinimizeToTray.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.chkMinimizeToTray.Location = new System.Drawing.Point(7, 45);
+			this.chkMinimizeToTray.Location = new System.Drawing.Point(7, 49);
 			this.chkMinimizeToTray.Name = "chkMinimizeToTray";
 			this.chkMinimizeToTray.Size = new System.Drawing.Size(98, 17);
 			this.chkMinimizeToTray.TabIndex = 2;
@@ -188,7 +188,7 @@ namespace Woofy.Gui
 			// 
 			this.txtPassword.Enabled = false;
 			this.errorProvider.SetIconPadding(this.txtPassword, 2);
-			this.txtPassword.Location = new System.Drawing.Point(293, 80);
+			this.txtPassword.Location = new System.Drawing.Point(293, 88);
 			this.txtPassword.Name = "txtPassword";
 			this.txtPassword.Size = new System.Drawing.Size(125, 20);
 			this.txtPassword.TabIndex = 15;
@@ -220,6 +220,16 @@ namespace Woofy.Gui
 			this.tabPage1.Text = "General";
 			this.tabPage1.UseVisualStyleBackColor = true;
 			// 
+			// chkCloseWhenAllComicsHaveFinished
+			// 
+			this.chkCloseWhenAllComicsHaveFinished.AutoSize = true;
+			this.chkCloseWhenAllComicsHaveFinished.Location = new System.Drawing.Point(7, 95);
+			this.chkCloseWhenAllComicsHaveFinished.Name = "chkCloseWhenAllComicsHaveFinished";
+			this.chkCloseWhenAllComicsHaveFinished.Size = new System.Drawing.Size(361, 17);
+			this.chkCloseWhenAllComicsHaveFinished.TabIndex = 4;
+			this.chkCloseWhenAllComicsHaveFinished.Text = "&Close Woofy when all comics have finished downloading (experimental)";
+			this.chkCloseWhenAllComicsHaveFinished.UseVisualStyleBackColor = true;
+			// 
 			// tabPage2
 			// 
 			this.tabPage2.Controls.Add(this.txtPassword);
@@ -243,7 +253,7 @@ namespace Woofy.Gui
 			// txtUsername
 			// 
 			this.txtUsername.Enabled = false;
-			this.txtUsername.Location = new System.Drawing.Point(92, 80);
+			this.txtUsername.Location = new System.Drawing.Point(92, 88);
 			this.txtUsername.Name = "txtUsername";
 			this.txtUsername.Size = new System.Drawing.Size(133, 20);
 			this.txtUsername.TabIndex = 13;
@@ -251,7 +261,7 @@ namespace Woofy.Gui
 			// lblPassword
 			// 
 			this.lblPassword.AutoSize = true;
-			this.lblPassword.Location = new System.Drawing.Point(231, 83);
+			this.lblPassword.Location = new System.Drawing.Point(231, 91);
 			this.lblPassword.Name = "lblPassword";
 			this.lblPassword.Size = new System.Drawing.Size(56, 13);
 			this.lblPassword.TabIndex = 14;
@@ -260,7 +270,7 @@ namespace Woofy.Gui
 			// lblUsername
 			// 
 			this.lblUsername.AutoSize = true;
-			this.lblUsername.Location = new System.Drawing.Point(28, 83);
+			this.lblUsername.Location = new System.Drawing.Point(28, 91);
 			this.lblUsername.Name = "lblUsername";
 			this.lblUsername.Size = new System.Drawing.Size(58, 13);
 			this.lblUsername.TabIndex = 12;
@@ -269,23 +279,13 @@ namespace Woofy.Gui
 			// chkUseCredentials
 			// 
 			this.chkUseCredentials.AutoSize = true;
-			this.chkUseCredentials.Location = new System.Drawing.Point(4, 57);
+			this.chkUseCredentials.Location = new System.Drawing.Point(4, 65);
 			this.chkUseCredentials.Name = "chkUseCredentials";
 			this.chkUseCredentials.Size = new System.Drawing.Size(99, 17);
 			this.chkUseCredentials.TabIndex = 11;
 			this.chkUseCredentials.Text = "Use credentials";
 			this.chkUseCredentials.UseVisualStyleBackColor = true;
 			this.chkUseCredentials.CheckedChanged += new System.EventHandler(this.chkUseCredentials_CheckedChanged);
-			// 
-			// chkCloseWhenAllComicsHaveFinished
-			// 
-			this.chkCloseWhenAllComicsHaveFinished.AutoSize = true;
-			this.chkCloseWhenAllComicsHaveFinished.Location = new System.Drawing.Point(7, 91);
-			this.chkCloseWhenAllComicsHaveFinished.Name = "chkCloseWhenAllComicsHaveFinished";
-			this.chkCloseWhenAllComicsHaveFinished.Size = new System.Drawing.Size(293, 17);
-			this.chkCloseWhenAllComicsHaveFinished.TabIndex = 4;
-			this.chkCloseWhenAllComicsHaveFinished.Text = "&Close Woofy when all comics have finished downloading";
-			this.chkCloseWhenAllComicsHaveFinished.UseVisualStyleBackColor = true;
 			// 
 			// SettingsForm
 			// 

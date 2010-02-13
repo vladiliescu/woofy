@@ -13,7 +13,7 @@
 		<State_Province />
 		<Zip_Postal_Code />
 		<Country />
-		<Company_WebSite_URL>http://woofy.sourceforge.net/</Company_WebSite_URL>
+		<Company_WebSite_URL>http://vladiliescu.ro</Company_WebSite_URL>
 		<Contact_Info>
 			<Author_First_Name>Vlad</Author_First_Name>
 			<Author_Last_Name>Iliescu</Author_Last_Name>
@@ -67,7 +67,7 @@
 	</Program_Info>
 	<Program_Descriptions>
 		<English>
-			<Keywords>woofy webcomic webcomics downloader download online comics comix comic web</Keywords>
+			<Keywords>woofy, webcomics, downloader, comics, comix</Keywords>
 			<Char_Desc_45>Woofy is a free webcomic downloader</Char_Desc_45>
 			<Char_Desc_80>Woofy is a free webcomic downloader, designed for simplicity and ease of use.</Char_Desc_80>
 			<Char_Desc_250>Woofy is a free webcomic downloader, designed for simplicity and ease of use. Its purpose is to help you download and keep an archive of your favorite online comics, while not getting in your way too much.</Char_Desc_250>
@@ -79,16 +79,16 @@ Its main features are:
 * Uses comic information files in order to know how to download a certain comic, so it can be easily extended to support new comics.
 * It can download several comics at the same time, and remembers the active tasks when restarted.
 * Written in C# 2.0 for the .NET Framework.
-* Open source, licensed under the LGPL.</Char_Desc_2000>
+* Open source, licensed under the GPL.</Char_Desc_2000>
 		</English>
 	</Program_Descriptions>
 	<Web_Info>
 		<Application_URLs>
-			<Application_Info_URL>http://woofy.sourceforge.net/</Application_Info_URL>
+			<Application_Info_URL>http://code.google.com/p/woofy/</Application_Info_URL>
 			<Application_Order_URL />
 			<Application_Screenshot_URL>http://woofy.sourceforge.net/images/scr_contextmenu.jpg</Application_Screenshot_URL>
 			<Application_Icon_URL />
-			<Application_XML_File_URL>http://woofy.sourceforge.net/pad_file.xml</Application_XML_File_URL>
+			<Application_XML_File_URL>http://code.google.com/p/woofy/source/browse/serve/pad_file.xml</Application_XML_File_URL>
 		</Application_URLs>
 		<Download_URLs>
 			<Primary_Download_URL>http://downloads.sourceforge.net/woofy/Woofy-@WOOFYVERSION@-setup.exe</Primary_Download_URL>
