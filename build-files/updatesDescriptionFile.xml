@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <updateDescription>
     <woofy>
-		<release versionNumber="@WOOFYVERSION@" downloadAddress="http://downloads.sourceforge.net/woofy/Woofy-@WOOFYVERSION@-setup.exe" releaseDate="@TODAY@" size="@WOOFYEXEFILESIZE@">
+		<release versionNumber="@WOOFYVERSION@" downloadAddress="http://woofy.googlecode.com/files/Woofy-@WOOFYVERSION@-setup.exe" releaseDate="@TODAY@" size="@WOOFYEXEFILESIZE@">
             <changes>
                 <change>A little.</change>
             </changes>
         </release>
     </woofy>
     <comicPack>
-		<release versionNumber="0.1" downloadAddress="http://downloads.sourceforge.net/woofy/ComicPack-0.1-setup.exe" releaseDate="@TODAY@" size="100">
+		<release versionNumber="0.1" downloadAddress="http://woofy.googlecode.com/files/ComicPack-0.1-setup.exe" releaseDate="@TODAY@" size="100">
             <changes>
                 <change>Some new comics.</change>
             </changes>

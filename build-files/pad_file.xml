@@ -46,7 +46,7 @@
 		<Program_Install_Support>Install and Uninstall</Program_Install_Support>
 		<Program_OS_Support>Windows2000,WinXP,Windows2003,Windows Vista Starter,Windows Vista Home Basic,Windows Vista Home Premium,Windows Vista Business,Windows Vista Enterprise,Windows Vista Ultimate,Windows Vista Home Basic x64,Windows Vista Home Premium x64,Windows Vista Business x64,Windows Vista Enterprise x64,Windows Vista Ultimate x64</Program_OS_Support>
 		<Program_Language>English</Program_Language>
-		<Program_Change_Info>Supports five new comics: Dueling Analogs, Heroes Inc, HijiNKS Ensue, Piled Higher and Deeper, College Roomies From Hell. MegaTokyo works again. I've decided to re-add support for the rootUrl element.</Program_Change_Info>
+		<Program_Change_Info></Program_Change_Info>
 		<Program_Specific_Category>Home/Hobby</Program_Specific_Category>
 		<Program_Category_Class>Home &amp; Hobby::Recreation</Program_Category_Class>
 		<Program_System_Requirements />
@@ -86,12 +86,12 @@ Its main features are:
 		<Application_URLs>
 			<Application_Info_URL>http://code.google.com/p/woofy/</Application_Info_URL>
 			<Application_Order_URL />
-			<Application_Screenshot_URL>http://woofy.sourceforge.net/images/scr_contextmenu.jpg</Application_Screenshot_URL>
+			<Application_Screenshot_URL>http://woofy.googlecode.com/hg/serve/screenshots/main_window.png</Application_Screenshot_URL>
 			<Application_Icon_URL />
-			<Application_XML_File_URL>http://code.google.com/p/woofy/source/browse/serve/pad_file.xml</Application_XML_File_URL>
+			<Application_XML_File_URL>http://woofy.googlecode.com/hg/serve/pad_file.xml</Application_XML_File_URL>
 		</Application_URLs>
 		<Download_URLs>
-			<Primary_Download_URL>http://downloads.sourceforge.net/woofy/Woofy-@WOOFYVERSION@-setup.exe</Primary_Download_URL>
+			<Primary_Download_URL>http://woofy.googlecode.com/files/Woofy-@WOOFYVERSION@-setup.exe</Primary_Download_URL>
 			<Secondary_Download_URL />
 			<Additional_Download_URL_1 />
 			<Additional_Download_URL_2 />

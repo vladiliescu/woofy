@@ -5,7 +5,7 @@ SetCompressor bzip2
 !define REGKEY "SOFTWARE\${NAME}"
 !define VERSION @WOOFYVERSION@
 !define COMPANY "Vlad Iliescu"
-!define URL "http://woofy.sourceforge.net"
+!define URL "http://code.google.com/p/woofy/"
 !define FILENAME "@WOOFYEXEFILENAME@"
 !define DIRECTORY "Woofy"
 
