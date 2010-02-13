@@ -27,6 +27,7 @@ SetCompressor bzip2
 # Included files
 !include Sections.nsh
 !include MUI.nsh
+!include "MUI_EXTRAPAGES.nsh"
 
 # Variables
 Var StartMenuGroup
@@ -34,6 +35,7 @@ Var StartMenuGroup
 # Installer pages
 !insertmacro MUI_PAGE_WELCOME
 !insertmacro MUI_PAGE_LICENSE ${DIRECTORY}\license.txt
+!insertmacro MUI_PAGE_README "readme.txt"
 !insertmacro MUI_PAGE_COMPONENTS
 !insertmacro MUI_PAGE_DIRECTORY
 !insertmacro MUI_PAGE_STARTMENU Application $StartMenuGroup
@@ -44,6 +46,12 @@ Var StartMenuGroup
 
 # Installer languages
 !insertmacro MUI_LANGUAGE English
+ ;Set up install lang strings for 1st lang
+  ${ReadmeLanguage} "${LANG_ENGLISH}" \
+          "What's new" \
+          "Please review the following changes" \
+          "" \
+          "$\n  Click on scrollbar arrows or press Page Down to review the entire text."
 
 # Installer attributes
 Name "${NAME} ${VERSION}"
