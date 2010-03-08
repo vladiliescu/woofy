@@ -27,6 +27,7 @@ namespace Woofy.Core
         private readonly ComicDefinition _comicInfo;
         //private WebClient _client;
         private bool _isDownloadCancelled;
+		private Random random = new Random();
         #endregion
 
         #region Constants
@@ -129,6 +130,7 @@ namespace Woofy.Core
                             break;
 
                         OnDownloadComicCompleted(new DownloadStripCompletedEventArgs(i + 1, backButtonStringLink));
+						PauseForRandomPeriod();
                     }
 
                     //HACK
@@ -376,7 +378,13 @@ namespace Woofy.Core
 
             return comicLinks;
         }
-        #endregion
+
+		private void PauseForRandomPeriod()
+		{
+			Thread.Sleep(500 + random.Next(1000));
+		}
+
+    	#endregion
 
         #region DownloadComicCompleted Event
 
