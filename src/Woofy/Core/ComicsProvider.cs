@@ -130,7 +130,6 @@ namespace Woofy.Core
                             break;
 
                         OnDownloadComicCompleted(new DownloadStripCompletedEventArgs(i + 1, backButtonStringLink));
-						PauseForRandomPeriod();
                     }
 
                     //HACK
@@ -378,11 +377,6 @@ namespace Woofy.Core
 
             return comicLinks;
         }
-
-		private void PauseForRandomPeriod()
-		{
-			Thread.Sleep(500 + random.Next(1000));
-		}
 
     	#endregion
 

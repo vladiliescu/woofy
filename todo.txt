@@ -1,12 +1,8 @@
 ** current
-- the user settings/tasks db should be stored under Local Settings
-- an option whether to install in portable-mode 
-	- without writing anything to the registry,
-	- and keeping the settings
-	- and comics in the same directory
-- before release: remember to update the updatesDescription file on sourceforge. the PAD file, too.
-- add an option to copy a comic's error message to clipboard
-- add an option to resume a stopped comic.
+- The debug logger should also contain a RollingFileAppender.
+- I should be able to configure each comic to pause randomly between requests, in order to avoid hammering the server
+	-> add an advanced section on the Create Task dialog
+	-> make sure the debug still works
 
 
 ** later
@@ -21,3 +17,11 @@
 - simplify auto-update code
 - auto-update should no longer run the installer => instead, the zip version should be downloaded and unpacked.
 - Woofy should not close when CloseWhenAllComicsHaveBeenDownloaded is true and at least one comic has an error.
+- the user settings/tasks db should be stored under Local Settings
+- an option whether to install in portable-mode 
+	- without writing anything to the registry,
+	- and keeping the settings
+	- and comics in the same directory
+- before release: remember to update the updatesDescription file on sourceforge. the PAD file, too.
+- add an option to copy a comic's error message to clipboard
+- add an option to resume a stopped comic.
