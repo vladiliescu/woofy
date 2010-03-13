@@ -1,8 +1,5 @@
 ** current
 - The debug logger should also contain a RollingFileAppender.
-- I should be able to configure each comic to pause randomly between requests, in order to avoid hammering the server
-	-> add an advanced section on the Create Task dialog
-	-> make sure the debug still works
 - The auto-update code has troubles interpreting the release date.
 - Errors should be logged in the Event Log.
 

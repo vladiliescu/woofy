@@ -12,7 +12,9 @@ namespace Woofy.Core
 {
     public class ComicsProvider
     {
-        #region Public Properties
+    	private readonly bool randomPausesBetweenRequests;
+
+    	#region Public Properties
         /// <summary>
         /// Causes the <see cref="ComicsProvider"/> to get all available comics, instead of a fixed number.
         /// </summary>
@@ -35,15 +37,17 @@ namespace Woofy.Core
         #endregion
 
         #region .ctor
-        public ComicsProvider(ComicDefinition comicInfo, string downloadFolder)
-            : this(comicInfo, new FileDownloader(downloadFolder))
+        public ComicsProvider(ComicDefinition comicInfo, string downloadFolder, bool randomPausesBetweenRequests)
+            : this(comicInfo, new FileDownloader(downloadFolder), randomPausesBetweenRequests)
         {
+        	
         }
 
-        public ComicsProvider(ComicDefinition comicInfo, IFileDownloader comicsDownloader)
+    	public ComicsProvider(ComicDefinition comicInfo, IFileDownloader comicsDownloader, bool randomPausesBetweenRequests)
         {
             _comicInfo = comicInfo;
             _comicsDownloader = comicsDownloader;
+			this.randomPausesBetweenRequests = randomPausesBetweenRequests;
 
             //_client = WebConnectionFactory.GetNewWebClientInstance();
         }
@@ -140,6 +144,9 @@ namespace Woofy.Core
                         break;
 
                     currentUrl = backButtonLink.AbsoluteUri;
+
+					if (randomPausesBetweenRequests)
+						PauseForRandomPeriod();
                 }
             }
             catch (UriFormatException ex)
@@ -203,6 +210,11 @@ namespace Woofy.Core
         #endregion
 
         #region Helper Methods
+
+		private void PauseForRandomPeriod()
+		{
+			Thread.Sleep(500 + random.Next(1500));
+		}
 
         private string GetFileName(string fileLink, string renamePattern, IDictionary<string, string> captures)
         {

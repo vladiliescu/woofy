@@ -45,6 +45,7 @@ namespace Woofy.Gui
 			this.chkAdvancedOptions = new System.Windows.Forms.CheckBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.notificationToolTip = new System.Windows.Forms.ToolTip(this.components);
+			this.chkRandomPauses = new System.Windows.Forms.CheckBox();
 			label2 = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.numComicsToDownload)).BeginInit();
 			this.gbAdvanced.SuspendLayout();
@@ -55,7 +56,7 @@ namespace Woofy.Gui
 			// 
 			label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			label2.AutoSize = true;
-			label2.Location = new System.Drawing.Point(357, 68);
+			label2.Location = new System.Drawing.Point(335, 65);
 			label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			label2.Name = "label2";
 			label2.Size = new System.Drawing.Size(40, 13);
@@ -70,18 +71,18 @@ namespace Woofy.Gui
 			this.cbComics.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.cbComics.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbComics.FormattingEnabled = true;
-			this.cbComics.Location = new System.Drawing.Point(5, 18);
+			this.cbComics.Location = new System.Drawing.Point(8, 18);
 			this.cbComics.Margin = new System.Windows.Forms.Padding(2);
 			this.cbComics.MaxDropDownItems = 15;
 			this.cbComics.Name = "cbComics";
-			this.cbComics.Size = new System.Drawing.Size(392, 21);
+			this.cbComics.Size = new System.Drawing.Size(367, 21);
 			this.cbComics.TabIndex = 1;
 			this.cbComics.SelectedIndexChanged += new System.EventHandler(this.cbComics_SelectedIndexChanged);
 			// 
 			// numComicsToDownload
 			// 
 			this.numComicsToDownload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.numComicsToDownload.Location = new System.Drawing.Point(307, 66);
+			this.numComicsToDownload.Location = new System.Drawing.Point(285, 63);
 			this.numComicsToDownload.Margin = new System.Windows.Forms.Padding(2);
 			this.numComicsToDownload.Maximum = new decimal(new int[] {
             9999,
@@ -107,7 +108,7 @@ namespace Woofy.Gui
 			// btnOk
 			// 
 			this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnOk.Location = new System.Drawing.Point(261, 244);
+			this.btnOk.Location = new System.Drawing.Point(238, 259);
 			this.btnOk.Margin = new System.Windows.Forms.Padding(2);
 			this.btnOk.Name = "btnOk";
 			this.btnOk.Size = new System.Drawing.Size(75, 23);
@@ -120,7 +121,7 @@ namespace Woofy.Gui
 			// 
 			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.btnCancel.Location = new System.Drawing.Point(340, 244);
+			this.btnCancel.Location = new System.Drawing.Point(317, 259);
 			this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(75, 23);
@@ -133,7 +134,7 @@ namespace Woofy.Gui
 			// 
 			this.rbDownloadOnlyNew.AutoSize = true;
 			this.rbDownloadOnlyNew.Checked = true;
-			this.rbDownloadOnlyNew.Location = new System.Drawing.Point(6, 66);
+			this.rbDownloadOnlyNew.Location = new System.Drawing.Point(8, 63);
 			this.rbDownloadOnlyNew.Margin = new System.Windows.Forms.Padding(2);
 			this.rbDownloadOnlyNew.Name = "rbDownloadOnlyNew";
 			this.rbDownloadOnlyNew.Size = new System.Drawing.Size(137, 17);
@@ -146,7 +147,7 @@ namespace Woofy.Gui
 			// 
 			this.rbDownloadLast.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.rbDownloadLast.AutoSize = true;
-			this.rbDownloadLast.Location = new System.Drawing.Point(211, 66);
+			this.rbDownloadLast.Location = new System.Drawing.Point(189, 63);
 			this.rbDownloadLast.Margin = new System.Windows.Forms.Padding(2);
 			this.rbDownloadLast.Name = "rbDownloadLast";
 			this.rbDownloadLast.Size = new System.Drawing.Size(92, 17);
@@ -157,7 +158,7 @@ namespace Woofy.Gui
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(4, 86);
+			this.label3.Location = new System.Drawing.Point(5, 44);
 			this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(84, 13);
@@ -168,16 +169,16 @@ namespace Woofy.Gui
 			// 
 			this.txtDownloadFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
-			this.txtDownloadFolder.Location = new System.Drawing.Point(3, 102);
+			this.txtDownloadFolder.Location = new System.Drawing.Point(8, 60);
 			this.txtDownloadFolder.Margin = new System.Windows.Forms.Padding(2);
 			this.txtDownloadFolder.Name = "txtDownloadFolder";
-			this.txtDownloadFolder.Size = new System.Drawing.Size(315, 20);
+			this.txtDownloadFolder.Size = new System.Drawing.Size(289, 20);
 			this.txtDownloadFolder.TabIndex = 9;
 			// 
 			// btnBrowse
 			// 
 			this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnBrowse.Location = new System.Drawing.Point(322, 100);
+			this.btnBrowse.Location = new System.Drawing.Point(301, 58);
 			this.btnBrowse.Margin = new System.Windows.Forms.Padding(2);
 			this.btnBrowse.Name = "btnBrowse";
 			this.btnBrowse.Size = new System.Drawing.Size(75, 23);
@@ -189,7 +190,7 @@ namespace Woofy.Gui
 			// chkOverrideStartUrl
 			// 
 			this.chkOverrideStartUrl.AutoSize = true;
-			this.chkOverrideStartUrl.Location = new System.Drawing.Point(6, 18);
+			this.chkOverrideStartUrl.Location = new System.Drawing.Point(8, 18);
 			this.chkOverrideStartUrl.Margin = new System.Windows.Forms.Padding(2);
 			this.chkOverrideStartUrl.Name = "chkOverrideStartUrl";
 			this.chkOverrideStartUrl.Size = new System.Drawing.Size(103, 17);
@@ -203,28 +204,26 @@ namespace Woofy.Gui
 			this.txtOverrideStartUrl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
 			this.txtOverrideStartUrl.Enabled = false;
-			this.txtOverrideStartUrl.Location = new System.Drawing.Point(6, 40);
+			this.txtOverrideStartUrl.Location = new System.Drawing.Point(8, 39);
 			this.txtOverrideStartUrl.Margin = new System.Windows.Forms.Padding(2);
 			this.txtOverrideStartUrl.Name = "txtOverrideStartUrl";
-			this.txtOverrideStartUrl.Size = new System.Drawing.Size(391, 20);
+			this.txtOverrideStartUrl.Size = new System.Drawing.Size(366, 20);
 			this.txtOverrideStartUrl.TabIndex = 3;
 			// 
 			// gbAdvanced
 			// 
 			this.gbAdvanced.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
 						| System.Windows.Forms.AnchorStyles.Right)));
+			this.gbAdvanced.Controls.Add(this.chkRandomPauses);
 			this.gbAdvanced.Controls.Add(this.txtOverrideStartUrl);
 			this.gbAdvanced.Controls.Add(this.numComicsToDownload);
 			this.gbAdvanced.Controls.Add(this.chkOverrideStartUrl);
 			this.gbAdvanced.Controls.Add(label2);
-			this.gbAdvanced.Controls.Add(this.btnBrowse);
 			this.gbAdvanced.Controls.Add(this.rbDownloadOnlyNew);
-			this.gbAdvanced.Controls.Add(this.txtDownloadFolder);
 			this.gbAdvanced.Controls.Add(this.rbDownloadLast);
-			this.gbAdvanced.Controls.Add(this.label3);
-			this.gbAdvanced.Location = new System.Drawing.Point(12, 87);
+			this.gbAdvanced.Location = new System.Drawing.Point(12, 135);
 			this.gbAdvanced.Name = "gbAdvanced";
-			this.gbAdvanced.Size = new System.Drawing.Size(402, 138);
+			this.gbAdvanced.Size = new System.Drawing.Size(379, 110);
 			this.gbAdvanced.TabIndex = 13;
 			this.gbAdvanced.TabStop = false;
 			this.gbAdvanced.Text = "Advanced";
@@ -233,7 +232,7 @@ namespace Woofy.Gui
 			// 
 			this.chkAdvancedOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.chkAdvancedOptions.AutoSize = true;
-			this.chkAdvancedOptions.Location = new System.Drawing.Point(256, 44);
+			this.chkAdvancedOptions.Location = new System.Drawing.Point(235, 94);
 			this.chkAdvancedOptions.Name = "chkAdvancedOptions";
 			this.chkAdvancedOptions.Size = new System.Drawing.Size(141, 17);
 			this.chkAdvancedOptions.TabIndex = 14;
@@ -243,11 +242,16 @@ namespace Woofy.Gui
 			// 
 			// groupBox1
 			// 
+			this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.groupBox1.Controls.Add(this.cbComics);
 			this.groupBox1.Controls.Add(this.chkAdvancedOptions);
+			this.groupBox1.Controls.Add(this.txtDownloadFolder);
+			this.groupBox1.Controls.Add(this.label3);
+			this.groupBox1.Controls.Add(this.btnBrowse);
 			this.groupBox1.Location = new System.Drawing.Point(12, 12);
 			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(402, 69);
+			this.groupBox1.Size = new System.Drawing.Size(380, 117);
 			this.groupBox1.TabIndex = 15;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Comic";
@@ -257,13 +261,23 @@ namespace Woofy.Gui
 			this.notificationToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Warning;
 			this.notificationToolTip.ToolTipTitle = "Warning";
 			// 
+			// chkRandomPauses
+			// 
+			this.chkRandomPauses.AutoSize = true;
+			this.chkRandomPauses.Location = new System.Drawing.Point(8, 85);
+			this.chkRandomPauses.Name = "chkRandomPauses";
+			this.chkRandomPauses.Size = new System.Drawing.Size(188, 17);
+			this.chkRandomPauses.TabIndex = 11;
+			this.chkRandomPauses.Text = "Pause randomly between requests";
+			this.chkRandomPauses.UseVisualStyleBackColor = true;
+			// 
 			// TaskDetailsForm
 			// 
 			this.AcceptButton = this.btnOk;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.btnCancel;
-			this.ClientSize = new System.Drawing.Size(426, 278);
+			this.ClientSize = new System.Drawing.Size(403, 293);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.gbAdvanced);
 			this.Controls.Add(this.btnCancel);
@@ -304,5 +318,6 @@ namespace Woofy.Gui
 		private System.Windows.Forms.CheckBox chkAdvancedOptions;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.ToolTip notificationToolTip;
+		private System.Windows.Forms.CheckBox chkRandomPauses;
     }
 }

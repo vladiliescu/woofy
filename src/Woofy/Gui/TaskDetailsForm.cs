@@ -74,7 +74,7 @@ namespace Woofy.Gui
             string downloadFolder = txtDownloadFolder.Text;
             string startUrl = chkOverrideStartUrl.Checked ? txtOverrideStartUrl.Text : comicInfo.StartUrl;
 
-            ComicTask task = new ComicTask(comicInfo.FriendlyName, comicInfo.ComicInfoFile, comicsToDownload, downloadFolder, startUrl);
+            ComicTask task = new ComicTask(comicInfo.FriendlyName, comicInfo.ComicInfoFile, comicsToDownload, downloadFolder, startUrl, chkRandomPauses.Checked);
             bool taskAdded = tasksController.AddNewTask(task);
 
             if (!taskAdded)
@@ -129,7 +129,7 @@ namespace Woofy.Gui
 		private void ShowOrHideAdvancedOptions(bool show)
 		{
 			gbAdvanced.Visible = show;
-			Height = show ? 300 : 155;
+			Height = show ? 325 : 205;
 			chkAdvancedOptions.Checked = show;
 		}
 

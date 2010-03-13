@@ -46,15 +46,29 @@ namespace Woofy.Core
 
     	public string CurrentUrl { get; set; }
 
+		public bool RandomPausesBetweenRequests { get; set; }
+
     	#endregion
 
         #region .ctors
-        public ComicTask(string name, string comicInfoFile, long? comicsToDownload, string downloadFolder, string currentUrl)
-            : this(-1, name, comicInfoFile, 0, comicsToDownload, downloadFolder, 1, currentUrl, TaskStatus.Running)
+		/// <summary>
+		/// Used for the Json.NET deserialization
+		/// </summary>
+		public ComicTask()
+		{
+		}
+
+    	public ComicTask(string name, string comicInfoFile, long? comicsToDownload, string downloadFolder, string currentUrl)
+            : this(name, comicInfoFile, comicsToDownload, downloadFolder, currentUrl, false)
         {
         }
 
-        private ComicTask(long id, string name, string comicInfoFile, long downloadedComics, long? comicsToDownload, string downloadFolder, long orderNumber, string currentUrl, TaskStatus status)
+		public ComicTask(string name, string comicInfoFile, long? comicsToDownload, string downloadFolder, string currentUrl, bool randomPausesBetweenRequests)
+			: this(-1, name, comicInfoFile, 0, comicsToDownload, downloadFolder, 1, currentUrl, TaskStatus.Running, randomPausesBetweenRequests)
+		{
+		}
+
+        private ComicTask(long id, string name, string comicInfoFile, long downloadedComics, long? comicsToDownload, string downloadFolder, long orderNumber, string currentUrl, TaskStatus status, bool randomPausesBetweenRequests)
         {
             Id = id;
             Name = name;
@@ -65,6 +79,7 @@ namespace Woofy.Core
             OrderNumber = orderNumber;
             CurrentUrl = currentUrl;
             Status = status;
+			RandomPausesBetweenRequests = randomPausesBetweenRequests;
         }
         #endregion
 

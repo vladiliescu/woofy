@@ -152,7 +152,7 @@ namespace Woofy.Core
         {
             var comicInfo = new ComicDefinition(task.ComicInfoFile);
 
-            var comicsProvider = new ComicsProvider(comicInfo, task.DownloadFolder);
+            var comicsProvider = new ComicsProvider(comicInfo, task.DownloadFolder, task.RandomPausesBetweenRequests);
             _comicProviders.Add(comicsProvider);
 
             comicsProvider.DownloadComicCompleted += DownloadComicCompletedCallback;

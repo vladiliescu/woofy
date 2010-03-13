@@ -273,7 +273,7 @@ namespace Woofy.Gui
                 delegate
                 {
                     CountingFileDownloader countingFileDownloader = new CountingFileDownloader();
-                    this.comicsProvider = new ComicsProvider(comicDefinition, countingFileDownloader);
+                    this.comicsProvider = new ComicsProvider(comicDefinition, countingFileDownloader, false);
                     this.comicsProvider.DownloadComicCompleted += comicsProvider_DownloadComicCompleted;
 
                     DownloadOutcome downloadOutcome = this.comicsProvider.DownloadComics(ComicsProvider.AllAvailableComics, startupUrl);
