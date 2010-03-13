@@ -1,7 +1,6 @@
 using System;
 using System.Windows.Forms;
 using System.IO;
-
 using Woofy.Core;
 using Woofy.Settings;
 
@@ -10,7 +9,7 @@ namespace Woofy.Gui
     public partial class TaskDetailsForm : Form
     {
         #region Instance Members
-        private readonly ComicTasksController _tasksController;
+        private readonly ComicTasksController tasksController;
         #endregion
 
         #region .ctor
@@ -18,13 +17,17 @@ namespace Woofy.Gui
         {
             InitializeComponent();
 
-            _tasksController = tasksController;
+            this.tasksController = tasksController;
         }
         #endregion
 
-        #region Events - Form
+		
+
+    	#region Events - Form
         private void TaskDetails_Load(object sender, EventArgs e)
         {
+			ShowOrHideAdvancedOptions(UserSettings.ShowAdvancedComicOptions);
+
             cbComics.DataSource = ComicDefinition.GetAvailableComicDefinitions();
 
             if (!string.IsNullOrEmpty(UserSettings.LastUsedComicDefinitionFile))
@@ -72,7 +75,7 @@ namespace Woofy.Gui
             string startUrl = chkOverrideStartUrl.Checked ? txtOverrideStartUrl.Text : comicInfo.StartUrl;
 
             ComicTask task = new ComicTask(comicInfo.FriendlyName, comicInfo.ComicInfoFile, comicsToDownload, downloadFolder, startUrl);
-            bool taskAdded = _tasksController.AddNewTask(task);
+            bool taskAdded = tasksController.AddNewTask(task);
 
             if (!taskAdded)
             {
@@ -101,12 +104,19 @@ namespace Woofy.Gui
             if (folderBrowser.ShowDialog() == DialogResult.OK)
                 txtDownloadFolder.Text = folderBrowser.SelectedPath;
         }
+
+		private void OnAdvancedOptionsCheckedChanged(object sender, EventArgs e)
+		{
+			ShowOrHideAdvancedOptions(chkAdvancedOptions.Checked);
+		}
+
         #endregion
 
         #region Helper Methods
         private void UpdateUserSettings()
         {
             UserSettings.LastUsedComicDefinitionFile = ((ComicDefinition)cbComics.SelectedValue).ComicInfoFile;
+			UserSettings.ShowAdvancedComicOptions = chkAdvancedOptions.Checked;
 
             if (rbDownloadOnlyNew.Checked)
                 UserSettings.LastNumberOfComicsToDownload = null;
@@ -115,6 +125,13 @@ namespace Woofy.Gui
 
             UserSettings.SaveData();
         }
+
+		private void ShowOrHideAdvancedOptions(bool show)
+		{
+			gbAdvanced.Visible = show;
+			Height = show ? 300 : 155;
+			chkAdvancedOptions.Checked = show;
+		}
 
         private void UpdateDownloadFolder()
         {

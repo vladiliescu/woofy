@@ -13,5 +13,6 @@ namespace Woofy.Settings
 		public bool CloseWhenAllComicsHaveFinishedDownloading { get; set; }
 		public string ProxyUsername { get; set; }
 		public string ProxyPassword { get; set; }
+    	public bool ShowAdvancedComicOptions { get; set; }
     }
 }

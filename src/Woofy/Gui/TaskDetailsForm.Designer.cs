@@ -28,232 +28,264 @@ namespace Woofy.Gui
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.Label label1;
-            System.Windows.Forms.Label label2;
-            this.cbComics = new System.Windows.Forms.ComboBox();
-            this.numComicsToDownload = new System.Windows.Forms.NumericUpDown();
-            this.btnOk = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.rbDownloadOnlyNew = new System.Windows.Forms.RadioButton();
-            this.rbDownloadLast = new System.Windows.Forms.RadioButton();
-            this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtDownloadFolder = new System.Windows.Forms.TextBox();
-            this.btnBrowse = new System.Windows.Forms.Button();
-            this.chkOverrideStartUrl = new System.Windows.Forms.CheckBox();
-            this.txtOverrideStartUrl = new System.Windows.Forms.TextBox();
-            label1 = new System.Windows.Forms.Label();
-            label2 = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.numComicsToDownload)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
-            this.SuspendLayout();
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(9, 10);
-            label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            label1.Name = "label1";
-            label1.Size = new System.Drawing.Size(36, 13);
-            label1.TabIndex = 0;
-            label1.Text = "Comic";
-            // 
-            // label2
-            // 
-            label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(365, 100);
-            label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            label2.Name = "label2";
-            label2.Size = new System.Drawing.Size(40, 13);
-            label2.TabIndex = 7;
-            label2.Text = "comics";
-            // 
-            // cbComics
-            // 
-            this.cbComics.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.cbComics.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
-            this.cbComics.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
-            this.cbComics.FormattingEnabled = true;
-            this.errorProvider.SetIconPadding(this.cbComics, 3);
-            this.cbComics.Location = new System.Drawing.Point(9, 26);
-            this.cbComics.Margin = new System.Windows.Forms.Padding(2);
-            this.cbComics.MaxDropDownItems = 15;
-            this.cbComics.Name = "cbComics";
-            this.cbComics.Size = new System.Drawing.Size(396, 21);
-            this.cbComics.TabIndex = 1;
-            this.cbComics.SelectedIndexChanged += new System.EventHandler(this.cbComics_SelectedIndexChanged);
-            // 
-            // numComicsToDownload
-            // 
-            this.numComicsToDownload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.numComicsToDownload.Location = new System.Drawing.Point(315, 98);
-            this.numComicsToDownload.Margin = new System.Windows.Forms.Padding(2);
-            this.numComicsToDownload.Maximum = new decimal(new int[] {
+			this.components = new System.ComponentModel.Container();
+			System.Windows.Forms.Label label2;
+			this.cbComics = new System.Windows.Forms.ComboBox();
+			this.numComicsToDownload = new System.Windows.Forms.NumericUpDown();
+			this.btnOk = new System.Windows.Forms.Button();
+			this.btnCancel = new System.Windows.Forms.Button();
+			this.rbDownloadOnlyNew = new System.Windows.Forms.RadioButton();
+			this.rbDownloadLast = new System.Windows.Forms.RadioButton();
+			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
+			this.label3 = new System.Windows.Forms.Label();
+			this.txtDownloadFolder = new System.Windows.Forms.TextBox();
+			this.btnBrowse = new System.Windows.Forms.Button();
+			this.chkOverrideStartUrl = new System.Windows.Forms.CheckBox();
+			this.txtOverrideStartUrl = new System.Windows.Forms.TextBox();
+			this.gbAdvanced = new System.Windows.Forms.GroupBox();
+			this.chkAdvancedOptions = new System.Windows.Forms.CheckBox();
+			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			label2 = new System.Windows.Forms.Label();
+			((System.ComponentModel.ISupportInitialize)(this.numComicsToDownload)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
+			this.gbAdvanced.SuspendLayout();
+			this.groupBox1.SuspendLayout();
+			this.SuspendLayout();
+			// 
+			// label2
+			// 
+			label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			label2.AutoSize = true;
+			label2.Location = new System.Drawing.Point(357, 68);
+			label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			label2.Name = "label2";
+			label2.Size = new System.Drawing.Size(40, 13);
+			label2.TabIndex = 7;
+			label2.Text = "comics";
+			// 
+			// cbComics
+			// 
+			this.cbComics.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.cbComics.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+			this.cbComics.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
+			this.cbComics.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cbComics.FormattingEnabled = true;
+			this.errorProvider.SetIconPadding(this.cbComics, 3);
+			this.cbComics.Location = new System.Drawing.Point(5, 18);
+			this.cbComics.Margin = new System.Windows.Forms.Padding(2);
+			this.cbComics.MaxDropDownItems = 15;
+			this.cbComics.Name = "cbComics";
+			this.cbComics.Size = new System.Drawing.Size(392, 21);
+			this.cbComics.TabIndex = 1;
+			this.cbComics.SelectedIndexChanged += new System.EventHandler(this.cbComics_SelectedIndexChanged);
+			// 
+			// numComicsToDownload
+			// 
+			this.numComicsToDownload.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.numComicsToDownload.Location = new System.Drawing.Point(307, 66);
+			this.numComicsToDownload.Margin = new System.Windows.Forms.Padding(2);
+			this.numComicsToDownload.Maximum = new decimal(new int[] {
             9999,
             0,
             0,
             0});
-            this.numComicsToDownload.Minimum = new decimal(new int[] {
+			this.numComicsToDownload.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numComicsToDownload.Name = "numComicsToDownload";
-            this.numComicsToDownload.Size = new System.Drawing.Size(46, 20);
-            this.numComicsToDownload.TabIndex = 6;
-            this.numComicsToDownload.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numComicsToDownload.Value = new decimal(new int[] {
+			this.numComicsToDownload.Name = "numComicsToDownload";
+			this.numComicsToDownload.Size = new System.Drawing.Size(46, 20);
+			this.numComicsToDownload.TabIndex = 6;
+			this.numComicsToDownload.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+			this.numComicsToDownload.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numComicsToDownload.Click += new System.EventHandler(this.numComicsToDownload_Click);
-            // 
-            // btnOk
-            // 
-            this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOk.Location = new System.Drawing.Point(251, 167);
-            this.btnOk.Margin = new System.Windows.Forms.Padding(2);
-            this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(75, 23);
-            this.btnOk.TabIndex = 11;
-            this.btnOk.Text = "Ok";
-            this.btnOk.UseVisualStyleBackColor = true;
-            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(330, 167);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 12;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
-            // rbDownloadOnlyNew
-            // 
-            this.rbDownloadOnlyNew.AutoSize = true;
-            this.rbDownloadOnlyNew.Checked = true;
-            this.rbDownloadOnlyNew.Location = new System.Drawing.Point(9, 98);
-            this.rbDownloadOnlyNew.Margin = new System.Windows.Forms.Padding(2);
-            this.rbDownloadOnlyNew.Name = "rbDownloadOnlyNew";
-            this.rbDownloadOnlyNew.Size = new System.Drawing.Size(137, 17);
-            this.rbDownloadOnlyNew.TabIndex = 4;
-            this.rbDownloadOnlyNew.TabStop = true;
-            this.rbDownloadOnlyNew.Text = "Download latest comics";
-            this.rbDownloadOnlyNew.UseVisualStyleBackColor = true;
-            // 
-            // rbDownloadLast
-            // 
-            this.rbDownloadLast.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.rbDownloadLast.AutoSize = true;
-            this.rbDownloadLast.Location = new System.Drawing.Point(219, 98);
-            this.rbDownloadLast.Margin = new System.Windows.Forms.Padding(2);
-            this.rbDownloadLast.Name = "rbDownloadLast";
-            this.rbDownloadLast.Size = new System.Drawing.Size(92, 17);
-            this.rbDownloadLast.TabIndex = 5;
-            this.rbDownloadLast.Text = "Download last";
-            this.rbDownloadLast.UseVisualStyleBackColor = true;
-            // 
-            // errorProvider
-            // 
-            this.errorProvider.ContainerControl = this;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(7, 118);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(84, 13);
-            this.label3.TabIndex = 8;
-            this.label3.Text = "Download folder";
-            // 
-            // txtDownloadFolder
-            // 
-            this.txtDownloadFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtDownloadFolder.Location = new System.Drawing.Point(6, 134);
-            this.txtDownloadFolder.Margin = new System.Windows.Forms.Padding(2);
-            this.txtDownloadFolder.Name = "txtDownloadFolder";
-            this.txtDownloadFolder.Size = new System.Drawing.Size(320, 20);
-            this.txtDownloadFolder.TabIndex = 9;
-            // 
-            // btnBrowse
-            // 
-            this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnBrowse.Location = new System.Drawing.Point(330, 132);
-            this.btnBrowse.Margin = new System.Windows.Forms.Padding(2);
-            this.btnBrowse.Name = "btnBrowse";
-            this.btnBrowse.Size = new System.Drawing.Size(75, 23);
-            this.btnBrowse.TabIndex = 10;
-            this.btnBrowse.Text = "B&rowse";
-            this.btnBrowse.UseVisualStyleBackColor = true;
-            this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
-            // 
-            // chkOverrideStartUrl
-            // 
-            this.chkOverrideStartUrl.AutoSize = true;
-            this.chkOverrideStartUrl.Location = new System.Drawing.Point(9, 50);
-            this.chkOverrideStartUrl.Margin = new System.Windows.Forms.Padding(2);
-            this.chkOverrideStartUrl.Name = "chkOverrideStartUrl";
-            this.chkOverrideStartUrl.Size = new System.Drawing.Size(103, 17);
-            this.chkOverrideStartUrl.TabIndex = 2;
-            this.chkOverrideStartUrl.Text = "Override start url";
-            this.chkOverrideStartUrl.UseVisualStyleBackColor = true;
-            this.chkOverrideStartUrl.CheckedChanged += new System.EventHandler(this.chkOverrideStartUrl_CheckedChanged);
-            // 
-            // txtOverrideStartUrl
-            // 
-            this.txtOverrideStartUrl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtOverrideStartUrl.Enabled = false;
-            this.txtOverrideStartUrl.Location = new System.Drawing.Point(9, 72);
-            this.txtOverrideStartUrl.Margin = new System.Windows.Forms.Padding(2);
-            this.txtOverrideStartUrl.Name = "txtOverrideStartUrl";
-            this.txtOverrideStartUrl.Size = new System.Drawing.Size(396, 20);
-            this.txtOverrideStartUrl.TabIndex = 3;
-            // 
-            // TaskDetailsForm
-            // 
-            this.AcceptButton = this.btnOk;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(416, 199);
-            this.Controls.Add(this.txtOverrideStartUrl);
-            this.Controls.Add(this.chkOverrideStartUrl);
-            this.Controls.Add(this.btnBrowse);
-            this.Controls.Add(this.txtDownloadFolder);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.rbDownloadLast);
-            this.Controls.Add(this.rbDownloadOnlyNew);
-            this.Controls.Add(label2);
-            this.Controls.Add(label1);
-            this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.btnOk);
-            this.Controls.Add(this.numComicsToDownload);
-            this.Controls.Add(this.cbComics);
-            this.Margin = new System.Windows.Forms.Padding(2);
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "TaskDetailsForm";
-            this.ShowIcon = false;
-            this.ShowInTaskbar = false;
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            this.Text = "Task Details";
-            this.Load += new System.EventHandler(this.TaskDetails_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.numComicsToDownload)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
+			this.numComicsToDownload.Click += new System.EventHandler(this.numComicsToDownload_Click);
+			// 
+			// btnOk
+			// 
+			this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnOk.Location = new System.Drawing.Point(261, 244);
+			this.btnOk.Margin = new System.Windows.Forms.Padding(2);
+			this.btnOk.Name = "btnOk";
+			this.btnOk.Size = new System.Drawing.Size(75, 23);
+			this.btnOk.TabIndex = 11;
+			this.btnOk.Text = "Ok";
+			this.btnOk.UseVisualStyleBackColor = true;
+			this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
+			// 
+			// btnCancel
+			// 
+			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.btnCancel.Location = new System.Drawing.Point(340, 244);
+			this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
+			this.btnCancel.Name = "btnCancel";
+			this.btnCancel.Size = new System.Drawing.Size(75, 23);
+			this.btnCancel.TabIndex = 12;
+			this.btnCancel.Text = "Cancel";
+			this.btnCancel.UseVisualStyleBackColor = true;
+			this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+			// 
+			// rbDownloadOnlyNew
+			// 
+			this.rbDownloadOnlyNew.AutoSize = true;
+			this.rbDownloadOnlyNew.Checked = true;
+			this.rbDownloadOnlyNew.Location = new System.Drawing.Point(6, 66);
+			this.rbDownloadOnlyNew.Margin = new System.Windows.Forms.Padding(2);
+			this.rbDownloadOnlyNew.Name = "rbDownloadOnlyNew";
+			this.rbDownloadOnlyNew.Size = new System.Drawing.Size(137, 17);
+			this.rbDownloadOnlyNew.TabIndex = 4;
+			this.rbDownloadOnlyNew.TabStop = true;
+			this.rbDownloadOnlyNew.Text = "Download latest comics";
+			this.rbDownloadOnlyNew.UseVisualStyleBackColor = true;
+			// 
+			// rbDownloadLast
+			// 
+			this.rbDownloadLast.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.rbDownloadLast.AutoSize = true;
+			this.rbDownloadLast.Location = new System.Drawing.Point(211, 66);
+			this.rbDownloadLast.Margin = new System.Windows.Forms.Padding(2);
+			this.rbDownloadLast.Name = "rbDownloadLast";
+			this.rbDownloadLast.Size = new System.Drawing.Size(92, 17);
+			this.rbDownloadLast.TabIndex = 5;
+			this.rbDownloadLast.Text = "Download last";
+			this.rbDownloadLast.UseVisualStyleBackColor = true;
+			// 
+			// errorProvider
+			// 
+			this.errorProvider.ContainerControl = this;
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(4, 86);
+			this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(84, 13);
+			this.label3.TabIndex = 8;
+			this.label3.Text = "Download folder";
+			// 
+			// txtDownloadFolder
+			// 
+			this.txtDownloadFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.txtDownloadFolder.Location = new System.Drawing.Point(3, 102);
+			this.txtDownloadFolder.Margin = new System.Windows.Forms.Padding(2);
+			this.txtDownloadFolder.Name = "txtDownloadFolder";
+			this.txtDownloadFolder.Size = new System.Drawing.Size(315, 20);
+			this.txtDownloadFolder.TabIndex = 9;
+			// 
+			// btnBrowse
+			// 
+			this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.btnBrowse.Location = new System.Drawing.Point(322, 100);
+			this.btnBrowse.Margin = new System.Windows.Forms.Padding(2);
+			this.btnBrowse.Name = "btnBrowse";
+			this.btnBrowse.Size = new System.Drawing.Size(75, 23);
+			this.btnBrowse.TabIndex = 10;
+			this.btnBrowse.Text = "B&rowse";
+			this.btnBrowse.UseVisualStyleBackColor = true;
+			this.btnBrowse.Click += new System.EventHandler(this.btnBrowse_Click);
+			// 
+			// chkOverrideStartUrl
+			// 
+			this.chkOverrideStartUrl.AutoSize = true;
+			this.chkOverrideStartUrl.Location = new System.Drawing.Point(6, 18);
+			this.chkOverrideStartUrl.Margin = new System.Windows.Forms.Padding(2);
+			this.chkOverrideStartUrl.Name = "chkOverrideStartUrl";
+			this.chkOverrideStartUrl.Size = new System.Drawing.Size(103, 17);
+			this.chkOverrideStartUrl.TabIndex = 2;
+			this.chkOverrideStartUrl.Text = "Override start url";
+			this.chkOverrideStartUrl.UseVisualStyleBackColor = true;
+			this.chkOverrideStartUrl.CheckedChanged += new System.EventHandler(this.chkOverrideStartUrl_CheckedChanged);
+			// 
+			// txtOverrideStartUrl
+			// 
+			this.txtOverrideStartUrl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.txtOverrideStartUrl.Enabled = false;
+			this.txtOverrideStartUrl.Location = new System.Drawing.Point(6, 40);
+			this.txtOverrideStartUrl.Margin = new System.Windows.Forms.Padding(2);
+			this.txtOverrideStartUrl.Name = "txtOverrideStartUrl";
+			this.txtOverrideStartUrl.Size = new System.Drawing.Size(391, 20);
+			this.txtOverrideStartUrl.TabIndex = 3;
+			// 
+			// gbAdvanced
+			// 
+			this.gbAdvanced.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			this.gbAdvanced.Controls.Add(this.txtOverrideStartUrl);
+			this.gbAdvanced.Controls.Add(this.numComicsToDownload);
+			this.gbAdvanced.Controls.Add(this.chkOverrideStartUrl);
+			this.gbAdvanced.Controls.Add(label2);
+			this.gbAdvanced.Controls.Add(this.btnBrowse);
+			this.gbAdvanced.Controls.Add(this.rbDownloadOnlyNew);
+			this.gbAdvanced.Controls.Add(this.txtDownloadFolder);
+			this.gbAdvanced.Controls.Add(this.rbDownloadLast);
+			this.gbAdvanced.Controls.Add(this.label3);
+			this.gbAdvanced.Location = new System.Drawing.Point(12, 87);
+			this.gbAdvanced.Name = "gbAdvanced";
+			this.gbAdvanced.Size = new System.Drawing.Size(402, 138);
+			this.gbAdvanced.TabIndex = 13;
+			this.gbAdvanced.TabStop = false;
+			this.gbAdvanced.Text = "Advanced";
+			// 
+			// chkAdvancedOptions
+			// 
+			this.chkAdvancedOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.chkAdvancedOptions.AutoSize = true;
+			this.chkAdvancedOptions.Location = new System.Drawing.Point(256, 44);
+			this.chkAdvancedOptions.Name = "chkAdvancedOptions";
+			this.chkAdvancedOptions.Size = new System.Drawing.Size(141, 17);
+			this.chkAdvancedOptions.TabIndex = 14;
+			this.chkAdvancedOptions.Text = "Show &advanced options";
+			this.chkAdvancedOptions.UseVisualStyleBackColor = true;
+			this.chkAdvancedOptions.CheckedChanged += new System.EventHandler(this.OnAdvancedOptionsCheckedChanged);
+			// 
+			// groupBox1
+			// 
+			this.groupBox1.Controls.Add(this.cbComics);
+			this.groupBox1.Controls.Add(this.chkAdvancedOptions);
+			this.groupBox1.Location = new System.Drawing.Point(12, 12);
+			this.groupBox1.Name = "groupBox1";
+			this.groupBox1.Size = new System.Drawing.Size(402, 69);
+			this.groupBox1.TabIndex = 15;
+			this.groupBox1.TabStop = false;
+			this.groupBox1.Text = "Comic";
+			// 
+			// TaskDetailsForm
+			// 
+			this.AcceptButton = this.btnOk;
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+			this.CancelButton = this.btnCancel;
+			this.ClientSize = new System.Drawing.Size(426, 278);
+			this.Controls.Add(this.groupBox1);
+			this.Controls.Add(this.gbAdvanced);
+			this.Controls.Add(this.btnCancel);
+			this.Controls.Add(this.btnOk);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+			this.Margin = new System.Windows.Forms.Padding(2);
+			this.MaximizeBox = false;
+			this.MinimizeBox = false;
+			this.Name = "TaskDetailsForm";
+			this.ShowIcon = false;
+			this.ShowInTaskbar = false;
+			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+			this.Text = "Task Details";
+			this.Load += new System.EventHandler(this.TaskDetails_Load);
+			((System.ComponentModel.ISupportInitialize)(this.numComicsToDownload)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
+			this.gbAdvanced.ResumeLayout(false);
+			this.gbAdvanced.PerformLayout();
+			this.groupBox1.ResumeLayout(false);
+			this.groupBox1.PerformLayout();
+			this.ResumeLayout(false);
 
         }
 
@@ -271,5 +303,8 @@ namespace Woofy.Gui
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtOverrideStartUrl;
         private System.Windows.Forms.CheckBox chkOverrideStartUrl;
+		private System.Windows.Forms.GroupBox gbAdvanced;
+		private System.Windows.Forms.CheckBox chkAdvancedOptions;
+		private System.Windows.Forms.GroupBox groupBox1;
     }
 }

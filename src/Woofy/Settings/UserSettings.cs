@@ -6,7 +6,7 @@ namespace Woofy.Settings
 {
 	public class UserSettings
 	{
-		private static readonly UserSettingsData defaultSettings = new UserSettingsData()
+		private static readonly UserSettingsData DefaultSettings = new UserSettingsData
 		{
 			LastUsedComicDefinitionFile = null,
 			LastNumberOfComicsToDownload = null,
@@ -21,6 +21,7 @@ namespace Woofy.Settings
 			ProxyPassword = null
 
 		};
+
 		private static UserSettingsData currentSettings;
 
 		public static string LastUsedComicDefinitionFile
@@ -89,6 +90,12 @@ namespace Woofy.Settings
 			set { currentSettings.ProxyPassword = value; }
 		}
 
+		public static bool ShowAdvancedComicOptions
+		{
+			get { return currentSettings.ShowAdvancedComicOptions; }
+			set { currentSettings.ShowAdvancedComicOptions = value; }
+		}
+
 		public static void Initialize()
 		{
 			EnsureSettingsFileExists();
@@ -113,7 +120,7 @@ namespace Woofy.Settings
 
 			File.Create(AppSettings.UserSettingsFile).Close();
 
-			currentSettings = defaultSettings;
+			currentSettings = DefaultSettings;
 			SaveData();
 		}
 	}

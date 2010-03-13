@@ -3,6 +3,8 @@
 - I should be able to configure each comic to pause randomly between requests, in order to avoid hammering the server
 	-> add an advanced section on the Create Task dialog
 	-> make sure the debug still works
+- The auto-update code has troubles interpreting the release date.
+- Errors should be logged in the Event Log.
 
 
 ** later
@@ -22,6 +24,5 @@
 	- without writing anything to the registry,
 	- and keeping the settings
 	- and comics in the same directory
-- before release: remember to update the updatesDescription file on sourceforge. the PAD file, too.
 - add an option to copy a comic's error message to clipboard
 - add an option to resume a stopped comic.
