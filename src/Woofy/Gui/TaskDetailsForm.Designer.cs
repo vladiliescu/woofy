@@ -36,7 +36,6 @@ namespace Woofy.Gui
 			this.btnCancel = new System.Windows.Forms.Button();
 			this.rbDownloadOnlyNew = new System.Windows.Forms.RadioButton();
 			this.rbDownloadLast = new System.Windows.Forms.RadioButton();
-			this.errorProvider = new System.Windows.Forms.ErrorProvider(this.components);
 			this.label3 = new System.Windows.Forms.Label();
 			this.txtDownloadFolder = new System.Windows.Forms.TextBox();
 			this.btnBrowse = new System.Windows.Forms.Button();
@@ -45,9 +44,9 @@ namespace Woofy.Gui
 			this.gbAdvanced = new System.Windows.Forms.GroupBox();
 			this.chkAdvancedOptions = new System.Windows.Forms.CheckBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.notificationToolTip = new System.Windows.Forms.ToolTip(this.components);
 			label2 = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.numComicsToDownload)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).BeginInit();
 			this.gbAdvanced.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			this.SuspendLayout();
@@ -71,7 +70,6 @@ namespace Woofy.Gui
 			this.cbComics.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.cbComics.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbComics.FormattingEnabled = true;
-			this.errorProvider.SetIconPadding(this.cbComics, 3);
 			this.cbComics.Location = new System.Drawing.Point(5, 18);
 			this.cbComics.Margin = new System.Windows.Forms.Padding(2);
 			this.cbComics.MaxDropDownItems = 15;
@@ -155,10 +153,6 @@ namespace Woofy.Gui
 			this.rbDownloadLast.TabIndex = 5;
 			this.rbDownloadLast.Text = "Download last";
 			this.rbDownloadLast.UseVisualStyleBackColor = true;
-			// 
-			// errorProvider
-			// 
-			this.errorProvider.ContainerControl = this;
 			// 
 			// label3
 			// 
@@ -258,6 +252,11 @@ namespace Woofy.Gui
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Comic";
 			// 
+			// notificationToolTip
+			// 
+			this.notificationToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Warning;
+			this.notificationToolTip.ToolTipTitle = "Warning";
+			// 
 			// TaskDetailsForm
 			// 
 			this.AcceptButton = this.btnOk;
@@ -280,7 +279,6 @@ namespace Woofy.Gui
 			this.Text = "Task Details";
 			this.Load += new System.EventHandler(this.TaskDetails_Load);
 			((System.ComponentModel.ISupportInitialize)(this.numComicsToDownload)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.errorProvider)).EndInit();
 			this.gbAdvanced.ResumeLayout(false);
 			this.gbAdvanced.PerformLayout();
 			this.groupBox1.ResumeLayout(false);
@@ -296,8 +294,7 @@ namespace Woofy.Gui
         private System.Windows.Forms.Button btnOk;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.RadioButton rbDownloadOnlyNew;
-        private System.Windows.Forms.RadioButton rbDownloadLast;
-        private System.Windows.Forms.ErrorProvider errorProvider;
+		private System.Windows.Forms.RadioButton rbDownloadLast;
         private System.Windows.Forms.Button btnBrowse;
         private System.Windows.Forms.TextBox txtDownloadFolder;
         private System.Windows.Forms.Label label3;
@@ -306,5 +303,6 @@ namespace Woofy.Gui
 		private System.Windows.Forms.GroupBox gbAdvanced;
 		private System.Windows.Forms.CheckBox chkAdvancedOptions;
 		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.ToolTip notificationToolTip;
     }
 }

@@ -79,7 +79,7 @@ namespace Woofy.Gui
 
             if (!taskAdded)
             {
-                errorProvider.SetError(cbComics, "A task for this comic is already running or paused.");
+                notificationToolTip.Show("A task for this comic has already been added.", btnOk);
                 return;
             }
 
