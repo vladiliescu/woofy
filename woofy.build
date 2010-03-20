@@ -19,8 +19,7 @@
 	<property name="file.PlaintextChangelog" value="${dir.Build}\changelog.txt"/>	
 
 	<property name="date.Now" value="${datetime::now()}"/>
-    <property name="date.Today" value="${datetime::get-year(date.Now)}-${datetime::get-month(date.Now)}-${datetime::get-day(date.Now)}"/>
-    <property name="date.Today2" value="${datetime::get-year(date.Now)}.${datetime::get-month(date.Now)}.${datetime::get-day(date.Now)}"/>
+    <property name="date.Today" value="${datetime::get-year(date.Now)}-${string::pad-left(int::to-string(datetime::get-month(date.Now)), 2, '0')}-${string::pad-left(int::to-string(datetime::get-day(date.Now)), 2, '0')}"/>
     
     <property name="woofy.Version" value="${version.Major}.${version.Minor}.${version.BuildNumber}" />
     <property name="woofy.ZipFileName" value="Woofy-${woofy.Version}-zipped.zip"/>
@@ -80,7 +79,6 @@
                 <include name="**.*"/>
                 <exclude name="*.xml"/>
             </fileset>
-			<!--TODO: to remove-->
             <filterchain>
                 <replacetokens>
                     <token key="WOOFYVERSION" value="${woofy.Version}" />
@@ -105,7 +103,6 @@
                     <token key="WOOFYEXEFILENAME" value="${woofy.ExeFileName}" />
                     
                     <token key="TODAY" value="${date.Today}" />
-                    <token key="TODAY2" value="${date.Today2}" />                    
                 </replacetokens>
             </filterchain>
         </copy>
