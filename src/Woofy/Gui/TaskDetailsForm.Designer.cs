@@ -42,10 +42,10 @@ namespace Woofy.Gui
 			this.chkOverrideStartUrl = new System.Windows.Forms.CheckBox();
 			this.txtOverrideStartUrl = new System.Windows.Forms.TextBox();
 			this.gbAdvanced = new System.Windows.Forms.GroupBox();
+			this.chkRandomPauses = new System.Windows.Forms.CheckBox();
 			this.chkAdvancedOptions = new System.Windows.Forms.CheckBox();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.notificationToolTip = new System.Windows.Forms.ToolTip(this.components);
-			this.chkRandomPauses = new System.Windows.Forms.CheckBox();
 			label2 = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.numComicsToDownload)).BeginInit();
 			this.gbAdvanced.SuspendLayout();
@@ -228,6 +228,16 @@ namespace Woofy.Gui
 			this.gbAdvanced.TabStop = false;
 			this.gbAdvanced.Text = "Advanced";
 			// 
+			// chkRandomPauses
+			// 
+			this.chkRandomPauses.AutoSize = true;
+			this.chkRandomPauses.Location = new System.Drawing.Point(8, 85);
+			this.chkRandomPauses.Name = "chkRandomPauses";
+			this.chkRandomPauses.Size = new System.Drawing.Size(190, 17);
+			this.chkRandomPauses.TabIndex = 11;
+			this.chkRandomPauses.Text = "Random pauses between requests";
+			this.chkRandomPauses.UseVisualStyleBackColor = true;
+			// 
 			// chkAdvancedOptions
 			// 
 			this.chkAdvancedOptions.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -260,16 +270,6 @@ namespace Woofy.Gui
 			// 
 			this.notificationToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Warning;
 			this.notificationToolTip.ToolTipTitle = "Warning";
-			// 
-			// chkRandomPauses
-			// 
-			this.chkRandomPauses.AutoSize = true;
-			this.chkRandomPauses.Location = new System.Drawing.Point(8, 85);
-			this.chkRandomPauses.Name = "chkRandomPauses";
-			this.chkRandomPauses.Size = new System.Drawing.Size(188, 17);
-			this.chkRandomPauses.TabIndex = 11;
-			this.chkRandomPauses.Text = "Pause randomly between requests";
-			this.chkRandomPauses.UseVisualStyleBackColor = true;
 			// 
 			// TaskDetailsForm
 			// 
