@@ -2,7 +2,6 @@
 - The debug logger should also contain a RollingFileAppender.
 - Errors should be logged in the Event Log.
 
-
 ** later **
 
 - the comics should be downloaded from start to end, and not backwards;

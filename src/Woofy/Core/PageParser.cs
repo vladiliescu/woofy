@@ -1,27 +1,31 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
 
 namespace Woofy.Core
 {
     public class PageParser
     {
-        public string PageContent { get; private set; }
-        public ComicDefinition Definition { get; private set; }
+    	private readonly string pageContent;
+    	private readonly string urlContent;
+    	private readonly ComicDefinition definition;
 
-        public PageParser(string pageContent, ComicDefinition definition)
+    	public PageParser(string pageContent, string urlContent, ComicDefinition definition)
         {
-            PageContent = pageContent;
-            Definition = definition;
+            this.pageContent = pageContent;
+        	this.urlContent = urlContent;
+        	this.definition = definition;
         }
 
         public Dictionary<string, string> GetCaptures()
         {
             var captures = new Dictionary<string, string>();
 
-            foreach (var capture in Definition.Captures)
+            foreach (var capture in definition.Captures)
             {
-                var match = Regex.Match(PageContent, capture.Content);
+				var match = capture.Target == CaptureTarget.Body ?
+					Regex.Match(pageContent, capture.Content) :
+					Regex.Match(urlContent, capture.Content);
+
                 if (!match.Success)
                     continue;
 
@@ -30,7 +34,6 @@ namespace Woofy.Core
                     capturedContent = match.Groups[ComicsProvider.ContentGroup].Value;
                 else
                     capturedContent = match.Value;
-
 
                 captures.Add(capture.Name, capturedContent);
             }

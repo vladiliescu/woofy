@@ -54,16 +54,6 @@ namespace Woofy.Core
         #endregion
 
         #region Public Methods
-
-        /// <summary>
-        /// Downloads the specified number of comic strips.
-        /// </summary>
-        /// <param name="comicsToDownload">Number of comics to download. Pass <see cref="AllAvailableComics"/> in order to download all the available comics.</param>
-        public DownloadOutcome DownloadComics(int comicsToDownload)
-        {
-            return DownloadComics(comicsToDownload, _comicInfo.StartUrl);
-        }
-
         /// <summary>
         /// Downloads the specified number of comic strips.
         /// </summary>
@@ -109,10 +99,9 @@ namespace Woofy.Core
                         responseUri = response.ResponseUri;
                     }
 
-
                     var comicLinks = RetrieveComicLinksFromPage(pageContent, rootUri ?? responseUri, _comicInfo);
                     var backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, rootUri ?? responseUri, _comicInfo);
-                    var captures = new PageParser(pageContent, _comicInfo).GetCaptures();
+                    var captures = new PageParser(pageContent, currentUrl, _comicInfo).GetCaptures();
 
                     if (!MatchedLinksObeyRules(comicLinks.Length, _comicInfo.AllowMissingStrips, _comicInfo.AllowMultipleStrips, ref downloadOutcome))
                         break;

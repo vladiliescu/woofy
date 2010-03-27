@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Xml;
 using System.IO;
-
-using Woofy.Exceptions;
 using Woofy.Settings;
 
 namespace Woofy.Core
@@ -115,13 +112,25 @@ namespace Woofy.Core
 
             Captures = new Collection<Capture>();
 
-            foreach (XmlNode capture in comicInfo.SelectNodes("captures/capture"))
+			foreach (XmlNode captureNode in comicInfo.SelectNodes("captures/capture"))
             {
-                Captures.Add(new Capture(capture.Attributes["name"].Value, capture.InnerText));
+                Captures.Add(BuildCapture(captureNode));
             }
         }
 
-        private string GetInnerText(XmlNode comicInfo, string xpath)
+    	private Capture BuildCapture(XmlNode captureNode)
+    	{
+			if (captureNode.Attributes["target"] == null)
+				return new Capture(captureNode.Attributes["name"].Value, captureNode.InnerText);
+
+			var target = captureNode.Attributes["target"].Value;
+			if (target.Trim().ToUpper().Equals("URL"))
+				return new Capture(captureNode.Attributes["name"].Value, captureNode.InnerText, CaptureTarget.Url);
+    		
+			return new Capture(captureNode.Attributes["name"].Value, captureNode.InnerText, CaptureTarget.Body);
+    	}
+
+    	private string GetInnerText(XmlNode comicInfo, string xpath)
         {
             var node = comicInfo.SelectSingleNode(xpath);
             return node == null ? null : node.InnerText;

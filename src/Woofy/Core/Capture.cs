@@ -4,11 +4,18 @@ namespace Woofy.Core
     {
         public string Name { get; private set; }
         public string Content { get; private set; }
+		public CaptureTarget Target { get; private set; }
 
         public Capture(string name, string content)
+			: this(name, content, CaptureTarget.Body)
         {
-            Name = name;
-            Content = content;
         }
+
+		public Capture(string name, string content, CaptureTarget target)
+		{
+			Name = name;
+			Content = content;
+			Target = target;
+		}
     }
 }

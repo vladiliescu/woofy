@@ -61,6 +61,7 @@
     <Compile Include="Core\ApplicationInfo.cs" />
     <Compile Include="Core\Bootstrapper.cs" />
     <Compile Include="Core\Capture.cs" />
+    <Compile Include="Core\CaptureTarget.cs" />
     <Compile Include="Core\CountingFileDownloader.cs" />
     <Compile Include="Core\ExRichTextBox.cs">
       <SubType>Component</SubType>
