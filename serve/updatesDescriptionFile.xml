@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <updateDescription>
     <woofy>
-		<release versionNumber="0.6.0" downloadAddress="http://woofy.googlecode.com/files/Woofy-0.6.0-setup.exe" releaseDate="2010-2-13" size="661276">
+        <release versionNumber="0.6.1" downloadAddress="http://woofy.googlecode.com/files/Woofy-0.6.1-setup.exe" releaseDate="2010-03-28" size="662987">
             <changes>
-                <change>A little.</change>
+                <change>-</change>
             </changes>
         </release>
     </woofy>
-    <comicPack>
-		<release versionNumber="0.1" downloadAddress="http://woofy.googlecode.com/files/ComicPack-0.1-setup.exe" releaseDate="2010-2-13" size="100">
-            <changes>
-                <change>Some new comics.</change>
-            </changes>
-        </release>   
-    </comicPack>
 </updateDescription>
