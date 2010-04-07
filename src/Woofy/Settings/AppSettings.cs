@@ -14,6 +14,9 @@ namespace Woofy.Settings
         public static readonly string UserSettingsFile = BaseDirectory("user.settings");
         public static readonly string ComicDefinitionsFolder = BaseDirectory("definitions");
 
+		public static readonly string HomePage = "http://code.google.com/p/woofy/";
+		public static readonly string AuthorHomePage = "http://vladiliescu.ro";
+
 
 		private static string BaseDirectory(string fileName)
 		{

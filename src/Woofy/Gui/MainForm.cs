@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -169,16 +170,20 @@ namespace Woofy.Gui
             dgvwTasks.AutoGenerateColumns = false;
             dgvwTasks.DataSource = _tasksController.Tasks;
 
-            var splitButton = new ToolStripSplitButton("Check for updates", Resources.CheckForUpdates);
-            splitButton.DropDown.Items.Add("Check for updates", Resources.CheckForUpdates, CheckForUpdates_Click);
-            splitButton.DropDown.Items.Add("Debug comic definitions..", Resources.DebugDefinitions, DebugDefinitions_Click);
+            var splitButton = new ToolStripSplitButton("About..", Resources.About);
+			splitButton.ButtonClick += About_Click;
+			splitButton.DropDown.Items.Add("Debug comic definitions..", Resources.DebugDefinitions, DebugDefinitions_Click);
+			splitButton.DropDown.Items.Add(new ToolStripSeparator());
+			splitButton.DropDown.Items.Add("Check for updates", Resources.CheckForUpdates, CheckForUpdates_Click);
             splitButton.DropDown.Items.Add("About..", Resources.About, About_Click);
+			splitButton.DropDown.Items.Add(new ToolStripSeparator());
+			splitButton.DropDown.Items.Add("vladiliescu.ro", Resources.vladiliescu_ro, OnHomePageClick);
             splitButton.Alignment = ToolStripItemAlignment.Right;
-            splitButton.ButtonClick += CheckForUpdates_Click;
 
             toolStrip.Items.Insert(0, splitButton);
         }
-        #endregion
+
+    	#endregion
 
         #region Helper Methods
         private void AddTask()
@@ -327,6 +332,11 @@ namespace Woofy.Gui
             var definitionsDebugForm = new DefinitionsDebugForm();            
             definitionsDebugForm.ShowDialog();
         }
+
+		private void OnHomePageClick(object sender, EventArgs e)
+		{
+			Process.Start(AppSettings.AuthorHomePage);
+		}
         #endregion        
 
         #region Events - Tray Tool Strip Menus

@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 
 using Woofy.Core;
+using Woofy.Settings;
 
 namespace Woofy.Gui
 {
@@ -80,5 +81,15 @@ namespace Woofy.Gui
     		Array.Sort(groups, (a, b) => a.Name.CompareTo(b.Name));
     		definitionAuthors.Groups.AddRange(groups);
     	}
+
+		private void OnHomePageClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			Process.Start(AppSettings.AuthorHomePage);
+		}
+
+		private void OnWoofyHomePageClicked(object sender, EventArgs e)
+		{
+			Process.Start(AppSettings.HomePage);
+		}
     }
 }
