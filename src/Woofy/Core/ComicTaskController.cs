@@ -11,32 +11,30 @@ namespace Woofy.Core
     public class ComicTasksController
     {
         #region Instance Members
-        private readonly List<ComicsProvider> _comicProviders = new List<ComicsProvider>();
-        private readonly DataGridView _tasksGrid;
+        private readonly List<ComicsProvider> comicProviders = new List<ComicsProvider>();
+        private readonly DataGridView tasksGrid;
 
         #endregion
 
         #region Public Properties
-        private BindingList<ComicTask> _tasks;
-        public BindingList<ComicTask> Tasks
-        {
-            get { return _tasks; }
-        }
-        #endregion
+
+    	public BindingList<ComicTask> Tasks { get; private set; }
+
+    	#endregion
 
         #region .ctor
         public ComicTasksController(DataGridView tasksGrid)
         {
-            _tasksGrid = tasksGrid;
+            this.tasksGrid = tasksGrid;
         }
         #endregion
 
         #region Public Methods
         public void Initialize()
         {
-            _tasks = new BindingList<ComicTask>(ComicTask.RetrieveAllTasks());
+            Tasks = new BindingList<ComicTask>(ComicTask.RetrieveAllTasks());
 
-            foreach (ComicTask task in _tasks)
+            foreach (ComicTask task in Tasks)
             {
                 AddComicsProviderAndStartDownload(task);
             }
@@ -52,7 +50,7 @@ namespace Woofy.Core
                 return false;
 
             task.Create();
-            _tasks.Add(task);
+            Tasks.Add(task);
             AddComicsProviderAndStartDownload(task);
 
             return true;
@@ -64,15 +62,15 @@ namespace Woofy.Core
         /// <param name="task"></param>
         public void DeleteTask(ComicTask task)
         {
-            int index = _tasks.IndexOf(task);
-            ComicsProvider comicsProvider = _comicProviders[index];
+            int index = Tasks.IndexOf(task);
+            ComicsProvider comicsProvider = comicProviders[index];
             if (task.Status == TaskStatus.Running)
                 comicsProvider.StopDownload();
 
             task.Delete();
 
-            _tasks.RemoveAt(index);
-            _comicProviders.RemoveAt(index);
+            Tasks.RemoveAt(index);
+            comicProviders.RemoveAt(index);
         }
 
         /// <summary>
@@ -103,8 +101,8 @@ namespace Woofy.Core
             if (task.Status != TaskStatus.Running)
                 return;
 
-            int index = _tasks.IndexOf(task);
-            ComicsProvider comicsProvider = _comicProviders[index];
+            int index = Tasks.IndexOf(task);
+            ComicsProvider comicsProvider = comicProviders[index];
 
             task.Status = TaskStatus.Stopped;
             comicsProvider.StopDownload();
@@ -121,8 +119,8 @@ namespace Woofy.Core
             if (task.Status != TaskStatus.Stopped)
                 return;
 
-            int index = _tasks.IndexOf(task);
-            ComicsProvider comicsProvider = _comicProviders[index];
+            int index = Tasks.IndexOf(task);
+            ComicsProvider comicsProvider = comicProviders[index];
 
             task.Status = TaskStatus.Running;
             int comicsToDownload = task.ComicsToDownload.HasValue ? (int)(task.ComicsToDownload.Value - task.DownloadedComics) : ComicsProvider.AllAvailableComics;
@@ -143,7 +141,7 @@ namespace Woofy.Core
 
         public void ResetTasksBindings()
         {
-            _tasks.ResetBindings();
+            Tasks.ResetBindings();
         }
         #endregion
 
@@ -153,7 +151,7 @@ namespace Woofy.Core
             var comicInfo = new ComicDefinition(task.ComicInfoFile);
 
             var comicsProvider = new ComicsProvider(comicInfo, task.DownloadFolder, task.RandomPausesBetweenRequests);
-            _comicProviders.Add(comicsProvider);
+            comicProviders.Add(comicsProvider);
 
             comicsProvider.DownloadComicCompleted += DownloadComicCompletedCallback;
             comicsProvider.DownloadCompleted += DownloadComicsCompletedCallback;
@@ -178,16 +176,16 @@ namespace Woofy.Core
         #region Callback Methods
         private void DownloadComicCompletedCallback(object sender, DownloadStripCompletedEventArgs e)
         {
-            _tasksGrid.Invoke(new MethodInvoker(
+            tasksGrid.Invoke(new MethodInvoker(
                 delegate
                     {
                     var provider = (ComicsProvider)sender;
 
-                    int index = _comicProviders.IndexOf(provider);
+                    int index = comicProviders.IndexOf(provider);
                     if (index == -1)    //in case the task has already been deleted.
                         return;
 
-                    ComicTask task = _tasks[index];
+                    ComicTask task = Tasks[index];
                     task.DownloadedComics++;
                     task.CurrentUrl = e.CurrentUrl;
                     task.Update();
@@ -199,16 +197,16 @@ namespace Woofy.Core
 
         private void DownloadComicsCompletedCallback(object sender, DownloadCompletedEventArgs e)
         {
-            _tasksGrid.Invoke(new MethodInvoker(
+            tasksGrid.Invoke(new MethodInvoker(
                 delegate
                 {
                     var comicsProvider = (ComicsProvider)sender;
 
-                    var index = _comicProviders.IndexOf(comicsProvider);
+                    var index = comicProviders.IndexOf(comicsProvider);
                     if (index == -1)    //in case the task has already been deleted.
                         return;
 
-                    var task = _tasks[index];
+                    var task = Tasks[index];
                     task.Status = e.DownloadOutcome == DownloadOutcome.Cancelled ? TaskStatus.Stopped : TaskStatus.Finished;
 
                     //only set the currentUrl to null if the outcome is successful
@@ -224,7 +222,7 @@ namespace Woofy.Core
                         return;
 
                     var allTasksHaveFinished = true;
-                    foreach (var _task in _tasks)
+                    foreach (var _task in Tasks)
                     {
                         if (_task.Status != TaskStatus.Running) 
                             continue;

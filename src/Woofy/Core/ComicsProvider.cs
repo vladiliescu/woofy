@@ -66,12 +66,8 @@ namespace Woofy.Core
 
             try
             {
-                Logger.Debug("Downloading comic {0}.", _comicInfo.FriendlyName);
-                string properStartUrl;
-                if (string.IsNullOrEmpty(startUrl) || startUrl.Equals(_comicInfo.StartUrl, StringComparison.OrdinalIgnoreCase))
-                    properStartUrl = GetProperStartUrl(startUrl, _comicInfo.LatestPageRegex);
-                else
-                    properStartUrl = startUrl;
+                Logger.Debug("Downloading comic {0}.", _comicInfo.Name);
+                string properStartUrl = startUrl;
 
                 var rootUri = string.IsNullOrEmpty(_comicInfo.RootUrl) ? null : new Uri(_comicInfo.RootUrl);
                 var currentUrl = properStartUrl;
@@ -176,7 +172,7 @@ namespace Woofy.Core
         /// <param name="comicsToDownload">Number of comics to download. Pass <see cref="AllAvailableComics"/> in order to download all the available comics.</param>
         public void DownloadComicsAsync(int comicsToDownload)
         {
-            DownloadComicsAsync(comicsToDownload, _comicInfo.StartUrl);
+            DownloadComicsAsync(comicsToDownload, _comicInfo.HomePage);
         }
 
         public void DownloadComicsAsync(int comicsToDownload, string startUrl)
@@ -340,7 +336,7 @@ namespace Woofy.Core
         private Uri RetrieveBackButtonLinkFromPage(string pageContent, Uri currentUri, ComicDefinition comicInfo)
         {
             if (comicInfo == null) throw new ArgumentNullException("comicInfo");
-            Uri[] backButtonLinks = RetrieveLinksFromPage(pageContent, currentUri, comicInfo.BackButtonRegex);
+            Uri[] backButtonLinks = RetrieveLinksFromPage(pageContent, currentUri, comicInfo.NextPageRegex);
 
             if (backButtonLinks.Length > 0)
             {

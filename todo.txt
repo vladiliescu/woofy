@@ -1,10 +1,12 @@
 ** current **
-- The debug logger should also contain a RollingFileAppender.
-- Errors should be logged in the Event Log.
+- the comics should be downloaded from start to end, and not backwards;
 
 ** later **
+- rethink the comic dowloading process (with active comics, resume, restart, refresh, etc).
+- add support for json definitions (deprecating the xml format).
 
-- the comics should be downloaded from start to end, and not backwards;
+- The debug logger should also contain a RollingFileAppender.
+- Errors should be logged in the Event Log.
 - ask for every supported comic's permision to be included in Woofy
 - support multiple definition formats -> by default they should be written using json, as it is easier to read and harder to mess-up than xml.
 - 3 simple proxy settings: none, auto-detect, explicit proxy (by default it should autodetect)
@@ -13,7 +15,6 @@
 	-> or publish somewhere the debug log (thus avoiding the need for a definitions debugger).
 - display favicons for the comics
 - simplify auto-update code
-- auto-update should no longer run the installer => instead, the zip version should be downloaded and unpacked.
 - Woofy should not close when CloseWhenAllComicsHaveBeenDownloaded is true and at least one comic has an error.
 - the user settings/tasks db should be stored under Local Settings
 - an option whether to install in portable-mode 

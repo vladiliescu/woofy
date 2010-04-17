@@ -96,7 +96,7 @@ namespace Woofy.Gui
         {
             foreach (ComicDefinition comicDefinition in ComicDefinition.GetAvailableComicDefinitions())
             {
-                ListViewItem item = new ListViewItem(new string[] { comicDefinition.FriendlyName, comicDefinition.Author });
+                ListViewItem item = new ListViewItem(new string[] { comicDefinition.Name, comicDefinition.Author });
                 item.Tag = comicDefinition.ComicInfoFile;
 
                 comicDefinitionsList.Items.Add(item);
@@ -156,7 +156,7 @@ namespace Woofy.Gui
             if (this.currentMode == TestMode.Paused)
                 startupUrl = this.currentUrl;
             else
-                startupUrl = chkOverrideStartUrl.Checked ? txtOverrideStartUrl.Text : comicDefinition.StartUrl;
+                startupUrl = chkOverrideStartUrl.Checked ? txtOverrideStartUrl.Text : comicDefinition.HomePage;
 
             this.currentMode = TestMode.Running;
             DisplayAppropriateControlsForCurrentMode();
@@ -293,10 +293,7 @@ namespace Woofy.Gui
                         case DownloadOutcome.Error:
                             break;
                         case DownloadOutcome.Successful:
-                            if (comics[comics.Length - 1] == comicDefinition.FirstIssue)
-                                Logger.Debug("The first strip has been reached, so the comic definition works as expected.");
-                            else
-                                Logger.Debug("The first strip has not been reached, the definition needs some more work.");
+                                Logger.Debug("Woofy has finished downloading the strips.");
                             break;
                         default:
                             throw new InvalidEnumArgumentException();

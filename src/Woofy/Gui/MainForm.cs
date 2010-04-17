@@ -74,7 +74,6 @@ namespace Woofy.Gui
             }
         }
 
-        //TODO: de testat.
         private void DisplayDownloadOutcome(DataGridViewRow row, DownloadOutcome downloadOutcome, string url)
         {
             Bitmap icon;

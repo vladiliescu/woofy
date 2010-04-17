@@ -43,8 +43,8 @@ namespace Woofy.Gui
 
     	private void AddComicDefinitionToAuthor(ComicDefinition comicDefinition, ListViewGroup authorGroup)
         {
-            ListViewItem definition = new ListViewItem(comicDefinition.FriendlyName, authorGroup);
-            definition.Tag = comicDefinition.StartUrl;
+            ListViewItem definition = new ListViewItem(comicDefinition.Name, authorGroup);
+            definition.Tag = comicDefinition.HomePage;
             definitionAuthors.Items.Add(definition);
         }
 

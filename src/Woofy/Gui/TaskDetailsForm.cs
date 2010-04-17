@@ -72,9 +72,9 @@ namespace Woofy.Gui
             else
                 comicsToDownload = null;
             string downloadFolder = txtDownloadFolder.Text;
-            string startUrl = chkOverrideStartUrl.Checked ? txtOverrideStartUrl.Text : comicInfo.StartUrl;
+            string startUrl = chkOverrideStartUrl.Checked ? txtOverrideStartUrl.Text : comicInfo.HomePage;
 
-            ComicTask task = new ComicTask(comicInfo.FriendlyName, comicInfo.ComicInfoFile, comicsToDownload, downloadFolder, startUrl, chkRandomPauses.Checked);
+            ComicTask task = new ComicTask(comicInfo.Name, comicInfo.ComicInfoFile, comicsToDownload, downloadFolder, startUrl, chkRandomPauses.Checked);
             bool taskAdded = tasksController.AddNewTask(task);
 
             if (!taskAdded)
@@ -136,7 +136,7 @@ namespace Woofy.Gui
         private void UpdateDownloadFolder()
         {
             ComicDefinition comicInfo = (ComicDefinition)cbComics.SelectedValue;
-            txtDownloadFolder.Text = Path.Combine(UserSettings.DefaultDownloadFolder ?? "", comicInfo.FriendlyName);
+            txtDownloadFolder.Text = Path.Combine(UserSettings.DefaultDownloadFolder ?? "", comicInfo.Name);
         }
         #endregion
 
