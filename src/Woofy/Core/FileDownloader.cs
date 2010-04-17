@@ -322,115 +322,58 @@ namespace Woofy.Core
         }
         #endregion
 
-        #region DownloadFileCompleted Event
-
-        private event EventHandler<DownloadFileCompletedEventArgs> _downloadFileCompleted;
         /// <summary>
         /// Occurs when an asynchronous download operation completes.
         /// </summary>
-        public event EventHandler<DownloadFileCompletedEventArgs> DownloadFileCompleted
-        {
-            add
-            {
-                _downloadFileCompleted += value;
-            }
-            remove
-            {
-                _downloadFileCompleted -= value;
-            }
-        }
+		public event EventHandler<DownloadFileCompletedEventArgs> DownloadFileCompleted;
 
         protected virtual void OnDownloadFileCompleted(DownloadFileCompletedEventArgs e)
         {
-            EventHandler<DownloadFileCompletedEventArgs> eventReference = _downloadFileCompleted;
-
+            var eventReference = DownloadFileCompleted;
             if (eventReference != null)
                 eventReference(this, e);
         }
-        #endregion
 
-        #region DownloadedFileChunk Event
-
-        private event EventHandler<DownloadedFileChunkEventArgs> _downloadedFileChunk;
-        /// <summary>
+		/// <summary>
         /// Occurs when a comic chunk is downloaded. Can be used to cancel the download of the current strip.
         /// </summary>
-        public event EventHandler<DownloadedFileChunkEventArgs> DownloadedFileChunk
-        {
-            add
-            {
-                _downloadedFileChunk += value;
-            }
-            remove
-            {
-                _downloadedFileChunk -= value;
-            }
-        }
+        public event EventHandler<DownloadedFileChunkEventArgs> DownloadedFileChunk;
 
         protected virtual void OnDownloadedFileChunk(DownloadedFileChunkEventArgs e)
         {
-            EventHandler<DownloadedFileChunkEventArgs> eventReference = _downloadedFileChunk;
-
+            var eventReference = DownloadedFileChunk;
             if (eventReference != null)
                 eventReference(this, e);
         }
 
-        #endregion
-
-        #region DownloadError Event
-        private event EventHandler<DownloadErrorEventArgs> _downloadError;
         /// <summary>
         /// Use this to handle any exceptions that have occurred while downloading.
         /// </summary>
-        public event EventHandler<DownloadErrorEventArgs> DownloadError
-        {
-            add
-            {
-                _downloadError += value;
-            }
-            remove
-            {
-                _downloadError -= value;
-            }
-        }
+        public event EventHandler<DownloadErrorEventArgs> DownloadError;
 
         protected virtual void OnDownloadError(Exception exception, out bool exceptionHandled)
         {
-            EventHandler<DownloadErrorEventArgs> eventReference = _downloadError;
-            DownloadErrorEventArgs e = new DownloadErrorEventArgs(exception);
+            var eventReference = DownloadError;
+            var e = new DownloadErrorEventArgs(exception);
 
             if (eventReference != null)                
                 eventReference(this, e);
 
             exceptionHandled = e.ExceptionHandled;
         }
-        #endregion
 
-        #region OnResponseReceived Event
-        private event EventHandler<ResponseReceivedEventArgs> responseReceived;
         /// <summary>
         /// Occurs when the site containing the file has responded to our request (right before downloading the file).
         /// </summary>
-        public event EventHandler<ResponseReceivedEventArgs> ResponseReceived
-        {
-            add
-            {
-                this.responseReceived += value;
-            }
-            remove
-            {
-                this.responseReceived -= value;
-            }
-        }
+		public event EventHandler<ResponseReceivedEventArgs> ResponseReceived;
 
         protected virtual void OnResponseReceived(WebResponse response)
         {
-            EventHandler<ResponseReceivedEventArgs> eventReference = this.responseReceived;
-            ResponseReceivedEventArgs e = new ResponseReceivedEventArgs(response);
+            var eventReference = ResponseReceived;
+            var e = new ResponseReceivedEventArgs(response);
 
             if (eventReference != null)
                 eventReference(this, e);
         }
-        #endregion
     }
 }

@@ -76,8 +76,7 @@ namespace Woofy.Core
                     if (!MatchedLinksObeyRules(comicLinks.Length, definition.AllowMissingStrips, definition.AllowMultipleStrips, ref downloadOutcome))
                         break;
 
-                    var fileAlreadyDownloaded = false;
-                    var backButtonStringLink = backButtonLink == null ? null : backButtonLink.AbsoluteUri;
+                	var backButtonStringLink = backButtonLink == null ? null : backButtonLink.AbsoluteUri;
                     foreach (var comicLink in comicLinks)
                     {
                         var fileName = GetFileName(comicLink.AbsoluteUri, definition.RenamePattern, captures);
@@ -87,7 +86,8 @@ namespace Woofy.Core
                             Logger.Debug("\t>>{0}", fileName);
                         }
 
-                        comicsDownloader.DownloadFile(comicLink.AbsoluteUri, currentUrl, fileName, out fileAlreadyDownloaded);
+                    	bool fileAlreadyDownloaded;
+                    	comicsDownloader.DownloadFile(comicLink.AbsoluteUri, currentUrl, fileName, out fileAlreadyDownloaded);
 
                         //if (fileAlreadyDownloaded && comicsToDownload == AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
                          //   break;
@@ -247,26 +247,6 @@ namespace Woofy.Core
             return true;
         }
 
-        private string GetProperStartUrl(string startUrl, string latestPageRegex)
-        {
-            if (string.IsNullOrEmpty(latestPageRegex))
-                return startUrl;
-
-            Logger.Debug("Visiting page {0}.", startUrl);
-            string pageContent;
-            var request = (HttpWebRequest)WebConnectionFactory.GetNewWebRequestInstance(startUrl);
-            Uri uri;
-            using (var response = (HttpWebResponse)request.GetResponse())
-            {
-                var reader = new StreamReader(response.GetResponseStream());
-                pageContent = reader.ReadToEnd();
-
-                uri = response.ResponseUri;
-            }
-
-            return GetProperStartUrlFromPage(pageContent, uri/*startUrl*/, latestPageRegex);
-        }
-
         public static string GetProperStartUrlFromPage(string pageContent, Uri pageUri, string latestPageRegex)
         {
             if (string.IsNullOrEmpty(latestPageRegex))
@@ -346,50 +326,26 @@ namespace Woofy.Core
             return comicLinks;
         }
 
-        private event EventHandler<DownloadStripCompletedEventArgs> _downloadComicCompleted;
         /// <summary>
         /// Occurs when a single comic is downloaded.
         /// </summary>
-        public event EventHandler<DownloadStripCompletedEventArgs> DownloadComicCompleted
-        {
-            add
-            {
-                _downloadComicCompleted += value;
-            }
-            remove
-            {
-                _downloadComicCompleted -= value;
-            }
-        }
+		public event EventHandler<DownloadStripCompletedEventArgs> DownloadComicCompleted;
 
         protected virtual void OnDownloadComicCompleted(DownloadStripCompletedEventArgs e)
         {
-            EventHandler<DownloadStripCompletedEventArgs> eventReference = _downloadComicCompleted;
-
+            var eventReference = DownloadComicCompleted;
             if (eventReference != null)
                 eventReference(this, e);
         }
 
-        private event EventHandler<DownloadCompletedEventArgs> _downloadCompleted;
         /// <summary>
         /// Occurs when the entire download is completed.
         /// </summary>
-        public event EventHandler<DownloadCompletedEventArgs> DownloadCompleted
-        {
-            add
-            {
-                _downloadCompleted += value;
-            }
-            remove
-            {
-                _downloadCompleted -= value;
-            }
-        }
+        public event EventHandler<DownloadCompletedEventArgs> DownloadCompleted;
 
         protected virtual void OnDownloadCompleted(DownloadOutcome downloadOutcome)
         {
-            EventHandler<DownloadCompletedEventArgs> eventReference = _downloadCompleted;
-
+            var eventReference = DownloadCompleted;
             if (eventReference != null)
                 eventReference(this, new DownloadCompletedEventArgs(downloadOutcome));
         }
