@@ -14,67 +14,49 @@ namespace Woofy.Core
     {
     	private readonly bool randomPausesBetweenRequests;
 
-    	#region Public Properties
-        /// <summary>
-        /// Causes the <see cref="ComicsProvider"/> to get all available comics, instead of a fixed number.
-        /// </summary>
-        public static int AllAvailableComics
-        {
-            get { return -1; }
-        }
-        #endregion
+        private readonly IFileDownloader comicsDownloader;
+        private readonly ComicDefinition definition;
+        private WebClient webClient;
+        private bool isDownloadCancelled;
+		private readonly Random random = new Random();
 
-        #region Instance Members
-        private readonly IFileDownloader _comicsDownloader;
-        private readonly ComicDefinition _comicInfo;
-        //private WebClient _client;
-        private bool _isDownloadCancelled;
-		private Random random = new Random();
-        #endregion
-
-        #region Constants
         public const string ContentGroup = "content";
-        #endregion
 
-        #region .ctor
         public ComicsProvider(ComicDefinition comicInfo, string downloadFolder, bool randomPausesBetweenRequests)
             : this(comicInfo, new FileDownloader(downloadFolder), randomPausesBetweenRequests)
         {
         	
         }
 
-    	public ComicsProvider(ComicDefinition comicInfo, IFileDownloader comicsDownloader, bool randomPausesBetweenRequests)
+    	public ComicsProvider(ComicDefinition definition, IFileDownloader comicsDownloader, bool randomPausesBetweenRequests)
         {
-            _comicInfo = comicInfo;
-            _comicsDownloader = comicsDownloader;
+            this.definition = definition;
+            this.comicsDownloader = comicsDownloader;
 			this.randomPausesBetweenRequests = randomPausesBetweenRequests;
 
-            //_client = WebConnectionFactory.GetNewWebClientInstance();
+            webClient = WebConnectionFactory.GetNewWebClientInstance();
         }
-        #endregion
 
-        #region Public Methods
         /// <summary>
         /// Downloads the specified number of comic strips.
         /// </summary>
-        /// <param name="comicsToDownload">Number of comics to download. Pass <see cref="AllAvailableComics"/> in order to download all the available comics.</param>
         /// <param name="startUrl">Url at which the download should start.</param>
-        public DownloadOutcome DownloadComics(int comicsToDownload, string startUrl)
+        public DownloadOutcome DownloadComics(string startUrl)
         {
-            _isDownloadCancelled = false;
+            isDownloadCancelled = false;
             var downloadOutcome = DownloadOutcome.Successful;
 
             try
             {
-                Logger.Debug("Downloading comic {0}.", _comicInfo.Name);
+                Logger.Debug("Downloading comic {0}.", definition.Name);
                 string properStartUrl = startUrl;
 
-                var rootUri = string.IsNullOrEmpty(_comicInfo.RootUrl) ? null : new Uri(_comicInfo.RootUrl);
+                var rootUri = string.IsNullOrEmpty(definition.RootUrl) ? null : new Uri(definition.RootUrl);
                 var currentUrl = properStartUrl;
 
-                for (var i = 0; i < comicsToDownload || comicsToDownload == AllAvailableComics; i++)
+                while(true)
                 {
-                    if (_isDownloadCancelled)
+                    if (isDownloadCancelled)
                     {
                         Logger.Debug("Download stopped by user.");
 
@@ -84,46 +66,39 @@ namespace Woofy.Core
 
                     Logger.Debug("Visiting page {0}.", currentUrl);
 
-                    string pageContent;
-                    var request = (HttpWebRequest)WebConnectionFactory.GetNewWebRequestInstance(currentUrl);
-                    Uri responseUri;
-                    using (var response = (HttpWebResponse)request.GetResponse())
-                    {
-                        var reader = new StreamReader(response.GetResponseStream());
-                        pageContent = reader.ReadToEnd();
+					var currentUri = new Uri(currentUrl);
+					var pageContent = webClient.DownloadString(currentUri);
 
-                        responseUri = response.ResponseUri;
-                    }
+                    var comicLinks = RetrieveComicLinksFromPage(pageContent, rootUri ?? currentUri, definition);
+                    var backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, rootUri ?? currentUri, definition);
+                    var captures = new PageParser(pageContent, currentUrl, definition).GetCaptures();
 
-                    var comicLinks = RetrieveComicLinksFromPage(pageContent, rootUri ?? responseUri, _comicInfo);
-                    var backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, rootUri ?? responseUri, _comicInfo);
-                    var captures = new PageParser(pageContent, currentUrl, _comicInfo).GetCaptures();
-
-                    if (!MatchedLinksObeyRules(comicLinks.Length, _comicInfo.AllowMissingStrips, _comicInfo.AllowMultipleStrips, ref downloadOutcome))
+                    if (!MatchedLinksObeyRules(comicLinks.Length, definition.AllowMissingStrips, definition.AllowMultipleStrips, ref downloadOutcome))
                         break;
 
                     var fileAlreadyDownloaded = false;
                     var backButtonStringLink = backButtonLink == null ? null : backButtonLink.AbsoluteUri;
                     foreach (var comicLink in comicLinks)
                     {
-                        var fileName = GetFileName(comicLink.AbsoluteUri, _comicInfo.RenamePattern, captures);
-                        if (!string.IsNullOrEmpty(_comicInfo.RenamePattern))
+                        var fileName = GetFileName(comicLink.AbsoluteUri, definition.RenamePattern, captures);
+                        if (!string.IsNullOrEmpty(definition.RenamePattern))
                         {
                             Logger.Debug("Renamed strip to:");
                             Logger.Debug("\t>>{0}", fileName);
                         }
 
-                        _comicsDownloader.DownloadFile(comicLink.AbsoluteUri, currentUrl, fileName, out fileAlreadyDownloaded);
+                        comicsDownloader.DownloadFile(comicLink.AbsoluteUri, currentUrl, fileName, out fileAlreadyDownloaded);
 
-                        if (fileAlreadyDownloaded && comicsToDownload == AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
-                            break;
+                        //if (fileAlreadyDownloaded && comicsToDownload == AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
+                         //   break;
 
-                        OnDownloadComicCompleted(new DownloadStripCompletedEventArgs(i + 1, backButtonStringLink));
+#warning get rid of updating the downloaded strip count here
+                        OnDownloadComicCompleted(new DownloadStripCompletedEventArgs(0, backButtonStringLink));
                     }
 
                     //HACK
-                    if (fileAlreadyDownloaded && comicsToDownload == AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
-                        break;
+                    //if (fileAlreadyDownloaded && comicsToDownload == AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
+                    //    break;
 
                     if (backButtonLink == null)
                         break;
@@ -169,18 +144,17 @@ namespace Woofy.Core
         /// <summary>
         /// Downloads the specified number of comic strips asynchronously.
         /// </summary>
-        /// <param name="comicsToDownload">Number of comics to download. Pass <see cref="AllAvailableComics"/> in order to download all the available comics.</param>
-        public void DownloadComicsAsync(int comicsToDownload)
+        public void DownloadComicsAsync()
         {
-            DownloadComicsAsync(comicsToDownload, _comicInfo.HomePage);
+            DownloadComicsAsync(definition.HomePage);
         }
 
-        public void DownloadComicsAsync(int comicsToDownload, string startUrl)
+        public void DownloadComicsAsync(string startUrl)
         {
             ThreadPool.UnsafeQueueUserWorkItem(
                 delegate
                 {
-                    DownloadComics(comicsToDownload, startUrl);
+                    DownloadComics(startUrl);
                 }, null
             );
         }
@@ -190,11 +164,8 @@ namespace Woofy.Core
         /// </summary>
         public void StopDownload()
         {
-            _isDownloadCancelled = true;
+            isDownloadCancelled = true;
         }
-        #endregion
-
-        #region Helper Methods
 
 		private void PauseForRandomPeriod()
 		{
@@ -375,10 +346,6 @@ namespace Woofy.Core
             return comicLinks;
         }
 
-    	#endregion
-
-        #region DownloadComicCompleted Event
-
         private event EventHandler<DownloadStripCompletedEventArgs> _downloadComicCompleted;
         /// <summary>
         /// Occurs when a single comic is downloaded.
@@ -402,9 +369,7 @@ namespace Woofy.Core
             if (eventReference != null)
                 eventReference(this, e);
         }
-        #endregion
 
-        #region DownloadCompleted Event
         private event EventHandler<DownloadCompletedEventArgs> _downloadCompleted;
         /// <summary>
         /// Occurs when the entire download is completed.
@@ -428,6 +393,5 @@ namespace Woofy.Core
             if (eventReference != null)
                 eventReference(this, new DownloadCompletedEventArgs(downloadOutcome));
         }
-        #endregion
     }
 }

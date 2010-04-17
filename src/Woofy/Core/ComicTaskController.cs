@@ -123,8 +123,7 @@ namespace Woofy.Core
             ComicsProvider comicsProvider = comicProviders[index];
 
             task.Status = TaskStatus.Running;
-            int comicsToDownload = task.ComicsToDownload.HasValue ? (int)(task.ComicsToDownload.Value - task.DownloadedComics) : ComicsProvider.AllAvailableComics;
-            comicsProvider.DownloadComicsAsync(comicsToDownload, task.CurrentUrl);
+            comicsProvider.DownloadComicsAsync(task.CurrentUrl);
 
             task.Update();
         }
@@ -165,11 +164,10 @@ namespace Woofy.Core
             if (task.Status != TaskStatus.Running) 
                 return;
 
-            var comicsToDownload = task.ComicsToDownload.HasValue ? (int)(task.ComicsToDownload.Value - task.DownloadedComics) : ComicsProvider.AllAvailableComics;
             if (string.IsNullOrEmpty(task.CurrentUrl))
-                comicsProvider.DownloadComicsAsync(comicsToDownload);
+                comicsProvider.DownloadComicsAsync();
             else
-                comicsProvider.DownloadComicsAsync(comicsToDownload, task.CurrentUrl);
+                comicsProvider.DownloadComicsAsync(task.CurrentUrl);
         }        
         #endregion
 

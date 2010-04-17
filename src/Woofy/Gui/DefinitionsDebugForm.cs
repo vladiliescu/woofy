@@ -276,9 +276,7 @@ namespace Woofy.Gui
                     this.comicsProvider = new ComicsProvider(comicDefinition, countingFileDownloader, false);
                     this.comicsProvider.DownloadComicCompleted += comicsProvider_DownloadComicCompleted;
 
-                    DownloadOutcome downloadOutcome = this.comicsProvider.DownloadComics(ComicsProvider.AllAvailableComics, startupUrl);
-
-                    string[] comics = countingFileDownloader.ComicLinks;
+                    DownloadOutcome downloadOutcome = comicsProvider.DownloadComics(startupUrl);
 
                     switch (downloadOutcome)
                     {
