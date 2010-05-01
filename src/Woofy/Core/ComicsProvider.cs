@@ -43,16 +43,15 @@ namespace Woofy.Core
         /// <param name="startUrl">Url at which the download should start.</param>
         public DownloadOutcome DownloadComics(string startUrl)
         {
+			Logger.Debug("Downloading comic {0}.", definition.Name);
+
             isDownloadCancelled = false;
             var downloadOutcome = DownloadOutcome.Successful;
-
-            try
+            
+			try
             {
-                Logger.Debug("Downloading comic {0}.", definition.Name);
-                string properStartUrl = startUrl;
-
                 var rootUri = string.IsNullOrEmpty(definition.RootUrl) ? null : new Uri(definition.RootUrl);
-                var currentUrl = properStartUrl;
+                var currentUrl = startUrl;
 
                 while(true)
                 {
@@ -69,14 +68,14 @@ namespace Woofy.Core
 					var currentUri = new Uri(currentUrl);
 					var pageContent = webClient.DownloadString(currentUri);
 
-                    var comicLinks = RetrieveComicLinksFromPage(pageContent, rootUri ?? currentUri, definition);
-                    var backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, rootUri ?? currentUri, definition);
+                    var comicLinks = RetrieveComicLinks(pageContent, rootUri ?? currentUri, definition);
+                    var nextPageLink = RetrieveNextPageLink(pageContent, rootUri ?? currentUri, definition);
                     var captures = new PageParser(pageContent, currentUrl, definition).GetCaptures();
 
                     if (!MatchedLinksObeyRules(comicLinks.Length, definition.AllowMissingStrips, definition.AllowMultipleStrips, ref downloadOutcome))
                         break;
 
-                	var backButtonStringLink = backButtonLink == null ? null : backButtonLink.AbsoluteUri;
+                	var nextPageStringLink = nextPageLink == null ? null : nextPageLink.AbsoluteUri;
                     foreach (var comicLink in comicLinks)
                     {
                         var fileName = GetFileName(comicLink.AbsoluteUri, definition.RenamePattern, captures);
@@ -93,17 +92,17 @@ namespace Woofy.Core
                          //   break;
 
 #warning get rid of updating the downloaded strip count here
-                        OnDownloadComicCompleted(new DownloadStripCompletedEventArgs(0, backButtonStringLink));
+                        OnDownloadComicCompleted(new DownloadStripCompletedEventArgs(0, nextPageStringLink));
                     }
 
                     //HACK
                     //if (fileAlreadyDownloaded && comicsToDownload == AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
                     //    break;
 
-                    if (backButtonLink == null)
+                    if (nextPageLink == null)
                         break;
 
-                    currentUrl = backButtonLink.AbsoluteUri;
+                    currentUrl = nextPageLink.AbsoluteUri;
 
 					if (randomPausesBetweenRequests)
 						PauseForRandomPeriod();
@@ -281,19 +280,16 @@ namespace Woofy.Core
         /// <summary>
         /// Returns the back button link from the specified page, or, if there are several back button links in the page, it returns null.
         /// </summary>
-        /// <param name="pageContent">Page content.</param>
-        /// <param name="currentUri"></param>
-        /// <returns></returns>
-        private Uri RetrieveBackButtonLinkFromPage(string pageContent, Uri currentUri, ComicDefinition comicInfo)
+        private Uri RetrieveNextPageLink(string pageContent, Uri currentUri, ComicDefinition definition)
         {
-            if (comicInfo == null) throw new ArgumentNullException("comicInfo");
-            Uri[] backButtonLinks = RetrieveLinksFromPage(pageContent, currentUri, comicInfo.NextPageRegex);
+			if (definition == null) throw new ArgumentNullException("definition");
+            var links = RetrieveLinksFromPage(pageContent, currentUri, definition.NextPageRegex);
 
-            if (backButtonLinks.Length > 0)
+            if (links.Length > 0)
             {
                 bool isFirst = true;
-                Logger.Debug("Found {0} link(s):", backButtonLinks.Length);
-                foreach (Uri link in backButtonLinks)
+                Logger.Debug("Found {0} link(s):", links.Length);
+                foreach (Uri link in links)
                 {
                     if (isFirst)
                     {
@@ -306,15 +302,16 @@ namespace Woofy.Core
                     }
                 }
 
-                return backButtonLinks[0];
+                return links[0];
             }
             
-            Logger.Debug("No links match the backButtonRegex element. The comic has completed.");
+#warning does this still apply?
+            Logger.Debug("No links match the nextPageRegex element. The comic has completed.");
 
             return null;
         }
 
-        private Uri[] RetrieveComicLinksFromPage(string pageContent, Uri pageUri, ComicDefinition comicInfo)
+        private Uri[] RetrieveComicLinks(string pageContent, Uri pageUri, ComicDefinition comicInfo)
         {
             Uri[] comicLinks = RetrieveLinksFromPage(pageContent, pageUri, comicInfo.ComicRegex);
             Logger.Debug("Found {0} strip(s):", comicLinks.Length);
