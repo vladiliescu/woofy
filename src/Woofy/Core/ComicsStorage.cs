@@ -6,56 +6,57 @@ namespace Woofy.Core
 {
 	public interface IComicsStorage
 	{
-		void Load();
-		void Add(ComicTask comic);
-		void Update(ComicTask comic);
-		void Delete(ComicTask comic);
+		void Add(Comic comic);
+		void Update(Comic comic);
+		void Delete(Comic comic);
 
 		/// <summary>
 		/// Returns a list with all the tasks in the database
 		/// </summary>
 		/// <returns></returns>
-		IList<ComicTask> RetrieveAllTasks();
+		IList<Comic> RetrieveAllTasks();
 
-		IList<ComicTask> RetrieveActiveTasksByComicInfoFile(string comicInfoFile);
+		IList<Comic> RetrieveActiveTasksByComicInfoFile(string comicInfoFile);
 	}
 
 	public class ComicsStorage : IComicsStorage
 	{
-		IList<ComicTask> taskCache;
+		IList<Comic> comicsCache;
 		readonly IAppSettings appSettings;
 
 		public ComicsStorage(IAppSettings appSettings)
 		{
 			this.appSettings = appSettings;
+
+			InitializeComicsCache();
 		}
 
-		public void Load()
+		public void InitializeComicsCache()
 		{
 			EnsureFileExists(appSettings.ComicsFile);
 			var json = File.ReadAllText(appSettings.ComicsFile);
-			taskCache = JsonConvert.DeserializeObject<List<ComicTask>>(json) ?? new List<ComicTask>();
+			comicsCache = JsonConvert.DeserializeObject<List<Comic>>(json) ?? new List<Comic>();
 		}
 
-		public void Add(ComicTask comic)
+		public void Add(Comic comic)
 		{
-			taskCache.Add(comic);
+			comicsCache.Add(comic);
 			PersistTasks();
 		}
 
 		private void PersistTasks()
 		{
-			File.WriteAllText(appSettings.ComicsFile, JsonConvert.SerializeObject(taskCache, Formatting.Indented));
+			File.WriteAllText(appSettings.ComicsFile, JsonConvert.SerializeObject(comicsCache, Formatting.Indented));
 		}
 
-		public void Update(ComicTask comic)
+		public void Update(Comic comic)
 		{
 			PersistTasks();
 		}
 
-		public void Delete(ComicTask comic)
+		public void Delete(Comic comic)
 		{
-			taskCache.Remove(comic);
+			comicsCache.Remove(comic);
 			PersistTasks();
 		}
 
@@ -63,15 +64,15 @@ namespace Woofy.Core
 		/// Returns a list with all the tasks in the database
 		/// </summary>
 		/// <returns></returns>
-		public IList<ComicTask> RetrieveAllTasks()
+		public IList<Comic> RetrieveAllTasks()
 		{
-			return new List<ComicTask>(taskCache);
+			return new List<Comic>(comicsCache);
 		}
 
-		public IList<ComicTask> RetrieveActiveTasksByComicInfoFile(string comicInfoFile)
+		public IList<Comic> RetrieveActiveTasksByComicInfoFile(string comicInfoFile)
 		{
-			var tasks = new List<ComicTask>();
-			foreach (var task in taskCache)
+			var tasks = new List<Comic>();
+			foreach (var task in comicsCache)
 			{
 				if (task.ComicInfoFile == comicInfoFile)
 					tasks.Add(task);

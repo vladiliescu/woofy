@@ -4,7 +4,7 @@ using Autofac.Builder;
 
 namespace Woofy.Core.Infrastructure
 {
-	public class ComponentsAsImplementedInterfacesModule : Module
+	public class DefaultComponentsModule : Module
 	{
 		protected override void Load(ContainerBuilder builder)
 		{

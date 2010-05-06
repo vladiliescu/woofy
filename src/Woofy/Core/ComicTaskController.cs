@@ -15,7 +15,7 @@ namespace Woofy.Core
         private readonly DataGridView tasksGrid;
 		private readonly IComicsStorage comicsStorage = ContainerAccesor.Container.Resolve<IComicsStorage>();
 
-    	public BindingList<ComicTask> Tasks { get; private set; }
+    	public BindingList<Comic> Tasks { get; private set; }
 
         public ComicTasksController(DataGridView tasksGrid)
         {
@@ -24,7 +24,7 @@ namespace Woofy.Core
     
 		public void Initialize()
         {
-            Tasks = new BindingList<ComicTask>(comicsStorage.RetrieveAllTasks());
+            Tasks = new BindingList<Comic>(comicsStorage.RetrieveAllTasks());
 
             foreach (var comic in Tasks)
             {
@@ -36,7 +36,7 @@ namespace Woofy.Core
         /// Adds a new comic to the tasks list and database. Also starts its download.
         /// </summary>
         /// <returns>True if the comic has been added successfully, false otherwise.</returns>
-        public bool AddNewTask(ComicTask comic)
+        public bool AddNewTask(Comic comic)
         {
             if (comicsStorage.RetrieveActiveTasksByComicInfoFile(comic.ComicInfoFile).Count > 0)
                 return false;
@@ -52,7 +52,7 @@ namespace Woofy.Core
         /// Stops the specified comic's download and deletes it from the database.
         /// </summary>
         /// <param name="comic"></param>
-        public void DeleteTask(ComicTask comic)
+        public void DeleteTask(Comic comic)
         {
             var index = Tasks.IndexOf(comic);
             var comicsProvider = comicProviders[index];
@@ -68,7 +68,7 @@ namespace Woofy.Core
         /// <summary>
         /// Pauses/unpauses a task, depending on its current state.
         /// </summary>
-        public void ToggleTaskState(ComicTask task, bool resetTasksBindings)
+        public void ToggleTaskState(Comic task, bool resetTasksBindings)
         {
             switch (task.Status)
             {
@@ -88,7 +88,7 @@ namespace Woofy.Core
         /// Stops the specified comic task.
         /// </summary>
         /// <param name="task">Comic task to stop.</param>
-        public void StopTask(ComicTask task)
+        public void StopTask(Comic task)
         {
             if (task.Status != TaskStatus.Running)
                 return;
@@ -106,7 +106,7 @@ namespace Woofy.Core
         /// Start the specified comic task.
         /// </summary>
         /// <param name="task">Comic task to start.</param>
-        public void StartTask(ComicTask task)
+        public void StartTask(Comic task)
         {
             if (task.Status != TaskStatus.Stopped)
                 return;
@@ -123,7 +123,7 @@ namespace Woofy.Core
         /// <summary>
         /// Opens the folder associated with the specified task, using Windows Explorer.
         /// </summary>
-        public void OpenTaskFolder(ComicTask task)
+        public void OpenTaskFolder(Comic task)
         {
             string downloadFolder = (Path.IsPathRooted(task.DownloadFolder) ? task.DownloadFolder : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, task.DownloadFolder));
             if (Directory.Exists(downloadFolder))
@@ -135,7 +135,7 @@ namespace Woofy.Core
             Tasks.ResetBindings();
         }
 
-        private void AddComicsProviderAndStartDownload(ComicTask task)
+        private void AddComicsProviderAndStartDownload(Comic task)
         {
             var comicInfo = new ComicDefinition(task.ComicInfoFile);
 
@@ -171,7 +171,7 @@ namespace Woofy.Core
                     if (index == -1)    //in case the task has already been deleted.
                         return;
 
-                    ComicTask task = Tasks[index];
+                    Comic task = Tasks[index];
                     task.DownloadedComics++;
                     task.CurrentUrl = e.CurrentUrl;
                     comicsStorage.Update(task);

@@ -50,7 +50,7 @@ namespace Woofy.Gui
         {
             foreach (DataGridViewRow row in dgvwTasks.Rows)
             {
-                var task = (ComicTask)row.DataBoundItem;
+                var task = (Comic)row.DataBoundItem;
 
                 string comicsToDownload = task.ComicsToDownload.HasValue ? task.ComicsToDownload.Value.ToString() : "-";
 
@@ -115,7 +115,7 @@ namespace Woofy.Gui
             if (dgvwTasks.SelectedRows.Count == 0)
                 return;
 
-            var task = (ComicTask)dgvwTasks.SelectedRows[0].DataBoundItem;
+            var task = (Comic)dgvwTasks.SelectedRows[0].DataBoundItem;
             if (task.Status == TaskStatus.Finished)
                 _tasksController.OpenTaskFolder(task);
             else
@@ -135,7 +135,7 @@ namespace Woofy.Gui
             toolStripButtonDeleteTask.Enabled = true;
             toolStripButtonOpenFolder.Enabled = true;
 
-            var task = (ComicTask)dgvwTasks.SelectedRows[0].DataBoundItem;
+            var task = (Comic)dgvwTasks.SelectedRows[0].DataBoundItem;
 
             switch (task.Status)
             {
@@ -205,7 +205,7 @@ namespace Woofy.Gui
 
             foreach (DataGridViewRow selectedRow in dgvwTasks.SelectedRows)
             {
-                var task = (ComicTask)selectedRow.DataBoundItem;
+                var task = (Comic)selectedRow.DataBoundItem;
                 _tasksController.DeleteTask(task);
             }
         }
@@ -217,7 +217,7 @@ namespace Woofy.Gui
 
             foreach (DataGridViewRow selectedRow in dgvwTasks.SelectedRows)
             {
-                var task = (ComicTask)selectedRow.DataBoundItem;
+                var task = (Comic)selectedRow.DataBoundItem;
                 _tasksController.ToggleTaskState(task, false);
             }
 
@@ -229,7 +229,7 @@ namespace Woofy.Gui
             if (dgvwTasks.SelectedRows.Count == 0)
                 return;
 
-            var task = (ComicTask)dgvwTasks.SelectedRows[0].DataBoundItem;
+            var task = (Comic)dgvwTasks.SelectedRows[0].DataBoundItem;
 
             _tasksController.OpenTaskFolder(task);
         }
@@ -241,7 +241,7 @@ namespace Woofy.Gui
         {
             foreach (DataGridViewRow row in dgvwTasks.Rows)
             {
-                var task = (ComicTask)row.DataBoundItem;
+                var task = (Comic)row.DataBoundItem;
                 _tasksController.StartTask(task);
             }
 
@@ -255,7 +255,7 @@ namespace Woofy.Gui
         {
             foreach (DataGridViewRow row in dgvwTasks.Rows)
             {
-                var task = (ComicTask)row.DataBoundItem;
+                var task = (Comic)row.DataBoundItem;
                 _tasksController.StopTask(task);
             }
 

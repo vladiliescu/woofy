@@ -12,7 +12,7 @@ namespace Woofy.Core.Infrastructure
 			var builder = new ContainerBuilder();
 			builder.SetDefaultScope(InstanceScope.Factory);
 
-			builder.RegisterModule(new ComponentsAsImplementedInterfacesModule());
+			builder.RegisterModule(new DefaultComponentsModule());
 			builder.RegisterModule(new SingletonComponentsModule());
 
 			Container = builder.Build();

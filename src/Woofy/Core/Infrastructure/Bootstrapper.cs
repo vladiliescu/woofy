@@ -12,8 +12,6 @@ namespace Woofy.Core.Infrastructure
 
 			ContainerAccesor.RegisterComponents();
 			UserSettings.Initialize();
-
-			ContainerAccesor.Container.Resolve<IComicsStorage>().Load();
 		}
 	}
 }

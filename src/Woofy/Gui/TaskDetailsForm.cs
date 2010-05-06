@@ -74,7 +74,7 @@ namespace Woofy.Gui
             string downloadFolder = txtDownloadFolder.Text;
             string startUrl = chkOverrideStartUrl.Checked ? txtOverrideStartUrl.Text : comicInfo.HomePage;
 
-            ComicTask task = new ComicTask(comicInfo.Name, comicInfo.ComicInfoFile, comicsToDownload, downloadFolder, startUrl, chkRandomPauses.Checked);
+            Comic task = new Comic(comicInfo.Name, comicInfo.ComicInfoFile, comicsToDownload, downloadFolder, startUrl, chkRandomPauses.Checked);
             bool taskAdded = tasksController.AddNewTask(task);
 
             if (!taskAdded)

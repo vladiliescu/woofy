@@ -71,7 +71,7 @@
     <Compile Include="Core\ExRichTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Core\Infrastructure\ComponentsAsImplementedInterfacesModule.cs" />
+    <Compile Include="Core\Infrastructure\DefaultComponentsModule.cs" />
     <Compile Include="Core\Infrastructure\ContainerAccesor.cs" />
     <Compile Include="Core\Infrastructure\SingletonComponentsModule.cs" />
     <Compile Include="Core\PageParser.cs" />
@@ -87,7 +87,7 @@
     <Compile Include="Core\FileDownloader.cs" />
     <Compile Include="Core\ComicDefinition.cs" />
     <Compile Include="Core\ComicsProvider.cs" />
-    <Compile Include="Core\ComicTask.cs" />
+    <Compile Include="Core\Comic.cs" />
     <Compile Include="Core\ComicTaskController.cs" />
     <Compile Include="Core\Logger.cs" />
     <Compile Include="Core\WebConnectionFactory.cs" />

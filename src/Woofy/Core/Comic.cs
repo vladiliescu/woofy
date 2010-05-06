@@ -1,6 +1,6 @@
 namespace Woofy.Core
 {
-    public class ComicTask
+    public class Comic
     {
     	public long Id { get; private set; }
 
@@ -27,21 +27,21 @@ namespace Woofy.Core
 		/// <summary>
 		/// Used for the Json.NET deserialization
 		/// </summary>
-		public ComicTask()
+		public Comic()
 		{
 		}
 
-    	public ComicTask(string name, string comicInfoFile, long? comicsToDownload, string downloadFolder, string currentUrl)
+    	public Comic(string name, string comicInfoFile, long? comicsToDownload, string downloadFolder, string currentUrl)
             : this(name, comicInfoFile, comicsToDownload, downloadFolder, currentUrl, false)
         {
         }
 
-		public ComicTask(string name, string comicInfoFile, long? comicsToDownload, string downloadFolder, string currentUrl, bool randomPausesBetweenRequests)
+		public Comic(string name, string comicInfoFile, long? comicsToDownload, string downloadFolder, string currentUrl, bool randomPausesBetweenRequests)
 			: this(-1, name, comicInfoFile, 0, comicsToDownload, downloadFolder, 1, currentUrl, TaskStatus.Running, randomPausesBetweenRequests)
 		{
 		}
 
-        private ComicTask(long id, string name, string comicInfoFile, long downloadedComics, long? comicsToDownload, string downloadFolder, long orderNumber, string currentUrl, TaskStatus status, bool randomPausesBetweenRequests)
+        private Comic(long id, string name, string comicInfoFile, long downloadedComics, long? comicsToDownload, string downloadFolder, long orderNumber, string currentUrl, TaskStatus status, bool randomPausesBetweenRequests)
         {
             Id = id;
             Name = name;
