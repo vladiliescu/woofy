@@ -135,8 +135,11 @@ namespace Woofy.Gui
 
         private void UpdateDownloadFolder()
         {
-            ComicDefinition comicInfo = (ComicDefinition)cbComics.SelectedValue;
-            txtDownloadFolder.Text = Path.Combine(UserSettings.DefaultDownloadFolder ?? "", comicInfo.Name);
+            var definition = (ComicDefinition)cbComics.SelectedValue;
+			if (definition == null)
+				return;
+
+            txtDownloadFolder.Text = Path.Combine(UserSettings.DefaultDownloadFolder ?? "", definition.Name);
         }
         #endregion
 

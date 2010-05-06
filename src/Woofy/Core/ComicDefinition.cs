@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Xml;
 using System.IO;
-using Woofy.Settings;
 
 namespace Woofy.Core
 {
@@ -83,7 +82,10 @@ namespace Woofy.Core
 		{
 			var availableComicInfos = new List<ComicDefinition>();
 
-			foreach (var comicInfoFile in Directory.GetFiles(AppSettings.ComicDefinitionsFolder, "*.xml"))
+			if (!Directory.Exists(AppSettingsOld.ComicDefinitionsFolder))
+				return new ComicDefinition[0];
+
+			foreach (var comicInfoFile in Directory.GetFiles(AppSettingsOld.ComicDefinitionsFolder, "*.xml"))
 			{
 				ComicDefinition definition;
 				try

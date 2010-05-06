@@ -49,7 +49,7 @@ namespace Woofy.Core
         {
             var client = new WebClient();
 			
-			client.Headers.Add("user-agent", string.Format("Woofy/{0}", AppSettings.VersionNumber));
+			client.Headers.Add("user-agent", string.Format("Woofy/{0}", AppSettingsOld.VersionNumber));
             client.Credentials = CredentialCache.DefaultNetworkCredentials;
             client.Proxy = Proxy;
 
@@ -65,7 +65,7 @@ namespace Woofy.Core
         {
             WebRequest request = WebRequest.Create(requestUriString);
 
-			((HttpWebRequest)request).UserAgent = string.Format("Woofy/{0}", AppSettings.VersionNumber);
+			((HttpWebRequest)request).UserAgent = string.Format("Woofy/{0}", AppSettingsOld.VersionNumber);
             request.Credentials = CredentialCache.DefaultNetworkCredentials;
             request.Proxy = Proxy;
 

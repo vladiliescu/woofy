@@ -334,7 +334,7 @@ namespace Woofy.Gui
 
 		private void OnHomePageClick(object sender, EventArgs e)
 		{
-			Process.Start(AppSettings.AuthorHomePage);
+			Process.Start(AppSettingsOld.AuthorHomePage);
 		}
         #endregion        
 

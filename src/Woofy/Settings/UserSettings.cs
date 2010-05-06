@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Newtonsoft.Json;
+using Woofy.Core;
 
 namespace Woofy.Settings
 {
@@ -104,21 +105,21 @@ namespace Woofy.Settings
 
 		public static void SaveData()
 		{
-			File.WriteAllText(AppSettings.UserSettingsFile, JsonConvert.SerializeObject(currentSettings, Formatting.Indented));
+			File.WriteAllText(AppSettingsOld.UserSettingsFile, JsonConvert.SerializeObject(currentSettings, Formatting.Indented));
 		}
 
 		public static void LoadData()
 		{
-			currentSettings = JsonConvert.DeserializeObject<UserSettingsData>(File.ReadAllText(AppSettings.UserSettingsFile));
+			currentSettings = JsonConvert.DeserializeObject<UserSettingsData>(File.ReadAllText(AppSettingsOld.UserSettingsFile));
 		}
 
 		private static void EnsureSettingsFileExists()
 		{
-			if (File.Exists(AppSettings.UserSettingsFile))
+			if (File.Exists(AppSettingsOld.UserSettingsFile))
 				return;
 
 
-			File.Create(AppSettings.UserSettingsFile).Close();
+			File.Create(AppSettingsOld.UserSettingsFile).Close();
 
 			currentSettings = DefaultSettings;
 			SaveData();

@@ -4,70 +4,62 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using Woofy.Core.Infrastructure;
 using Woofy.Settings;
 
 namespace Woofy.Core
 {
     public class ComicTasksController
     {
-        #region Instance Members
         private readonly List<ComicsProvider> comicProviders = new List<ComicsProvider>();
         private readonly DataGridView tasksGrid;
-
-        #endregion
-
-        #region Public Properties
+		private readonly IComicsStorage comicsStorage = ContainerAccesor.Container.Resolve<IComicsStorage>();
 
     	public BindingList<ComicTask> Tasks { get; private set; }
 
-    	#endregion
-
-        #region .ctor
         public ComicTasksController(DataGridView tasksGrid)
         {
             this.tasksGrid = tasksGrid;
         }
-        #endregion
-
-        #region Public Methods
-        public void Initialize()
+    
+		public void Initialize()
         {
-            Tasks = new BindingList<ComicTask>(ComicTask.RetrieveAllTasks());
+            Tasks = new BindingList<ComicTask>(comicsStorage.RetrieveAllTasks());
 
-            foreach (ComicTask task in Tasks)
+            foreach (var comic in Tasks)
             {
-                AddComicsProviderAndStartDownload(task);
+                AddComicsProviderAndStartDownload(comic);
             }
         }
 
         /// <summary>
-        /// Adds a new task to the tasks list and database. Also starts its download.
+        /// Adds a new comic to the tasks list and database. Also starts its download.
         /// </summary>
-        /// <returns>True if the task has been added successfully, false otherwise.</returns>
-        public bool AddNewTask(ComicTask task)
+        /// <returns>True if the comic has been added successfully, false otherwise.</returns>
+        public bool AddNewTask(ComicTask comic)
         {
-            if (ComicTask.RetrieveActiveTasksByComicInfoFile(task.ComicInfoFile).Count > 0)
+            if (comicsStorage.RetrieveActiveTasksByComicInfoFile(comic.ComicInfoFile).Count > 0)
                 return false;
 
-            task.Create();
-            Tasks.Add(task);
-            AddComicsProviderAndStartDownload(task);
+            comicsStorage.Add(comic);
+            Tasks.Add(comic);
+            AddComicsProviderAndStartDownload(comic);
 
             return true;
         }
 
         /// <summary>
-        /// Stops the specified task's download and deletes it from the database.
+        /// Stops the specified comic's download and deletes it from the database.
         /// </summary>
-        /// <param name="task"></param>
-        public void DeleteTask(ComicTask task)
+        /// <param name="comic"></param>
+        public void DeleteTask(ComicTask comic)
         {
-            int index = Tasks.IndexOf(task);
-            ComicsProvider comicsProvider = comicProviders[index];
-            if (task.Status == TaskStatus.Running)
+            var index = Tasks.IndexOf(comic);
+            var comicsProvider = comicProviders[index];
+            if (comic.Status == TaskStatus.Running)
                 comicsProvider.StopDownload();
 
-            task.Delete();
+			comicsStorage.Delete(comic);
 
             Tasks.RemoveAt(index);
             comicProviders.RemoveAt(index);
@@ -107,7 +99,7 @@ namespace Woofy.Core
             task.Status = TaskStatus.Stopped;
             comicsProvider.StopDownload();
 
-            task.Update();
+            comicsStorage.Update(task);
         }
 
         /// <summary>
@@ -125,7 +117,7 @@ namespace Woofy.Core
             task.Status = TaskStatus.Running;
             comicsProvider.DownloadComicsAsync(task.CurrentUrl);
 
-            task.Update();
+            comicsStorage.Update(task);
         }
 
         /// <summary>
@@ -142,9 +134,7 @@ namespace Woofy.Core
         {
             Tasks.ResetBindings();
         }
-        #endregion
 
-        #region Helper Methods
         private void AddComicsProviderAndStartDownload(ComicTask task)
         {
             var comicInfo = new ComicDefinition(task.ComicInfoFile);
@@ -158,7 +148,7 @@ namespace Woofy.Core
             if (task.Status == TaskStatus.Finished)
             {
                 task.Status = TaskStatus.Running;
-                task.Update();
+                comicsStorage.Update(task);
             }
 
             if (task.Status != TaskStatus.Running) 
@@ -169,9 +159,7 @@ namespace Woofy.Core
             else
                 comicsProvider.DownloadComicsAsync(task.CurrentUrl);
         }        
-        #endregion
-
-        #region Callback Methods
+        
         private void DownloadComicCompletedCallback(object sender, DownloadStripCompletedEventArgs e)
         {
             tasksGrid.Invoke(new MethodInvoker(
@@ -186,7 +174,7 @@ namespace Woofy.Core
                     ComicTask task = Tasks[index];
                     task.DownloadedComics++;
                     task.CurrentUrl = e.CurrentUrl;
-                    task.Update();
+                    comicsStorage.Update(task);
 
                     ResetTasksBindings();
                 }
@@ -212,7 +200,7 @@ namespace Woofy.Core
                         task.CurrentUrl = null;
 
                     task.DownloadOutcome = e.DownloadOutcome;
-                    task.Update();
+                    comicsStorage.Update(task);
 
                     ResetTasksBindings();
 
@@ -234,6 +222,5 @@ namespace Woofy.Core
                 }
             ));
         }
-        #endregion
     }
 }

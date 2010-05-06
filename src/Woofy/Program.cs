@@ -1,6 +1,7 @@
 using System;
 using System.Windows.Forms;
 using Woofy.Core;
+using Woofy.Core.Infrastructure;
 using Woofy.Gui;
 
 namespace Woofy
@@ -10,10 +11,7 @@ namespace Woofy
         [STAThread]
         static void Main()
         {
-			Bootstrapper.BootstrapApplication();
-
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+			Bootstrapper.BootstrapApplication();          
 
             Application.ThreadException += Application_ThreadException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;

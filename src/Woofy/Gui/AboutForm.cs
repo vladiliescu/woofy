@@ -3,7 +3,6 @@ using System.Windows.Forms;
 using System.Diagnostics;
 
 using Woofy.Core;
-using Woofy.Settings;
 
 namespace Woofy.Gui
 {
@@ -84,12 +83,12 @@ namespace Woofy.Gui
 
 		private void OnHomePageClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			Process.Start(AppSettings.AuthorHomePage);
+			Process.Start(AppSettingsOld.AuthorHomePage);
 		}
 
 		private void OnWoofyHomePageClicked(object sender, EventArgs e)
 		{
-			Process.Start(AppSettings.HomePage);
+			Process.Start(AppSettingsOld.HomePage);
 		}
     }
 }

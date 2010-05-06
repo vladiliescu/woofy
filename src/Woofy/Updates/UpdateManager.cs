@@ -45,7 +45,7 @@ namespace Woofy.Updates
 
         private static void CheckForUpdates()
         {
-            WebRequest request = WebConnectionFactory.GetNewWebRequestInstance(AppSettings.UpdateDescriptionFileAddress);
+            WebRequest request = WebConnectionFactory.GetNewWebRequestInstance(AppSettingsOld.UpdateDescriptionFileAddress);
             Stream responseStream;
 
             try
@@ -113,7 +113,7 @@ namespace Woofy.Updates
         {
             Release latestWoofyRelease = updateDescription.Woofy[0];
 
-            if (IsUpgradeCandidate(latestWoofyRelease, AppSettings.VersionNumber, UserSettings.LastReportedWoofyVersion, initiatedByUser))
+            if (IsUpgradeCandidate(latestWoofyRelease, AppSettingsOld.VersionNumber, UserSettings.LastReportedWoofyVersion, initiatedByUser))
                 return latestWoofyRelease;
             else 
                 return null;

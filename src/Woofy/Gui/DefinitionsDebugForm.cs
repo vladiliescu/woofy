@@ -101,7 +101,8 @@ namespace Woofy.Gui
 
                 comicDefinitionsList.Items.Add(item);
             }
-            comicDefinitionsList.SelectedIndices.Add(0);
+			if (comicDefinitionsList.Items.Count > 0)
+				comicDefinitionsList.SelectedIndices.Add(0);
 
             SetFoundComics(0);
         }
