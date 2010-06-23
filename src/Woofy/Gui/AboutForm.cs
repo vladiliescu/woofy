@@ -42,7 +42,7 @@ namespace Woofy.Gui
 
     	private void AddComicDefinitionToAuthor(ComicDefinition comicDefinition, ListViewGroup authorGroup)
         {
-            ListViewItem definition = new ListViewItem(comicDefinition.Name, authorGroup);
+            var definition = new ListViewItem(comicDefinition.Name, authorGroup);
             definition.Tag = comicDefinition.HomePage;
             definitionAuthors.Items.Add(definition);
         }
@@ -56,7 +56,7 @@ namespace Woofy.Gui
                     return group;
             }
 
-            ListViewGroup authorGroup = new ListViewGroup(trimmedAuthor, trimmedAuthor);
+            var authorGroup = new ListViewGroup(trimmedAuthor, trimmedAuthor);
             definitionAuthors.Groups.Add(authorGroup);
 
             return authorGroup;
@@ -64,17 +64,16 @@ namespace Woofy.Gui
 
     	private void InitComicDefinitionsList()
     	{
-    		ComicDefinition[] comicDefinitions = ComicDefinition.GetAvailableComicDefinitions();
-    		foreach (ComicDefinition comicDefinition in comicDefinitions)
+    		var comicDefinitions = ComicDefinition.GetAvailableComicDefinitions();
+    		foreach (var comicDefinition in comicDefinitions)
     		{
-    			if (string.IsNullOrEmpty(comicDefinition.Author))
-    				continue;
-    			ListViewGroup authorGroup = ObtainAuthorGroup(comicDefinition.Author);
+				var author = comicDefinition.Author.IsNotNullOrEmpty() ? comicDefinition.Author : "unknown";
+				var authorGroup = ObtainAuthorGroup(author);
     			AddComicDefinitionToAuthor(comicDefinition, authorGroup);                    
     		}
 
 
-    		ListViewGroup[] groups = new ListViewGroup[definitionAuthors.Groups.Count];
+    		var groups = new ListViewGroup[definitionAuthors.Groups.Count];
     		definitionAuthors.Groups.CopyTo(groups, 0);
     		definitionAuthors.Groups.Clear();
     		Array.Sort(groups, (a, b) => a.Name.CompareTo(b.Name));
