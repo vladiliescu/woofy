@@ -23,7 +23,6 @@ namespace Woofy.Core
 		public Collection<Capture> Captures { get; private set; }
 		public string RenamePattern { get; private set; }
 
-		public string AuthorEmail { get; private set; }
 		public string Author { get; private set; }
 		
 		public bool FailedToInitialize { get; private set; }
@@ -40,8 +39,7 @@ namespace Woofy.Core
 			var definition = doc.SelectSingleNode("comicDefinition");
 
 			Name = definition.Attributes["name"].Value;
-			Author = definition.Attributes["author"] == null ? null : definition.Attributes["author"].Value;
-			AuthorEmail = definition.Attributes["authorEmail"] == null ? null : definition.Attributes["authorEmail"].Value;
+			Author = definition.Attributes["definitionAuthor"] == null ? null : definition.Attributes["definitionAuthor"].Value;
 			var allowMissingStrips = definition.Attributes["allowMissingStrips"] == null ? "" : definition.Attributes["allowMissingStrips"].Value;
 			AllowMissingStrips = allowMissingStrips.ParseAsSafe<bool>();
 			var allowMultipleStrips = definition.Attributes["allowMultipleStrips"] == null ? "" : definition.Attributes["allowMultipleStrips"].Value;

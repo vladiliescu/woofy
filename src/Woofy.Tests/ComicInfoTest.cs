@@ -19,8 +19,7 @@ namespace UnitTests
 			name=""some comic name"" 
             allowMultipleStrips=""true"" 
             allowMissingStrips=""false"" 
-            author=""some author""
-            authorEmail=""some author email"">
+            definitionAuthor=""some author"">
 	<homePage><![CDATA[some home page]]></homePage>
 	<startPage><![CDATA[some start page]]></startPage>    
 	<comicRegex><![CDATA[some comic regex]]></comicRegex>
@@ -38,7 +37,6 @@ namespace UnitTests
             Assert.Equal(true, definition.AllowMultipleStrips);
             Assert.Equal(false, definition.AllowMissingStrips);
             Assert.Equal("some author", definition.Author);
-            Assert.Equal("some author email", definition.AuthorEmail);
             Assert.Equal("some home page", definition.HomePage);
 			Assert.Equal("some start page", definition.StartPage);
             Assert.Equal("some root url", definition.RootUrl);
@@ -67,7 +65,6 @@ namespace UnitTests
             Assert.Equal(false, definition.AllowMultipleStrips);
             Assert.Equal(false, definition.AllowMissingStrips);
             Assert.Null(definition.Author);
-            Assert.Null(definition.AuthorEmail);
             Assert.Equal("some base url", definition.HomePage);
             Assert.Null(definition.RootUrl);
             Assert.Equal("some comic regex", definition.ComicRegex);
