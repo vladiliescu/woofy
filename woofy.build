@@ -5,8 +5,8 @@
 
 	<property name="configuration" value="Release"/>
 	<property name="version.Major" value="0" />
-	<property name="version.Minor" value="6" />
-	<property name="version.BuildNumber" value="1" />
+	<property name="version.Minor" value="8" />
+	<property name="version.BuildNumber" value="0" />
 	<property name="version.Revision" value="0"  />
 	
 	<property name="dir.Current" value="${directory::get-current-directory()}"/>

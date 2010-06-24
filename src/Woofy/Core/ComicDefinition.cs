@@ -130,5 +130,25 @@ namespace Woofy.Core
 		{
 			return Name;
 		}
+
+		public bool Equals(ComicDefinition other)
+		{
+			if (ReferenceEquals(null, other)) return false;
+			if (ReferenceEquals(this, other)) return true;
+			return Equals(other.ComicInfoFile, ComicInfoFile);
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(null, obj)) return false;
+			if (ReferenceEquals(this, obj)) return true;
+			if (obj.GetType() != typeof (ComicDefinition)) return false;
+			return Equals((ComicDefinition) obj);
+		}
+
+		public override int GetHashCode()
+		{
+			return (ComicInfoFile != null ? ComicInfoFile.GetHashCode() : 0);
+		}
 	}
 }

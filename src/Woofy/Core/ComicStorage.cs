@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Woofy.Core
 {
-	public interface IComicsStorage
+	public interface IComicStorage
 	{
 		void Add(Comic comic);
 		void Update(Comic comic);
@@ -14,17 +14,17 @@ namespace Woofy.Core
 		/// Returns a list with all the tasks in the database
 		/// </summary>
 		/// <returns></returns>
-		IList<Comic> RetrieveAllTasks();
+		IList<Comic> RetrieveAll();
 
 		IList<Comic> RetrieveActiveTasksByComicInfoFile(string comicInfoFile);
 	}
 
-	public class ComicsStorage : IComicsStorage
+	public class ComicStorage : IComicStorage
 	{
 		IList<Comic> comicsCache;
 		readonly IAppSettings appSettings;
 
-		public ComicsStorage(IAppSettings appSettings)
+		public ComicStorage(IAppSettings appSettings)
 		{
 			this.appSettings = appSettings;
 
@@ -64,7 +64,7 @@ namespace Woofy.Core
 		/// Returns a list with all the tasks in the database
 		/// </summary>
 		/// <returns></returns>
-		public IList<Comic> RetrieveAllTasks()
+		public IList<Comic> RetrieveAll()
 		{
 			return new List<Comic>(comicsCache);
 		}

@@ -6,7 +6,7 @@ namespace Woofy.Core.Infrastructure
 	{
 		protected override void Load(ContainerBuilder builder)
 		{
-			builder.Register<ComicsStorage>().As<IComicsStorage>().SingletonScoped();
+			builder.Register<ComicStorage>().As<IComicStorage>().SingletonScoped();
 		}
 	}
 }

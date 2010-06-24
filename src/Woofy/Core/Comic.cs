@@ -1,3 +1,5 @@
+using System;
+
 namespace Woofy.Core
 {
     public class Comic
@@ -24,7 +26,9 @@ namespace Woofy.Core
 
 		public bool RandomPausesBetweenRequests { get; set; }
 
-		/// <summary>
+    	public ComicDefinition Definition { get; set; }
+
+    	/// <summary>
 		/// Used for the Json.NET deserialization
 		/// </summary>
 		public Comic()
