@@ -32,9 +32,18 @@ namespace Woofy.Gui.ComicSelection
 
 		private void OnOK(object sender, EventArgs e)
 		{
+			controller.UpdateActiveComics(new ComicSelectionInputModel((
+				from ListViewItem item in lvwActiveComics.Items
+					select item.Name
+			).ToList()));
 
+			Close();
 		}
 
+		private void OnCancel(object sender, EventArgs e)
+		{
+			Close();
+		}
 
 		private void InitializeControls()
 		{
@@ -45,13 +54,13 @@ namespace Woofy.Gui.ComicSelection
 		private void LoadData()
 		{
 			var model = controller.LoadComics();
-			lvwActiveComics.Items.AddRange((	
-			                               	from comic in model.ActiveComics
-			                               	select new ListViewItem(comic.ComicName)
-			                               ).ToArray());
+			lvwActiveComics.Items.AddRange((
+											from comic in model.ActiveComics
+											select new ListViewItem(comic.ComicName) { Name = comic.DefinitionFile }
+										   ).ToArray());
 			lvwAvailableComics.Items.AddRange((
 			                                  	from comic in model.AvailableComics
-			                                  	select new ListViewItem(comic.ComicName)
+												select new ListViewItem(comic.ComicName) { Name = comic.DefinitionFile }
 			                                  ).ToArray());
 		}
 	}

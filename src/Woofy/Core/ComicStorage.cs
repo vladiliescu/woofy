@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
@@ -18,6 +19,7 @@ namespace Woofy.Core
 		IList<Comic> RetrieveAll();
 
 		IList<Comic> RetrieveActiveTasksByComicInfoFile(string comicInfoFile);
+		void ReplaceWith(IList<Comic> comics);
 	}
 
 	public class ComicStorage : IComicStorage
@@ -43,23 +45,24 @@ namespace Woofy.Core
 		public void Add(Comic comic)
 		{
 			comicsCache.Add(comic);
-			PersistTasks();
-		}
-
-		private void PersistTasks()
-		{
-			File.WriteAllText(appSettings.ComicsFile, JsonConvert.SerializeObject(comicsCache, Formatting.Indented));
+			PersistComics();
 		}
 
 		public void Update(Comic comic)
 		{
-			PersistTasks();
+			PersistComics();
 		}
 
 		public void Delete(Comic comic)
 		{
 			comicsCache.Remove(comic);
-			PersistTasks();
+			PersistComics();
+		}
+
+		public void ReplaceWith(IList<Comic> comics)
+		{
+			comicsCache = comics;
+			PersistComics();
 		}
 
 		/// <summary>
@@ -83,6 +86,11 @@ namespace Woofy.Core
 			return tasks;
 		}
 
+		private void PersistComics()
+		{
+			File.WriteAllText(appSettings.ComicsFile, JsonConvert.SerializeObject(comicsCache, Formatting.Indented));
+		}
+
 		private static void EnsureFileExists(string file)
 		{
 			if (File.Exists(file))
@@ -90,6 +98,5 @@ namespace Woofy.Core
 
 			File.Create(file).Close();
 		}
-
 	}
 }

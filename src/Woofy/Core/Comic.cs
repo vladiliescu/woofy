@@ -1,3 +1,6 @@
+using System;
+using Newtonsoft.Json;
+
 namespace Woofy.Core
 {
     public class Comic
@@ -13,6 +16,7 @@ namespace Woofy.Core
     	public TaskStatus Status { get; set; }
     	public string CurrentUrl { get; set; }
 		public bool RandomPausesBetweenRequests { get; set; }
+		[JsonIgnore]
     	public ComicDefinition Definition { get; set; }
 
     	/// <summary>
@@ -47,7 +51,13 @@ namespace Woofy.Core
 			RandomPausesBetweenRequests = randomPausesBetweenRequests;
         }
 
-        public override string ToString()
+		//TODO: ensure that the definition's name can represent a valid download folder;
+    	public Comic(ComicDefinition definition)
+			: this(definition.Name, definition.ComicInfoFile, null, definition.Name, null)
+    	{
+    	}
+
+    	public override string ToString()
         {
             return string.Format("{0}.{1}", Id, Name);
         }

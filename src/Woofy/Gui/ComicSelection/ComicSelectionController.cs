@@ -7,6 +7,7 @@ namespace Woofy.Gui.ComicSelection
 	public interface IComicSelectionController
 	{
 		ComicSelectionViewModel LoadComics();
+		void UpdateActiveComics(ComicSelectionInputModel inputModel);
 	}
 
 	public class ComicSelectionController : IComicSelectionController
@@ -37,6 +38,18 @@ namespace Woofy.Gui.ComicSelection
 			}
 
 			return new ComicSelectionViewModel(availableComics, activeComics);
+		}
+
+		public void UpdateActiveComics(ComicSelectionInputModel inputModel)
+		{
+			var comics = new List<Comic>();
+			foreach (var definitionFile in inputModel.ActiveComicDefinitions)
+			{
+				//TODO: I could optimize this by maintaining a definition cache similar to the Comics one; this means that the definitions will not be reloaded each time though
+				comics.Add(new Comic(new ComicDefinition(definitionFile)));
+			}
+
+			comicStorage.ReplaceWith(comics);
 		}
 	}
 }
