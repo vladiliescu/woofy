@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using Woofy.Core;
 using Woofy.Core.Infrastructure;
 using Woofy.Gui;
+using Woofy.Gui.ComicSelection;
 
 namespace Woofy
 {
@@ -16,7 +17,8 @@ namespace Woofy
             Application.ThreadException += Application_ThreadException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
-            Application.Run(new MainForm());
+            //Application.Run(new MainForm());
+			Application.Run(new ComicSelectionForm(ContainerAccesor.Container.Resolve<IComicSelectionController>()));
         }
 
         /// <summary>

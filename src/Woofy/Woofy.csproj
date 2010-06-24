@@ -88,7 +88,6 @@
     <Compile Include="Gui\ComicSelection\ComicSelectionForm.Designer.cs">
       <DependentUpon>ComicSelectionForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\ComicSelection\ComicLoadingService.cs" />
     <Compile Include="Gui\ComicSelection\ComicSelectionInputModel.cs" />
     <Compile Include="Gui\ComicSelection\ComicSelectionViewModel.cs" />
     <Compile Include="Core\DefinitionStorage.cs" />

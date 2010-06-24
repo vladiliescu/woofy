@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
+using System.Linq;
 
 namespace Woofy.Core
 {
@@ -36,6 +37,7 @@ namespace Woofy.Core
 			EnsureFileExists(appSettings.ComicsFile);
 			var json = File.ReadAllText(appSettings.ComicsFile);
 			comicsCache = JsonConvert.DeserializeObject<List<Comic>>(json) ?? new List<Comic>();
+			comicsCache.ForEach(x => x.Definition = new ComicDefinition(x.ComicInfoFile));
 		}
 
 		public void Add(Comic comic)

@@ -150,5 +150,15 @@ namespace Woofy.Core
 		{
 			return (ComicInfoFile != null ? ComicInfoFile.GetHashCode() : 0);
 		}
+
+		public static bool operator ==(ComicDefinition left, ComicDefinition right)
+		{
+			return Equals(left, right);
+		}
+
+		public static bool operator !=(ComicDefinition left, ComicDefinition right)
+		{
+			return !Equals(left, right);
+		}
 	}
 }

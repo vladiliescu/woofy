@@ -34,23 +34,31 @@
 			this.button2 = new System.Windows.Forms.Button();
 			this.button3 = new System.Windows.Forms.Button();
 			this.button4 = new System.Windows.Forms.Button();
+			this.chAvailableComics = new System.Windows.Forms.ColumnHeader();
+			this.chActiveComics = new System.Windows.Forms.ColumnHeader();
 			this.SuspendLayout();
 			// 
 			// lvwAvailableComics
 			// 
+			this.lvwAvailableComics.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.chAvailableComics});
 			this.lvwAvailableComics.Location = new System.Drawing.Point(12, 12);
 			this.lvwAvailableComics.Name = "lvwAvailableComics";
 			this.lvwAvailableComics.Size = new System.Drawing.Size(241, 220);
 			this.lvwAvailableComics.TabIndex = 1;
 			this.lvwAvailableComics.UseCompatibleStateImageBehavior = false;
+			this.lvwAvailableComics.View = System.Windows.Forms.View.Details;
 			// 
 			// lvwActiveComics
 			// 
+			this.lvwActiveComics.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.chActiveComics});
 			this.lvwActiveComics.Location = new System.Drawing.Point(306, 12);
 			this.lvwActiveComics.Name = "lvwActiveComics";
 			this.lvwActiveComics.Size = new System.Drawing.Size(252, 220);
 			this.lvwActiveComics.TabIndex = 2;
 			this.lvwActiveComics.UseCompatibleStateImageBehavior = false;
+			this.lvwActiveComics.View = System.Windows.Forms.View.Details;
 			// 
 			// button1
 			// 
@@ -88,7 +96,15 @@
 			this.button4.Text = "Cancel";
 			this.button4.UseVisualStyleBackColor = true;
 			// 
-			// ComicsSelectionForm
+			// chAvailableComics
+			// 
+			this.chAvailableComics.Text = "Available Comics";
+			// 
+			// chActiveComics
+			// 
+			this.chActiveComics.Text = "Active Comics";
+			// 
+			// ComicSelectionForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -114,5 +130,7 @@
 		private System.Windows.Forms.Button button2;
 		private System.Windows.Forms.Button button3;
 		private System.Windows.Forms.Button button4;
+		private System.Windows.Forms.ColumnHeader chAvailableComics;
+		private System.Windows.Forms.ColumnHeader chActiveComics;
 	}
 }

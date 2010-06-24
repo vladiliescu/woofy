@@ -1,31 +1,18 @@
-using System;
-
 namespace Woofy.Core
 {
     public class Comic
     {
     	public long Id { get; private set; }
-
     	public DownloadOutcome DownloadOutcome { get; set; }
-
     	public string Name { get; private set; }
-
     	public string ComicInfoFile { get; private set; }
-
     	public long DownloadedComics { get; set; }
-
     	public long? ComicsToDownload { get; private set; }
-
     	public string DownloadFolder { get; private set; }
-
     	public long OrderNumber { get; set; }
-
     	public TaskStatus Status { get; set; }
-
     	public string CurrentUrl { get; set; }
-
 		public bool RandomPausesBetweenRequests { get; set; }
-
     	public ComicDefinition Definition { get; set; }
 
     	/// <summary>
@@ -50,6 +37,7 @@ namespace Woofy.Core
             Id = id;
             Name = name;
             ComicInfoFile = comicInfoFile;
+			Definition = new ComicDefinition(comicInfoFile);
             DownloadedComics = downloadedComics;
             ComicsToDownload = comicsToDownload;
             DownloadFolder = downloadFolder;
