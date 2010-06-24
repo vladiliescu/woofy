@@ -65,16 +65,11 @@ namespace Woofy.Gui
             if (cbComics.SelectedItem == null)
                 return;
 
-            ComicDefinition comicInfo = (ComicDefinition)cbComics.SelectedItem;
-            long? comicsToDownload;
-            if (rbDownloadLast.Checked)
-                comicsToDownload = (long)numComicsToDownload.Value;
-            else
-                comicsToDownload = null;
+            var comicInfo = (ComicDefinition)cbComics.SelectedItem;
             string downloadFolder = txtDownloadFolder.Text;
             string startUrl = chkOverrideStartUrl.Checked ? txtOverrideStartUrl.Text : comicInfo.HomePage;
 
-            Comic task = new Comic(comicInfo.Name, comicInfo.ComicInfoFile, comicsToDownload, downloadFolder, startUrl, chkRandomPauses.Checked);
+            var task = new Comic(comicInfo.Name, comicInfo.ComicInfoFile, downloadFolder, startUrl, chkRandomPauses.Checked);
             bool taskAdded = tasksController.AddNewTask(task);
 
             if (!taskAdded)

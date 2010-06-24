@@ -1,18 +1,14 @@
-using System;
 using Newtonsoft.Json;
 
 namespace Woofy.Core
 {
     public class Comic
     {
-    	public long Id { get; private set; }
     	public DownloadOutcome DownloadOutcome { get; set; }
     	public string Name { get; private set; }
     	public string ComicInfoFile { get; private set; }
     	public long DownloadedComics { get; set; }
-    	public long? ComicsToDownload { get; private set; }
     	public string DownloadFolder { get; private set; }
-    	public long OrderNumber { get; set; }
     	public TaskStatus Status { get; set; }
     	public string CurrentUrl { get; set; }
 		public bool RandomPausesBetweenRequests { get; set; }
@@ -26,26 +22,23 @@ namespace Woofy.Core
 		{
 		}
 
-    	public Comic(string name, string comicInfoFile, long? comicsToDownload, string downloadFolder, string currentUrl)
-            : this(name, comicInfoFile, comicsToDownload, downloadFolder, currentUrl, false)
+    	public Comic(string name, string comicInfoFile, string downloadFolder, string currentUrl)
+            : this(name, comicInfoFile, downloadFolder, currentUrl, false)
         {
         }
 
-		public Comic(string name, string comicInfoFile, long? comicsToDownload, string downloadFolder, string currentUrl, bool randomPausesBetweenRequests)
-			: this(-1, name, comicInfoFile, 0, comicsToDownload, downloadFolder, 1, currentUrl, TaskStatus.Running, randomPausesBetweenRequests)
+		public Comic(string name, string comicInfoFile, string downloadFolder, string currentUrl, bool randomPausesBetweenRequests)
+			: this(name, comicInfoFile, 0, downloadFolder, currentUrl, TaskStatus.Running, randomPausesBetweenRequests)
 		{
 		}
 
-        private Comic(long id, string name, string comicInfoFile, long downloadedComics, long? comicsToDownload, string downloadFolder, long orderNumber, string currentUrl, TaskStatus status, bool randomPausesBetweenRequests)
+        private Comic(string name, string comicInfoFile, long downloadedComics, string downloadFolder, string currentUrl, TaskStatus status, bool randomPausesBetweenRequests)
         {
-            Id = id;
             Name = name;
             ComicInfoFile = comicInfoFile;
 			Definition = new ComicDefinition(comicInfoFile);
             DownloadedComics = downloadedComics;
-            ComicsToDownload = comicsToDownload;
             DownloadFolder = downloadFolder;
-            OrderNumber = orderNumber;
             CurrentUrl = currentUrl;
             Status = status;
 			RandomPausesBetweenRequests = randomPausesBetweenRequests;
@@ -53,13 +46,13 @@ namespace Woofy.Core
 
 		//TODO: ensure that the definition's name can represent a valid download folder;
     	public Comic(ComicDefinition definition)
-			: this(definition.Name, definition.ComicInfoFile, null, definition.Name, null)
+			: this(definition.Name, definition.ComicInfoFile, definition.Name, null)
     	{
     	}
 
     	public override string ToString()
         {
-            return string.Format("{0}.{1}", Id, Name);
+            return Name;
         }
     }
 }

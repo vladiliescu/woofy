@@ -52,9 +52,7 @@ namespace Woofy.Gui
             {
                 var task = (Comic)row.DataBoundItem;
 
-                string comicsToDownload = task.ComicsToDownload.HasValue ? task.ComicsToDownload.Value.ToString() : "-";
-
-                row.Cells["ComicsColumn"].Value = string.Format("{0}/{1}", task.DownloadedComics, comicsToDownload);
+                row.Cells["ComicsColumn"].Value = string.Format("{0}", task.DownloadedComics);
 
                 switch (task.Status)
                 {
