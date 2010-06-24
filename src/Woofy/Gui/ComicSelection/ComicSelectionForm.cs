@@ -18,10 +18,23 @@ namespace Woofy.Gui.ComicSelection
 		{
 			InitializeControls();
 			LoadData();
-
-			//model.AvailableComics;
-			//model.ActiveComics;
 		}
+
+		private void OnActivateComic(object sender, EventArgs e)
+		{
+			lvwAvailableComics.MoveSelectedItemsTo(lvwActiveComics);
+		}
+
+		private void OnDeactivateComic(object sender, EventArgs e)
+		{
+			lvwActiveComics.MoveSelectedItemsTo(lvwAvailableComics);
+		}
+
+		private void OnOK(object sender, EventArgs e)
+		{
+
+		}
+
 
 		private void InitializeControls()
 		{
@@ -40,6 +53,21 @@ namespace Woofy.Gui.ComicSelection
 			                                  	from comic in model.AvailableComics
 			                                  	select new ListViewItem(comic.ComicName)
 			                                  ).ToArray());
+		}
+	}
+
+	public static class ListViewExtensions
+	{
+		public static void MoveSelectedItemsTo(this ListView source, ListView destination)
+		{
+			if (source.SelectedItems.Count == 0)
+				return;
+
+			foreach (ListViewItem item in source.SelectedItems)
+			{
+				source.Items.Remove(item);
+				destination.Items.Add(item);
+			}
 		}
 	}
 }

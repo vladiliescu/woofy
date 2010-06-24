@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Windows.Forms;
 using Woofy.Core;
 using Woofy.Core.Infrastructure;
@@ -36,8 +37,9 @@ namespace Woofy
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        static void Application_ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
+        static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
         {
+			//TODO: it looks like this event is preventing exceptions from reaching the user - should i handle these exceptions differently?
             Logger.LogException(e.Exception);
         }
     }
