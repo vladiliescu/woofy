@@ -2,15 +2,15 @@ using Woofy.Core;
 
 namespace Woofy.Gui.ComicSelection
 {
-	public class DefinitionDto
+	public class ComicDto
 	{
 		public string ComicName { get; private set; }
 		public string DefinitionFile { get; private set; }
 
-		public DefinitionDto(ComicDefinition definition)
+		public ComicDto(Comic comic)
 		{
-			ComicName = definition.Name;
-			DefinitionFile = definition.Filename;
+			ComicName = comic.Name;
+			DefinitionFile = comic.DefinitionFilename;
 		}
 	}
 }

@@ -26,18 +26,16 @@ namespace Woofy.Gui.ComicSelection
 
 		public ComicSelectionViewModel LoadComics()
 		{
-			var comics = comicStorage.RetrieveActiveComics();
-			var definitions = definitionStorage.RetrieveAll();
-			var availableComics = new List<DefinitionDto>();
-			var activeComics = new List<DefinitionDto>();
+			var comics = comicStorage.RetrieveAllComics();
+			var availableComics = new List<ComicDto>();
+			var activeComics = new List<ComicDto>();
 
-			foreach (var definition in definitions)
+			foreach (var comic in comics)
 			{
-				var definitionIsActive = comics.FirstOrDefault(x => x.Definition == definition) != null;
-				if (definitionIsActive)
-					activeComics.Add(new DefinitionDto(definition));
+				if (comic.IsActive)
+					activeComics.Add(new ComicDto(comic));
 				else
-					availableComics.Add(new DefinitionDto(definition));
+					availableComics.Add(new ComicDto(comic));
 			}
 
 			return new ComicSelectionViewModel(availableComics, activeComics);
@@ -52,6 +50,7 @@ namespace Woofy.Gui.ComicSelection
 				comics.Add(new Comic(definitionStorage.Retrieve(definitionFile)));
 			}
 
+			//de schimbat replace-ul: nu vreau sa pierd statisticile de download
 			comicStorage.ReplaceWith(comics);
 		}
 

@@ -1,9 +1,15 @@
 using System.IO;
+using Newtonsoft.Json;
 
 namespace Woofy.Core
 {
     public class Comic
     {
+		/// <summary>
+		/// The definition's filename. It uniquely identifies a comic/definition.
+		/// </summary>
+		public string DefinitionFilename { get; set; }
+
     	public DownloadOutcome DownloadOutcome { get; set; }
     	public string Name { get; private set; }
     	public long DownloadedComics { get; set; }
@@ -11,7 +17,15 @@ namespace Woofy.Core
     	public TaskStatus Status { get; set; }
     	public string CurrentUrl { get; set; }
 		public bool RandomPausesBetweenRequests { get; set; }
+
+		[JsonIgnore]
     	public ComicDefinition Definition { get; set; }
+
+#warning This should be merged with Status, once the whole thing is stable.
+		/// <summary>
+		/// Gets or sets whether the comic is active or not.
+		/// </summary>
+    	public bool IsActive { get; set; }
 
     	/// <summary>
 		/// Used for the Json.NET deserialization
@@ -34,6 +48,7 @@ namespace Woofy.Core
         {
             Name = name;
 			Definition = definition;
+			DefinitionFilename = definition.Filename;
             DownloadedComics = downloadedComics;
             DownloadFolder = downloadFolder;
             CurrentUrl = currentUrl;
@@ -41,10 +56,14 @@ namespace Woofy.Core
 			RandomPausesBetweenRequests = randomPausesBetweenRequests;
         }
 
-#warning: ensure that the definition's name can represent a valid download folder; i could try and sanitize the name before setting the download folder.
     	public Comic(ComicDefinition definition)
-			: this(definition.Name, definition, Path.GetFileNameWithoutExtension(definition.Filename), null)
     	{
+			Name = definition.Name;
+			Definition = definition;
+			DefinitionFilename = definition.Filename;
+#warning the download folder should be combined with the default download folder
+			DownloadFolder = Path.GetFileNameWithoutExtension(definition.Filename);
+			Status = TaskStatus.Running;
     	}
 
     	public override string ToString()

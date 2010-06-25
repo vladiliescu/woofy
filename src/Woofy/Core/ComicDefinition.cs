@@ -1,17 +1,14 @@
 using System.Collections.ObjectModel;
 using System.Xml;
 using System.IO;
-using Newtonsoft.Json;
 
 namespace Woofy.Core
 {
-	[JsonObject(MemberSerialization = MemberSerialization.OptIn)]
 	public class ComicDefinition
 	{
 		/// <summary>
-		/// Uniquely identifies a comic definition.
+		/// The definition's filename. It uniquely identifies a comic/definition.
 		/// </summary>
-		[JsonProperty]
 		public string Filename { get; private set; }
 
 		public string Name { get; private set; }
@@ -43,7 +40,7 @@ namespace Woofy.Core
 		/// Initializes a new instance of the <see cref="ComicDefinition"/> class.
 		/// </summary>
 		/// <param name="definitionStream">Stream containing the data necessary to create a new instance.</param>
-		public ComicDefinition(Stream definitionStream, string filename)
+		public ComicDefinition(string filename, Stream definitionStream)
 		{
 			Filename = filename;
 			var doc = new XmlDocument();
@@ -83,7 +80,7 @@ namespace Woofy.Core
 			return new Capture(captureNode.Attributes["name"].Value, captureNode.InnerText, CaptureTarget.Body);
 		}
 
-		private string ExtractInnerText(XmlNode comicInfo, string xpath)
+		private static string ExtractInnerText(XmlNode comicInfo, string xpath)
 		{
 			var node = comicInfo.SelectSingleNode(xpath);
 			return node == null ? null : node.InnerText;
@@ -92,36 +89,6 @@ namespace Woofy.Core
 		public override string ToString()
 		{
 			return Name;
-		}
-
-		public bool Equals(ComicDefinition other)
-		{
-			if (ReferenceEquals(null, other)) return false;
-			if (ReferenceEquals(this, other)) return true;
-			return Equals(other.Filename, Filename);
-		}
-
-		public override bool Equals(object obj)
-		{
-			if (ReferenceEquals(null, obj)) return false;
-			if (ReferenceEquals(this, obj)) return true;
-			if (obj.GetType() != typeof (ComicDefinition)) return false;
-			return Equals((ComicDefinition) obj);
-		}
-
-		public override int GetHashCode()
-		{
-			return (Filename != null ? Filename.GetHashCode() : 0);
-		}
-
-		public static bool operator ==(ComicDefinition left, ComicDefinition right)
-		{
-			return Equals(left, right);
-		}
-
-		public static bool operator !=(ComicDefinition left, ComicDefinition right)
-		{
-			return !Equals(left, right);
 		}
 	}
 }

@@ -26,7 +26,6 @@ namespace Woofy.Core
 
 	public interface IAppSettings
 	{
-		string VersionNumber { get; set; }
 		string UpdateDescriptionFileAddress { get; set; }
 		string ComicsFile { get; set; }
 		string UserSettingsFile { get; set; }
@@ -56,8 +55,6 @@ namespace Woofy.Core
 
 		public AppSettings()
 		{
-			VersionNumber = Assembly.GetAssembly(typeof(Program)).GetName().Version.ToString();
-
 			UpdateDescriptionFileAddress = "http://woofy.googlecode.com/hg/serve/updatesDescriptionFile.xml";
 			ComicsFile = BaseDirectory("comics.json");
 

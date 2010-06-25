@@ -150,12 +150,6 @@ namespace Woofy.Gui.Main
         #endregion
 
         #region Helper Methods
-        private void AddTask()
-        {
-            var taskDetails = new TaskDetailsForm(_tasksController);
-            taskDetails.ShowDialog();
-        }
-
         private void ToggleSelectedTasksState()
         {
             if (dgvwTasks.SelectedRows.Count == 0)
@@ -211,12 +205,7 @@ namespace Woofy.Gui.Main
 
         #region Events - Tool Strip Menus
 
-        private void toolStripMenuItemNewTask_Click(object sender, EventArgs e)
-        {
-            AddTask();
-        }
-
-        private void toolStripMenuItemPauseTask_Click(object sender, EventArgs e)
+       private void toolStripMenuItemPauseTask_Click(object sender, EventArgs e)
         {
             ToggleSelectedTasksState();
         }

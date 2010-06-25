@@ -50,7 +50,9 @@ namespace Woofy.Core
 		public ComicDefinition Retrieve(string definitionFileName)
 		{
 			var definitionFile = Path.IsPathRooted(definitionFileName) ? definitionFileName : Path.Combine(appSettings.ComicDefinitionsFolder, definitionFileName);
-			return new ComicDefinition(new FileStream(definitionFile, FileMode.Open, FileAccess.Read), Path.GetFileName(definitionFileName));
+			if (!File.Exists(definitionFile))
+				return null;
+			return new ComicDefinition(Path.GetFileName(definitionFile), new FileStream(definitionFile, FileMode.Open, FileAccess.Read));
 		}
 	}
 }

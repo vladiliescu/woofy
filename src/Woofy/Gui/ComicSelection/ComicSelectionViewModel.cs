@@ -4,10 +4,10 @@ namespace Woofy.Gui.ComicSelection
 {
 	public class ComicSelectionViewModel
 	{
-		public IList<DefinitionDto> AvailableComics { get; set; }
-		public IList<DefinitionDto> ActiveComics { get; set; }
+		public IList<ComicDto> AvailableComics { get; set; }
+		public IList<ComicDto> ActiveComics { get; set; }
 
-		public ComicSelectionViewModel(IList<DefinitionDto> availableComics, IList<DefinitionDto> activeComics)
+		public ComicSelectionViewModel(IList<ComicDto> availableComics, IList<ComicDto> activeComics)
 		{
 			AvailableComics = availableComics;
 			ActiveComics = activeComics;

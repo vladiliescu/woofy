@@ -32,7 +32,7 @@ namespace UnitTests
 	<renamePattern><![CDATA[rename pattern]]></renamePattern>
 </comicDefinition>
 ";
-			var definition = new ComicDefinition(new MemoryStream(Encoding.UTF8.GetBytes(comicInfoContent)), "comic.xml");
+			var definition = new ComicDefinition(new MemoryStream(Encoding.UTF8.GetBytes(comicInfoContent)));
             Assert.Equal("some comic name", definition.Name);
             Assert.Equal(true, definition.AllowMultipleStrips);
             Assert.Equal(false, definition.AllowMissingStrips);
@@ -60,7 +60,7 @@ namespace UnitTests
     <backButtonRegex><![CDATA[some back button regex]]></backButtonRegex>    
 </comicInfo>
 ";
-            var definition = new ComicDefinition(new MemoryStream(Encoding.UTF8.GetBytes(comicInfoContent)), "comic.xml");
+            var definition = new ComicDefinition(new MemoryStream(Encoding.UTF8.GetBytes(comicInfoContent)));
             Assert.Equal("some friendly name", definition.Name);
             Assert.Equal(false, definition.AllowMultipleStrips);
             Assert.Equal(false, definition.AllowMissingStrips);
@@ -83,7 +83,7 @@ namespace UnitTests
     <backButtonRegex><![CDATA[some back button regex]]></backButtonRegex>
 </comicInfo>
 ";
-			Assert.Throws<Exception>(() => new ComicDefinition(new MemoryStream(Encoding.UTF8.GetBytes(comicInfoContent)), "comic.xml"));
+			Assert.Throws<Exception>(() => new ComicDefinition(new MemoryStream(Encoding.UTF8.GetBytes(comicInfoContent))));
         }
 
 		[Fact(Skip = "skipped until the new definition format is stable")]
@@ -96,7 +96,7 @@ namespace UnitTests
     <backButtonRegex><![CDATA[some back button regex]]></backButtonRegex>
 </comicInfo>
 ";
-			Assert.Throws<MissingFriendlyNameException>(() => new ComicDefinition(new MemoryStream(Encoding.UTF8.GetBytes(comicInfoContent)), "comic.xml"));
+			Assert.Throws<MissingFriendlyNameException>(() => new ComicDefinition(new MemoryStream(Encoding.UTF8.GetBytes(comicInfoContent))));
         }
     }
 }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
@@ -5,7 +6,6 @@ using System.Linq;
 
 namespace Woofy.Core
 {
-#warning I think I should have the ComicStorage class support the "available" (i.e. not selected) comics, for consistency purposes
 	public interface IComicStorage
 	{
 		void Add(Comic comic);
@@ -13,9 +13,8 @@ namespace Woofy.Core
 		void Delete(Comic comic);
 
 		IList<Comic> RetrieveActiveComics();
-
-		IList<Comic> RetrieveActiveTasksByComicInfoFile(string comicInfoFile);
 		void ReplaceWith(IList<Comic> comics);
+		IList<Comic> RetrieveAllComics();
 	}
 
 	public class ComicStorage : IComicStorage
@@ -32,12 +31,41 @@ namespace Woofy.Core
 			InitializeComicsCache();
 		}
 
-		public void InitializeComicsCache()
+		private void InitializeComicsCache()
 		{
+			comicsCache = new List<Comic>();
+
 			EnsureFileExists(appSettings.ComicsFile);
+			var comics = ReadSerializedComics();
+			var definitions = definitionStorage.RetrieveAll();
+
+			foreach (var comic in comics)
+			{
+				var comicIsSerializedAndHasADefinition = definitions.FirstOrDefault(x => x.Filename == comic.DefinitionFilename) != null;
+				if (!comicIsSerializedAndHasADefinition)
+					continue;
+				
+				comicsCache.Add(comic);
+			}
+
+			foreach (var definition in definitions)
+			{
+				var comicIsNotSerializedAndHasADefinition = comics.FirstOrDefault(x => x.DefinitionFilename == definition.Filename) == null;
+				if (!comicIsNotSerializedAndHasADefinition)
+					continue;
+
+				comicsCache.Add(new Comic(definition));
+			}
+
+			PersistComics();
+		}
+
+		private IList<Comic> ReadSerializedComics()
+		{
 			var json = File.ReadAllText(appSettings.ComicsFile);
-			comicsCache = JsonConvert.DeserializeObject<List<Comic>>(json) ?? new List<Comic>();
-			comicsCache.ForEach(x => x.Definition = definitionStorage.Retrieve(x.Definition.Filename));
+			var comics = JsonConvert.DeserializeObject<List<Comic>>(json) ?? new List<Comic>();
+			comics.ForEach(x => x.Definition = x.DefinitionFilename != null ? definitionStorage.Retrieve(x.DefinitionFilename) : null);
+			return comics;
 		}
 
 		public void Add(Comic comic)
@@ -63,21 +91,14 @@ namespace Woofy.Core
 			PersistComics();
 		}
 
+		public IList<Comic> RetrieveAllComics()
+		{
+			throw new NotImplementedException();
+		}
+
 		public IList<Comic> RetrieveActiveComics()
 		{
 			return new List<Comic>(comicsCache);
-		}
-
-		public IList<Comic> RetrieveActiveTasksByComicInfoFile(string comicInfoFile)
-		{
-			var tasks = new List<Comic>();
-			foreach (var task in comicsCache)
-			{
-				if (task.Definition.Filename == comicInfoFile)
-					tasks.Add(task);
-			}
-
-			return tasks;
 		}
 
 		private void PersistComics()

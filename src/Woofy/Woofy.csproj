@@ -80,7 +80,7 @@
     <Compile Include="Gui\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Gui\ComicSelection\DefinitionDto.cs" />
+    <Compile Include="Gui\ComicSelection\ComicDto.cs" />
     <Compile Include="Gui\ComicSelection\ComicSelectionController.cs" />
     <Compile Include="Gui\ComicSelection\ComicSelectionForm.cs">
       <SubType>Form</SubType>
@@ -141,12 +141,6 @@
     <Compile Include="Gui\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\TaskDetailsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Gui\TaskDetailsForm.Designer.cs">
-      <DependentUpon>TaskDetailsForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Gui\AboutForm.resx">
@@ -160,10 +154,6 @@
     <EmbeddedResource Include="Gui\SettingsForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>SettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Gui\TaskDetailsForm.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>TaskDetailsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
