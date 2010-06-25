@@ -91,6 +91,7 @@
     <Compile Include="Gui\ComicSelection\ComicSelectionInputModel.cs" />
     <Compile Include="Gui\ComicSelection\ComicSelectionViewModel.cs" />
     <Compile Include="Core\DefinitionStorage.cs" />
+    <Compile Include="Gui\Main\MainController.cs" />
     <Compile Include="Settings\UserSettingsData.cs" />
     <Compile Include="EventArgs\DownloadCompletedEventArgs.cs" />
     <Compile Include="EventArgs\DownloadedFileChunkEventArgs.cs" />
@@ -102,7 +103,7 @@
     <Compile Include="Core\ComicDefinition.cs" />
     <Compile Include="Core\ComicsProvider.cs" />
     <Compile Include="Core\Comic.cs" />
-    <Compile Include="Core\ComicTaskController.cs" />
+    <Compile Include="Gui\Main\ComicTaskController.cs" />
     <Compile Include="Core\Logger.cs" />
     <Compile Include="Core\WebConnectionFactory.cs" />
     <Compile Include="Core\WebPath.cs" />
@@ -128,10 +129,10 @@
     <Compile Include="Gui\DownloadProgressForm.Designer.cs">
       <DependentUpon>DownloadProgressForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\MainForm.cs">
+    <Compile Include="Gui\Main\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Gui\MainForm.Designer.cs">
+    <Compile Include="Gui\Main\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Gui\SettingsForm.cs">
@@ -152,7 +153,7 @@
       <SubType>Designer</SubType>
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gui\MainForm.resx">
+    <EmbeddedResource Include="Gui\Main\MainForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>

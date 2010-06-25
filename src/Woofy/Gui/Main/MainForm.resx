@@ -133,7 +133,7 @@
     <value>131, 17</value>
   </metadata>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="toolStripButtonAddTask.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="toolStripButtonSelectComics.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
         YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAnJJREFUOE+tk+9L
@@ -166,23 +166,6 @@
         gfEBHF5P02P3C/UeP/p3kWr/AOv5ZNBn7/e8lWbnIxRLKKwnqDkYlWnMu0CP+B7pTtfIv6vc+Jlu9ERt
         7c/GhA5nr8jzvNzZxcsPO9xi69Nh4bIj9P/P1PizUBcaiw5jzlW3sLtazQ2APx86paIB+gGzAAAAAElF
         TkSuQmCC
-</value>
-  </data>
-  <data name="toolStripButtonDeleteTask.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAldJREFUOE+tk+tL
-        U3EYx/1bZhEskKB8UYRQkbSLzl3aXNs8yamDmxmLMM2xM0wzqGHMRS/CWbqumg1imhlEpiaYo4tDpbNi
-        aju1UWu6s2vKtznIS01fRA98Xz6f7+/3fZ4nL+9/12xNTb7fYDB/pCjGRxDRDxnNEDpmitSYJytU+Vv6
-        zVdXyxmDgf1ub0Vy+DlSkxNIvR4B5+7GnJHCuwo569FK5DkhK82+qipusbcby74ZpAcfIe20Ie24gp8P
-        2rE0NoigyYhRqZgbVxdvhMzq9TwfRQWi95xYZrxI37iEiM2ChdYGJK9ZkGqjkbSeQ7L/PuZPkxiTHw4M
-        yw7xVl/i1+vpUJMZS15P1jFhpxG+XIt486kNip4nkXTdxltJEV4qiuhVwKdMYDHXHaR7HIhY6/CNUOTU
-        Yh0JrrURQUs9Xkj3MasAL0nGU09dSNstiFw0YrMKqksQNlRgwXEdA8X8+DoAEU/0dCLZYkT8QtWWgBCl
-        xUL7H4BpopwJWxuRsNGIntVhxSmnNBJEmkyYM9ViUFiw7guEimaUIsR7uhA5oUSYkv0FYMvFYI/JEHPe
-        xEjZHgwI+Wshvq+U8d7o5IH56krEHnZmAwxpy7IQVl0KVplpVpaB6+rA1HEF+gT8gFu0fW2MK2F41GL5
-        qFTA+U9qEbvbiR8tNIKkBl90aoSbzeBudWBaJ0WvkMf1CXbk3saxzIa9OnqQnZDtx9eGWoTbrmb1uf4M
-        hkp247FwJ7tp8++RjKgO5A9J9pqfSQsZt7Aw6hbuirpLC5gnIr65/8i2rY/pXy77F2T90omsNdHSAAAA
-        AElFTkSuQmCC
 </value>
   </data>
   <metadata name="notifyIcon.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">

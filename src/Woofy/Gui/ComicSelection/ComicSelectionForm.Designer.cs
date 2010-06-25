@@ -51,11 +51,12 @@
 			this.lvwAvailableComics.Location = new System.Drawing.Point(12, 12);
 			this.lvwAvailableComics.Name = "lvwAvailableComics";
 			this.lvwAvailableComics.ShowItemToolTips = true;
-			this.lvwAvailableComics.Size = new System.Drawing.Size(278, 262);
+			this.lvwAvailableComics.Size = new System.Drawing.Size(237, 262);
 			this.lvwAvailableComics.Sorting = System.Windows.Forms.SortOrder.Ascending;
 			this.lvwAvailableComics.TabIndex = 1;
 			this.lvwAvailableComics.UseCompatibleStateImageBehavior = false;
 			this.lvwAvailableComics.View = System.Windows.Forms.View.Details;
+			this.lvwAvailableComics.DoubleClick += new System.EventHandler(this.OnActivateComic);
 			// 
 			// chAvailableComics
 			// 
@@ -71,14 +72,15 @@
 			this.lvwActiveComics.FullRowSelect = true;
 			this.lvwActiveComics.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
 			this.lvwActiveComics.HideSelection = false;
-			this.lvwActiveComics.Location = new System.Drawing.Point(343, 12);
+			this.lvwActiveComics.Location = new System.Drawing.Point(302, 12);
 			this.lvwActiveComics.Name = "lvwActiveComics";
 			this.lvwActiveComics.ShowItemToolTips = true;
-			this.lvwActiveComics.Size = new System.Drawing.Size(277, 262);
+			this.lvwActiveComics.Size = new System.Drawing.Size(230, 262);
 			this.lvwActiveComics.Sorting = System.Windows.Forms.SortOrder.Ascending;
 			this.lvwActiveComics.TabIndex = 2;
 			this.lvwActiveComics.UseCompatibleStateImageBehavior = false;
 			this.lvwActiveComics.View = System.Windows.Forms.View.Details;
+			this.lvwActiveComics.DoubleClick += new System.EventHandler(this.OnDeactivateComic);
 			// 
 			// chActiveComics
 			// 
@@ -86,7 +88,7 @@
 			// 
 			// btnActivateComic
 			// 
-			this.btnActivateComic.Location = new System.Drawing.Point(296, 123);
+			this.btnActivateComic.Location = new System.Drawing.Point(255, 133);
 			this.btnActivateComic.Name = "btnActivateComic";
 			this.btnActivateComic.Size = new System.Drawing.Size(41, 23);
 			this.btnActivateComic.TabIndex = 3;
@@ -96,7 +98,7 @@
 			// 
 			// btnDeactivateComic
 			// 
-			this.btnDeactivateComic.Location = new System.Drawing.Point(296, 152);
+			this.btnDeactivateComic.Location = new System.Drawing.Point(255, 162);
 			this.btnDeactivateComic.Name = "btnDeactivateComic";
 			this.btnDeactivateComic.Size = new System.Drawing.Size(41, 23);
 			this.btnDeactivateComic.TabIndex = 4;
@@ -108,7 +110,7 @@
 			// 
 			this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.btnOK.Location = new System.Drawing.Point(463, 280);
+			this.btnOK.Location = new System.Drawing.Point(375, 280);
 			this.btnOK.Name = "btnOK";
 			this.btnOK.Size = new System.Drawing.Size(75, 23);
 			this.btnOK.TabIndex = 5;
@@ -120,7 +122,7 @@
 			// 
 			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.btnCancel.Location = new System.Drawing.Point(545, 280);
+			this.btnCancel.Location = new System.Drawing.Point(457, 280);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(75, 23);
 			this.btnCancel.TabIndex = 6;
@@ -134,7 +136,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.btnCancel;
-			this.ClientSize = new System.Drawing.Size(632, 315);
+			this.ClientSize = new System.Drawing.Size(544, 315);
 			this.Controls.Add(this.btnCancel);
 			this.Controls.Add(this.btnOK);
 			this.Controls.Add(this.btnDeactivateComic);

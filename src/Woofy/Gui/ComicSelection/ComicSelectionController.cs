@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Windows.Forms;
 using Woofy.Core;
 using System.Linq;
 
@@ -8,6 +10,7 @@ namespace Woofy.Gui.ComicSelection
 	{
 		ComicSelectionViewModel LoadComics();
 		void UpdateActiveComics(ComicSelectionInputModel inputModel);
+		DialogResult DisplayComicSelectionForm();
 	}
 
 	public class ComicSelectionController : IComicSelectionController
@@ -23,7 +26,7 @@ namespace Woofy.Gui.ComicSelection
 
 		public ComicSelectionViewModel LoadComics()
 		{
-			var comics = comicStorage.RetrieveAll();
+			var comics = comicStorage.RetrieveActiveComics();
 			var definitions = definitionStorage.RetrieveAll();
 			var availableComics = new List<DefinitionDto>();
 			var activeComics = new List<DefinitionDto>();
@@ -50,6 +53,14 @@ namespace Woofy.Gui.ComicSelection
 			}
 
 			comicStorage.ReplaceWith(comics);
+		}
+
+		public DialogResult DisplayComicSelectionForm()
+		{
+			using (var form = new ComicSelectionForm(this))
+			{
+				return form.ShowDialog();
+			}
 		}
 	}
 }

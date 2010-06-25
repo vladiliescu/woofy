@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
@@ -6,17 +5,14 @@ using System.Linq;
 
 namespace Woofy.Core
 {
+#warning I think I should have the ComicStorage class support the "available" (i.e. not selected) comics, for consistency purposes
 	public interface IComicStorage
 	{
 		void Add(Comic comic);
 		void Update(Comic comic);
 		void Delete(Comic comic);
 
-		/// <summary>
-		/// Returns a list with all the tasks in the database
-		/// </summary>
-		/// <returns></returns>
-		IList<Comic> RetrieveAll();
+		IList<Comic> RetrieveActiveComics();
 
 		IList<Comic> RetrieveActiveTasksByComicInfoFile(string comicInfoFile);
 		void ReplaceWith(IList<Comic> comics);
@@ -67,11 +63,7 @@ namespace Woofy.Core
 			PersistComics();
 		}
 
-		/// <summary>
-		/// Returns a list with all the tasks in the database
-		/// </summary>
-		/// <returns></returns>
-		public IList<Comic> RetrieveAll()
+		public IList<Comic> RetrieveActiveComics()
 		{
 			return new List<Comic>(comicsCache);
 		}

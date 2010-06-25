@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using System.IO;
 using Woofy.Core;
 using Woofy.Core.Infrastructure;
+using Woofy.Gui.Main;
 using Woofy.Settings;
 
 namespace Woofy.Gui

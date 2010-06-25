@@ -2,31 +2,28 @@ using System;
 using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
-
 using Woofy.Core;
 using Woofy.Properties;
 using Woofy.Settings;
 using Woofy.Updates;
 
-namespace Woofy.Gui
+namespace Woofy.Gui.Main
 {
     public partial class MainForm : BaseForm
     {
-        #region .ctor
-        public MainForm()
+    	readonly ComicTasksController _tasksController;
+		readonly IMainController controller;
+
+    	public MainForm(IMainController controller)
         {
             InitializeComponent();
 
             _tasksController = new ComicTasksController(dgvwTasks);
+    		this.controller = controller;
+			this.controller.TasksController = _tasksController;
         }
-        #endregion
 
-        #region Instance Members
-        private readonly ComicTasksController _tasksController;
-        #endregion
-
-        #region Events - Form
-        private void MainForm_Load(object sender, EventArgs e)
+    	private void MainForm_Load(object sender, EventArgs e)
         {
             InitControls();
 
@@ -43,7 +40,7 @@ namespace Woofy.Gui
             if (WindowState == FormWindowState.Minimized)
                 Hide();
         }
-        #endregion
+
 
         #region Events - dgvwTasks
         private void dgvwTasks_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -125,12 +122,10 @@ namespace Woofy.Gui
             if (dgvwTasks.SelectedRows.Count == 0)
             {
                 toolStripButtonPauseTask.Enabled = false;
-                toolStripButtonDeleteTask.Enabled = false;
                 toolStripButtonOpenFolder.Enabled = false;
                 return;
             }
             toolStripButtonPauseTask.Enabled = true;
-            toolStripButtonDeleteTask.Enabled = true;
             toolStripButtonOpenFolder.Enabled = true;
 
             var task = (Comic)dgvwTasks.SelectedRows[0].DataBoundItem;
@@ -154,58 +149,11 @@ namespace Woofy.Gui
         }
         #endregion
 
-        #region Initialization Methods
-        private void InitControls()
-        {
-            var appIcon = new Icon(typeof(Program), "Woofy.ico");
-
-            Icon = 
-                notifyIcon.Icon = appIcon;
-
-            _tasksController.Initialize();
-
-            dgvwTasks.AutoGenerateColumns = false;
-            dgvwTasks.DataSource = _tasksController.Tasks;
-
-            var splitButton = new ToolStripSplitButton("About..", Resources.About);
-			splitButton.ButtonClick += About_Click;
-			splitButton.DropDown.Items.Add("Debug comic definitions..", Resources.DebugDefinitions, DebugDefinitions_Click);
-			splitButton.DropDown.Items.Add(new ToolStripSeparator());
-			splitButton.DropDown.Items.Add("Check for updates", Resources.CheckForUpdates, CheckForUpdates_Click);
-            splitButton.DropDown.Items.Add("About..", Resources.About, About_Click);
-			splitButton.DropDown.Items.Add(new ToolStripSeparator());
-			splitButton.DropDown.Items.Add("vladiliescu.ro", Resources.vladiliescu_ro, OnHomePageClick);
-            splitButton.Alignment = ToolStripItemAlignment.Right;
-
-            toolStrip.Items.Insert(0, splitButton);
-        }
-
-    	#endregion
-
         #region Helper Methods
         private void AddTask()
         {
             var taskDetails = new TaskDetailsForm(_tasksController);
             taskDetails.ShowDialog();
-        }
-
-        private void DeleteSelectedTasks()
-        {
-            if (dgvwTasks.SelectedRows.Count == 0)
-                return;
-
-            string message = dgvwTasks.SelectedRows.Count > 1 ?
-                "Are you sure you want to delete the selected tasks?" :
-                "Are you sure you want to delete the selected task?";
-
-            if (MessageBox.Show(message, Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
-                return;
-
-            foreach (DataGridViewRow selectedRow in dgvwTasks.SelectedRows)
-            {
-                var task = (Comic)selectedRow.DataBoundItem;
-                _tasksController.DeleteTask(task);
-            }
         }
 
         private void ToggleSelectedTasksState()
@@ -273,11 +221,6 @@ namespace Woofy.Gui
             ToggleSelectedTasksState();
         }
 
-        private void toolStripMenuItemDeleteTask_Click(object sender, EventArgs e)
-        {
-            DeleteSelectedTasks();
-        }
-
         private void toolStripMenuItemOpenTaskFolder_Click(object sender, EventArgs e)
         {
             OpenSelectedTaskFolder();
@@ -285,19 +228,14 @@ namespace Woofy.Gui
         #endregion
 
         #region Events - Tool Strip Buttons
-        private void toolStripButtonAddTask_Click(object sender, EventArgs e)
+        private void OnSelectComics(object sender, EventArgs e)
         {
-            AddTask();
+			controller.DisplayComicSelectionForm();
         }
 
         private void toolStripButtonPauseTask_Click(object sender, EventArgs e)
         {
             ToggleSelectedTasksState();
-        }
-
-        private void toolStripButtonDeleteTask_Click(object sender, EventArgs e)
-        {
-            DeleteSelectedTasks();
         }
 
         private void toolStripButtonOpenFolder_Click(object sender, EventArgs e)
@@ -419,5 +357,29 @@ namespace Woofy.Gui
             return result;
         }
         #endregion        
+
+		void InitControls()
+		{
+			var appIcon = new Icon(typeof(Program), "Woofy.ico");
+			Icon = 
+				notifyIcon.Icon = appIcon;
+
+			_tasksController.Initialize();
+
+			dgvwTasks.AutoGenerateColumns = false;
+			dgvwTasks.DataSource = _tasksController.Tasks;
+
+			var splitButton = new ToolStripSplitButton("About..", Resources.About);
+			splitButton.ButtonClick += About_Click;
+			splitButton.DropDown.Items.Add("Debug comic definitions..", Resources.DebugDefinitions, DebugDefinitions_Click);
+			splitButton.DropDown.Items.Add(new ToolStripSeparator());
+			splitButton.DropDown.Items.Add("Check for updates", Resources.CheckForUpdates, CheckForUpdates_Click);
+			splitButton.DropDown.Items.Add("About..", Resources.About, About_Click);
+			splitButton.DropDown.Items.Add(new ToolStripSeparator());
+			splitButton.DropDown.Items.Add("vladiliescu.ro", Resources.vladiliescu_ro, OnHomePageClick);
+			splitButton.Alignment = ToolStripItemAlignment.Right;
+
+			toolStrip.Items.Insert(0, splitButton);
+		}
     }
 }

@@ -4,17 +4,17 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using Woofy.Core;
 using Woofy.Core.Infrastructure;
 using Woofy.Settings;
 
-namespace Woofy.Core
+namespace Woofy.Gui.Main
 {
     public class ComicTasksController
     {
         readonly List<ComicsProvider> comicProviders = new List<ComicsProvider>();
         readonly DataGridView tasksGrid;
 		readonly IComicStorage comicStorage = ContainerAccesor.Container.Resolve<IComicStorage>();
-		readonly IDefinitionStorage definitionStorage = ContainerAccesor.Resolve<IDefinitionStorage>();
 
     	public BindingList<Comic> Tasks { get; private set; }
 
@@ -25,7 +25,7 @@ namespace Woofy.Core
     
 		public void Initialize()
         {
-            Tasks = new BindingList<Comic>(comicStorage.RetrieveAll());
+            Tasks = new BindingList<Comic>(comicStorage.RetrieveActiveComics());
 
             foreach (var comic in Tasks)
             {
@@ -39,8 +39,8 @@ namespace Woofy.Core
         /// <returns>True if the comic has been added successfully, false otherwise.</returns>
         public bool AddNewTask(Comic comic)
         {
-            if (comicStorage.RetrieveActiveTasksByComicInfoFile(comic.Definition.Filename).Count > 0)
-                return false;
+			//if (comicStorage.RetrieveActiveTasksByComicInfoFile(comic.Definition.Filename).Count > 0)
+			//    return false;
 
             comicStorage.Add(comic);
             Tasks.Add(comic);
