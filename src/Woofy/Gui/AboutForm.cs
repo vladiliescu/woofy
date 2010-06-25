@@ -3,12 +3,14 @@ using System.Windows.Forms;
 using System.Diagnostics;
 
 using Woofy.Core;
+using Woofy.Core.Infrastructure;
 
 namespace Woofy.Gui
 {
     partial class AboutForm : Form
     {
-		private readonly IApplicationInfo applicationInfo = new ApplicationInfo();
+		readonly IApplicationInfo applicationInfo = ContainerAccesor.Resolve<IApplicationInfo>();
+		readonly IDefinitionStorage definitionStorage = ContainerAccesor.Resolve<IDefinitionStorage>();
 
         public AboutForm()
         {
@@ -64,7 +66,7 @@ namespace Woofy.Gui
 
     	private void InitComicDefinitionsList()
     	{
-    		var comicDefinitions = ComicDefinition.GetAvailableComicDefinitions();
+			var comicDefinitions = definitionStorage.RetrieveAll();
     		foreach (var comicDefinition in comicDefinitions)
     		{
 				var author = comicDefinition.Author.IsNotNullOrEmpty() ? comicDefinition.Author : "unknown";

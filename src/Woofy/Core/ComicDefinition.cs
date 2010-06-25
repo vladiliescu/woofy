@@ -1,13 +1,19 @@
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Xml;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace Woofy.Core
 {
+	[JsonObject(MemberSerialization = MemberSerialization.OptIn)]
 	public class ComicDefinition
 	{
+		/// <summary>
+		/// Uniquely identifies a comic definition.
+		/// </summary>
+		[JsonProperty]
+		public string Filename { get; private set; }
+
 		public string Name { get; private set; }
 		public string HomePage { get; private set; }
 
@@ -24,18 +30,24 @@ namespace Woofy.Core
 		public string RenamePattern { get; private set; }
 
 		public string Author { get; private set; }
-		
-		public bool FailedToInitialize { get; private set; }
-		public string ComicInfoFile { get; private set; }
 
+		/// <summary>
+		/// Used for the json deserialization
+		/// </summary>
+		public ComicDefinition()
+		{
+		}
+
+#warning another service should be responsible for parsing the definition - this way it would be much easier to add alternative definition formats (e.g. json)
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ComicDefinition"/> class.
 		/// </summary>
-		/// <param name="comicInfoStream">Stream containing the data necessary to create a new instance.</param>
-		public ComicDefinition(Stream comicInfoStream)
+		/// <param name="definitionStream">Stream containing the data necessary to create a new instance.</param>
+		public ComicDefinition(Stream definitionStream, string filename)
 		{
+			Filename = filename;
 			var doc = new XmlDocument();
-			doc.Load(comicInfoStream);
+			doc.Load(definitionStream);
 			var definition = doc.SelectSingleNode("comicDefinition");
 
 			Name = definition.Attributes["name"].Value;
@@ -57,55 +69,6 @@ namespace Woofy.Core
 			{
 				Captures.Add(BuildCapture(captureNode));
 			}
-		}
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="ComicDefinition"/> class.
-		/// </summary>
-		/// <param name="comicInfoFile">Path to an xml file containing the data necessary to create a new instance.</param>
-		public ComicDefinition(string comicInfoFile)
-			: this(new FileStream(comicInfoFile, FileMode.Open, FileAccess.Read))
-		{
-			ComicInfoFile = comicInfoFile;
-		}
-
-		public ComicDefinition()
-		{
-		}
-
-		/// <summary>
-		/// Returns the available comic info files.
-		/// </summary>
-		public static ComicDefinition[] GetAvailableComicDefinitions()
-		{
-			var availableComicInfos = new List<ComicDefinition>();
-
-			if (!Directory.Exists(AppSettingsOld.ComicDefinitionsFolder))
-				return new ComicDefinition[0];
-
-			foreach (var comicInfoFile in Directory.GetFiles(AppSettingsOld.ComicDefinitionsFolder, "*.xml"))
-			{
-				ComicDefinition definition;
-				try
-				{
-					definition = new ComicDefinition(comicInfoFile);
-				}
-				catch (Exception ex)
-				{
-					Logger.LogException("Error initializing definition " + comicInfoFile, ex);
-
-					definition = new ComicDefinition
-					{
-						ComicInfoFile = comicInfoFile,
-						Name = string.Format("--- Failed to initialize definition {0} ---", Path.GetFileName(comicInfoFile)),
-						FailedToInitialize = true
-					};
-				}
-
-				availableComicInfos.Add(definition);
-			}
-
-			return availableComicInfos.ToArray();
 		}
 
 		private Capture BuildCapture(XmlNode captureNode)
@@ -135,7 +98,7 @@ namespace Woofy.Core
 		{
 			if (ReferenceEquals(null, other)) return false;
 			if (ReferenceEquals(this, other)) return true;
-			return Equals(other.ComicInfoFile, ComicInfoFile);
+			return Equals(other.Filename, Filename);
 		}
 
 		public override bool Equals(object obj)
@@ -148,7 +111,7 @@ namespace Woofy.Core
 
 		public override int GetHashCode()
 		{
-			return (ComicInfoFile != null ? ComicInfoFile.GetHashCode() : 0);
+			return (Filename != null ? Filename.GetHashCode() : 0);
 		}
 
 		public static bool operator ==(ComicDefinition left, ComicDefinition right)

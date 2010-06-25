@@ -2,15 +2,15 @@ using System;
 using System.Windows.Forms;
 using System.IO;
 using Woofy.Core;
+using Woofy.Core.Infrastructure;
 using Woofy.Settings;
 
 namespace Woofy.Gui
 {
     public partial class TaskDetailsForm : Form
     {
-        #region Instance Members
         private readonly ComicTasksController tasksController;
-        #endregion
+		readonly IDefinitionStorage definitionStorage = ContainerAccesor.Resolve<IDefinitionStorage>();
 
         #region .ctor
         public TaskDetailsForm(ComicTasksController tasksController)
@@ -28,14 +28,14 @@ namespace Woofy.Gui
         {
 			ShowOrHideAdvancedOptions(UserSettings.ShowAdvancedComicOptions);
 
-            cbComics.DataSource = ComicDefinition.GetAvailableComicDefinitions();
+			cbComics.DataSource = definitionStorage.RetrieveAll();
 
             if (!string.IsNullOrEmpty(UserSettings.LastUsedComicDefinitionFile))
             {
                 int i = 0;
                 foreach (ComicDefinition comicInfo in cbComics.Items)
                 {
-                    if (comicInfo.ComicInfoFile.Equals(UserSettings.LastUsedComicDefinitionFile, StringComparison.OrdinalIgnoreCase))
+                    if (comicInfo.Filename.Equals(UserSettings.LastUsedComicDefinitionFile, StringComparison.OrdinalIgnoreCase))
                     {
                         cbComics.SelectedIndex = i;
                         break;
@@ -69,7 +69,7 @@ namespace Woofy.Gui
             string downloadFolder = txtDownloadFolder.Text;
             string startUrl = chkOverrideStartUrl.Checked ? txtOverrideStartUrl.Text : comicInfo.HomePage;
 
-            var task = new Comic(comicInfo.Name, comicInfo.ComicInfoFile, downloadFolder, startUrl, chkRandomPauses.Checked);
+            var task = new Comic(comicInfo.Name, comicInfo, downloadFolder, startUrl, chkRandomPauses.Checked);
             bool taskAdded = tasksController.AddNewTask(task);
 
             if (!taskAdded)
@@ -110,7 +110,7 @@ namespace Woofy.Gui
         #region Helper Methods
         private void UpdateUserSettings()
         {
-            UserSettings.LastUsedComicDefinitionFile = ((ComicDefinition)cbComics.SelectedValue).ComicInfoFile;
+            UserSettings.LastUsedComicDefinitionFile = ((ComicDefinition)cbComics.SelectedValue).Filename;
 			UserSettings.ShowAdvancedComicOptions = chkAdvancedOptions.Checked;
 
             if (rbDownloadOnlyNew.Checked)

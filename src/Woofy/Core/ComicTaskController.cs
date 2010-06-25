@@ -11,9 +11,10 @@ namespace Woofy.Core
 {
     public class ComicTasksController
     {
-        private readonly List<ComicsProvider> comicProviders = new List<ComicsProvider>();
-        private readonly DataGridView tasksGrid;
-		private readonly IComicStorage comicStorage = ContainerAccesor.Container.Resolve<IComicStorage>();
+        readonly List<ComicsProvider> comicProviders = new List<ComicsProvider>();
+        readonly DataGridView tasksGrid;
+		readonly IComicStorage comicStorage = ContainerAccesor.Container.Resolve<IComicStorage>();
+		readonly IDefinitionStorage definitionStorage = ContainerAccesor.Resolve<IDefinitionStorage>();
 
     	public BindingList<Comic> Tasks { get; private set; }
 
@@ -38,7 +39,7 @@ namespace Woofy.Core
         /// <returns>True if the comic has been added successfully, false otherwise.</returns>
         public bool AddNewTask(Comic comic)
         {
-            if (comicStorage.RetrieveActiveTasksByComicInfoFile(comic.ComicInfoFile).Count > 0)
+            if (comicStorage.RetrieveActiveTasksByComicInfoFile(comic.Definition.Filename).Count > 0)
                 return false;
 
             comicStorage.Add(comic);
@@ -137,9 +138,7 @@ namespace Woofy.Core
 
         private void AddComicsProviderAndStartDownload(Comic task)
         {
-            var comicInfo = new ComicDefinition(task.ComicInfoFile);
-
-            var comicsProvider = new ComicsProvider(comicInfo, task.DownloadFolder, task.RandomPausesBetweenRequests);
+            var comicsProvider = new ComicsProvider(task.Definition, task.DownloadFolder, task.RandomPausesBetweenRequests);
             comicProviders.Add(comicsProvider);
 
             comicsProvider.DownloadComicCompleted += DownloadComicCompletedCallback;

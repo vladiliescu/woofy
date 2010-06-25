@@ -7,6 +7,13 @@ namespace Woofy.Core
 	public interface IDefinitionStorage
 	{
 		IList<ComicDefinition> RetrieveAll();
+		
+		/// <summary>
+		/// Returns a definition based on its filename.
+		/// </summary>
+		/// <param name="definitionFileName">The definition's filename (usually without path information).</param>
+		/// <returns></returns>
+		ComicDefinition Retrieve(string definitionFileName);
 	}
 
 	public class DefinitionStorage : IDefinitionStorage
@@ -29,8 +36,7 @@ namespace Woofy.Core
 			{
 				try
 				{
-					var definition = new ComicDefinition(definitionFile);
-					definitions.Add(definition);
+					definitions.Add(Retrieve(definitionFile));
 				}
 				catch (Exception ex)
 				{
@@ -39,6 +45,12 @@ namespace Woofy.Core
 			}
 
 			return definitions.ToArray();
+		}
+
+		public ComicDefinition Retrieve(string definitionFileName)
+		{
+			var definitionFile = Path.IsPathRooted(definitionFileName) ? definitionFileName : Path.Combine(appSettings.ComicDefinitionsFolder, definitionFileName);
+			return new ComicDefinition(new FileStream(definitionFile, FileMode.Open, FileAccess.Read), Path.GetFileName(definitionFileName));
 		}
 	}
 }

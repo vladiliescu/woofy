@@ -10,7 +10,7 @@ using Woofy.Updates;
 
 namespace Woofy.Gui
 {
-    public partial class MainForm : Form
+    public partial class MainForm : BaseForm
     {
         #region .ctor
         public MainForm()

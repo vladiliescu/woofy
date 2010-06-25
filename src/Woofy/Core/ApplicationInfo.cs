@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Reflection;
 
 namespace Woofy.Core
@@ -16,7 +14,7 @@ namespace Woofy.Core
 
 	public class ApplicationInfo : IApplicationInfo
 	{
-		private Assembly assembly = Assembly.GetExecutingAssembly();
+		private readonly Assembly assembly = Assembly.GetExecutingAssembly();
 		
 		public Version Version { get; private set; }
 		public string Title { get; private set; }

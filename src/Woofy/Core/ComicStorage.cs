@@ -26,10 +26,12 @@ namespace Woofy.Core
 	{
 		IList<Comic> comicsCache;
 		readonly IAppSettings appSettings;
+		readonly IDefinitionStorage definitionStorage;
 
-		public ComicStorage(IAppSettings appSettings)
+		public ComicStorage(IAppSettings appSettings, IDefinitionStorage definitionStorage)
 		{
 			this.appSettings = appSettings;
+			this.definitionStorage = definitionStorage;
 
 			InitializeComicsCache();
 		}
@@ -39,7 +41,7 @@ namespace Woofy.Core
 			EnsureFileExists(appSettings.ComicsFile);
 			var json = File.ReadAllText(appSettings.ComicsFile);
 			comicsCache = JsonConvert.DeserializeObject<List<Comic>>(json) ?? new List<Comic>();
-			comicsCache.ForEach(x => x.Definition = new ComicDefinition(x.ComicInfoFile));
+			comicsCache.ForEach(x => x.Definition = definitionStorage.Retrieve(x.Definition.Filename));
 		}
 
 		public void Add(Comic comic)
@@ -79,7 +81,7 @@ namespace Woofy.Core
 			var tasks = new List<Comic>();
 			foreach (var task in comicsCache)
 			{
-				if (task.ComicInfoFile == comicInfoFile)
+				if (task.Definition.Filename == comicInfoFile)
 					tasks.Add(task);
 			}
 

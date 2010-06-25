@@ -7,16 +7,17 @@ using System.Threading;
 using log4net.Core;
 
 using Woofy.Core;
+using Woofy.Core.Infrastructure;
 
 namespace Woofy.Gui
 {
     public partial class DefinitionsDebugForm : Form
     {
-        #region Instance Members
         private ComicsProvider comicsProvider;
         private string currentUrl;
         private TestMode currentMode = TestMode.StandBy;
-        #endregion
+		readonly IDefinitionStorage definitionStorage = ContainerAccesor.Resolve<IDefinitionStorage>();
+
 
         #region .ctor
         public DefinitionsDebugForm()
@@ -94,10 +95,10 @@ namespace Woofy.Gui
         #region Helper Methods
         private void InitControls()
         {
-            foreach (ComicDefinition comicDefinition in ComicDefinition.GetAvailableComicDefinitions())
+			foreach (ComicDefinition comicDefinition in definitionStorage.RetrieveAll())
             {
                 ListViewItem item = new ListViewItem(new string[] { comicDefinition.Name, comicDefinition.Author });
-                item.Tag = comicDefinition.ComicInfoFile;
+                item.Tag = comicDefinition.Filename;
 
                 comicDefinitionsList.Items.Add(item);
             }
@@ -151,7 +152,7 @@ namespace Woofy.Gui
             eventsRichTextBox.Focus();
 
             string selectedFile = (string)comicDefinitionsList.SelectedItems[0].Tag;
-            ComicDefinition comicDefinition = new ComicDefinition(selectedFile);
+            ComicDefinition comicDefinition = definitionStorage.Retrieve(selectedFile);
 
             string startupUrl;
             if (this.currentMode == TestMode.Paused)

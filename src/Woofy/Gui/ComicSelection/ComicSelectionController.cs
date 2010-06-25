@@ -46,7 +46,7 @@ namespace Woofy.Gui.ComicSelection
 			foreach (var definitionFile in inputModel.ActiveComicDefinitions)
 			{
 				//TODO: I could optimize this by maintaining a definition cache similar to the Comics one; this means that the definitions will not be reloaded each time though
-				comics.Add(new Comic(new ComicDefinition(definitionFile)));
+				comics.Add(new Comic(definitionStorage.Retrieve(definitionFile)));
 			}
 
 			comicStorage.ReplaceWith(comics);

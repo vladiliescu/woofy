@@ -10,7 +10,7 @@ namespace Woofy.Gui.ComicSelection
 		public DefinitionDto(ComicDefinition definition)
 		{
 			ComicName = definition.Name;
-			DefinitionFile = definition.ComicInfoFile;
+			DefinitionFile = definition.Filename;
 		}
 	}
 }
