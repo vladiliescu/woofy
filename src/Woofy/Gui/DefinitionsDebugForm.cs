@@ -153,7 +153,7 @@ namespace Woofy.Gui
             eventsRichTextBox.Focus();
 
             string selectedFile = (string)comicDefinitionsList.SelectedItems[0].Tag;
-            ComicDefinition comicDefinition = definitionStore.Retrieve(selectedFile);
+            ComicDefinition comicDefinition = definitionStore.FindByFilename(selectedFile);
 
             string startupUrl;
             if (this.currentMode == TestMode.Paused)

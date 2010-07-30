@@ -8,15 +8,12 @@ namespace Woofy.Core
 	public interface IComicStore
 	{
         Comic[] Comics { get; }
-		void Add(Comic comic);
-		void Update(Comic comic);
-		void Delete(Comic comic);
 	    void PersistComics();
+	    Comic FindByFilename(string definitionFilename);
 	}
 
 	public class ComicStore : IComicStore
 	{
-        private readonly IList<Comic> comics = new List<Comic>();
         public Comic[] Comics { get; private set; }
 		readonly IAppSettings appSettings;
 		readonly IDefinitionStore definitionStore;
@@ -26,14 +23,15 @@ namespace Woofy.Core
 			this.appSettings = appSettings;
 			this.definitionStore = definitionStore;
 
-			InitializeComicsCache();
+			InitializeComicCache();
 		}
 
-		private void InitializeComicsCache()
+		private void InitializeComicCache()
 		{
 			EnsureFileExists(appSettings.ComicsFile);
-			var definitions = definitionStore.RetrieveAll();
+			var definitions = definitionStore.Definitions;
 
+            var comics = new List<Comic>();
 			foreach (var comic in ReadSerializedComics())
 			{
 				var comicIsSerializedAndHasADefinition = definitions.FirstOrDefault(x => x.Filename == comic.DefinitionFilename) != null;
@@ -51,6 +49,7 @@ namespace Woofy.Core
 
 				comics.Add(new Comic(definition));
 			}
+            Comics = comics.ToArray();
 
 			PersistComics();
 		}
@@ -59,35 +58,21 @@ namespace Woofy.Core
 		{
 			var json = File.ReadAllText(appSettings.ComicsFile);
 			var comics = JsonConvert.DeserializeObject<List<Comic>>(json) ?? new List<Comic>();
-			comics.ForEach(x => x.Definition = x.DefinitionFilename != null ? definitionStore.Retrieve(x.DefinitionFilename) : null);
+			comics.ForEach(x => x.Definition = x.DefinitionFilename != null ? definitionStore.FindByFilename(x.DefinitionFilename) : null);
 			return comics;
-		}
-
-	    public void Add(Comic comic)
-		{
-			comics.Add(comic);
-			PersistComics();
-		}
-
-		public void Update(Comic comic)
-		{
-			PersistComics();
-		}
-
-		public void Delete(Comic comic)
-		{
-			comics.Remove(comic);
-			PersistComics();
 		}
 
 		public void PersistComics()
 		{
-            //everytime someone modifies the comics list I persist it, and also update the cached array
-            Comics = comics.ToArray();
-			File.WriteAllText(appSettings.ComicsFile, JsonConvert.SerializeObject(comics, Formatting.Indented));
+			File.WriteAllText(appSettings.ComicsFile, JsonConvert.SerializeObject(Comics, Formatting.Indented));
 		}
 
-		private static void EnsureFileExists(string file)
+        public Comic FindByFilename(string definitionFilename)
+        {
+            return Comics.SingleOrDefault(x => x.DefinitionFilename == definitionFilename);
+        }
+
+	    private static void EnsureFileExists(string file)
 		{
 			if (File.Exists(file))
 				return;

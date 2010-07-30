@@ -66,7 +66,7 @@ namespace Woofy.Gui
 
     	private void InitComicDefinitionsList()
     	{
-			var comicDefinitions = definitionStore.RetrieveAll();
+			var comicDefinitions = definitionStore.Definitions;
     		foreach (var comicDefinition in comicDefinitions)
     		{
 				var author = comicDefinition.Author.IsNotNullOrEmpty() ? comicDefinition.Author : "unknown";
