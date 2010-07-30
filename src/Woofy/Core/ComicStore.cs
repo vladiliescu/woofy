@@ -6,46 +6,41 @@ using System.Linq;
 
 namespace Woofy.Core
 {
-	public interface IComicStorage
+	public interface IComicStore
 	{
+        Comic[] Comics { get; }
 		void Add(Comic comic);
 		void Update(Comic comic);
 		void Delete(Comic comic);
-
-		IList<Comic> RetrieveActiveComics();
-		void ReplaceWith(IList<Comic> comics);
-		IList<Comic> RetrieveAllComics();
 	}
 
-	public class ComicStorage : IComicStorage
+	public class ComicStore : IComicStore
 	{
-		IList<Comic> comicsCache;
+        private readonly IList<Comic> comics = new List<Comic>();
+        public Comic[] Comics { get; private set; }
 		readonly IAppSettings appSettings;
-		readonly IDefinitionStorage definitionStorage;
+		readonly IDefinitionStore definitionStore;
 
-		public ComicStorage(IAppSettings appSettings, IDefinitionStorage definitionStorage)
+		public ComicStore(IAppSettings appSettings, IDefinitionStore definitionStore)
 		{
 			this.appSettings = appSettings;
-			this.definitionStorage = definitionStorage;
+			this.definitionStore = definitionStore;
 
 			InitializeComicsCache();
 		}
 
 		private void InitializeComicsCache()
 		{
-			comicsCache = new List<Comic>();
-
 			EnsureFileExists(appSettings.ComicsFile);
-			var comics = ReadSerializedComics();
-			var definitions = definitionStorage.RetrieveAll();
+			var definitions = definitionStore.RetrieveAll();
 
-			foreach (var comic in comics)
+			foreach (var comic in ReadSerializedComics())
 			{
 				var comicIsSerializedAndHasADefinition = definitions.FirstOrDefault(x => x.Filename == comic.DefinitionFilename) != null;
 				if (!comicIsSerializedAndHasADefinition)
 					continue;
 				
-				comicsCache.Add(comic);
+				comics.Add(comic);
 			}
 
 			foreach (var definition in definitions)
@@ -54,23 +49,23 @@ namespace Woofy.Core
 				if (!comicIsNotSerializedAndHasADefinition)
 					continue;
 
-				comicsCache.Add(new Comic(definition));
+				comics.Add(new Comic(definition));
 			}
 
 			PersistComics();
 		}
 
-		private IList<Comic> ReadSerializedComics()
+		private IEnumerable<Comic> ReadSerializedComics()
 		{
 			var json = File.ReadAllText(appSettings.ComicsFile);
 			var comics = JsonConvert.DeserializeObject<List<Comic>>(json) ?? new List<Comic>();
-			comics.ForEach(x => x.Definition = x.DefinitionFilename != null ? definitionStorage.Retrieve(x.DefinitionFilename) : null);
+			comics.ForEach(x => x.Definition = x.DefinitionFilename != null ? definitionStore.Retrieve(x.DefinitionFilename) : null);
 			return comics;
 		}
 
-		public void Add(Comic comic)
+	    public void Add(Comic comic)
 		{
-			comicsCache.Add(comic);
+			comics.Add(comic);
 			PersistComics();
 		}
 
@@ -81,29 +76,15 @@ namespace Woofy.Core
 
 		public void Delete(Comic comic)
 		{
-			comicsCache.Remove(comic);
+			comics.Remove(comic);
 			PersistComics();
-		}
-
-		public void ReplaceWith(IList<Comic> comics)
-		{
-			comicsCache = comics;
-			PersistComics();
-		}
-
-		public IList<Comic> RetrieveAllComics()
-		{
-			throw new NotImplementedException();
-		}
-
-		public IList<Comic> RetrieveActiveComics()
-		{
-			return new List<Comic>(comicsCache);
 		}
 
 		private void PersistComics()
 		{
-			File.WriteAllText(appSettings.ComicsFile, JsonConvert.SerializeObject(comicsCache, Formatting.Indented));
+            //everytime someone modifies the comics list I persist it, and also update the cached array
+            Comics = comics.ToArray();
+			File.WriteAllText(appSettings.ComicsFile, JsonConvert.SerializeObject(comics, Formatting.Indented));
 		}
 
 		private static void EnsureFileExists(string file)

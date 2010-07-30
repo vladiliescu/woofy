@@ -16,8 +16,8 @@ namespace Woofy.Gui
         private ComicsProvider comicsProvider;
         private string currentUrl;
         private TestMode currentMode = TestMode.StandBy;
-		readonly IDefinitionStorage definitionStorage = ContainerAccesor.Resolve<IDefinitionStorage>();
-		readonly IComicStorage comicStorage = ContainerAccesor.Resolve<IComicStorage>();
+		readonly IDefinitionStore definitionStore = ContainerAccesor.Resolve<IDefinitionStore>();
+        readonly IComicRepository comicRepository = ContainerAccesor.Resolve<IComicRepository>();
 
 
         #region .ctor
@@ -96,7 +96,7 @@ namespace Woofy.Gui
         #region Helper Methods
         private void InitControls()
         {
-			foreach (var comic in comicStorage.RetrieveAllComics())
+			foreach (var comic in comicRepository.RetrieveAllComics())
             {
                 ListViewItem item = new ListViewItem(new string[] { comic.Definition.Name, comic.Definition.Author });
                 item.Tag = comic.DefinitionFilename;
@@ -153,7 +153,7 @@ namespace Woofy.Gui
             eventsRichTextBox.Focus();
 
             string selectedFile = (string)comicDefinitionsList.SelectedItems[0].Tag;
-            ComicDefinition comicDefinition = definitionStorage.Retrieve(selectedFile);
+            ComicDefinition comicDefinition = definitionStore.Retrieve(selectedFile);
 
             string startupUrl;
             if (this.currentMode == TestMode.Paused)

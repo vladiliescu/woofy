@@ -17,14 +17,14 @@ namespace Woofy.Gui.Main
 	public class MainController : IMainController
 	{
 		readonly IComicSelectionController comicSelectionController;
-		readonly IComicStorage comicStorage;
+		readonly IComicRepository comicRepository;
 
 		public ComicTasksController TasksController { get; set; }
 
-		public MainController(IComicSelectionController comicSelectionController, IComicStorage comicStorage)
+        public MainController(IComicSelectionController comicSelectionController, IComicRepository comicRepository)
 		{
 			this.comicSelectionController = comicSelectionController;
-			this.comicStorage = comicStorage;
+			this.comicRepository = comicRepository;
 		}
 
 		public void DisplayComicSelectionForm()
@@ -33,8 +33,8 @@ namespace Woofy.Gui.Main
 			if (result == DialogResult.Cancel)
 				return;
 
-			var comics = comicStorage.RetrieveActiveComics();
-
+            //refresh the already running comics
+			var comics = comicRepository.RetrieveActiveComics();
 			for (var i = 0; i < TasksController.Tasks.Count;)
 			{
 				var activeComic = TasksController.Tasks[i];

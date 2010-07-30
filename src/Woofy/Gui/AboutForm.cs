@@ -10,7 +10,7 @@ namespace Woofy.Gui
     partial class AboutForm : Form
     {
 		readonly IApplicationInfo applicationInfo = ContainerAccesor.Resolve<IApplicationInfo>();
-		readonly IDefinitionStorage definitionStorage = ContainerAccesor.Resolve<IDefinitionStorage>();
+		readonly IDefinitionStore definitionStore = ContainerAccesor.Resolve<IDefinitionStore>();
 
         public AboutForm()
         {
@@ -66,7 +66,7 @@ namespace Woofy.Gui
 
     	private void InitComicDefinitionsList()
     	{
-			var comicDefinitions = definitionStorage.RetrieveAll();
+			var comicDefinitions = definitionStore.RetrieveAll();
     		foreach (var comicDefinition in comicDefinitions)
     		{
 				var author = comicDefinition.Author.IsNotNullOrEmpty() ? comicDefinition.Author : "unknown";

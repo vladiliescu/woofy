@@ -4,7 +4,7 @@ using System.IO;
 
 namespace Woofy.Core
 {
-	public interface IDefinitionStorage
+	public interface IDefinitionStore
 	{
 		IList<ComicDefinition> RetrieveAll();
 		
@@ -16,11 +16,11 @@ namespace Woofy.Core
 		ComicDefinition Retrieve(string definitionFileName);
 	}
 
-	public class DefinitionStorage : IDefinitionStorage
+	public class DefinitionStore : IDefinitionStore
 	{
 		readonly IAppSettings appSettings;
 
-		public DefinitionStorage(IAppSettings appSettings)
+		public DefinitionStore(IAppSettings appSettings)
 		{
 			this.appSettings = appSettings;
 		}

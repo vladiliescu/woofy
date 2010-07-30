@@ -1,9 +1,10 @@
+using System;
 using System.IO;
 using Newtonsoft.Json;
 
 namespace Woofy.Core
 {
-    public class Comic
+    public class Comic: IEquatable<Comic>
     {
 		/// <summary>
 		/// The definition's filename. It uniquely identifies a comic/definition.
@@ -71,34 +72,36 @@ namespace Woofy.Core
             return Name;
         }
 
-    	public bool Equals(Comic other)
-    	{
-    		if (ReferenceEquals(null, other)) return false;
-    		if (ReferenceEquals(this, other)) return true;
-    		return Equals(other.Definition, Definition);
-    	}
+        #region Equality
+        public bool Equals(Comic other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Equals(other.Definition, Definition);
+        }
 
-    	public override bool Equals(object obj)
-    	{
-    		if (ReferenceEquals(null, obj)) return false;
-    		if (ReferenceEquals(this, obj)) return true;
-    		if (obj.GetType() != typeof (Comic)) return false;
-    		return Equals((Comic) obj);
-    	}
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof(Comic)) return false;
+            return Equals((Comic)obj);
+        }
 
-    	public override int GetHashCode()
-    	{
-    		return (Definition != null ? Definition.GetHashCode() : 0);
-    	}
+        public override int GetHashCode()
+        {
+            return (Definition != null ? Definition.GetHashCode() : 0);
+        }
 
-    	public static bool operator ==(Comic left, Comic right)
-    	{
-    		return Equals(left, right);
-    	}
+        public static bool operator ==(Comic left, Comic right)
+        {
+            return Equals(left, right);
+        }
 
-    	public static bool operator !=(Comic left, Comic right)
-    	{
-    		return !Equals(left, right);
-    	}
+        public static bool operator !=(Comic left, Comic right)
+        {
+            return !Equals(left, right);
+        } 
+        #endregion
     }
 }

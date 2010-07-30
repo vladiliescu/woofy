@@ -63,12 +63,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\ApplicationInfo.cs" />
+    <Compile Include="Core\ComicRepository.cs" />
     <Compile Include="Core\Infrastructure\Bootstrapper.cs" />
     <Compile Include="Core\Capture.cs" />
     <Compile Include="Core\CaptureTarget.cs" />
-    <Compile Include="Core\ComicStorage.cs" />
+    <Compile Include="Core\ComicStore.cs" />
     <Compile Include="Core\CountingFileDownloader.cs" />
-    <Compile Include="Core\ExRichTextBox.cs">
+    <Compile Include="External\ExRichTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Core\Infrastructure\DefaultComponentsModule.cs" />
@@ -77,6 +78,7 @@
     <Compile Include="Core\PageParser.cs" />
     <Compile Include="Core\StringExtensions.cs" />
     <Compile Include="Exceptions\RegexException.cs" />
+    <Compile Include="External\HashSet.cs" />
     <Compile Include="Gui\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -90,7 +92,7 @@
     </Compile>
     <Compile Include="Gui\ComicSelection\ComicSelectionInputModel.cs" />
     <Compile Include="Gui\ComicSelection\ComicSelectionViewModel.cs" />
-    <Compile Include="Core\DefinitionStorage.cs" />
+    <Compile Include="Core\DefinitionStore.cs" />
     <Compile Include="Gui\Main\MainController.cs" />
     <Compile Include="Settings\UserSettingsData.cs" />
     <Compile Include="EventArgs\DownloadCompletedEventArgs.cs" />

@@ -1,3 +1,5 @@
+using Woofy.External;
+
 namespace Woofy.Gui
 {
     partial class DefinitionsDebugForm
@@ -36,7 +38,7 @@ namespace Woofy.Gui
             this.comicDefinitionsList = new System.Windows.Forms.ListView();
             this.txtOverrideStartUrl = new System.Windows.Forms.TextBox();
             this.chkOverrideStartUrl = new System.Windows.Forms.CheckBox();
-            this.eventsRichTextBox = new Woofy.Core.ExRichTextBox();
+            this.eventsRichTextBox = new ExRichTextBox();
             this.outputContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startButton = new System.Windows.Forms.Button();
@@ -142,14 +144,14 @@ namespace Woofy.Gui
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.eventsRichTextBox.ContextMenuStrip = this.outputContextMenu;
-            this.eventsRichTextBox.HiglightColor = Woofy.Core.RtfColor.White;
+            this.eventsRichTextBox.HiglightColor = RtfColor.White;
             this.eventsRichTextBox.Location = new System.Drawing.Point(6, 19);
             this.eventsRichTextBox.Name = "eventsRichTextBox";
             this.eventsRichTextBox.ReadOnly = true;
             this.eventsRichTextBox.Size = new System.Drawing.Size(596, 280);
             this.eventsRichTextBox.TabIndex = 6;
             this.eventsRichTextBox.Text = "";
-            this.eventsRichTextBox.TextColor = Woofy.Core.RtfColor.Black;
+            this.eventsRichTextBox.TextColor = RtfColor.Black;
             this.eventsRichTextBox.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.eventsRichTextBox_LinkClicked);
             // 
             // outputContextMenu
@@ -259,7 +261,7 @@ namespace Woofy.Gui
 
         private System.Windows.Forms.Button startButton;
         private System.Windows.Forms.Button closeButton;
-        private Woofy.Core.ExRichTextBox eventsRichTextBox;
+        private ExRichTextBox eventsRichTextBox;
         private System.Windows.Forms.ListView comicDefinitionsList;
         private System.Windows.Forms.TextBox txtOverrideStartUrl;
         private System.Windows.Forms.CheckBox chkOverrideStartUrl;

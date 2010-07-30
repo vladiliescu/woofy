@@ -14,7 +14,7 @@ namespace Woofy
         {
 			Bootstrapper.BootstrapApplication();          
 
-            Application.ThreadException += Application_ThreadException;
+            //Application.ThreadException += Application_ThreadException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
             Application.Run(new MainForm(ContainerAccesor.Resolve<IMainController>()));

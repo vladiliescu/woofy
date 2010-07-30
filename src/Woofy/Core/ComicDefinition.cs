@@ -1,10 +1,11 @@
+using System;
 using System.Collections.ObjectModel;
 using System.Xml;
 using System.IO;
 
 namespace Woofy.Core
 {
-	public class ComicDefinition
+	public class ComicDefinition : IEquatable<ComicDefinition>
 	{
 		/// <summary>
 		/// The definition's filename. It uniquely identifies a comic/definition.
@@ -90,5 +91,27 @@ namespace Woofy.Core
 		{
 			return Name;
 		}
+
+        #region Equality
+        public bool Equals(ComicDefinition other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return Equals(other.Filename, Filename);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != typeof(ComicDefinition)) return false;
+            return Equals((ComicDefinition)obj);
+        }
+
+        public override int GetHashCode()
+        {
+            return (Filename != null ? Filename.GetHashCode() : 0);
+        } 
+        #endregion
 	}
 }

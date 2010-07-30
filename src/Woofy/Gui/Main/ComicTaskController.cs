@@ -14,7 +14,7 @@ namespace Woofy.Gui.Main
     {
         readonly List<ComicsProvider> comicProviders = new List<ComicsProvider>();
         readonly DataGridView tasksGrid;
-		readonly IComicStorage comicStorage = ContainerAccesor.Container.Resolve<IComicStorage>();
+        readonly IComicRepository comicRepository = ContainerAccesor.Container.Resolve<IComicRepository>();
 
     	public BindingList<Comic> Tasks { get; private set; }
 
@@ -25,7 +25,8 @@ namespace Woofy.Gui.Main
     
 		public void Initialize()
         {
-            Tasks = new BindingList<Comic>(comicStorage.RetrieveActiveComics());
+            //I uses a List<Comic> instead of the original array in order to be able to add/remove items to/from the BindingList
+            Tasks = new BindingList<Comic>(new List<Comic>(comicRepository.RetrieveActiveComics()));
 
             foreach (var comic in Tasks)
             {
@@ -39,10 +40,8 @@ namespace Woofy.Gui.Main
         /// <returns>True if the comic has been added successfully, false otherwise.</returns>
         public bool AddNewTask(Comic comic)
         {
-			//if (comicStorage.RetrieveActiveTasksByComicInfoFile(comic.Definition.Filename).Count > 0)
+			//if (comicStore.RetrieveActiveTasksByComicInfoFile(comic.Definition.Filename).Count > 0)
 			//    return false;
-
-            comicStorage.Add(comic);
             Tasks.Add(comic);
             AddComicsProviderAndStartDownload(comic);
 
@@ -59,8 +58,6 @@ namespace Woofy.Gui.Main
             var comicsProvider = comicProviders[index];
             if (comic.Status == TaskStatus.Running)
                 comicsProvider.StopDownload();
-
-			comicStorage.Delete(comic);
 
             Tasks.RemoveAt(index);
             comicProviders.RemoveAt(index);
@@ -100,7 +97,7 @@ namespace Woofy.Gui.Main
             task.Status = TaskStatus.Stopped;
             comicsProvider.StopDownload();
 
-            comicStorage.Update(task);
+#warning How do I handle this? comicRepository.Update(task);
         }
 
         /// <summary>
@@ -118,7 +115,7 @@ namespace Woofy.Gui.Main
             task.Status = TaskStatus.Running;
             comicsProvider.DownloadComicsAsync(task.CurrentUrl);
 
-            comicStorage.Update(task);
+            //comicRepository.Update(task);
         }
 
         /// <summary>
@@ -147,7 +144,7 @@ namespace Woofy.Gui.Main
             if (task.Status == TaskStatus.Finished)
             {
                 task.Status = TaskStatus.Running;
-                comicStorage.Update(task);
+                //comicRepository.Update(task);
             }
 
             if (task.Status != TaskStatus.Running) 
@@ -173,7 +170,7 @@ namespace Woofy.Gui.Main
                     Comic task = Tasks[index];
                     task.DownloadedComics++;
                     task.CurrentUrl = e.CurrentUrl;
-                    comicStorage.Update(task);
+                    //comicRepository.Update(task);
 
                     ResetTasksBindings();
                 }
@@ -199,7 +196,7 @@ namespace Woofy.Gui.Main
                         task.CurrentUrl = null;
 
                     task.DownloadOutcome = e.DownloadOutcome;
-                    comicStorage.Update(task);
+                    //comicRepository.Update(task);
 
                     ResetTasksBindings();
 

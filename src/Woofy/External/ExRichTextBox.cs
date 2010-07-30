@@ -5,9 +5,8 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Windows.Forms;
 
-namespace Woofy.Core {
+namespace Woofy.External {
 
 	#region Public Enums
 

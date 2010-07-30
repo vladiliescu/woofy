@@ -15,18 +15,16 @@ namespace Woofy.Gui.ComicSelection
 
 	public class ComicSelectionController : IComicSelectionController
 	{
-		readonly IComicStorage comicStorage;
-		readonly IDefinitionStorage definitionStorage;
+		readonly IComicRepository comicRepository;
 
-		public ComicSelectionController(IComicStorage comicStorage, IDefinitionStorage definitionStorage)
+	    public ComicSelectionController(IComicRepository comicRepository)
 		{
-			this.comicStorage = comicStorage;
-			this.definitionStorage = definitionStorage;
+			this.comicRepository = comicRepository;
 		}
 
 		public ComicSelectionViewModel LoadComics()
 		{
-			var comics = comicStorage.RetrieveAllComics();
+			var comics = comicRepository.RetrieveAllComics();
 			var availableComics = new List<ComicDto>();
 			var activeComics = new List<ComicDto>();
 
@@ -43,15 +41,11 @@ namespace Woofy.Gui.ComicSelection
 
 		public void UpdateActiveComics(ComicSelectionInputModel inputModel)
 		{
-			var comics = new List<Comic>();
-			foreach (var definitionFile in inputModel.ActiveComicDefinitions)
+            foreach (var comic in comicRepository.RetrieveAllComics())
 			{
-				//TODO: I could optimize this by maintaining a definition cache similar to the Comics one; this means that the definitions will not be reloaded each time though
-				comics.Add(new Comic(definitionStorage.Retrieve(definitionFile)));
+                var comicShouldBeActive = inputModel.ActiveComicDefinitions.SingleOrDefault(def => def == comic.DefinitionFilename) != null;
+                comic.IsActive = comicShouldBeActive;
 			}
-
-			//de schimbat replace-ul: nu vreau sa pierd statisticile de download
-			comicStorage.ReplaceWith(comics);
 		}
 
 		public DialogResult DisplayComicSelectionForm()
