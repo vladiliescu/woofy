@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 
 namespace Woofy.Core
@@ -8,6 +7,7 @@ namespace Woofy.Core
         Comic[] RetrieveActiveComics();
         Comic[] RetrieveAllComics();
         Comic Retrieve(string definitionFilename);
+        void PersistComics();
     }
 
     public class ComicRepository : IComicRepository
@@ -32,6 +32,11 @@ namespace Woofy.Core
         public Comic Retrieve(string definitionFilename)
         {
             return comicStore.Comics.Where(x => x.DefinitionFilename == definitionFilename).SingleOrDefault();
+        }
+
+        public void PersistComics()
+        {
+            comicStore.PersistComics();
         }
     }
 }

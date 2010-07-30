@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
@@ -12,6 +11,7 @@ namespace Woofy.Core
 		void Add(Comic comic);
 		void Update(Comic comic);
 		void Delete(Comic comic);
+	    void PersistComics();
 	}
 
 	public class ComicStore : IComicStore
@@ -80,7 +80,7 @@ namespace Woofy.Core
 			PersistComics();
 		}
 
-		private void PersistComics()
+		public void PersistComics()
 		{
             //everytime someone modifies the comics list I persist it, and also update the cached array
             Comics = comics.ToArray();

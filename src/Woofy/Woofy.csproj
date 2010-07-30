@@ -78,7 +78,6 @@
     <Compile Include="Core\PageParser.cs" />
     <Compile Include="Core\StringExtensions.cs" />
     <Compile Include="Exceptions\RegexException.cs" />
-    <Compile Include="External\HashSet.cs" />
     <Compile Include="Gui\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
