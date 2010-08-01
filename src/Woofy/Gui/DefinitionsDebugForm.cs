@@ -13,7 +13,7 @@ namespace Woofy.Gui
 {
     public partial class DefinitionsDebugForm : Form
     {
-        private ComicsProvider comicsProvider;
+        private Spider spider;
         private string currentUrl;
         private TestMode currentMode = TestMode.StandBy;
 		readonly IDefinitionStore definitionStore = ContainerAccesor.Resolve<IDefinitionStore>();
@@ -114,7 +114,7 @@ namespace Woofy.Gui
             this.currentMode = TestMode.Paused;
             DisplayAppropriateControlsForCurrentMode();
 
-            this.comicsProvider.StopDownload();
+            this.spider.StopDownload();
             CheckForLatestDebugMessages();
         }
 
@@ -123,8 +123,8 @@ namespace Woofy.Gui
             this.currentMode = TestMode.StandBy;
             DisplayAppropriateControlsForCurrentMode();
 
-            if (this.comicsProvider != null)
-                this.comicsProvider.StopDownload();
+            if (this.spider != null)
+                this.spider.StopDownload();
             CheckForLatestDebugMessages();
         }
 
@@ -276,10 +276,10 @@ namespace Woofy.Gui
                 delegate
                 {
                     CountingFileDownloader countingFileDownloader = new CountingFileDownloader();
-                    this.comicsProvider = new ComicsProvider(comicDefinition, countingFileDownloader, false);
-                    this.comicsProvider.DownloadComicCompleted += comicsProvider_DownloadComicCompleted;
+                    this.spider = new Spider(comicDefinition, countingFileDownloader, false);
+                    this.spider.DownloadComicCompleted += comicsProvider_DownloadComicCompleted;
 
-                    DownloadOutcome downloadOutcome = comicsProvider.DownloadComics(startupUrl);
+                    DownloadOutcome downloadOutcome = spider.DownloadComics(startupUrl);
 
                     switch (downloadOutcome)
                     {
@@ -316,7 +316,7 @@ namespace Woofy.Gui
 
         #endregion
 
-        #region Events - comicsProvider
+        #region Events - spider
         void comicsProvider_DownloadComicCompleted(object sender, DownloadStripCompletedEventArgs e)
         {
             this.currentUrl = e.CurrentUrl;

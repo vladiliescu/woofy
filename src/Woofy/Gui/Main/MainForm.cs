@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using Woofy.Core;
 using Woofy.Properties;
@@ -11,16 +12,13 @@ namespace Woofy.Gui.Main
 {
     public partial class MainForm : BaseForm
     {
-    	readonly ComicTasksController _tasksController;
 		readonly IMainController controller;
 
     	public MainForm(IMainController controller)
         {
             InitializeComponent();
 
-            _tasksController = new ComicTasksController(dgvwTasks);
     		this.controller = controller;
-			this.controller.TasksController = _tasksController;
         }
 
     	private void MainForm_Load(object sender, EventArgs e)
@@ -112,7 +110,7 @@ namespace Woofy.Gui.Main
 
             var task = (Comic)dgvwTasks.SelectedRows[0].DataBoundItem;
             if (task.Status == TaskStatus.Finished)
-                _tasksController.OpenTaskFolder(task);
+                controller.OpenTaskFolder(task);
             else
                 ToggleSelectedTasksState();
         }
@@ -154,14 +152,9 @@ namespace Woofy.Gui.Main
         {
             if (dgvwTasks.SelectedRows.Count == 0)
                 return;
-
-            foreach (DataGridViewRow selectedRow in dgvwTasks.SelectedRows)
-            {
-                var task = (Comic)selectedRow.DataBoundItem;
-                _tasksController.ToggleTaskState(task, false);
-            }
-
-            _tasksController.ResetTasksBindings();
+			
+			var selectedRows = (from row in dgvwTasks.SelectedRows.Cast<DataGridViewRow>() select (Comic)row.DataBoundItem).ToArray();
+			controller.ToggleSpidersState(selectedRows);
         }
 
         private void OpenSelectedTaskFolder()
@@ -170,8 +163,7 @@ namespace Woofy.Gui.Main
                 return;
 
             var task = (Comic)dgvwTasks.SelectedRows[0].DataBoundItem;
-
-            _tasksController.OpenTaskFolder(task);
+            controller.OpenTaskFolder(task);
         }
 
         /// <summary>
@@ -179,13 +171,7 @@ namespace Woofy.Gui.Main
         /// </summary>
         private void StartAllTasks()
         {
-            foreach (DataGridViewRow row in dgvwTasks.Rows)
-            {
-                var task = (Comic)row.DataBoundItem;
-                _tasksController.StartTask(task);
-            }
-
-            _tasksController.ResetTasksBindings();
+			controller.StartSpiders((from row in dgvwTasks.Rows.Cast<DataGridViewRow>() select (Comic)row.DataBoundItem).ToArray());
         }
 
         /// <summary>
@@ -193,13 +179,7 @@ namespace Woofy.Gui.Main
         /// </summary>
         private void StopAllTasks()
         {
-            foreach (DataGridViewRow row in dgvwTasks.Rows)
-            {
-                var task = (Comic)row.DataBoundItem;
-                _tasksController.StopTask(task);
-            }
-
-            _tasksController.ResetTasksBindings();
+			controller.StopSpiders((from row in dgvwTasks.Rows.Cast<DataGridViewRow>() select (Comic)row.DataBoundItem).ToArray());
         }
         #endregion
 
@@ -353,10 +333,9 @@ namespace Woofy.Gui.Main
 			Icon = 
 				notifyIcon.Icon = appIcon;
 
-			_tasksController.Initialize();
 
 			dgvwTasks.AutoGenerateColumns = false;
-			dgvwTasks.DataSource = _tasksController.Tasks;
+			dgvwTasks.DataSource = controller.Tasks;
 
 			var splitButton = new ToolStripSplitButton("About..", Resources.About);
 			splitButton.ButtonClick += About_Click;

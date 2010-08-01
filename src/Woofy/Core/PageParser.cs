@@ -30,8 +30,8 @@ namespace Woofy.Core
                     continue;
 
                 string capturedContent;
-                if (match.Groups[ComicsProvider.ContentGroup].Success)
-                    capturedContent = match.Groups[ComicsProvider.ContentGroup].Value;
+                if (match.Groups[Spider.ContentGroup].Success)
+                    capturedContent = match.Groups[Spider.ContentGroup].Value;
                 else
                     capturedContent = match.Value;
 
