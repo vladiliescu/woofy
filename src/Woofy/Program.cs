@@ -9,6 +9,8 @@ namespace Woofy
 {
     static class Program
     {
+		public static SynchronizationContext SynchronizationContext { get; private set; }
+
         [STAThread]
         static void Main()
         {
@@ -17,8 +19,13 @@ namespace Woofy
             //Application.ThreadException += Application_ThreadException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
-            Application.Run(new MainForm(ContainerAccesor.Resolve<IMainController>()));
-			//Application.Run(new ComicSelectionForm(ContainerAccesor.Container.Resolve<IComicSelectionController>()));
+			var mainForm = new MainForm();
+			//the synchronization context only becomes available after creating the form
+			SynchronizationContext = SynchronizationContext.Current;	
+			//the SpiderSupervisor needs the SynchronizationContext, so I resolve it only after initializing the context
+			mainForm.Controller = ContainerAccesor.Resolve<IMainController>();
+
+            Application.Run(mainForm);
         }
 
         /// <summary>

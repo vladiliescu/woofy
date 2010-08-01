@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using System.Windows.Forms;
 using System.ComponentModel;
 using Woofy.Settings;
@@ -48,11 +49,12 @@ namespace Woofy.Core
 
 		readonly List<Spider> spiders = new List<Spider>();
 		readonly IComicRepository comicRepository;
+		readonly SynchronizationContext synchronizationContext;
 
-		public SpiderSupervisor(IComicRepository comicRepository)
+		public SpiderSupervisor(IComicRepository comicRepository, SynchronizationContext synchronizationContext)
 		{
 			this.comicRepository = comicRepository;
-
+			this.synchronizationContext = synchronizationContext;
 			//I uses a List<Comic> instead of the original array in order to be able to add/remove items to/from the BindingList
 			Tasks = new BindingList<Comic>(new List<Comic>(comicRepository.RetrieveActiveComics()));
 		}
@@ -180,58 +182,63 @@ namespace Woofy.Core
 
 		private void DownloadComicCompletedCallback(object sender, DownloadStripCompletedEventArgs e)
 		{
-			var provider = (Spider)sender;
+			synchronizationContext.Post(o =>
+											{
+												var provider = (Spider)sender;
 
-			int index = spiders.IndexOf(provider);
-			if (index == -1)    //in case the task has already been deleted.
-				return;
+												int index = spiders.IndexOf(provider);
+												if (index == -1) //in case the task has already been deleted.
+													return;
 
-			Comic task = Tasks[index];
-			task.DownloadedComics++;
-			task.CurrentUrl = e.CurrentUrl;
-			//comicRepository.Update(task);
+												Comic task = Tasks[index];
+												task.DownloadedComics++;
+												task.CurrentUrl = e.CurrentUrl;
+												//comicRepository.Update(task);
 
-			ResetTasksBindings();
+												ResetTasksBindings();
+											}, null);
 		}
 
 		private void DownloadComicsCompletedCallback(object sender, DownloadCompletedEventArgs e)
 		{
-#warning this should be run on the UI thread
+			synchronizationContext.Post(o =>
+											{
+												var comicsProvider = (Spider)sender;
 
-			var comicsProvider = (Spider)sender;
+												var index = spiders.IndexOf(comicsProvider);
+												if (index == -1) //in case the task has already been deleted.
+													return;
 
-			var index = spiders.IndexOf(comicsProvider);
-			if (index == -1)    //in case the task has already been deleted.
-				return;
+												var task = Tasks[index];
+												task.Status = e.DownloadOutcome == DownloadOutcome.Cancelled
+																? TaskStatus.Stopped
+																: TaskStatus.Finished;
 
-			var task = Tasks[index];
-			task.Status = e.DownloadOutcome == DownloadOutcome.Cancelled ? TaskStatus.Stopped : TaskStatus.Finished;
+												//only set the currentUrl to null if the outcome is successful
+												if (e.DownloadOutcome == DownloadOutcome.Successful)
+													task.CurrentUrl = null;
 
-			//only set the currentUrl to null if the outcome is successful
-			if (e.DownloadOutcome == DownloadOutcome.Successful)
-				task.CurrentUrl = null;
+												task.DownloadOutcome = e.DownloadOutcome;
+												//comicRepository.Update(task);
 
-			task.DownloadOutcome = e.DownloadOutcome;
-			//comicRepository.Update(task);
+												ResetTasksBindings();
 
-			ResetTasksBindings();
+												if (!UserSettings.CloseWhenAllComicsHaveFinished)
+													return;
 
-			if (!UserSettings.CloseWhenAllComicsHaveFinished)
-				return;
+												var allTasksHaveFinished = true;
+												foreach (var _task in Tasks)
+												{
+													if (_task.Status != TaskStatus.Running)
+														continue;
 
-			var allTasksHaveFinished = true;
-			foreach (var _task in Tasks)
-			{
-				if (_task.Status != TaskStatus.Running)
-					continue;
+													allTasksHaveFinished = false;
+													break;
+												}
 
-				allTasksHaveFinished = false;
-				break;
-			}
-
-			if (allTasksHaveFinished)
-				Application.Exit();
-
+												if (allTasksHaveFinished)
+													Application.Exit();
+											}, null);
 		}
 	}
 }

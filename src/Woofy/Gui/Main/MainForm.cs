@@ -12,13 +12,11 @@ namespace Woofy.Gui.Main
 {
     public partial class MainForm : BaseForm
     {
-		readonly IMainController controller;
+		public IMainController Controller { get; set; }
 
-    	public MainForm(IMainController controller)
+    	public MainForm()
         {
             InitializeComponent();
-
-    		this.controller = controller;
         }
 
     	private void MainForm_Load(object sender, EventArgs e)
@@ -110,7 +108,7 @@ namespace Woofy.Gui.Main
 
             var task = (Comic)dgvwTasks.SelectedRows[0].DataBoundItem;
             if (task.Status == TaskStatus.Finished)
-                controller.OpenTaskFolder(task);
+                Controller.OpenTaskFolder(task);
             else
                 ToggleSelectedTasksState();
         }
@@ -154,7 +152,7 @@ namespace Woofy.Gui.Main
                 return;
 			
 			var selectedRows = (from row in dgvwTasks.SelectedRows.Cast<DataGridViewRow>() select (Comic)row.DataBoundItem).ToArray();
-			controller.ToggleSpidersState(selectedRows);
+			Controller.ToggleSpidersState(selectedRows);
         }
 
         private void OpenSelectedTaskFolder()
@@ -163,7 +161,7 @@ namespace Woofy.Gui.Main
                 return;
 
             var task = (Comic)dgvwTasks.SelectedRows[0].DataBoundItem;
-            controller.OpenTaskFolder(task);
+            Controller.OpenTaskFolder(task);
         }
 
         /// <summary>
@@ -171,7 +169,7 @@ namespace Woofy.Gui.Main
         /// </summary>
         private void StartAllTasks()
         {
-			controller.StartSpiders((from row in dgvwTasks.Rows.Cast<DataGridViewRow>() select (Comic)row.DataBoundItem).ToArray());
+			Controller.StartSpiders((from row in dgvwTasks.Rows.Cast<DataGridViewRow>() select (Comic)row.DataBoundItem).ToArray());
         }
 
         /// <summary>
@@ -179,7 +177,7 @@ namespace Woofy.Gui.Main
         /// </summary>
         private void StopAllTasks()
         {
-			controller.StopSpiders((from row in dgvwTasks.Rows.Cast<DataGridViewRow>() select (Comic)row.DataBoundItem).ToArray());
+			Controller.StopSpiders((from row in dgvwTasks.Rows.Cast<DataGridViewRow>() select (Comic)row.DataBoundItem).ToArray());
         }
         #endregion
 
@@ -199,7 +197,7 @@ namespace Woofy.Gui.Main
         #region Events - Tool Strip Buttons
         private void OnSelectComics(object sender, EventArgs e)
         {
-			controller.DisplayComicSelectionForm();
+			Controller.DisplayComicSelectionForm();
         }
 
         private void toolStripButtonPauseTask_Click(object sender, EventArgs e)
@@ -335,7 +333,7 @@ namespace Woofy.Gui.Main
 
 
 			dgvwTasks.AutoGenerateColumns = false;
-			dgvwTasks.DataSource = controller.Tasks;
+			dgvwTasks.DataSource = Controller.Tasks;
 
 			var splitButton = new ToolStripSplitButton("About..", Resources.About);
 			splitButton.ButtonClick += About_Click;
