@@ -9,36 +9,23 @@ namespace Woofy.Core
 	public interface IBotSupervisor
 	{
 		BindingList<Comic> Tasks { get; }
-		void Initialize();
 
 		/// <summary>
 		/// Adds a new comic to the tasks list and database. Also starts its download.
 		/// </summary>
-		/// <returns>True if the comic has been added successfully, false otherwise.</returns>
-		bool AddNewTask(Comic comic);
+		void AddNewTask(Comic comic);
 
 		/// <summary>
 		/// Stops the specified comic's download and deletes it from the database.
 		/// </summary>
-		/// <param name="comic"></param>
 		void DeleteTask(Comic comic);
 
 		/// <summary>
-		/// Pauses/unpauses a task, depending on its current state.
+		/// Pauses/unpauses a comic, depending on its current state.
 		/// </summary>
-		void ToggleTaskState(Comic task, bool resetTasksBindings);
-
-		/// <summary>
-		/// Stops the specified comic task.
-		/// </summary>
-		/// <param name="task">Comic task to stop.</param>
-		void StopTask(Comic task);
-
-		/// <summary>
-		/// Start the specified comic task.
-		/// </summary>
-		/// <param name="task">Comic task to start.</param>
-		void StartTask(Comic task);
+		void ToggleTaskState(Comic comic);
+		void StopTask(Comic comic);
+		void StartTask(Comic comic);
 
 		void ResetTasksBindings();
 	}
@@ -47,7 +34,7 @@ namespace Woofy.Core
 	{
 		public BindingList<Comic> Tasks { get; private set; }
 
-		readonly List<Bot> spiders = new List<Bot>();
+		readonly List<Bot> bots = new List<Bot>();
 		readonly IComicRepository comicRepository;
 		readonly SynchronizationContext synchronizationContext;
 
@@ -55,31 +42,18 @@ namespace Woofy.Core
 		{
 			this.comicRepository = comicRepository;
 			this.synchronizationContext = synchronizationContext;
-			//I uses a List<Comic> instead of the original array in order to be able to add/remove items to/from the BindingList
+			//I use a List<Comic> instead of the original array in order to be able to add/remove items to/from the BindingList
 			Tasks = new BindingList<Comic>(new List<Comic>(comicRepository.RetrieveActiveComics()));
-		}
-
-#warning de mutat in MainController
-		public void Initialize()
-		{
-			foreach (var comic in Tasks)
-			{
-				AddComicsProviderAndStartDownload(comic);
-			}
 		}
 
 		/// <summary>
 		/// Adds a new comic to the tasks list and database. Also starts its download.
 		/// </summary>
 		/// <returns>True if the comic has been added successfully, false otherwise.</returns>
-		public bool AddNewTask(Comic comic)
+		public void AddNewTask(Comic comic)
 		{
-			//if (comicStore.RetrieveActiveTasksByComicInfoFile(comic.Definition.Filename).Count > 0)
-			//    return false;
 			Tasks.Add(comic);
 			AddComicsProviderAndStartDownload(comic);
-
-			return true;
 		}
 
 		/// <summary>
@@ -89,67 +63,56 @@ namespace Woofy.Core
 		public void DeleteTask(Comic comic)
 		{
 			var index = Tasks.IndexOf(comic);
-			var comicsProvider = spiders[index];
+			var comicsProvider = bots[index];
 			if (comic.Status == TaskStatus.Running)
 				comicsProvider.StopDownload();
 
 			Tasks.RemoveAt(index);
-			spiders.RemoveAt(index);
+			bots.RemoveAt(index);
 		}
 
 		/// <summary>
-		/// Pauses/unpauses a task, depending on its current state.
+		/// Pauses/unpauses a comic, depending on its current state.
 		/// </summary>
-		public void ToggleTaskState(Comic task, bool resetTasksBindings)
+		public void ToggleTaskState(Comic comic)
 		{
-			switch (task.Status)
+			switch (comic.Status)
 			{
 				case TaskStatus.Stopped:
-					StartTask(task);
+					StartTask(comic);
 					break;
 				case TaskStatus.Running:
-					StopTask(task);
+					StopTask(comic);
 					break;
 			}
-
-			if (resetTasksBindings)
-				ResetTasksBindings();
 		}
 
-		/// <summary>
-		/// Stops the specified comic task.
-		/// </summary>
-		/// <param name="task">Comic task to stop.</param>
-		public void StopTask(Comic task)
+		public void StopTask(Comic comic)
 		{
-			if (task.Status != TaskStatus.Running)
+			if (comic.Status != TaskStatus.Running)
 				return;
 
-			int index = Tasks.IndexOf(task);
-			Bot bot = spiders[index];
+			int index = Tasks.IndexOf(comic);
+			Bot bot = bots[index];
 
-			task.Status = TaskStatus.Stopped;
+			comic.Status = TaskStatus.Stopped;
 			bot.StopDownload();
 
-#warning How do I handle this? comicRepository.Update(task);
+#warning How do I handle this? comicRepository.Update(comic);
 		}
 
-		/// <summary>
-		/// Start the specified comic task.
-		/// </summary>
-		/// <param name="task">Comic task to start.</param>
-		public void StartTask(Comic task)
+		public void StartTask(Comic comic)
 		{
-			if (task.Status != TaskStatus.Stopped)
+			if (comic.Status != TaskStatus.Stopped)
 				return;
 
-			int index = Tasks.IndexOf(task);
-			Bot bot = spiders[index];
+			int index = Tasks.IndexOf(comic);
+			Bot bot = bots[index];
 
-			task.Status = TaskStatus.Running;
-			bot.DownloadComicsAsync(task.CurrentUrl);
+			comic.Status = TaskStatus.Running;
+			bot.DownloadComicsAsync(comic.CurrentUrl);
 
-			//comicRepository.Update(task);
+			//comicRepository.Update(comic);
 		}
 
 		public void ResetTasksBindings()
@@ -159,11 +122,11 @@ namespace Woofy.Core
 
 		private void AddComicsProviderAndStartDownload(Comic task)
 		{
-			var comicsProvider = new Bot(task.Definition, task.DownloadFolder, task.RandomPausesBetweenRequests);
-			spiders.Add(comicsProvider);
+			var bot = new Bot(task.Definition, task.DownloadFolder, task.RandomPausesBetweenRequests);
+			bots.Add(bot);
 
-			comicsProvider.DownloadComicCompleted += DownloadComicCompletedCallback;
-			comicsProvider.DownloadCompleted += DownloadComicsCompletedCallback;
+			bot.DownloadComicCompleted += DownloadComicCompletedCallback;
+			bot.DownloadCompleted += DownloadComicsCompletedCallback;
 
 			if (task.Status == TaskStatus.Finished)
 			{
@@ -175,9 +138,9 @@ namespace Woofy.Core
 				return;
 
 			if (string.IsNullOrEmpty(task.CurrentUrl))
-				comicsProvider.DownloadComicsAsync();
+				bot.DownloadComicsAsync();
 			else
-				comicsProvider.DownloadComicsAsync(task.CurrentUrl);
+				bot.DownloadComicsAsync(task.CurrentUrl);
 		}
 
 		private void DownloadComicCompletedCallback(object sender, DownloadStripCompletedEventArgs e)
@@ -186,7 +149,7 @@ namespace Woofy.Core
 											{
 												var provider = (Bot)sender;
 
-												int index = spiders.IndexOf(provider);
+												int index = bots.IndexOf(provider);
 												if (index == -1) //in case the task has already been deleted.
 													return;
 
@@ -205,7 +168,7 @@ namespace Woofy.Core
 											{
 												var comicsProvider = (Bot)sender;
 
-												var index = spiders.IndexOf(comicsProvider);
+												var index = bots.IndexOf(comicsProvider);
 												if (index == -1) //in case the task has already been deleted.
 													return;
 

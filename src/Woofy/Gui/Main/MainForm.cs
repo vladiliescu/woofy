@@ -108,7 +108,7 @@ namespace Woofy.Gui.Main
 
             var task = (Comic)dgvwTasks.SelectedRows[0].DataBoundItem;
             if (task.Status == TaskStatus.Finished)
-                Controller.OpenTaskFolder(task);
+                Controller.OpenFolder(task);
             else
                 ToggleSelectedTasksState();
         }
@@ -152,7 +152,7 @@ namespace Woofy.Gui.Main
                 return;
 			
 			var selectedRows = (from row in dgvwTasks.SelectedRows.Cast<DataGridViewRow>() select (Comic)row.DataBoundItem).ToArray();
-			Controller.ToggleSpidersState(selectedRows);
+			Controller.ToggleBotState(selectedRows);
         }
 
         private void OpenSelectedTaskFolder()
@@ -161,7 +161,7 @@ namespace Woofy.Gui.Main
                 return;
 
             var task = (Comic)dgvwTasks.SelectedRows[0].DataBoundItem;
-            Controller.OpenTaskFolder(task);
+            Controller.OpenFolder(task);
         }
 
         /// <summary>
@@ -169,7 +169,7 @@ namespace Woofy.Gui.Main
         /// </summary>
         private void StartAllTasks()
         {
-			Controller.StartSpiders((from row in dgvwTasks.Rows.Cast<DataGridViewRow>() select (Comic)row.DataBoundItem).ToArray());
+			Controller.StartBots((from row in dgvwTasks.Rows.Cast<DataGridViewRow>() select (Comic)row.DataBoundItem).ToArray());
         }
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace Woofy.Gui.Main
         /// </summary>
         private void StopAllTasks()
         {
-			Controller.StopSpiders((from row in dgvwTasks.Rows.Cast<DataGridViewRow>() select (Comic)row.DataBoundItem).ToArray());
+			Controller.StopBots((from row in dgvwTasks.Rows.Cast<DataGridViewRow>() select (Comic)row.DataBoundItem).ToArray());
         }
         #endregion
 

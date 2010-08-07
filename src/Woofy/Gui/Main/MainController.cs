@@ -16,11 +16,11 @@ namespace Woofy.Gui.Main
 		/// <summary>
 		/// Opens the folder associated with the specified task, using Windows Explorer.
 		/// </summary>
-		void OpenTaskFolder(Comic task);
+		void OpenFolder(Comic task);
 
-		void ToggleSpidersState(Comic[] comics);
-		void StartSpiders(Comic[] comics);
-		void StopSpiders(Comic[] comics);
+		void ToggleBotState(Comic[] comics);
+		void StartBots(Comic[] comics);
+		void StopBots(Comic[] comics);
 		BindingList<Comic> Tasks { get; }
 	}
 
@@ -73,22 +73,22 @@ namespace Woofy.Gui.Main
 		/// <summary>
 		/// Opens the folder associated with the specified task, using Windows Explorer.
 		/// </summary>
-		public void OpenTaskFolder(Comic task)
+		public void OpenFolder(Comic task)
 		{
 			var downloadFolder = (Path.IsPathRooted(task.DownloadFolder) ? task.DownloadFolder : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, task.DownloadFolder));
 			if (Directory.Exists(downloadFolder))
 				Process.Start(downloadFolder);
 		}
 
-		public void ToggleSpidersState(Comic[] comics)
+		public void ToggleBotState(Comic[] comics)
 		{
 			foreach (var comic in comics)
-				botSupervisor.ToggleTaskState(comic, false);
+				botSupervisor.ToggleTaskState(comic);
 
 			botSupervisor.ResetTasksBindings();
 		}
 
-		public void StartSpiders(Comic[] comics)
+		public void StartBots(Comic[] comics)
 		{
 			foreach (var comic in comics)
 				botSupervisor.StartTask(comic);
@@ -96,7 +96,7 @@ namespace Woofy.Gui.Main
 			botSupervisor.ResetTasksBindings();
 		}
 
-		public void StopSpiders(Comic[] comics)
+		public void StopBots(Comic[] comics)
 		{
 			foreach (var comic in comics)
 				botSupervisor.StopTask(comic);

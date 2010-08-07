@@ -22,8 +22,8 @@ namespace Woofy.Core
 
         public const string ContentGroup = "content";
 
-        public Bot(ComicDefinition comicInfo, string downloadFolder, bool randomPausesBetweenRequests)
-            : this(comicInfo, new FileDownloader(downloadFolder), randomPausesBetweenRequests)
+        public Bot(ComicDefinition definition, string downloadFolder, bool randomPausesBetweenRequests)
+            : this(definition, new FileDownloader(downloadFolder), randomPausesBetweenRequests)
         {
         	
         }
