@@ -38,7 +38,9 @@ namespace Woofy.Core
 		public BindingList<Comic> Comics { get; private set; }
 
 		readonly Dictionary<Comic, Bot> bots = new Dictionary<Comic, Bot>();
+
 		readonly IComicRepository comicRepository;
+
 		readonly SynchronizationContext synchronizationContext;
 
 		public BotSupervisor(IComicRepository comicRepository, SynchronizationContext synchronizationContext)
@@ -52,7 +54,7 @@ namespace Woofy.Core
 		}
 
 		/// <summary>
-		/// Adds a new comic to the tasks list and database.
+		/// Adds a new comic to the tasks list.
 		/// </summary>
 		/// <returns>True if the comic has been added successfully, false otherwise.</returns>
 		public void Add(Comic comic)
@@ -61,8 +63,13 @@ namespace Woofy.Core
 			Comics.Add(comic);
 		}
 
+		public void StartAllBots()
+		{
+			bots.ForEach(x => x.Value.DownloadComicsAsync());
+		}
+
 		/// <summary>
-		/// Stops the specified comic's download and deletes it from the database.
+		/// Stops the specified comic's download.
 		/// </summary>
 		/// <param name="comic"></param>
 		public void Delete(Comic comic)
@@ -100,17 +107,16 @@ namespace Woofy.Core
 				return;
 			
 			comic.Status = TaskStatus.Stopped;
+			comicRepository.PersistComics();
 
 			var bot = bots[comic];
 			bot.StopDownload();
-
-#warning How do I handle this? //comicRepository.Update(comic);
 		}
 
 		public void Resume(Comic comic)
 		{
 			comic.Status = TaskStatus.Running;
-			//comicRepository.Update(comic);
+			comicRepository.PersistComics();
 
 			var bot = bots[comic];
 			if (string.IsNullOrEmpty(comic.CurrentUrl))
@@ -122,11 +128,6 @@ namespace Woofy.Core
 		public void ResetComicsBindings()
 		{
 			Comics.ResetBindings();
-		}
-
-		public void StartAllBots()
-		{
-			bots.ForEach(x => x.Value.DownloadComicsAsync());
 		}
 
 		private void AddBot(Comic comic)
@@ -148,7 +149,7 @@ namespace Woofy.Core
 
 												comic.DownloadedComics++;
 												comic.CurrentUrl = e.CurrentUrl;
-												//comicRepository.Update(task);
+												comicRepository.PersistComics();
 
 												ResetComicsBindings();
 											}, null);
@@ -171,7 +172,7 @@ namespace Woofy.Core
 													comic.CurrentUrl = null;
 
 												comic.DownloadOutcome = e.DownloadOutcome;
-												//comicRepository.Update(task);
+												comicRepository.PersistComics();
 
 												ResetComicsBindings();
 
