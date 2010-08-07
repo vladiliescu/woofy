@@ -45,9 +45,9 @@ namespace Woofy.Gui.Main
 
             //refresh the already running comics
 			var comics = comicRepository.RetrieveActiveComics();
-			for (var i = 0; i < botSupervisor.Tasks.Count;)
+			for (var i = 0; i < botSupervisor.Comics.Count;)
 			{
-				var activeComic = botSupervisor.Tasks[i];
+				var activeComic = botSupervisor.Comics[i];
 				var comicIsStillActive = comics.FirstOrDefault(x => x == activeComic) != null;
 				if (comicIsStillActive)
 				{
@@ -55,19 +55,20 @@ namespace Woofy.Gui.Main
 					continue;
 				}
 
-				botSupervisor.DeleteTask(activeComic);
+				botSupervisor.Delete(activeComic);
 			}
 
 			foreach (var comic in comics)
 			{
-				var comicIsAlreadyActive = botSupervisor.Tasks.FirstOrDefault(x => x == comic) != null;
+				var comicIsAlreadyActive = botSupervisor.Comics.FirstOrDefault(x => x == comic) != null;
 				if (comicIsAlreadyActive)
 					continue;
 
-				botSupervisor.AddNewTask(comic);
+				botSupervisor.Add(comic);
+				botSupervisor.Resume(comic);
 			}
 
-			botSupervisor.ResetTasksBindings();
+			botSupervisor.ResetComicsBindings();
 		}
 
 		/// <summary>
@@ -83,30 +84,35 @@ namespace Woofy.Gui.Main
 		public void ToggleBotState(Comic[] comics)
 		{
 			foreach (var comic in comics)
-				botSupervisor.ToggleTaskState(comic);
+				botSupervisor.Toggle(comic);
 
-			botSupervisor.ResetTasksBindings();
+			botSupervisor.ResetComicsBindings();
 		}
 
 		public void StartBots(Comic[] comics)
 		{
 			foreach (var comic in comics)
-				botSupervisor.StartTask(comic);
+				botSupervisor.Resume(comic);
 
-			botSupervisor.ResetTasksBindings();
+			botSupervisor.ResetComicsBindings();
+		}
+
+		public void StartAllBots()
+		{
+			botSupervisor.StartAllBots();
 		}
 
 		public void StopBots(Comic[] comics)
 		{
 			foreach (var comic in comics)
-				botSupervisor.StopTask(comic);
+				botSupervisor.Pause(comic);
 
-			botSupervisor.ResetTasksBindings();
+			botSupervisor.ResetComicsBindings();
 		}
 
 		public BindingList<Comic> Tasks
 		{
-			get { return botSupervisor.Tasks; }
+			get { return botSupervisor.Comics; }
 		}
 	}
 }

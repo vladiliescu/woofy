@@ -1,40 +1,43 @@
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
 using System.ComponentModel;
 using Woofy.Settings;
+using System.Linq;
 
 namespace Woofy.Core
 {
 	public interface IBotSupervisor
 	{
-		BindingList<Comic> Tasks { get; }
+		BindingList<Comic> Comics { get; }
 
 		/// <summary>
 		/// Adds a new comic to the tasks list and database. Also starts its download.
 		/// </summary>
-		void AddNewTask(Comic comic);
+		void Add(Comic comic);
 
 		/// <summary>
 		/// Stops the specified comic's download and deletes it from the database.
 		/// </summary>
-		void DeleteTask(Comic comic);
+		void Delete(Comic comic);
 
 		/// <summary>
 		/// Pauses/unpauses a comic, depending on its current state.
 		/// </summary>
-		void ToggleTaskState(Comic comic);
-		void StopTask(Comic comic);
-		void StartTask(Comic comic);
+		void Toggle(Comic comic);
+		void Pause(Comic comic);
+		void Resume(Comic comic);
 
-		void ResetTasksBindings();
+		void ResetComicsBindings();
+		void StartAllBots();
 	}
 
 	public class BotSupervisor : IBotSupervisor
 	{
-		public BindingList<Comic> Tasks { get; private set; }
+		public BindingList<Comic> Comics { get; private set; }
 
-		readonly List<Bot> bots = new List<Bot>();
+		readonly Dictionary<Comic, Bot> bots = new Dictionary<Comic, Bot>();
 		readonly IComicRepository comicRepository;
 		readonly SynchronizationContext synchronizationContext;
 
@@ -42,123 +45,112 @@ namespace Woofy.Core
 		{
 			this.comicRepository = comicRepository;
 			this.synchronizationContext = synchronizationContext;
-			//I use a List<Comic> instead of the original array in order to be able to add/remove items to/from the BindingList
-			Tasks = new BindingList<Comic>(new List<Comic>(comicRepository.RetrieveActiveComics()));
+
+			var comics = comicRepository.RetrieveActiveComics();
+			comics.ForEach(AddBot);
+			Comics = new BindingList<Comic>(comics.ToList());
 		}
 
 		/// <summary>
-		/// Adds a new comic to the tasks list and database. Also starts its download.
+		/// Adds a new comic to the tasks list and database.
 		/// </summary>
 		/// <returns>True if the comic has been added successfully, false otherwise.</returns>
-		public void AddNewTask(Comic comic)
+		public void Add(Comic comic)
 		{
-			Tasks.Add(comic);
-			AddComicsProviderAndStartDownload(comic);
+			AddBot(comic);
+			Comics.Add(comic);
 		}
 
 		/// <summary>
 		/// Stops the specified comic's download and deletes it from the database.
 		/// </summary>
 		/// <param name="comic"></param>
-		public void DeleteTask(Comic comic)
+		public void Delete(Comic comic)
 		{
-			var index = Tasks.IndexOf(comic);
-			var comicsProvider = bots[index];
+			var bot = bots[comic];
 			if (comic.Status == TaskStatus.Running)
-				comicsProvider.StopDownload();
+				bot.StopDownload();
 
-			Tasks.RemoveAt(index);
-			bots.RemoveAt(index);
+			Comics.Remove(comic);
+
+			bot.DownloadComicCompleted -= DownloadComicCompletedCallback;
+			bot.DownloadCompleted -= DownloadComicsCompletedCallback;
+			bots.Remove(comic);
 		}
 
 		/// <summary>
 		/// Pauses/unpauses a comic, depending on its current state.
 		/// </summary>
-		public void ToggleTaskState(Comic comic)
+		public void Toggle(Comic comic)
 		{
 			switch (comic.Status)
 			{
 				case TaskStatus.Stopped:
-					StartTask(comic);
+					Resume(comic);
 					break;
 				case TaskStatus.Running:
-					StopTask(comic);
+					Pause(comic);
 					break;
 			}
 		}
 
-		public void StopTask(Comic comic)
+		public void Pause(Comic comic)
 		{
 			if (comic.Status != TaskStatus.Running)
 				return;
-
-			int index = Tasks.IndexOf(comic);
-			Bot bot = bots[index];
-
+			
 			comic.Status = TaskStatus.Stopped;
+
+			var bot = bots[comic];
 			bot.StopDownload();
 
-#warning How do I handle this? comicRepository.Update(comic);
+#warning How do I handle this? //comicRepository.Update(comic);
 		}
 
-		public void StartTask(Comic comic)
+		public void Resume(Comic comic)
 		{
-			if (comic.Status != TaskStatus.Stopped)
-				return;
-
-			int index = Tasks.IndexOf(comic);
-			Bot bot = bots[index];
-
 			comic.Status = TaskStatus.Running;
-			bot.DownloadComicsAsync(comic.CurrentUrl);
-
 			//comicRepository.Update(comic);
+
+			var bot = bots[comic];
+			if (string.IsNullOrEmpty(comic.CurrentUrl))
+				bot.DownloadComicsAsync();
+			else
+				bot.DownloadComicsAsync(comic.CurrentUrl);
 		}
 
-		public void ResetTasksBindings()
+		public void ResetComicsBindings()
 		{
-			Tasks.ResetBindings();
+			Comics.ResetBindings();
 		}
 
-		private void AddComicsProviderAndStartDownload(Comic task)
+		public void StartAllBots()
 		{
-			var bot = new Bot(task.Definition, task.DownloadFolder, task.RandomPausesBetweenRequests);
-			bots.Add(bot);
+			bots.ForEach(x => x.Value.DownloadComicsAsync());
+		}
 
+		private void AddBot(Comic comic)
+		{
+			var bot = new Bot(comic);
 			bot.DownloadComicCompleted += DownloadComicCompletedCallback;
 			bot.DownloadCompleted += DownloadComicsCompletedCallback;
 
-			if (task.Status == TaskStatus.Finished)
-			{
-				task.Status = TaskStatus.Running;
-				//comicRepository.Update(task);
-			}
-
-			if (task.Status != TaskStatus.Running)
-				return;
-
-			if (string.IsNullOrEmpty(task.CurrentUrl))
-				bot.DownloadComicsAsync();
-			else
-				bot.DownloadComicsAsync(task.CurrentUrl);
+			bots.Add(comic, bot);
 		}
 
 		private void DownloadComicCompletedCallback(object sender, DownloadStripCompletedEventArgs e)
 		{
 			synchronizationContext.Post(o =>
 											{
-												var provider = (Bot)sender;
-
-												int index = bots.IndexOf(provider);
-												if (index == -1) //in case the task has already been deleted.
+												var comic = ((Bot)sender).Comic;
+												if (!bots.ContainsKey(comic)) //in case the comic has already been removed.
 													return;
 
-												Comic task = Tasks[index];
-												task.DownloadedComics++;
-												task.CurrentUrl = e.CurrentUrl;
+												comic.DownloadedComics++;
+												comic.CurrentUrl = e.CurrentUrl;
 												//comicRepository.Update(task);
 
-												ResetTasksBindings();
+												ResetComicsBindings();
 											}, null);
 		}
 
@@ -166,31 +158,28 @@ namespace Woofy.Core
 		{
 			synchronizationContext.Post(o =>
 											{
-												var comicsProvider = (Bot)sender;
-
-												var index = bots.IndexOf(comicsProvider);
-												if (index == -1) //in case the task has already been deleted.
+												var comic = ((Bot)sender).Comic;
+												if (!bots.ContainsKey(comic)) //in case the comic has already been removed.
 													return;
 
-												var task = Tasks[index];
-												task.Status = e.DownloadOutcome == DownloadOutcome.Cancelled
+												comic.Status = e.DownloadOutcome == DownloadOutcome.Cancelled
 																? TaskStatus.Stopped
 																: TaskStatus.Finished;
 
 												//only set the currentUrl to null if the outcome is successful
 												if (e.DownloadOutcome == DownloadOutcome.Successful)
-													task.CurrentUrl = null;
+													comic.CurrentUrl = null;
 
-												task.DownloadOutcome = e.DownloadOutcome;
+												comic.DownloadOutcome = e.DownloadOutcome;
 												//comicRepository.Update(task);
 
-												ResetTasksBindings();
+												ResetComicsBindings();
 
 												if (!UserSettings.CloseWhenAllComicsHaveFinished)
 													return;
 
 												var allTasksHaveFinished = true;
-												foreach (var _task in Tasks)
+												foreach (var _task in Comics)
 												{
 													if (_task.Status != TaskStatus.Running)
 														continue;

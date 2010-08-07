@@ -45,8 +45,9 @@ namespace Woofy.Gui.ComicSelection
 			{
                 var comicShouldBeActive = inputModel.ActiveComicDefinitions.SingleOrDefault(def => def == comic.DefinitionFilename) != null;
                 comic.IsActive = comicShouldBeActive;
-                comicRepository.PersistComics();
 			}
+			
+			comicRepository.PersistComics();
 		}
 
 		public DialogResult DisplayComicSelectionForm()

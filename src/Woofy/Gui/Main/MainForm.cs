@@ -22,6 +22,7 @@ namespace Woofy.Gui.Main
     	private void MainForm_Load(object sender, EventArgs e)
         {
             InitControls();
+			StartAllComics();
 
             if (UserSettings.AutomaticallyCheckForUpdates)
                 //UpdateController.CheckForUpdatesAsync(this, false);
@@ -167,7 +168,7 @@ namespace Woofy.Gui.Main
         /// <summary>
         /// Starts all the existing tasks.
         /// </summary>
-        private void StartAllTasks()
+        private void StartAllComics()
         {
 			Controller.StartBots((from row in dgvwTasks.Rows.Cast<DataGridViewRow>() select (Comic)row.DataBoundItem).ToArray());
         }
@@ -263,7 +264,7 @@ namespace Woofy.Gui.Main
 
         private void startAllTasksToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            StartAllTasks();
+            StartAllComics();
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)

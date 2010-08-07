@@ -14,6 +14,7 @@ namespace Woofy.Core
     {
     	private readonly bool randomPausesBetweenRequests;
 
+    	public Comic Comic { get; private set; }
         private readonly IFileDownloader comicsDownloader;
         private readonly ComicDefinition definition;
         private WebClient webClient;
@@ -21,12 +22,6 @@ namespace Woofy.Core
 		private readonly Random random = new Random();
 
         public const string ContentGroup = "content";
-
-        public Bot(ComicDefinition definition, string downloadFolder, bool randomPausesBetweenRequests)
-            : this(definition, new FileDownloader(downloadFolder), randomPausesBetweenRequests)
-        {
-        	
-        }
 
     	public Bot(ComicDefinition definition, IFileDownloader comicsDownloader, bool randomPausesBetweenRequests)
         {
@@ -37,7 +32,13 @@ namespace Woofy.Core
             webClient = WebConnectionFactory.GetNewWebClientInstance();
         }
 
-        /// <summary>
+    	public Bot(Comic comic)
+			: this(comic.Definition, new FileDownloader(comic.DownloadFolder), comic.RandomPausesBetweenRequests)
+    	{
+			Comic = comic;
+    	}
+
+    	/// <summary>
         /// Downloads the specified number of comic strips.
         /// </summary>
         /// <param name="startUrl">Url at which the download should start.</param>
