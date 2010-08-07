@@ -22,7 +22,7 @@ namespace Woofy
 			var mainForm = new MainForm();
 			//the synchronization context only becomes available after creating the form
 			SynchronizationContext = SynchronizationContext.Current;	
-			//the SpiderSupervisor needs the SynchronizationContext, so I resolve it only after initializing the context
+			//the BotSupervisor needs the SynchronizationContext, so I resolve it only after initializing the context
 			mainForm.Controller = ContainerAccesor.Resolve<IMainController>();
 
             Application.Run(mainForm);

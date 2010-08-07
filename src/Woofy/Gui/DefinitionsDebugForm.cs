@@ -13,7 +13,7 @@ namespace Woofy.Gui
 {
     public partial class DefinitionsDebugForm : Form
     {
-        private Spider spider;
+        private Bot bot;
         private string currentUrl;
         private TestMode currentMode = TestMode.StandBy;
 		readonly IDefinitionStore definitionStore = ContainerAccesor.Resolve<IDefinitionStore>();
@@ -114,7 +114,7 @@ namespace Woofy.Gui
             this.currentMode = TestMode.Paused;
             DisplayAppropriateControlsForCurrentMode();
 
-            this.spider.StopDownload();
+            this.bot.StopDownload();
             CheckForLatestDebugMessages();
         }
 
@@ -123,8 +123,8 @@ namespace Woofy.Gui
             this.currentMode = TestMode.StandBy;
             DisplayAppropriateControlsForCurrentMode();
 
-            if (this.spider != null)
-                this.spider.StopDownload();
+            if (this.bot != null)
+                this.bot.StopDownload();
             CheckForLatestDebugMessages();
         }
 
@@ -276,10 +276,10 @@ namespace Woofy.Gui
                 delegate
                 {
                     CountingFileDownloader countingFileDownloader = new CountingFileDownloader();
-                    this.spider = new Spider(comicDefinition, countingFileDownloader, false);
-                    this.spider.DownloadComicCompleted += comicsProvider_DownloadComicCompleted;
+                    this.bot = new Bot(comicDefinition, countingFileDownloader, false);
+                    this.bot.DownloadComicCompleted += comicsProvider_DownloadComicCompleted;
 
-                    DownloadOutcome downloadOutcome = spider.DownloadComics(startupUrl);
+                    DownloadOutcome downloadOutcome = bot.DownloadComics(startupUrl);
 
                     switch (downloadOutcome)
                     {
@@ -316,7 +316,7 @@ namespace Woofy.Gui
 
         #endregion
 
-        #region Events - spider
+        #region Events - bot
         void comicsProvider_DownloadComicCompleted(object sender, DownloadStripCompletedEventArgs e)
         {
             this.currentUrl = e.CurrentUrl;

@@ -10,7 +10,7 @@ using Woofy.Exceptions;
 
 namespace Woofy.Core
 {
-    public class Spider
+    public class Bot
     {
     	private readonly bool randomPausesBetweenRequests;
 
@@ -22,13 +22,13 @@ namespace Woofy.Core
 
         public const string ContentGroup = "content";
 
-        public Spider(ComicDefinition comicInfo, string downloadFolder, bool randomPausesBetweenRequests)
+        public Bot(ComicDefinition comicInfo, string downloadFolder, bool randomPausesBetweenRequests)
             : this(comicInfo, new FileDownloader(downloadFolder), randomPausesBetweenRequests)
         {
         	
         }
 
-    	public Spider(ComicDefinition definition, IFileDownloader comicsDownloader, bool randomPausesBetweenRequests)
+    	public Bot(ComicDefinition definition, IFileDownloader comicsDownloader, bool randomPausesBetweenRequests)
         {
             this.definition = definition;
             this.comicsDownloader = comicsDownloader;

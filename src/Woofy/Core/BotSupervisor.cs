@@ -6,7 +6,7 @@ using Woofy.Settings;
 
 namespace Woofy.Core
 {
-	public interface ISpiderSupervisor
+	public interface IBotSupervisor
 	{
 		BindingList<Comic> Tasks { get; }
 		void Initialize();
@@ -43,15 +43,15 @@ namespace Woofy.Core
 		void ResetTasksBindings();
 	}
 
-	public class SpiderSupervisor : ISpiderSupervisor
+	public class BotSupervisor : IBotSupervisor
 	{
 		public BindingList<Comic> Tasks { get; private set; }
 
-		readonly List<Spider> spiders = new List<Spider>();
+		readonly List<Bot> spiders = new List<Bot>();
 		readonly IComicRepository comicRepository;
 		readonly SynchronizationContext synchronizationContext;
 
-		public SpiderSupervisor(IComicRepository comicRepository, SynchronizationContext synchronizationContext)
+		public BotSupervisor(IComicRepository comicRepository, SynchronizationContext synchronizationContext)
 		{
 			this.comicRepository = comicRepository;
 			this.synchronizationContext = synchronizationContext;
@@ -126,10 +126,10 @@ namespace Woofy.Core
 				return;
 
 			int index = Tasks.IndexOf(task);
-			Spider spider = spiders[index];
+			Bot bot = spiders[index];
 
 			task.Status = TaskStatus.Stopped;
-			spider.StopDownload();
+			bot.StopDownload();
 
 #warning How do I handle this? comicRepository.Update(task);
 		}
@@ -144,10 +144,10 @@ namespace Woofy.Core
 				return;
 
 			int index = Tasks.IndexOf(task);
-			Spider spider = spiders[index];
+			Bot bot = spiders[index];
 
 			task.Status = TaskStatus.Running;
-			spider.DownloadComicsAsync(task.CurrentUrl);
+			bot.DownloadComicsAsync(task.CurrentUrl);
 
 			//comicRepository.Update(task);
 		}
@@ -159,7 +159,7 @@ namespace Woofy.Core
 
 		private void AddComicsProviderAndStartDownload(Comic task)
 		{
-			var comicsProvider = new Spider(task.Definition, task.DownloadFolder, task.RandomPausesBetweenRequests);
+			var comicsProvider = new Bot(task.Definition, task.DownloadFolder, task.RandomPausesBetweenRequests);
 			spiders.Add(comicsProvider);
 
 			comicsProvider.DownloadComicCompleted += DownloadComicCompletedCallback;
@@ -184,7 +184,7 @@ namespace Woofy.Core
 		{
 			synchronizationContext.Post(o =>
 											{
-												var provider = (Spider)sender;
+												var provider = (Bot)sender;
 
 												int index = spiders.IndexOf(provider);
 												if (index == -1) //in case the task has already been deleted.
@@ -203,7 +203,7 @@ namespace Woofy.Core
 		{
 			synchronizationContext.Post(o =>
 											{
-												var comicsProvider = (Spider)sender;
+												var comicsProvider = (Bot)sender;
 
 												var index = spiders.IndexOf(comicsProvider);
 												if (index == -1) //in case the task has already been deleted.

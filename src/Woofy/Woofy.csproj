@@ -102,9 +102,9 @@
     <Compile Include="Core\IFileDownloader.cs" />
     <Compile Include="Core\FileDownloader.cs" />
     <Compile Include="Core\ComicDefinition.cs" />
-    <Compile Include="Core\Spider.cs" />
+    <Compile Include="Core\Bot.cs" />
     <Compile Include="Core\Comic.cs" />
-    <Compile Include="Core\SpiderSupervisor.cs" />
+    <Compile Include="Core\BotSupervisor.cs" />
     <Compile Include="Core\Logger.cs" />
     <Compile Include="Core\WebConnectionFactory.cs" />
     <Compile Include="Core\WebPath.cs" />

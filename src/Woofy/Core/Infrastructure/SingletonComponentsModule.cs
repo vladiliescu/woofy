@@ -8,7 +8,7 @@ namespace Woofy.Core.Infrastructure
 		{
 			builder.Register<ComicStore>().As<IComicStore>().SingletonScoped();
 			builder.Register<DefinitionStore>().As<IDefinitionStore>().SingletonScoped();
-			builder.Register<SpiderSupervisor>().As<ISpiderSupervisor>().SingletonScoped();
+			builder.Register<BotSupervisor>().As<IBotSupervisor>().SingletonScoped();
 			builder.Register(c => Program.SynchronizationContext);
 		}
 	}

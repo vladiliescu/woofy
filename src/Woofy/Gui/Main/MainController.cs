@@ -28,12 +28,12 @@ namespace Woofy.Gui.Main
 	{
 		readonly IComicSelectionController comicSelectionController;
 		readonly IComicRepository comicRepository;
-		readonly ISpiderSupervisor spiderSupervisor;
+		readonly IBotSupervisor botSupervisor;
 
-        public MainController(IComicSelectionController comicSelectionController, IComicRepository comicRepository, ISpiderSupervisor spiderSupervisor)
+        public MainController(IComicSelectionController comicSelectionController, IComicRepository comicRepository, IBotSupervisor botSupervisor)
 		{
 			this.comicSelectionController = comicSelectionController;
-        	this.spiderSupervisor = spiderSupervisor;
+        	this.botSupervisor = botSupervisor;
         	this.comicRepository = comicRepository;
 		}
 
@@ -45,9 +45,9 @@ namespace Woofy.Gui.Main
 
             //refresh the already running comics
 			var comics = comicRepository.RetrieveActiveComics();
-			for (var i = 0; i < spiderSupervisor.Tasks.Count;)
+			for (var i = 0; i < botSupervisor.Tasks.Count;)
 			{
-				var activeComic = spiderSupervisor.Tasks[i];
+				var activeComic = botSupervisor.Tasks[i];
 				var comicIsStillActive = comics.FirstOrDefault(x => x == activeComic) != null;
 				if (comicIsStillActive)
 				{
@@ -55,19 +55,19 @@ namespace Woofy.Gui.Main
 					continue;
 				}
 
-				spiderSupervisor.DeleteTask(activeComic);
+				botSupervisor.DeleteTask(activeComic);
 			}
 
 			foreach (var comic in comics)
 			{
-				var comicIsAlreadyActive = spiderSupervisor.Tasks.FirstOrDefault(x => x == comic) != null;
+				var comicIsAlreadyActive = botSupervisor.Tasks.FirstOrDefault(x => x == comic) != null;
 				if (comicIsAlreadyActive)
 					continue;
 
-				spiderSupervisor.AddNewTask(comic);
+				botSupervisor.AddNewTask(comic);
 			}
 
-			spiderSupervisor.ResetTasksBindings();
+			botSupervisor.ResetTasksBindings();
 		}
 
 		/// <summary>
@@ -83,30 +83,30 @@ namespace Woofy.Gui.Main
 		public void ToggleSpidersState(Comic[] comics)
 		{
 			foreach (var comic in comics)
-				spiderSupervisor.ToggleTaskState(comic, false);
+				botSupervisor.ToggleTaskState(comic, false);
 
-			spiderSupervisor.ResetTasksBindings();
+			botSupervisor.ResetTasksBindings();
 		}
 
 		public void StartSpiders(Comic[] comics)
 		{
 			foreach (var comic in comics)
-				spiderSupervisor.StartTask(comic);
+				botSupervisor.StartTask(comic);
 
-			spiderSupervisor.ResetTasksBindings();
+			botSupervisor.ResetTasksBindings();
 		}
 
 		public void StopSpiders(Comic[] comics)
 		{
 			foreach (var comic in comics)
-				spiderSupervisor.StopTask(comic);
+				botSupervisor.StopTask(comic);
 
-			spiderSupervisor.ResetTasksBindings();
+			botSupervisor.ResetTasksBindings();
 		}
 
 		public BindingList<Comic> Tasks
 		{
-			get { return spiderSupervisor.Tasks; }
+			get { return botSupervisor.Tasks; }
 		}
 	}
 }
