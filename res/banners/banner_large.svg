@@ -18,8 +18,8 @@
    inkscape:version="0.48.0 r9654"
    sodipodi:docname="banner_large.svg"
    inkscape:export-filename="D:\projects\my stuff\woofy.hg.gcode\experimental\res\banners\banner_large.png"
-   inkscape:export-xdpi="167.45"
-   inkscape:export-ydpi="167.45"
+   inkscape:export-xdpi="62.157856"
+   inkscape:export-ydpi="62.157856"
    enable-background="new">
   <defs
      id="defs4">
@@ -51,7 +51,7 @@
        x2="477.68237"
        y2="377.36217"
        gradientUnits="userSpaceOnUse"
-       gradientTransform="matrix(1.0001485,0,0,0.88793697,-0.03978992,36.574062)" />
+       gradientTransform="matrix(1.0158163,0,0,0.8878592,-0.95353234,36.603412)" />
     <clipPath
        clipPathUnits="userSpaceOnUse"
        id="clipPath4047">
@@ -124,7 +124,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -134,14 +134,14 @@
      id="layer1"
      style="display:inline">
     <rect
-       style="fill:url(#linearGradient3762);fill-opacity:1;stroke:#52b9be;stroke-width:1.01682162;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:url(#linearGradient3762);fill-opacity:1;stroke:#52b9be;stroke-width:1.0247103;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect2986"
-       width="418.63361"
-       height="90.06218"
-       x="58.54034"
-       y="326.61679"
-       rx="10"
-       ry="10" />
+       width="425.19171"
+       height="90.054291"
+       x="58.544285"
+       y="326.62073"
+       rx="10.156655"
+       ry="9.9991245" />
   </g>
   <g
      inkscape:groupmode="layer"
