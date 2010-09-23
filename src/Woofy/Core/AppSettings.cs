@@ -26,12 +26,13 @@ namespace Woofy.Core
 
 	public interface IAppSettings
 	{
-		string UpdateDescriptionFileAddress { get; set; }
-		string ComicsFile { get; set; }
-		string UserSettingsFile { get; set; }
-		string ComicDefinitionsFolder { get; set; }
-		string HomePage { get; set; }
-		string AuthorHomePage { get; set; }
+		string UpdateDescriptionFileAddress { get; }
+		string ComicsFile { get; }
+		string UserSettingsFile { get; }
+		string ComicDefinitionsFolder { get; }
+		string HomePage { get; }
+		string AuthorHomePage { get; }
+		string ContentGroupName { get; }
 	}
 
 	/// <summary>
@@ -39,19 +40,14 @@ namespace Woofy.Core
 	/// </summary>
 	public class AppSettings : IAppSettings
 	{
-		public string VersionNumber { get; set; }
-
-		public string UpdateDescriptionFileAddress { get; set; }
-
-		public string ComicsFile { get; set; }
-
-		public string UserSettingsFile { get; set; }
-
-		public string ComicDefinitionsFolder { get; set; }
-
-		public string HomePage { get; set; }
-
-		public string AuthorHomePage { get; set; }
+		public string VersionNumber { get; private set; }
+		public string UpdateDescriptionFileAddress { get; private set; }
+		public string ComicsFile { get; private set; }
+		public string UserSettingsFile { get; private set; }
+		public string ComicDefinitionsFolder { get; private set; }
+		public string HomePage { get; private set; }
+		public string AuthorHomePage { get; private set; }
+		public string ContentGroupName { get; private set; }
 
 		public AppSettings()
 		{
@@ -63,6 +59,8 @@ namespace Woofy.Core
 
 			HomePage = "http://code.google.com/p/woofy/";
 			AuthorHomePage = "http://vladiliescu.ro";
+
+			ContentGroupName = "content";
 		}
 
 		private static string BaseDirectory(string fileName)

@@ -7,6 +7,7 @@ using System.Threading;
 using log4net.Core;
 
 using Woofy.Core;
+using Woofy.Core.Engine;
 using Woofy.Core.Infrastructure;
 
 namespace Woofy.Gui
