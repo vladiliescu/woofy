@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Boo.Lang.Compiler;
+using Boo.Lang.Compiler.IO;
+using Boo.Lang.Compiler.Pipelines;
 using Woofy.Core.Engine;
 
 namespace Woofy.Console
@@ -11,6 +13,42 @@ namespace Woofy.Console
 		 *		download regex
 		 */
 		static void Main(string[] args)
+		{
+			CompileBooScript();
+
+			//BuildAndRunStatements();
+		}
+
+		private static void CompileBooScript()
+		{
+			var code = @"
+import Boo.Lang.PatternMatching
+
+macro hello(message as string):
+	return [|
+		print ""Hello "" + $message
+	|]		
+
+hello ""world""
+";
+
+			var parameters = new CompilerParameters()
+			{
+				OutputType = CompilerOutputType.ConsoleApplication,
+				Pipeline = new Run(),
+				OutputAssembly = "compiled.dll",
+				Input = { new StringInput("integration.boo", code) }
+			};
+
+			var compiler = new BooCompiler(parameters);
+
+			var context = compiler.Run();
+
+			if (context.Errors.Count > 0)
+				throw new CompilerError("");
+		}
+
+		private static void BuildAndRunStatements()
 		{
 			var statements = new IStatement[] { 
         	    new StartAt { Url = "http://xkcd.com/5/" }, 
