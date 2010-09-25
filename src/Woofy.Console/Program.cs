@@ -15,11 +15,42 @@ namespace Woofy.Console
 		 */
 		static void Main(string[] args)
 		{
-			CompileBooScriptUsingCustomMacro();
+			CompileDefinitionPrototype();
+
+			//CompileBooScriptUsingCustomMacro();
 
 			//CompileBooScript();
 
 			//BuildAndRunStatements();
+		}
+
+		private static void CompileDefinitionPrototype()
+		{
+			var code = @"
+start_at ""http://xkcd.com""
+#do_while visit_next(regex):
+#		download regex
+";
+
+			code = "import Woofy.Console\n\n" + code;
+
+			var parameters = new CompilerParameters()
+			{
+				OutputType = CompilerOutputType.ConsoleApplication,
+				Pipeline = new Run(),
+				OutputAssembly = "CompiledBooScriptUsingCustomMacro.dll",
+				Input = { new StringInput("integration.boo", code) }//,
+				//References = { Assembly.GetExecutingAssembly() }
+			};
+
+			parameters.References.Add(Assembly.GetExecutingAssembly());
+
+			var compiler = new BooCompiler(parameters);
+
+			var context = compiler.Run();
+
+			if (context.Errors.Count > 0)
+				throw new CompilerError("");
 		}
 
 		private static void CompileBooScriptUsingCustomMacro()
