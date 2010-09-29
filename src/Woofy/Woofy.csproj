@@ -96,6 +96,8 @@
   <ItemGroup>
     <Compile Include="Core\ApplicationInfo.cs" />
     <Compile Include="Core\ComicRepository.cs" />
+    <Compile Include="Core\Engine\BaseDefinition.cs" />
+    <Compile Include="Core\Engine\DefinitionClassCompilerStep.cs" />
     <Compile Include="Core\Engine\Context.cs" />
     <Compile Include="Core\Engine\DefinitionCompiler.cs" />
     <Compile Include="Core\Engine\Download.cs" />

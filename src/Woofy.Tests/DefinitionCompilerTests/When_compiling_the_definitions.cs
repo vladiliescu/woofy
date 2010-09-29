@@ -20,12 +20,6 @@ namespace Woofy.Tests.DefinitionCompilerTests
 		}
 
 		[Fact]
-		public void Generated_types_should_have_the_same_names_as_the_definition_filenames()
-		{
-			Assert.True(false);
-		}
-
-		[Fact]
 		public void Compiled_definitions_should_return_their_names()
 		{
 			Assert.True(false);
