@@ -13,11 +13,11 @@ namespace Woofy.Core.Engine
 
 		public void Run(Context context)
 		{
-            do
-            {
-                Body.ForEach(statement => statement.Run(context));
-            }
-            while(ConditionIsFulfilled(context));
+            //do
+            //{
+            //    Body.ForEach(statement => statement.Run(context));
+            //}
+            //while(ConditionIsFulfilled(context));
 		}
 
 	    private bool ConditionIsFulfilled(Context context)

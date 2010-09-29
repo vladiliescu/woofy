@@ -2,6 +2,7 @@
 using Boo.Lang.Compiler;
 using Boo.Lang.Compiler.IO;
 using Boo.Lang.Compiler.Pipelines;
+
 using Woofy.Core.Engine;
 
 namespace Woofy.Console
@@ -15,13 +16,52 @@ namespace Woofy.Console
 		 */
 		static void Main(string[] args)
 		{
-			CompileDefinitionPrototype();
-
-			//CompileBooScriptUsingCustomMacro();
+			CompileBooScriptUsingCustomMacro();
 
 			//CompileBooScript();
 
 			//BuildAndRunStatements();
+		}
+
+		private static void GenerateNamedClassFromDefinition()
+		{
+			var code = @"
+print 'hello there'
+#name = 'xkcd'
+#start_at = 'http://xkcd.com'
+
+#body:
+#	i = 1
+#	while i <= 5
+#		download '...'
+#		i++
+";
+
+			code = "import Woofy.Console\n\n" + code;
+
+			var parameters = new CompilerParameters()
+			{
+				OutputType = CompilerOutputType.Library,
+				Pipeline = new CompileToFile(), //new Run(),
+				OutputAssembly = "GenerateNamedClassFromDefinition.dll",
+				Input = { new StringInput("AnonymousClass.boo", code) }
+			};
+
+            //parameters.Pipeline.Insert(1,
+            //    new ImplicitBaseClassCompilerStep(typeof(MyAnonymousBaseClass), "Run"));
+
+			parameters.References.Add(Assembly.GetExecutingAssembly());
+
+			var compiler = new BooCompiler(parameters);
+
+			var context = compiler.Run();
+
+			MyAnonymousBaseClass instance = (MyAnonymousBaseClass)context.GeneratedAssembly.CreateInstance("AnonymousClass");
+			instance.Run();
+
+			if (context.Errors.Count > 0)
+				throw new CompilerError(context.Errors.ToString(true));
+
 		}
 
 		private static void CompileDefinitionPrototype()
@@ -39,8 +79,7 @@ start_at ""http://xkcd.com""
 				OutputType = CompilerOutputType.ConsoleApplication,
 				Pipeline = new Run(),
 				OutputAssembly = "CompiledBooScriptUsingCustomMacro.dll",
-				Input = { new StringInput("integration.boo", code) }//,
-				//References = { Assembly.GetExecutingAssembly() }
+				Input = { new StringInput("integration.boo", code) }
 			};
 
 			parameters.References.Add(Assembly.GetExecutingAssembly());
@@ -137,5 +176,10 @@ hello ""world""
 				statement.Run(context);
 			}
 		}
+	}
+
+	public abstract class MyAnonymousBaseClass
+	{
+		public abstract void Run();
 	}
 }

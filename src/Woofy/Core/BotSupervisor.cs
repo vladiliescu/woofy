@@ -6,6 +6,7 @@ using System.ComponentModel;
 using Woofy.Core.Engine;
 using Woofy.Settings;
 using System.Linq;
+using MoreLinq;
 
 namespace Woofy.Core
 {
