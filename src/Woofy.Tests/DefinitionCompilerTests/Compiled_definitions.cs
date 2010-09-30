@@ -1,3 +1,4 @@
+using System.Reflection;
 using Woofy.Core.Engine;
 using Xunit;
 using System.Linq;
@@ -6,14 +7,10 @@ namespace Woofy.Tests.DefinitionCompilerTests
 {
 	public class Compiled_definitions
 	{
-		[Fact]
-		public void Should_be_named_after_their_filenames()
+	    [Fact]
+		public void Should_be_named_after_their_filenames_and_prefixed_with_underscores()
 		{
-			var assembly = new DefinitionCompiler().Compile(
-				@"DefinitionCompilerTests\alpha.boo",
-				@"DefinitionCompilerTests\beta.boo",
-				@"DefinitionCompilerTests\gamma.boo"
-				);
+			var assembly = Compile("alpha.boo", "beta.boo", "gamma.boo");
 			
 			var types = assembly.GetTypes();
 			var expectedNames = new[] { "_alpha", "_beta", "_gamma" };
@@ -26,12 +23,35 @@ namespace Woofy.Tests.DefinitionCompilerTests
 		[Fact]
 		public void Should_inherit_the_base_class()
 		{
-			var compiler = new DefinitionCompiler();
-			var assembly = compiler.Compile(@"DefinitionCompilerTests\alpha.boo");
+			var assembly = Compile("alpha.boo");
+			var alphaType = assembly.GetType("_alpha");
 
-			var alpha = assembly.GetType("_alpha");
-
-			Assert.True(alpha.IsSubclassOf(typeof(BaseDefinition)));
+			Assert.True(alphaType.IsSubclassOf(typeof(BaseDefinition)));
 		}
+
+        [Fact]
+        public void Should_fill_the_comic_property()
+        {
+            var assembly = Compile("alpha.boo");
+            var alpha = (BaseDefinition)assembly.CreateInstance("_alpha");
+
+            Assert.Equal("alpha comic", alpha.Comic);
+        }
+
+        [Fact]
+        public void Should_fill_the_start_at_property()
+        {
+            var assembly = Compile("alpha.boo");
+            var alpha = (BaseDefinition)assembly.CreateInstance("_alpha");
+
+            Assert.Equal("http://example.com/alpha", alpha.StartAt);
+        }
+
+	    private Assembly Compile(params string[] definitionNames)
+        {
+            var compiler = new DefinitionCompiler();
+            var assembly = compiler.Compile(definitionNames.Select(name => "DefinitionCompilerTests\\" + name).ToArray());
+            return assembly;
+        }
 	}
 }

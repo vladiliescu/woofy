@@ -83,6 +83,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Json.Net\Newtonsoft.Json.Net20.dll</HintPath>
     </Reference>
+    <Reference Include="Rhino.DSL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Rhino.DSL\Rhino.DSL.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -103,6 +107,7 @@
     <Compile Include="Core\Engine\Download.cs" />
     <Compile Include="Core\Engine\IExpression.cs" />
     <Compile Include="Core\Engine\Macros\ComicMacro.cs" />
+    <Compile Include="Core\Engine\Macros\StartAtMacro.cs" />
     <Compile Include="Core\Engine\VisitNext.cs" />
     <Compile Include="Core\ForEach.cs" />
     <Compile Include="Core\Infrastructure\Bootstrapper.cs" />

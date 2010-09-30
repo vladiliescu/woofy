@@ -1,2 +1,2 @@
-#comic "alpha":
-#    start_address = "http://alpha.com"    
+comic "alpha comic"
+#start_address "http://example.com/alpha"

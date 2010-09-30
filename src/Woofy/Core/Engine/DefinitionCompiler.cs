@@ -2,6 +2,7 @@ using System;
 using Boo.Lang.Compiler;
 using Boo.Lang.Compiler.IO;
 using Boo.Lang.Compiler.Pipelines;
+using Rhino.DSL;
 using Assembly = System.Reflection.Assembly;
 
 namespace Woofy.Core.Engine
@@ -28,7 +29,6 @@ namespace Woofy.Core.Engine
             parameters.Pipeline.Insert(1, new DefinitionClassCompilerStep());
 
             var compiler = new BooCompiler(parameters);
-
             var context = compiler.Run();
 
             if (context.Errors.Count > 0)

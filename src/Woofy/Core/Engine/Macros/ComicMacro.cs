@@ -1,19 +1,12 @@
-using System;
-using Boo.Lang.Compiler;
-using Boo.Lang.Compiler.Ast;
+using Rhino.DSL;
 
 namespace Woofy.Core.Engine.Macros
 {
-    public class ComicMacro : LexicalInfoPreservingMacro
+    public class ComicMacro : GeneratePropertyMacro
     {
-        protected override Statement ExpandImpl(MacroStatement macro)
+        public ComicMacro() 
+            : base("Comic")
         {
-            var classDefinition = new ClassDefinition(macro.LexicalInfo);
-            //return Expression.Lift(classDefinition);
-
-            
-
-            return null;
         }
     }
 }

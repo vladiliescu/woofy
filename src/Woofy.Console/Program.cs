@@ -122,7 +122,6 @@ with foo:
 			parameters.References.Add(Assembly.GetExecutingAssembly());
 
 			var compiler = new BooCompiler(parameters);
-
 			var context = compiler.Run();
 
 			if (context.Errors.Count > 0)

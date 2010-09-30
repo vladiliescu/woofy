@@ -18,17 +18,5 @@ namespace Woofy.Tests.DefinitionCompilerTests
             var generatedTypes = assembly.GetTypes();
             Assert.Equal(3, generatedTypes.Length);
 		}
-
-		[Fact]
-		public void Compiled_definitions_should_return_their_names()
-		{
-			Assert.True(false);
-		}
-
-		[Fact]
-		public void Compiled_definitions_should_return_their_start_addresses()
-		{
-			Assert.True(false);
-		}
 	}
 }
