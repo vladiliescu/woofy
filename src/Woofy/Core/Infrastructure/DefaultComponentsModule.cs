@@ -1,6 +1,6 @@
-using System;
-using System.Linq;
-using Autofac.Builder;
+using System.Reflection;
+using Autofac;
+using Module = Autofac.Module;
 
 namespace Woofy.Core.Infrastructure
 {
@@ -8,18 +8,10 @@ namespace Woofy.Core.Infrastructure
 	{
 		protected override void Load(ContainerBuilder builder)
 		{
-			var classes = from type in GetType().Assembly.GetTypes()
-			              where type.IsClass
-			              select type;
-
-			foreach (var c in classes)
-			{
-				var correspondingInterface = Type.GetType(c.FullName.Replace(c.Name, "I" + c.Name));
-				if (correspondingInterface == null)
-					continue;
-
-				builder.Register(c).As(correspondingInterface);
-			}
+            builder
+                .RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
+                .AsImplementedInterfaces()
+                .InstancePerDependency();
 		}
 	}
 }

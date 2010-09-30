@@ -1,6 +1,5 @@
 using System;
 using Autofac;
-using Autofac.Builder;
 
 namespace Woofy.Core.Infrastructure
 {
@@ -14,7 +13,6 @@ namespace Woofy.Core.Infrastructure
 				throw new InvalidOperationException("The container has already been initialized.");
 
 			var builder = new ContainerBuilder();
-			builder.SetDefaultScope(InstanceScope.Factory);
 
 			builder.RegisterModule(new DefaultComponentsModule());
 			builder.RegisterModule(new SingletonComponentsModule());
