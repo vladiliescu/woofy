@@ -85,7 +85,7 @@
     <Compile Include="ComicsProviderTest.cs" />
     <Compile Include="DefinitionCompilerTests\BaseDefinitionCompilerTest.cs" />
     <Compile Include="DefinitionCompilerTests\Compiled_definitions.cs" />
-    <Compile Include="DefinitionCompilerTests\Visit_macro.cs" />
+    <Compile Include="DefinitionCompilerTests\Visit.cs" />
     <Compile Include="DefinitionCompilerTests\When_compiling_the_definitions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ComicInfoTest.cs" />
