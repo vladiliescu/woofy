@@ -11,7 +11,7 @@ namespace Woofy.Core.Engine
 		{
 		}
 
-		public void Run(Context context)
+		public void Execute(Context context)
 		{
             //do
             //{

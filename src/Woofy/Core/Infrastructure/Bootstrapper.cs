@@ -10,7 +10,7 @@ namespace Woofy.Core.Infrastructure
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 
-			ContainerAccesor.RegisterComponents();
+			ContainerAccessor.RegisterComponents();
 			UserSettings.Initialize();
 		}
 	}

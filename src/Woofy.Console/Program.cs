@@ -172,7 +172,7 @@ hello ""world""
 			var context = new Context();
 			foreach (var statement in statements)
 			{
-				statement.Run(context);
+				statement.Execute(context);
 			}
 		}
 	}

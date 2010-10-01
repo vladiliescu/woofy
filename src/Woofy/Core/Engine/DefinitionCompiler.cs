@@ -21,8 +21,9 @@ namespace Woofy.Core.Engine
                 Pipeline = new CompileToFile(),
                 OutputAssembly = "Definitions.dll"
             };
-            
+
             parameters.References.Add(Assembly.GetExecutingAssembly());
+
             foreach (var definitionFile in definitionFiles)
                 parameters.Input.Add(new FileInput(definitionFile));
 

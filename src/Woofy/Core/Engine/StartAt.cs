@@ -14,7 +14,7 @@ namespace Woofy.Core.Engine
             webClient = new WebClient();
 		}
 
-		public void Run(Context context)
+		public void Execute(Context context)
 		{
 			var pageContent = webClient.DownloadString(Url);
 			context.CurrentAddress = new Uri(Url);

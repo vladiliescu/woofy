@@ -1,6 +1,6 @@
 namespace Woofy.Core.Engine
 {
-	public abstract class BaseDefinition
+	public abstract class Definition
 	{
         public abstract string Comic { get; }
         public abstract string StartAt { get; }

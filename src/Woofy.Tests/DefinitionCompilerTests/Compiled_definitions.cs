@@ -1,11 +1,10 @@
-using System.Reflection;
 using Woofy.Core.Engine;
 using Xunit;
 using System.Linq;
 
 namespace Woofy.Tests.DefinitionCompilerTests
 {
-	public class Compiled_definitions
+	public class Compiled_definitions : BaseDefinitionCompilerTest
 	{
 	    [Fact]
 		public void Should_be_named_after_their_filenames_and_prefixed_with_underscores()
@@ -26,14 +25,14 @@ namespace Woofy.Tests.DefinitionCompilerTests
 			var assembly = Compile("alpha.boo");
 			var alphaType = assembly.GetType("_alpha");
 
-			Assert.True(alphaType.IsSubclassOf(typeof(BaseDefinition)));
+			Assert.True(alphaType.IsSubclassOf(typeof(Definition)));
 		}
 
         [Fact]
         public void Should_fill_the_comic_property()
         {
             var assembly = Compile("alpha.boo");
-            var alpha = (BaseDefinition)assembly.CreateInstance("_alpha");
+            var alpha = (Definition)assembly.CreateInstance("_alpha");
 
             Assert.Equal("alpha comic", alpha.Comic);
         }
@@ -42,16 +41,9 @@ namespace Woofy.Tests.DefinitionCompilerTests
         public void Should_fill_the_start_at_property()
         {
             var assembly = Compile("alpha.boo");
-            var alpha = (BaseDefinition)assembly.CreateInstance("_alpha");
+            var alpha = (Definition)assembly.CreateInstance("_alpha");
 
             Assert.Equal("http://example.com/alpha", alpha.StartAt);
-        }
-
-	    private Assembly Compile(params string[] definitionNames)
-        {
-            var compiler = new DefinitionCompiler();
-            var assembly = compiler.Compile(definitionNames.Select(name => "DefinitionCompilerTests\\" + name).ToArray());
-            return assembly;
         }
 	}
 }

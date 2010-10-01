@@ -1,2 +1,2 @@
 comic "alpha comic"
-#start_address "http://example.com/alpha"
+start_at "http://example.com/alpha"

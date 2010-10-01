@@ -108,6 +108,7 @@
     <Compile Include="Core\Engine\IExpression.cs" />
     <Compile Include="Core\Engine\Macros\ComicMacro.cs" />
     <Compile Include="Core\Engine\Macros\StartAtMacro.cs" />
+    <Compile Include="Core\Engine\Macros\VisitMacro.cs" />
     <Compile Include="Core\Engine\VisitNext.cs" />
     <Compile Include="Core\ForEach.cs" />
     <Compile Include="Core\Infrastructure\Bootstrapper.cs" />
@@ -122,7 +123,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Core\Infrastructure\DefaultComponentsModule.cs" />
-    <Compile Include="Core\Infrastructure\ContainerAccesor.cs" />
+    <Compile Include="Core\Infrastructure\ContainerAccessor.cs" />
     <Compile Include="Core\Infrastructure\SingletonComponentsModule.cs" />
     <Compile Include="Core\Engine\PageParser.cs" />
     <Compile Include="Core\StringExtensions.cs" />

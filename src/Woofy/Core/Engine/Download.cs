@@ -6,7 +6,7 @@ namespace Woofy.Core.Engine
     {
         public string Regex { get; set; }
 
-        public void Run(Context context)
+        public void Execute(Context context)
         {
             Console.WriteLine("Downloading strip on {0}.".FormatTo(context.CurrentAddress));
         }

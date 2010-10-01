@@ -1,2 +1,2 @@
-#comic "gamma":
-#    pass
+comic "gamma"
+start_at "http://example.com/gamma"

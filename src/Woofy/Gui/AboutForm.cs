@@ -9,8 +9,8 @@ namespace Woofy.Gui
 {
     partial class AboutForm : Form
     {
-		readonly IApplicationInfo applicationInfo = ContainerAccesor.Resolve<IApplicationInfo>();
-		readonly IDefinitionStore definitionStore = ContainerAccesor.Resolve<IDefinitionStore>();
+		readonly IApplicationInfo applicationInfo = ContainerAccessor.Resolve<IApplicationInfo>();
+		readonly IDefinitionStore definitionStore = ContainerAccessor.Resolve<IDefinitionStore>();
 
         public AboutForm()
         {

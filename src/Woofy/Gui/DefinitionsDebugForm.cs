@@ -17,8 +17,8 @@ namespace Woofy.Gui
         private Bot bot;
         private string currentUrl;
         private TestMode currentMode = TestMode.StandBy;
-		readonly IDefinitionStore definitionStore = ContainerAccesor.Resolve<IDefinitionStore>();
-        readonly IComicRepository comicRepository = ContainerAccesor.Resolve<IComicRepository>();
+		readonly IDefinitionStore definitionStore = ContainerAccessor.Resolve<IDefinitionStore>();
+        readonly IComicRepository comicRepository = ContainerAccessor.Resolve<IComicRepository>();
 
 
         #region .ctor

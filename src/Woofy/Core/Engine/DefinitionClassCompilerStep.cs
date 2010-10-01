@@ -13,7 +13,8 @@ namespace Woofy.Core.Engine
 	    }
 
 	    public DefinitionClassCompilerStep(ParameterDeclarationCollection parameters)
-            : base(typeof(BaseDefinition), "Run", parameters, "Woofy.Core.Engine.Macros")
+            : base(typeof(Definition), "Run", parameters, 
+                "Woofy.Core.Engine.Macros", "Woofy.Core.Infrastructure")
 	    {
 	    }
 
