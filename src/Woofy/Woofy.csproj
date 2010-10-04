@@ -108,7 +108,7 @@
     <Compile Include="Core\Engine\IExpression.cs" />
     <Compile Include="Core\Engine\Macros\ComicMacro.cs" />
     <Compile Include="Core\Engine\Macros\StartAtMacro.cs" />
-    <Compile Include="Core\Engine\Macros\VisitMacro.cs" />
+    <Compile Include="Core\Engine\Macros\MetaMethods.cs" />
     <Compile Include="Core\Engine\VisitNext.cs" />
     <Compile Include="Core\ForEach.cs" />
     <Compile Include="Core\Infrastructure\Bootstrapper.cs" />

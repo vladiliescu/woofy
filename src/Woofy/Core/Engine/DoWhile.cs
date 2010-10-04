@@ -22,7 +22,7 @@ namespace Woofy.Core.Engine
 
 	    private bool ConditionIsFulfilled(Context context)
 	    {
-	        foreach (var expressionResult in Condition.Select(expression => expression.Execute(context)))
+	        foreach (var expressionResult in Condition.Select(expression => expression.Invoke(context)))
 	        {
                 if (expressionResult == null)
                     return false;

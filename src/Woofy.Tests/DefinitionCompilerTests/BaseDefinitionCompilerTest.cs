@@ -12,5 +12,12 @@ namespace Woofy.Tests.DefinitionCompilerTests
             var assembly = compiler.Compile(definitionNames.Select(name => "DefinitionCompilerTests\\" + name).ToArray());
             return assembly;
         }
+
+		protected Assembly CompileReferencingTests(params string[] definitionNames)
+		{
+			var compiler = new DefinitionCompiler();
+			var assembly = compiler.Compile(new[] { Assembly.GetExecutingAssembly() }, definitionNames.Select(name => "DefinitionCompilerTests\\" + name).ToArray());
+			return assembly;
+		}
     }
 }
