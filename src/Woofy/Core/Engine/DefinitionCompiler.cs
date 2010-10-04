@@ -8,6 +8,8 @@ namespace Woofy.Core.Engine
 {
     public interface IDefinitionCompiler
     {
+    	Assembly Compile(Assembly[] references, params string[] definitionFiles);
+    	Assembly Compile(params string[] definitionFiles);
     }
 
     public class DefinitionCompiler : IDefinitionCompiler

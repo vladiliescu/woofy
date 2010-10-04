@@ -31,7 +31,7 @@ namespace Woofy.Core
 
         public Comic Retrieve(string definitionFilename)
         {
-            return comicStore.Comics.Where(x => x.DefinitionFilename == definitionFilename).SingleOrDefault();
+            return comicStore.Comics.Where(x => x.DefinitionId == definitionFilename).SingleOrDefault();
         }
 
         public void PersistComics()

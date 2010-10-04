@@ -66,13 +66,14 @@ namespace Woofy.Gui
 
     	private void InitComicDefinitionsList()
     	{
+#warning commented out
 			var comicDefinitions = definitionStore.Definitions;
-    		foreach (var comicDefinition in comicDefinitions)
-    		{
-				var author = comicDefinition.Author.IsNotNullOrEmpty() ? comicDefinition.Author : "unknown";
-				var authorGroup = ObtainAuthorGroup(author);
-    			AddComicDefinitionToAuthor(comicDefinition, authorGroup);                    
-    		}
+			//foreach (var comicDefinition in comicDefinitions)
+			//{
+			//    var author = comicDefinition.Author.IsNotNullOrEmpty() ? comicDefinition.Author : "unknown";
+			//    var authorGroup = ObtainAuthorGroup(author);
+			//    AddComicDefinitionToAuthor(comicDefinition, authorGroup);                    
+			//}
 
 
     		var groups = new ListViewGroup[definitionAuthors.Groups.Count];

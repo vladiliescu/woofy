@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using Woofy.Core;
+using Woofy.Core.Engine;
 using Woofy.Gui.ComicSelection;
 using System.Linq;
 using Woofy.Updates;
@@ -32,15 +33,19 @@ namespace Woofy.Gui.Main
 		readonly IComicRepository comicRepository;
 		readonly IBotSupervisor botSupervisor;
 		readonly IUserSettings userSettings;
+		readonly IDefinitionCompiler compiler;
+		readonly IAppSettings appSettings;
 
 		public BindingList<Comic> Comics
 		{
 			get { return botSupervisor.Comics; }
 		}
 
-        public MainController(IComicSelectionController comicSelectionController, IComicRepository comicRepository, IBotSupervisor botSupervisor, IUserSettings userSettings)
+        public MainController(IComicSelectionController comicSelectionController, IComicRepository comicRepository, IBotSupervisor botSupervisor, IUserSettings userSettings, IDefinitionCompiler compiler, IAppSettings appSettings)
 		{
 			this.comicSelectionController = comicSelectionController;
+        	this.appSettings = appSettings;
+        	this.compiler = compiler;
         	this.userSettings = userSettings;
         	this.botSupervisor = botSupervisor;
         	this.comicRepository = comicRepository;

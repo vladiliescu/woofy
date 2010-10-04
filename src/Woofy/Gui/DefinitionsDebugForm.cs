@@ -99,8 +99,8 @@ namespace Woofy.Gui
         {
 			foreach (var comic in comicRepository.RetrieveAllComics())
             {
-                ListViewItem item = new ListViewItem(new string[] { comic.Definition.Name, comic.Definition.Author });
-                item.Tag = comic.DefinitionFilename;
+                var item = new ListViewItem(new[] { comic.Definition.Comic, ""});
+                item.Tag = comic.DefinitionId;
 
                 comicDefinitionsList.Items.Add(item);
             }
@@ -154,25 +154,26 @@ namespace Woofy.Gui
             eventsRichTextBox.Focus();
 
             string selectedFile = (string)comicDefinitionsList.SelectedItems[0].Tag;
-            ComicDefinition comicDefinition = definitionStore.FindByFilename(selectedFile);
+#warning commented out
+			//ComicDefinition comicDefinition = definitionStore.FindByFilename(selectedFile);
 
-            string startupUrl;
-            if (this.currentMode == TestMode.Paused)
-                startupUrl = this.currentUrl;
-            else
-                startupUrl = chkOverrideStartUrl.Checked ? txtOverrideStartUrl.Text : comicDefinition.HomePage;
+			//string startupUrl;
+			//if (this.currentMode == TestMode.Paused)
+			//    startupUrl = this.currentUrl;
+			//else
+			//    startupUrl = chkOverrideStartUrl.Checked ? txtOverrideStartUrl.Text : comicDefinition.HomePage;
 
-            this.currentMode = TestMode.Running;
-            DisplayAppropriateControlsForCurrentMode();
+			//this.currentMode = TestMode.Running;
+			//DisplayAppropriateControlsForCurrentMode();
 
-            ThreadPool.UnsafeQueueUserWorkItem(
-                delegate
-                {
-                    MonitorDebugMessages();
-                }
-            , null);
+			//ThreadPool.UnsafeQueueUserWorkItem(
+			//    delegate
+			//    {
+			//        MonitorDebugMessages();
+			//    }
+			//, null);
 
-            RunComicTest(comicDefinition, startupUrl);
+			//RunComicTest(comicDefinition, startupUrl);
         }
 
         private void DisplayAppropriateControlsForCurrentMode()
@@ -276,11 +277,13 @@ namespace Woofy.Gui
             ThreadPool.UnsafeQueueUserWorkItem(
                 delegate
                 {
-                    CountingFileDownloader countingFileDownloader = new CountingFileDownloader();
-                    this.bot = new Bot(comicDefinition, countingFileDownloader, false);
-                    this.bot.DownloadComicCompleted += comicsProvider_DownloadComicCompleted;
+#warning commented out
+					//CountingFileDownloader countingFileDownloader = new CountingFileDownloader();
+					//this.bot = new Bot(comicDefinition, countingFileDownloader, false);
+					//this.bot.DownloadComicCompleted += comicsProvider_DownloadComicCompleted;
 
-                    DownloadOutcome downloadOutcome = bot.DownloadComics(startupUrl);
+
+					DownloadOutcome downloadOutcome = DownloadOutcome.Error;// bot.DownloadComics(startupUrl);
 
                     switch (downloadOutcome)
                     {

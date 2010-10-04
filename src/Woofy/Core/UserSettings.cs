@@ -61,9 +61,8 @@ namespace Woofy.Core
 
 		public void Load()
 		{
-			var settings = File.Exists(appSettings.UserSettingsFile) ? 
-				JsonConvert.DeserializeObject<UserSettings>(File.ReadAllText(appSettings.UserSettingsFile)) : 
-				appSettings.DefaultSettings;
+			var rawSettings = File.Exists(appSettings.UserSettingsFile) ? File.ReadAllText(appSettings.UserSettingsFile) : "";
+			var settings = JsonConvert.DeserializeObject<UserSettings>(rawSettings) ?? appSettings.DefaultSettings;
 
 			CopyAttributesFrom(settings);
 		}
