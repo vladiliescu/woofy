@@ -27,7 +27,7 @@ namespace Woofy.Core
         #region Instance Members
         private readonly IFileDownloader _comicsDownloader;
         private readonly ComicDefinition _comicInfo;
-        //private WebClient _client;
+        private WebClient _client;
         private bool _isDownloadCancelled;
 		private Random random = new Random();
         #endregion
@@ -49,7 +49,7 @@ namespace Woofy.Core
             _comicsDownloader = comicsDownloader;
 			this.randomPausesBetweenRequests = randomPausesBetweenRequests;
 
-            //_client = WebConnectionFactory.GetNewWebClientInstance();
+            _client = WebConnectionFactory.GetNewWebClientInstance();
         }
         #endregion
 
@@ -88,19 +88,11 @@ namespace Woofy.Core
 
                     Logger.Debug("Visiting page {0}.", currentUrl);
 
-                    string pageContent;
-                    var request = (HttpWebRequest)WebConnectionFactory.GetNewWebRequestInstance(currentUrl);
-                    Uri responseUri;
-                    using (var response = (HttpWebResponse)request.GetResponse())
-                    {
-                        var reader = new StreamReader(response.GetResponseStream());
-                        pageContent = reader.ReadToEnd();
+                    var currentUri = new Uri(currentUrl);
+                    var pageContent = _client.DownloadString(currentUri);
 
-                        responseUri = response.ResponseUri;
-                    }
-
-                    var comicLinks = RetrieveComicLinksFromPage(pageContent, rootUri ?? responseUri, _comicInfo);
-                    var backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, rootUri ?? responseUri, _comicInfo);
+                    var comicLinks = RetrieveComicLinksFromPage(pageContent, rootUri ?? currentUri, _comicInfo);
+                    var backButtonLink = RetrieveBackButtonLinkFromPage(pageContent, rootUri ?? currentUri, _comicInfo);
                     var captures = new PageParser(pageContent, currentUrl, _comicInfo).GetCaptures();
 
                     if (!MatchedLinksObeyRules(comicLinks.Length, _comicInfo.AllowMissingStrips, _comicInfo.AllowMultipleStrips, ref downloadOutcome))

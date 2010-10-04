@@ -157,14 +157,14 @@ namespace Woofy.Gui
             this.outputContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.copyToolStripMenuItem});
             this.outputContextMenu.Name = "outputContextMenu";
-            this.outputContextMenu.Size = new System.Drawing.Size(149, 26);
+            this.outputContextMenu.Size = new System.Drawing.Size(150, 26);
             // 
             // copyToolStripMenuItem
             // 
             this.copyToolStripMenuItem.Image = global::Woofy.Properties.Resources.Copy;
             this.copyToolStripMenuItem.Name = "copyToolStripMenuItem";
             this.copyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.copyToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.copyToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.copyToolStripMenuItem.Text = "&Copy";
             this.copyToolStripMenuItem.Click += new System.EventHandler(this.copyToolStripMenuItem_Click);
             // 
@@ -218,12 +218,13 @@ namespace Woofy.Gui
             // 
             // lblFoundStrips
             // 
+            this.lblFoundStrips.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.lblFoundStrips.AutoSize = true;
-            this.lblFoundStrips.Location = new System.Drawing.Point(12, 663);
+            this.lblFoundStrips.Location = new System.Drawing.Point(9, 673);
             this.lblFoundStrips.Name = "lblFoundStrips";
-            this.lblFoundStrips.Size = new System.Drawing.Size(117, 13);
+            this.lblFoundStrips.Size = new System.Drawing.Size(100, 13);
             this.lblFoundStrips.TabIndex = 7;
-            this.lblFoundStrips.Text = "I\'ve found <009> strips.";
+            this.lblFoundStrips.Text = "Found <009> strips.";
             this.lblFoundStrips.Visible = false;
             // 
             // DefinitionsDebugForm
@@ -231,9 +232,9 @@ namespace Woofy.Gui
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(632, 698);
-            this.Controls.Add(this.lblFoundStrips);
             this.Controls.Add(this.abortButton);
             this.Controls.Add(this.pauseButton);
+            this.Controls.Add(this.lblFoundStrips);
             this.Controls.Add(groupBox2);
             this.Controls.Add(groupBox1);
             this.Controls.Add(this.closeButton);
