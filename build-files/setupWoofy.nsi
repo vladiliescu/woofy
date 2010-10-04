@@ -92,12 +92,7 @@ Section Woofy SEC0000
     
     SetOutPath $INSTDIR\definitions
     SetOverwrite on
-    File /r ${DIRECTORY}\definitions\*
-
-	ExecWait '"$WINDIR\Microsoft.NET\Framework\v2.0.50727\ngen.exe" install "$INSTDIR\LinqBridge.dll"'
-	ExecWait '"$WINDIR\Microsoft.NET\Framework\v2.0.50727\ngen.exe" install "$INSTDIR\Newtonsoft.Json.Net20.dll"'
-    ExecWait '"$WINDIR\Microsoft.NET\Framework\v2.0.50727\ngen.exe" install "$INSTDIR\log4net.dll"'
-    ExecWait '"$WINDIR\Microsoft.NET\Framework\v2.0.50727\ngen.exe" install "$INSTDIR\Woofy.exe"'
+    File /r ${DIRECTORY}\definitions\*	
     
     WriteRegStr HKLM "${REGKEY}\Components" "Woofy" 1
 SectionEnd
@@ -154,12 +149,7 @@ Section /o "un.Debug Symbols" UNSEC0001
     DeleteRegValue HKLM "${REGKEY}\Components" "Debug Symbols"
 SectionEnd
 
-Section /o un.Woofy UNSEC0000
-    ExecWait '"$WINDIR\Microsoft.NET\Framework\v2.0.50727\ngen.exe" uninstall "$INSTDIR\Woofy.exe"'
-    ExecWait '"$WINDIR\Microsoft.NET\Framework\v2.0.50727\ngen.exe" uninstall "$INSTDIR\log4net.dll"'
-	ExecWait '"$WINDIR\Microsoft.NET\Framework\v2.0.50727\ngen.exe" uninstall "$INSTDIR\Newtonsoft.Json.Net20.dll"'
-	ExecWait '"$WINDIR\Microsoft.NET\Framework\v2.0.50727\ngen.exe" uninstall "$INSTDIR\LinqBridge.dll"'
-
+Section /o un.Woofy UNSEC0000   
     RMDir /r /REBOOTOK $INSTDIR
     RMDir /r /REBOOTOK $SMPROGRAMS\$StartMenuGroup
     DeleteRegValue HKLM "${REGKEY}\Components" Woofy
