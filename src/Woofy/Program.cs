@@ -15,7 +15,7 @@ namespace Woofy
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Application.ThreadException += Application_ThreadException;
+            //Application.ThreadException += Application_ThreadException;
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
 
             Application.Run(new MainForm());
