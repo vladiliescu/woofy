@@ -3,7 +3,6 @@ using Autofac;
 using Boo.Lang;
 using Boo.Lang.Compiler.Ast;
 using Woofy.Core.Engine;
-using Woofy.Core.Engine.Macros;
 using Woofy.Core.Infrastructure;
 using Xunit;
 using Module = Autofac.Module;

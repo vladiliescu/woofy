@@ -5,7 +5,7 @@ using Woofy.Core;
 
 namespace Woofy.Settings
 {
-	public class UserSettings
+	public class UserSettingsOld
 	{
 		private static readonly UserSettingsData DefaultSettings = new UserSettingsData
 		{
@@ -125,6 +125,4 @@ namespace Woofy.Settings
 			SaveData();
 		}
 	}
-
-
 }

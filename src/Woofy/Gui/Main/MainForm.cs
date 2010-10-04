@@ -19,25 +19,21 @@ namespace Woofy.Gui.Main
             InitializeComponent();
         }
 
-    	private void MainForm_Load(object sender, EventArgs e)
+    	private void OnLoad(object sender, EventArgs e)
         {
             InitControls();
-			StartAllComics();
 
-            if (UserSettings.AutomaticallyCheckForUpdates)
-                //UpdateController.CheckForUpdatesAsync(this, false);
-                UpdateManager.CheckForUpdatesAsync(false, this);
+			Controller.Initialize(this);
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
         {
-            if (!UserSettings.MinimizeToTray)
+            if (!UserSettingsOld.MinimizeToTray)
                 return;
 
             if (WindowState == FormWindowState.Minimized)
                 Hide();
         }
-
 
         #region Events - dgvwTasks
         private void dgvwTasks_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
@@ -146,41 +142,7 @@ namespace Woofy.Gui.Main
         }
         #endregion
 
-        #region Helper Methods
-        private void ToggleSelectedTasksState()
-        {
-            if (dgvwTasks.SelectedRows.Count == 0)
-                return;
-			
-			var selectedRows = (from row in dgvwTasks.SelectedRows.Cast<DataGridViewRow>() select (Comic)row.DataBoundItem).ToArray();
-			Controller.ToggleBotState(selectedRows);
-        }
-
-        private void OpenSelectedTaskFolder()
-        {
-            if (dgvwTasks.SelectedRows.Count == 0)
-                return;
-
-            var task = (Comic)dgvwTasks.SelectedRows[0].DataBoundItem;
-            Controller.OpenFolder(task);
-        }
-
-        /// <summary>
-        /// Starts all the existing tasks.
-        /// </summary>
-        private void StartAllComics()
-        {
-			Controller.StartBots((from row in dgvwTasks.Rows.Cast<DataGridViewRow>() select (Comic)row.DataBoundItem).ToArray());
-        }
-
-        /// <summary>
-        /// Stops all the existing tasks.
-        /// </summary>
-        private void StopAllTasks()
-        {
-			Controller.StopBots((from row in dgvwTasks.Rows.Cast<DataGridViewRow>() select (Comic)row.DataBoundItem).ToArray());
-        }
-        #endregion
+        
 
         #region Events - Tool Strip Menus
 
@@ -230,7 +192,7 @@ namespace Woofy.Gui.Main
 
         private void DebugDefinitions_Click(object sender, EventArgs e)
         {
-            StopAllTasks();
+            PauseAllBots();
 
             var definitionsDebugForm = new DefinitionsDebugForm();            
             definitionsDebugForm.ShowDialog();
@@ -259,15 +221,15 @@ namespace Woofy.Gui.Main
 
         private void stopAllTasksToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            StopAllTasks();
+            PauseAllBots();
         }
 
         private void startAllTasksToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            StartAllComics();
+        	ResumeAllBots();
         }
 
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+    	private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
         } 
@@ -326,15 +288,45 @@ namespace Woofy.Gui.Main
         }
         #endregion        
 
-		void InitControls()
+		
+
+		#region Helper Methods
+		private void ToggleSelectedTasksState()
+		{
+			if (dgvwTasks.SelectedRows.Count == 0)
+				return;
+
+			var selectedRows = (from row in dgvwTasks.SelectedRows.Cast<DataGridViewRow>() select (Comic)row.DataBoundItem).ToArray();
+			Controller.ToggleBotState(selectedRows);
+		}
+
+		private void OpenSelectedTaskFolder()
+		{
+			if (dgvwTasks.SelectedRows.Count == 0)
+				return;
+
+			var task = (Comic)dgvwTasks.SelectedRows[0].DataBoundItem;
+			Controller.OpenFolder(task);
+		}
+
+		private void PauseAllBots()
+		{
+			Controller.StopBots((from row in dgvwTasks.Rows.Cast<DataGridViewRow>() select (Comic)row.DataBoundItem).ToArray());
+		}
+
+		private void ResumeAllBots()
+		{
+			Controller.StartBots((from row in dgvwTasks.Rows.Cast<DataGridViewRow>() select (Comic)row.DataBoundItem).ToArray());
+		}
+
+		private void InitControls()
 		{
 			var appIcon = new Icon(typeof(Program), "Woofy.ico");
-			Icon = 
+			Icon =
 				notifyIcon.Icon = appIcon;
 
-
 			dgvwTasks.AutoGenerateColumns = false;
-			dgvwTasks.DataSource = Controller.Tasks;
+			dgvwTasks.DataSource = Controller.Comics;
 
 			var splitButton = new ToolStripSplitButton("About..", Resources.About);
 			splitButton.ButtonClick += About_Click;
@@ -348,5 +340,6 @@ namespace Woofy.Gui.Main
 
 			toolStrip.Items.Insert(0, splitButton);
 		}
+		#endregion
     }
 }
