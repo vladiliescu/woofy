@@ -36,7 +36,6 @@ namespace Woofy.Gui
             this.comicDefinitionsList = new System.Windows.Forms.ListView();
             this.txtOverrideStartUrl = new System.Windows.Forms.TextBox();
             this.chkOverrideStartUrl = new System.Windows.Forms.CheckBox();
-            this.eventsRichTextBox = new Woofy.Core.ExRichTextBox();
             this.outputContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.copyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.startButton = new System.Windows.Forms.Button();
@@ -44,6 +43,7 @@ namespace Woofy.Gui
             this.pauseButton = new System.Windows.Forms.Button();
             this.abortButton = new System.Windows.Forms.Button();
             this.lblFoundStrips = new System.Windows.Forms.Label();
+            this.eventsRichTextBox = new Woofy.Core.ExRichTextBox();
             columnHeader1 = new System.Windows.Forms.ColumnHeader();
             columnHeader2 = new System.Windows.Forms.ColumnHeader();
             groupBox1 = new System.Windows.Forms.GroupBox();
@@ -72,7 +72,7 @@ namespace Woofy.Gui
             groupBox1.Controls.Add(this.chkOverrideStartUrl);
             groupBox1.Location = new System.Drawing.Point(12, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(608, 334);
+            groupBox1.Size = new System.Drawing.Size(588, 334);
             groupBox1.TabIndex = 15;
             groupBox1.TabStop = false;
             groupBox1.Text = "Test Selection";
@@ -93,7 +93,7 @@ namespace Woofy.Gui
             this.comicDefinitionsList.Location = new System.Drawing.Point(6, 19);
             this.comicDefinitionsList.MultiSelect = false;
             this.comicDefinitionsList.Name = "comicDefinitionsList";
-            this.comicDefinitionsList.Size = new System.Drawing.Size(596, 258);
+            this.comicDefinitionsList.Size = new System.Drawing.Size(576, 258);
             this.comicDefinitionsList.TabIndex = 7;
             this.comicDefinitionsList.UseCompatibleStateImageBehavior = false;
             this.comicDefinitionsList.View = System.Windows.Forms.View.Details;
@@ -107,7 +107,7 @@ namespace Woofy.Gui
             this.txtOverrideStartUrl.Location = new System.Drawing.Point(5, 303);
             this.txtOverrideStartUrl.Margin = new System.Windows.Forms.Padding(2);
             this.txtOverrideStartUrl.Name = "txtOverrideStartUrl";
-            this.txtOverrideStartUrl.Size = new System.Drawing.Size(597, 20);
+            this.txtOverrideStartUrl.Size = new System.Drawing.Size(577, 20);
             this.txtOverrideStartUrl.TabIndex = 14;
             // 
             // chkOverrideStartUrl
@@ -131,26 +131,10 @@ namespace Woofy.Gui
             groupBox2.Controls.Add(this.eventsRichTextBox);
             groupBox2.Location = new System.Drawing.Point(12, 352);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new System.Drawing.Size(608, 305);
+            groupBox2.Size = new System.Drawing.Size(588, 305);
             groupBox2.TabIndex = 16;
             groupBox2.TabStop = false;
             groupBox2.Text = "Output";
-            // 
-            // eventsRichTextBox
-            // 
-            this.eventsRichTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.eventsRichTextBox.ContextMenuStrip = this.outputContextMenu;
-            this.eventsRichTextBox.HiglightColor = Woofy.Core.RtfColor.White;
-            this.eventsRichTextBox.Location = new System.Drawing.Point(6, 19);
-            this.eventsRichTextBox.Name = "eventsRichTextBox";
-            this.eventsRichTextBox.ReadOnly = true;
-            this.eventsRichTextBox.Size = new System.Drawing.Size(596, 280);
-            this.eventsRichTextBox.TabIndex = 6;
-            this.eventsRichTextBox.Text = "";
-            this.eventsRichTextBox.TextColor = Woofy.Core.RtfColor.Black;
-            this.eventsRichTextBox.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.eventsRichTextBox_LinkClicked);
             // 
             // outputContextMenu
             // 
@@ -171,7 +155,7 @@ namespace Woofy.Gui
             // startButton
             // 
             this.startButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.startButton.Location = new System.Drawing.Point(464, 663);
+            this.startButton.Location = new System.Drawing.Point(444, 663);
             this.startButton.Name = "startButton";
             this.startButton.Size = new System.Drawing.Size(75, 23);
             this.startButton.TabIndex = 2;
@@ -183,7 +167,7 @@ namespace Woofy.Gui
             // 
             this.closeButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.closeButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.closeButton.Location = new System.Drawing.Point(545, 663);
+            this.closeButton.Location = new System.Drawing.Point(525, 663);
             this.closeButton.Name = "closeButton";
             this.closeButton.Size = new System.Drawing.Size(75, 23);
             this.closeButton.TabIndex = 3;
@@ -194,7 +178,7 @@ namespace Woofy.Gui
             // pauseButton
             // 
             this.pauseButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.pauseButton.Location = new System.Drawing.Point(464, 663);
+            this.pauseButton.Location = new System.Drawing.Point(444, 663);
             this.pauseButton.Name = "pauseButton";
             this.pauseButton.Size = new System.Drawing.Size(75, 23);
             this.pauseButton.TabIndex = 17;
@@ -207,7 +191,7 @@ namespace Woofy.Gui
             // 
             this.abortButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.abortButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.abortButton.Location = new System.Drawing.Point(545, 663);
+            this.abortButton.Location = new System.Drawing.Point(525, 663);
             this.abortButton.Name = "abortButton";
             this.abortButton.Size = new System.Drawing.Size(75, 23);
             this.abortButton.TabIndex = 18;
@@ -227,11 +211,27 @@ namespace Woofy.Gui
             this.lblFoundStrips.Text = "Found <009> strips.";
             this.lblFoundStrips.Visible = false;
             // 
+            // eventsRichTextBox
+            // 
+            this.eventsRichTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.eventsRichTextBox.ContextMenuStrip = this.outputContextMenu;
+            this.eventsRichTextBox.HiglightColor = Woofy.Core.RtfColor.White;
+            this.eventsRichTextBox.Location = new System.Drawing.Point(6, 19);
+            this.eventsRichTextBox.Name = "eventsRichTextBox";
+            this.eventsRichTextBox.ReadOnly = true;
+            this.eventsRichTextBox.Size = new System.Drawing.Size(576, 280);
+            this.eventsRichTextBox.TabIndex = 6;
+            this.eventsRichTextBox.Text = "";
+            this.eventsRichTextBox.TextColor = Woofy.Core.RtfColor.Black;
+            this.eventsRichTextBox.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.eventsRichTextBox_LinkClicked);
+            // 
             // DefinitionsDebugForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(632, 698);
+            this.ClientSize = new System.Drawing.Size(612, 698);
             this.Controls.Add(this.abortButton);
             this.Controls.Add(this.pauseButton);
             this.Controls.Add(this.lblFoundStrips);
