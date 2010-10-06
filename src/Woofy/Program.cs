@@ -14,10 +14,10 @@ namespace Woofy
         [STAThread]
         static void Main()
         {
-			Bootstrapper.BootstrapApplication();          
+			Bootstrapper.BootstrapApplication();
 
-            //Application.ThreadException += Application_ThreadException;
-            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
+            AppDomain.CurrentDomain.UnhandledException += (sender, e) => Logger.LogException((Exception)e.ExceptionObject);
 
 			var mainForm = new MainForm();
 			//the synchronization context only becomes available after creating the form
@@ -26,27 +26,6 @@ namespace Woofy
 			mainForm.Controller = ContainerAccessor.Resolve<IMainController>();
 
             Application.Run(mainForm);
-        }
-
-        /// <summary>
-        /// Log exceptions on the additional threads.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
-        {
-            Logger.LogException((Exception)e.ExceptionObject);
-        }
-
-        /// <summary>
-        /// Log exceptions on the main UI thread.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        static void Application_ThreadException(object sender, ThreadExceptionEventArgs e)
-        {
-			//TODO: it looks like this event is preventing exceptions from reaching the user - should i handle these exceptions differently?
-            Logger.LogException(e.Exception);
         }
     }
 }
