@@ -6,7 +6,16 @@ namespace Woofy.Tests.DefinitionCompilerTests
 {
 	public class Compiled_definitions : BaseDefinitionCompilerTest
 	{
-	    [Fact]
+		[Fact]
+		public void Should_have_exactly_one_type_associated_with_each_definition()
+		{
+			var assembly = Compile("alpha.boo", "beta.boo", "gamma.boo");
+
+			var generatedTypes = assembly.GetTypes();
+			Assert.Equal(3, generatedTypes.Length);
+		}
+
+		[Fact]
 		public void Should_be_named_after_their_filenames_and_prefixed_with_underscores()
 		{
 			var assembly = Compile("alpha.boo", "beta.boo", "gamma.boo");
@@ -28,7 +37,7 @@ namespace Woofy.Tests.DefinitionCompilerTests
 			Assert.True(alphaType.IsSubclassOf(typeof(Definition)));
 		}
 
-        [Fact]
+		[Fact]
         public void Should_fill_the_comic_property()
         {
             var assembly = Compile("alpha.boo");
@@ -37,7 +46,7 @@ namespace Woofy.Tests.DefinitionCompilerTests
             Assert.Equal("alpha comic", alpha.Comic);
         }
 
-        [Fact]
+		[Fact]
         public void Should_fill_the_start_at_property()
         {
             var assembly = Compile("alpha.boo");

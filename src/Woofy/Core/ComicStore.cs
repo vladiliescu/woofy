@@ -34,7 +34,7 @@ namespace Woofy.Core
             var comics = new List<Comic>();
 			foreach (var comic in ReadSerializedComics())
 			{
-				var comicIsSerializedAndHasADefinition = definitions.FirstOrDefault(x => x.Filename == comic.DefinitionFilename) != null;
+				var comicIsSerializedAndHasADefinition = definitions.FirstOrDefault(x => x.Id == comic.DefinitionId) != null;
 				if (!comicIsSerializedAndHasADefinition)
 					continue;
 				
@@ -43,7 +43,7 @@ namespace Woofy.Core
 
 			foreach (var definition in definitions)
 			{
-				var comicIsNotSerializedAndHasADefinition = comics.FirstOrDefault(x => x.DefinitionFilename == definition.Filename) == null;
+				var comicIsNotSerializedAndHasADefinition = comics.FirstOrDefault(x => x.DefinitionId == definition.Id) == null;
 				if (!comicIsNotSerializedAndHasADefinition)
 					continue;
 
@@ -58,7 +58,7 @@ namespace Woofy.Core
 		{
 			var json = File.ReadAllText(appSettings.ComicsFile);
 			var comics = JsonConvert.DeserializeObject<List<Comic>>(json) ?? new List<Comic>();
-			comics.ForEach(x => x.Definition = x.DefinitionFilename != null ? definitionStore.FindByFilename(x.DefinitionFilename) : null);
+			comics.ForEach(x => x.Definition = x.DefinitionId != null ? definitionStore.FindByFilename(x.DefinitionId) : null);
 			return comics;
 		}
 
@@ -69,7 +69,7 @@ namespace Woofy.Core
 
         public Comic FindByFilename(string definitionFilename)
         {
-            return Comics.SingleOrDefault(x => x.DefinitionFilename == definitionFilename);
+            return Comics.SingleOrDefault(x => x.DefinitionId == definitionFilename);
         }
 
 	    private static void EnsureFileExists(string file)

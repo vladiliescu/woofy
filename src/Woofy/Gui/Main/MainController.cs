@@ -4,8 +4,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using Woofy.Core;
+using Woofy.Core.Engine;
 using Woofy.Gui.ComicSelection;
 using System.Linq;
+using Woofy.Updates;
 
 namespace Woofy.Gui.Main
 {
@@ -21,7 +23,8 @@ namespace Woofy.Gui.Main
 		void ToggleBotState(Comic[] comics);
 		void StartBots(Comic[] comics);
 		void StopBots(Comic[] comics);
-		BindingList<Comic> Tasks { get; }
+		BindingList<Comic> Comics { get; }
+		void Initialize(MainForm form);
 	}
 
 	public class MainController : IMainController
@@ -29,10 +32,21 @@ namespace Woofy.Gui.Main
 		readonly IComicSelectionController comicSelectionController;
 		readonly IComicRepository comicRepository;
 		readonly IBotSupervisor botSupervisor;
+		readonly IUserSettings userSettings;
+		readonly IDefinitionCompiler compiler;
+		readonly IAppSettings appSettings;
 
-        public MainController(IComicSelectionController comicSelectionController, IComicRepository comicRepository, IBotSupervisor botSupervisor)
+		public BindingList<Comic> Comics
+		{
+			get { return botSupervisor.Comics; }
+		}
+
+        public MainController(IComicSelectionController comicSelectionController, IComicRepository comicRepository, IBotSupervisor botSupervisor, IUserSettings userSettings, IDefinitionCompiler compiler, IAppSettings appSettings)
 		{
 			this.comicSelectionController = comicSelectionController;
+        	this.appSettings = appSettings;
+        	this.compiler = compiler;
+        	this.userSettings = userSettings;
         	this.botSupervisor = botSupervisor;
         	this.comicRepository = comicRepository;
 		}
@@ -110,9 +124,12 @@ namespace Woofy.Gui.Main
 			botSupervisor.ResetComicsBindings();
 		}
 
-		public BindingList<Comic> Tasks
+		public void Initialize(MainForm form)
 		{
-			get { return botSupervisor.Comics; }
+			if (userSettings.AutomaticallyCheckForUpdates)
+				UpdateManager.CheckForUpdatesAsync(false, form);
+
+			StartBots(Comics.ToArray());
 		}
 	}
 }

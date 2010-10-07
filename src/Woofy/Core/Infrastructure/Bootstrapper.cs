@@ -11,7 +11,7 @@ namespace Woofy.Core.Infrastructure
 			Application.SetCompatibleTextRenderingDefault(false);
 
 			ContainerAccessor.RegisterComponents();
-			UserSettings.Initialize();
+			UserSettingsOld.Initialize();
 		}
 	}
 }

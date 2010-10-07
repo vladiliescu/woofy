@@ -290,7 +290,7 @@ namespace Woofy.Gui.Main
 			this.Margin = new System.Windows.Forms.Padding(2);
 			this.Name = "MainForm";
 			this.Text = "Woofy";
-			this.Load += new System.EventHandler(this.MainForm_Load);
+			this.Load += new System.EventHandler(this.OnLoad);
 			this.Resize += new System.EventHandler(this.MainForm_Resize);
 			((System.ComponentModel.ISupportInitialize)(this.dgvwTasks)).EndInit();
 			this.contextMenuStrip.ResumeLayout(false);

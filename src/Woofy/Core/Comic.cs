@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using Newtonsoft.Json;
+using Woofy.Core.Engine;
 
 namespace Woofy.Core
 {
@@ -9,7 +10,7 @@ namespace Woofy.Core
 		/// <summary>
 		/// The definition's filename. It uniquely identifies a comic/definition.
 		/// </summary>
-		public string DefinitionFilename { get; set; }
+		public string DefinitionId { get; set; }
 
     	public DownloadOutcome DownloadOutcome { get; set; }
     	public string Name { get; private set; }
@@ -20,7 +21,7 @@ namespace Woofy.Core
 		public bool RandomPausesBetweenRequests { get; set; }
 
 		[JsonIgnore]
-    	public ComicDefinition Definition { get; set; }
+    	public Definition Definition { get; set; }
 
 #warning This should be merged with Status, once the whole thing is stable.
 		/// <summary>
@@ -35,35 +36,13 @@ namespace Woofy.Core
 		{
 		}
 
-    	public Comic(string name, ComicDefinition definition, string downloadFolder, string currentUrl)
-			: this(name, definition, downloadFolder, currentUrl, false)
-        {
-        }
-
-		public Comic(string name, ComicDefinition definition, string downloadFolder, string currentUrl, bool randomPausesBetweenRequests)
-			: this(name, definition, 0, downloadFolder, currentUrl, TaskStatus.Running, randomPausesBetweenRequests)
-		{
-		}
-
-		private Comic(string name, ComicDefinition definition, long downloadedComics, string downloadFolder, string currentUrl, TaskStatus status, bool randomPausesBetweenRequests)
-        {
-            Name = name;
-			Definition = definition;
-			DefinitionFilename = definition.Filename;
-            DownloadedComics = downloadedComics;
-            DownloadFolder = downloadFolder;
-            CurrentUrl = currentUrl;
-            Status = status;
-			RandomPausesBetweenRequests = randomPausesBetweenRequests;
-        }
-
-    	public Comic(ComicDefinition definition)
+    	public Comic(Definition definition)
     	{
-			Name = definition.Name;
+			Name = definition.Comic;
 			Definition = definition;
-			DefinitionFilename = definition.Filename;
+			DefinitionId = definition.Id;
 #warning the download folder should be combined with the default download folder
-			DownloadFolder = Path.GetFileNameWithoutExtension(definition.Filename);
+			DownloadFolder = definition.Id;
 			Status = TaskStatus.Running;
     	}
 

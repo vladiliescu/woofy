@@ -43,7 +43,7 @@ namespace Woofy.Gui.ComicSelection
 		{
             foreach (var comic in comicRepository.RetrieveAllComics())
 			{
-                var comicShouldBeActive = inputModel.ActiveComicDefinitions.SingleOrDefault(def => def == comic.DefinitionFilename) != null;
+                var comicShouldBeActive = inputModel.ActiveComicDefinitions.SingleOrDefault(def => def == comic.DefinitionId) != null;
                 comic.IsActive = comicShouldBeActive;
 			}
 			

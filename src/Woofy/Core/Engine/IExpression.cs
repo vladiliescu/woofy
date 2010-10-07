@@ -2,6 +2,6 @@
 {
     public interface IExpression
     {
-        object Execute(Context context);
+        object Invoke(Context context);
     }
 }

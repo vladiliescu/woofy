@@ -20,23 +20,23 @@ namespace Woofy.Gui
         #region Helper Methods
         private void InitControls()
         {
-            txtDefaultDownloadFolder.Text = UserSettings.DefaultDownloadFolder;
-            chkAutomaticallyCheckForUpdates.Checked = UserSettings.AutomaticallyCheckForUpdates;
-            chkMinimizeToTray.Checked = UserSettings.MinimizeToTray;
-			chkCloseWhenAllComicsHaveFinished.Checked = UserSettings.CloseWhenAllComicsHaveFinished;
+            txtDefaultDownloadFolder.Text = UserSettingsOld.DefaultDownloadFolder;
+            chkAutomaticallyCheckForUpdates.Checked = UserSettingsOld.AutomaticallyCheckForUpdates;
+            chkMinimizeToTray.Checked = UserSettingsOld.MinimizeToTray;
+			chkCloseWhenAllComicsHaveFinished.Checked = UserSettingsOld.CloseWhenAllComicsHaveFinished;
 
-            if (!string.IsNullOrEmpty(UserSettings.ProxyAddress))
+            if (!string.IsNullOrEmpty(UserSettingsOld.ProxyAddress))
             {
-                txtProxyAddress.Text = UserSettings.ProxyAddress;
-                txtProxyPort.Text = UserSettings.ProxyPort.ToString();
+                txtProxyAddress.Text = UserSettingsOld.ProxyAddress;
+                txtProxyPort.Text = UserSettingsOld.ProxyPort.ToString();
 
                 chkUseProxy.Checked = true;
             }
 
-            if (!string.IsNullOrEmpty(UserSettings.ProxyUsername))
+            if (!string.IsNullOrEmpty(UserSettingsOld.ProxyUsername))
             {
-                txtUsername.Text = UserSettings.ProxyUsername;
-                txtPassword.Text = UserSettings.ProxyPassword;
+                txtUsername.Text = UserSettingsOld.ProxyUsername;
+                txtPassword.Text = UserSettingsOld.ProxyPassword;
 
                 chkUseCredentials.Checked = true;
             }
@@ -47,7 +47,7 @@ namespace Woofy.Gui
         #region Events - clicks
         private void btnCancel_Click(object sender, EventArgs e)
         {
-            UserSettings.LoadData();
+            UserSettingsOld.LoadData();
             this.DialogResult = DialogResult.Cancel;
         }
 
@@ -58,38 +58,38 @@ namespace Woofy.Gui
 
             if (chkUseProxy.Checked)
             {
-                UserSettings.ProxyAddress = txtProxyAddress.Text;
+                UserSettingsOld.ProxyAddress = txtProxyAddress.Text;
                 
                 int tempProxyPort;
                 if (int.TryParse(txtProxyPort.Text, out tempProxyPort))
-                    UserSettings.ProxyPort = tempProxyPort;
+                    UserSettingsOld.ProxyPort = tempProxyPort;
                 else 
-                    UserSettings.ProxyPort = null;
+                    UserSettingsOld.ProxyPort = null;
             }
             else
             {
-                UserSettings.ProxyAddress = string.Empty;
-                UserSettings.ProxyPort = null;
+                UserSettingsOld.ProxyAddress = string.Empty;
+                UserSettingsOld.ProxyPort = null;
             }
 
             if (chkUseCredentials.Checked)
             {
-                UserSettings.ProxyUsername = txtUsername.Text;
-                UserSettings.ProxyPassword = txtPassword.Text;
+                UserSettingsOld.ProxyUsername = txtUsername.Text;
+                UserSettingsOld.ProxyPassword = txtPassword.Text;
             }
             else
             {
-                UserSettings.ProxyUsername = string.Empty;
-                UserSettings.ProxyPassword = string.Empty;
+                UserSettingsOld.ProxyUsername = string.Empty;
+                UserSettingsOld.ProxyPassword = string.Empty;
             }
 
 
-            UserSettings.DefaultDownloadFolder = txtDefaultDownloadFolder.Text;
-            UserSettings.AutomaticallyCheckForUpdates = chkAutomaticallyCheckForUpdates.Checked;
-            UserSettings.MinimizeToTray = chkMinimizeToTray.Checked;
-			UserSettings.CloseWhenAllComicsHaveFinished = chkCloseWhenAllComicsHaveFinished.Checked;
+            UserSettingsOld.DefaultDownloadFolder = txtDefaultDownloadFolder.Text;
+            UserSettingsOld.AutomaticallyCheckForUpdates = chkAutomaticallyCheckForUpdates.Checked;
+            UserSettingsOld.MinimizeToTray = chkMinimizeToTray.Checked;
+			UserSettingsOld.CloseWhenAllComicsHaveFinished = chkCloseWhenAllComicsHaveFinished.Checked;
 
-            UserSettings.SaveData();
+            UserSettingsOld.SaveData();
 
             this.DialogResult = DialogResult.OK;
         }

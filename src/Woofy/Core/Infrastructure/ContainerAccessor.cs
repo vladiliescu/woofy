@@ -1,6 +1,5 @@
 using System;
 using Autofac;
-using Woofy.Core.Engine;
 
 namespace Woofy.Core.Infrastructure
 {
@@ -32,11 +31,6 @@ namespace Woofy.Core.Infrastructure
         public static T Resolve<T>(string serviceName)
         {
             return Container.Resolve<T>(serviceName);
-        }
-
-        public static IExpression ResolveExpression(string serviceName)
-        {
-            return Container.Resolve<IExpression>(serviceName);
         }
 	}
 }

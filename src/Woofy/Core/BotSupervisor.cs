@@ -178,7 +178,7 @@ namespace Woofy.Core
 
 												ResetComicsBindings();
 
-												if (!UserSettings.CloseWhenAllComicsHaveFinished)
+												if (!UserSettingsOld.CloseWhenAllComicsHaveFinished)
 													return;
 
 												var allTasksHaveFinished = true;

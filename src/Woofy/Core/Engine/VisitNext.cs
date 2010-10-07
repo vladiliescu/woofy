@@ -13,7 +13,7 @@ namespace Woofy.Core.Engine
             webClient = new WebClient();
         }
 
-        public object Execute(Context context)
+        public object Invoke(Context context)
         {
             var links = Bot.RetrieveLinksFromPage(context.PageContent, context.CurrentAddress, Regex);
             if (links.Length == 0)

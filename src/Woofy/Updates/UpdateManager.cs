@@ -75,8 +75,8 @@ namespace Woofy.Updates
 
             if (release == updateDescription.Woofy[0])
             {
-                UserSettings.LastReportedWoofyVersion = release.VersionNumber;
-                UserSettings.SaveData();
+                UserSettingsOld.LastReportedWoofyVersion = release.VersionNumber;
+                UserSettingsOld.SaveData();
                 if (mainForm.DisplayMessageBox(GetNewVersionText("Woofy", release), MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
                 {
                     DoCleanup();
@@ -114,7 +114,7 @@ namespace Woofy.Updates
         {
             Release latestWoofyRelease = updateDescription.Woofy[0];
 
-            if (IsUpgradeCandidate(latestWoofyRelease, AppSettingsOld.VersionNumber, UserSettings.LastReportedWoofyVersion, initiatedByUser))
+            if (IsUpgradeCandidate(latestWoofyRelease, AppSettingsOld.VersionNumber, UserSettingsOld.LastReportedWoofyVersion, initiatedByUser))
                 return latestWoofyRelease;
             else 
                 return null;

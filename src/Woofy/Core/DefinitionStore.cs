@@ -2,54 +2,49 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Woofy.Core.Engine;
 
 namespace Woofy.Core
 {
 	public interface IDefinitionStore
 	{
-        ComicDefinition[] Definitions { get; }
-	    ComicDefinition FindByFilename(string filename);
+		Definition[] Definitions { get; }
+		Definition FindByFilename(string filename);
 	}
 
 	public class DefinitionStore : IDefinitionStore
 	{
-		readonly IAppSettings appSettings;
-        public ComicDefinition[] Definitions { get; set; }
+        public Definition[] Definitions { get; set; }
 
-		public DefinitionStore(IAppSettings appSettings)
+		readonly IAppSettings appSettings;
+		readonly IDefinitionCompiler compiler;
+
+		public DefinitionStore(IAppSettings appSettings, IDefinitionCompiler compiler)
 		{
 			this.appSettings = appSettings;
+			this.compiler = compiler;
 
             InitializeDefinitionCache();
 		}
 
-        public ComicDefinition FindByFilename(string filename)
+		public Definition FindByFilename(string filename)
         {
-            return Definitions.SingleOrDefault(x => x.Filename == filename);
+			return null;
+            //return Definitions.SingleOrDefault(x => x.Filename == filename);
         }
 
 	    private void InitializeDefinitionCache()
 	    {
-            var definitions = new List<ComicDefinition>();
-
             if (!Directory.Exists(appSettings.ComicDefinitionsFolder))
             {
-                Definitions = new ComicDefinition[0];
+				Definitions = new Definition[0];
+				return;
             }
 
-	        foreach (var definitionFile in Directory.GetFiles(appSettings.ComicDefinitionsFolder, "*.xml"))
-            {
-                try
-                {
-                    definitions.Add(Create(definitionFile));
-                }
-                catch (Exception ex)
-                {
-                    Logger.LogException("Error initializing definition: {0}".FormatTo(definitionFile), ex);
-                }
-            }
+			var assembly = compiler.Compile(Directory.GetFiles(appSettings.ComicDefinitionsFolder, "*.def"));
+			var definitions = assembly.GetTypes();
 
-            Definitions = definitions.ToArray();
+            Definitions = definitions.Select(definition => (Definition)Activator.CreateInstance(definition)).ToArray();
 	    }
 
         /// <summary>

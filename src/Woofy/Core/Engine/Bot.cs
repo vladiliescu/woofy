@@ -16,14 +16,15 @@ namespace Woofy.Core.Engine
 
 		public Comic Comic { get; private set; }
 		private readonly IFileDownloader comicsDownloader;
-		private readonly ComicDefinition definition;
+		private readonly Definition definition;
 		private WebClient webClient;
 		private bool isDownloadCancelled;
 		private readonly Random random = new Random();
 
+#warning appSettings.ContentGroupName should be used instead.
 		public const string ContentGroup = "content";
 
-		public Bot(ComicDefinition definition, IFileDownloader comicsDownloader, bool randomPausesBetweenRequests)
+		public Bot(Definition definition, IFileDownloader comicsDownloader, bool randomPausesBetweenRequests)
 		{
 			this.definition = definition;
 			this.comicsDownloader = comicsDownloader;
@@ -40,7 +41,8 @@ namespace Woofy.Core.Engine
 
 		public void DownloadComicsAsync()
 		{
-			DownloadComicsAsync(definition.HomePage);
+#warning commented out
+			//DownloadComicsAsync(definition.HomePage);
 		}
 
 		public void DownloadComicsAsync(string startUrl)
@@ -48,7 +50,7 @@ namespace Woofy.Core.Engine
 			ThreadPool.UnsafeQueueUserWorkItem(
 				delegate
 					{
-						DownloadComics(startUrl);
+						//DownloadComics(startUrl);
 						//DownloadComicsEx();
 					}, null
 				);
@@ -76,104 +78,104 @@ namespace Woofy.Core.Engine
 			//}
 		}
 
-		public DownloadOutcome DownloadComics(string startUrl)
-		{
-			Logger.Debug("Downloading comic {0}.", definition.Name);
+//        public DownloadOutcome DownloadComics(string startUrl)
+//        {
+//            Logger.Debug("Downloading comic {0}.", definition.Name);
 
-			isDownloadCancelled = false;
-			var downloadOutcome = DownloadOutcome.Successful;
+//            isDownloadCancelled = false;
+//            var downloadOutcome = DownloadOutcome.Successful;
             
-			try
-			{
-				var rootUri = string.IsNullOrEmpty(definition.RootUrl) ? null : new Uri(definition.RootUrl);
-				var currentUrl = startUrl;
+//            try
+//            {
+//                var rootUri = string.IsNullOrEmpty(definition.RootUrl) ? null : new Uri(definition.RootUrl);
+//                var currentUrl = startUrl;
 
-				while(true)
-				{
-					if (isDownloadCancelled)
-					{
-						Logger.Debug("Download stopped by user.");
+//                while(true)
+//                {
+//                    if (isDownloadCancelled)
+//                    {
+//                        Logger.Debug("Download stopped by user.");
 
-						downloadOutcome = DownloadOutcome.Cancelled;
-						break;
-					}
+//                        downloadOutcome = DownloadOutcome.Cancelled;
+//                        break;
+//                    }
 
-					Logger.Debug("Visiting page {0}.", currentUrl);
+//                    Logger.Debug("Visiting page {0}.", currentUrl);
 
-					var currentUri = new Uri(currentUrl);
-					var pageContent = webClient.DownloadString(currentUri);
+//                    var currentUri = new Uri(currentUrl);
+//                    var pageContent = webClient.DownloadString(currentUri);
 
-					var comicLinks = RetrieveComicLinks(pageContent, rootUri ?? currentUri, definition);
-					var nextPageLink = RetrieveNextPageLink(pageContent, rootUri ?? currentUri, definition);
-					var captures = new PageParser(pageContent, currentUrl, definition).GetCaptures();
+//                    var comicLinks = RetrieveComicLinks(pageContent, rootUri ?? currentUri, definition);
+//                    var nextPageLink = RetrieveNextPageLink(pageContent, rootUri ?? currentUri, definition);
+//                    var captures = new PageParser(pageContent, currentUrl, definition).GetCaptures();
 
-					if (!MatchedLinksObeyRules(comicLinks.Length, definition.AllowMissingStrips, definition.AllowMultipleStrips, ref downloadOutcome))
-						break;
+//                    if (!MatchedLinksObeyRules(comicLinks.Length, definition.AllowMissingStrips, definition.AllowMultipleStrips, ref downloadOutcome))
+//                        break;
 
-					var nextPageStringLink = nextPageLink == null ? null : nextPageLink.AbsoluteUri;
-					foreach (var comicLink in comicLinks)
-					{
-						var fileName = GetFileName(comicLink.AbsoluteUri, definition.RenamePattern, captures);
-						if (!string.IsNullOrEmpty(definition.RenamePattern))
-						{
-							Logger.Debug("Renamed strip to:");
-							Logger.Debug("\t>>{0}", fileName);
-						}
+//                    var nextPageStringLink = nextPageLink == null ? null : nextPageLink.AbsoluteUri;
+//                    foreach (var comicLink in comicLinks)
+//                    {
+//                        var fileName = GetFileName(comicLink.AbsoluteUri, definition.RenamePattern, captures);
+//                        if (!string.IsNullOrEmpty(definition.RenamePattern))
+//                        {
+//                            Logger.Debug("Renamed strip to:");
+//                            Logger.Debug("\t>>{0}", fileName);
+//                        }
 
-						bool fileAlreadyDownloaded;
-						comicsDownloader.DownloadFile(comicLink.AbsoluteUri, currentUrl, fileName, out fileAlreadyDownloaded);
+//                        bool fileAlreadyDownloaded;
+//                        comicsDownloader.DownloadFile(comicLink.AbsoluteUri, currentUrl, fileName, out fileAlreadyDownloaded);
 
-						//if (fileAlreadyDownloaded && comicsToDownload == AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
-						//   break;
+//                        //if (fileAlreadyDownloaded && comicsToDownload == AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
+//                        //   break;
 
-#warning get rid of updating the downloaded strip count here
-						OnDownloadComicCompleted(new DownloadStripCompletedEventArgs(0, nextPageStringLink));
-					}
+//#warning get rid of updating the downloaded strip count here
+//                        OnDownloadComicCompleted(new DownloadStripCompletedEventArgs(0, nextPageStringLink));
+//                    }
 
-					//HACK
-					//if (fileAlreadyDownloaded && comicsToDownload == AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
-					//    break;
+//                    //HACK
+//                    //if (fileAlreadyDownloaded && comicsToDownload == AllAvailableComics)    //if the file hasn't been downloaded, then all new comics have been downloaded => exit
+//                    //    break;
 
-					if (nextPageLink == null)
-						break;
+//                    if (nextPageLink == null)
+//                        break;
 
-					currentUrl = nextPageLink.AbsoluteUri;
+//                    currentUrl = nextPageLink.AbsoluteUri;
 
-					if (randomPausesBetweenRequests)
-						PauseForRandomPeriod();
-				}
-			}
-			catch (UriFormatException ex)
-			{
-				Logger.Debug("Encountered an exception while downloading: {0}.", ex.Message);
+//                    if (randomPausesBetweenRequests)
+//                        PauseForRandomPeriod();
+//                }
+//            }
+//            catch (UriFormatException ex)
+//            {
+//                Logger.Debug("Encountered an exception while downloading: {0}.", ex.Message);
 
-				downloadOutcome = DownloadOutcome.Error;
-			}
-			catch (WebException ex)
-			{
-				Logger.Debug("Encountered an exception while downloading: {0}.", ex.Message);
+//                downloadOutcome = DownloadOutcome.Error;
+//            }
+//            catch (WebException ex)
+//            {
+//                Logger.Debug("Encountered an exception while downloading: {0}.", ex.Message);
 
-				downloadOutcome = DownloadOutcome.Error;
-			}
-			catch (RegexException ex)
-			{
-				Logger.Debug("Encountered an exception while searching for regex matches: {0}.", ex.Message);
-				downloadOutcome = DownloadOutcome.Error;
-			}
-			catch (IOException ex)
-			{
-				//if the network goes down while downloading a strip, the FileDownloader will throw an IOException containing a SocketException
-				//yummy
-				if (!(ex.InnerException is SocketException))
-					throw;
-				Logger.Debug("Could not access the network.");
-				downloadOutcome = DownloadOutcome.Error;
-			}
+//                downloadOutcome = DownloadOutcome.Error;
+//            }
+//            catch (RegexException ex)
+//            {
+//                Logger.Debug("Encountered an exception while searching for regex matches: {0}.", ex.Message);
+//                downloadOutcome = DownloadOutcome.Error;
+//            }
+//            catch (IOException ex)
+//            {
+//                //if the network goes down while downloading a strip, the FileDownloader will throw an IOException containing a SocketException
+//                //yummy
+//                if (!(ex.InnerException is SocketException))
+//                    throw;
+//                Logger.Debug("Could not access the network.");
+//                downloadOutcome = DownloadOutcome.Error;
+//            }
 
-			OnDownloadCompleted(downloadOutcome);
+//            OnDownloadCompleted(downloadOutcome);
 
-			return downloadOutcome;
-		}
+//            return downloadOutcome;
+//        }
 
 		/// <summary>
 		/// Stops the current download.

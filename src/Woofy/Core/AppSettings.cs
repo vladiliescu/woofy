@@ -33,6 +33,7 @@ namespace Woofy.Core
 		string HomePage { get; }
 		string AuthorHomePage { get; }
 		string ContentGroupName { get; }
+		IUserSettings DefaultSettings { get; }
 	}
 
 	/// <summary>
@@ -48,6 +49,7 @@ namespace Woofy.Core
 		public string HomePage { get; private set; }
 		public string AuthorHomePage { get; private set; }
 		public string ContentGroupName { get; private set; }
+		public IUserSettings DefaultSettings { get; private set; }
 
 		public AppSettings()
 		{
@@ -61,6 +63,21 @@ namespace Woofy.Core
 			AuthorHomePage = "http://vladiliescu.ro";
 
 			ContentGroupName = "content";
+
+			DefaultSettings = new UserSettings
+			{
+				LastUsedComicDefinitionFile = null,
+				LastNumberOfComicsToDownload = null,
+				ProxyAddress = null,
+				ProxyPort = null,
+				MinimizeToTray = true,
+				DefaultDownloadFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Comics"),
+				AutomaticallyCheckForUpdates = true,
+				LastReportedWoofyVersion = null,
+				CloseWhenAllComicsHaveFinishedDownloading = false,
+				ProxyUsername = null,
+				ProxyPassword = null
+			};
 		}
 
 		private static string BaseDirectory(string fileName)
