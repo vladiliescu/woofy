@@ -157,24 +157,6 @@ hello ""world""
 			if (context.Errors.Count > 0)
 				throw new CompilerError("");
 		}
-
-		private static void BuildAndRunStatements()
-		{
-			var statements = new IStatement[] { 
-        	    new StartAt { Url = "http://xkcd.com/5/" }, 
-                new DoWhile
-                {
-                    Condition = new [] { new VisitNext { Regex = @"<a\shref=""(?<content>/[\d]*/)""\saccesskey=""p"">" } },
-                    Body = new[] { new Download { Regex = @"<img\ssrc=""(?<content>http://imgs.xkcd.com/comics/[\w()-]*\.(gif|jpg|jpeg|png))" }}
-                }
-            };
-
-			var context = new Context();
-			foreach (var statement in statements)
-			{
-				statement.Execute(context);
-			}
-		}
 	}
 
 	public abstract class MyAnonymousBaseClass

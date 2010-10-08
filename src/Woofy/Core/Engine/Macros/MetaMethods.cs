@@ -19,7 +19,7 @@ namespace Woofy.Core.Engine.Macros
 			var invokeVisit = new MethodInvocationExpression(genericReference, new StringLiteralExpression(keyword));
 			var execute = new MemberReferenceExpression(invokeVisit, "Invoke");
 
-			var invokeExecute = new MethodInvocationExpression(execute, new NullLiteralExpression());
+			var invokeExecute = new MethodInvocationExpression(execute, new ReferenceExpression("context"));
 			return invokeExecute;
 		}
 

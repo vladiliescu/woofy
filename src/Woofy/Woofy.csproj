@@ -118,8 +118,6 @@
     <Compile Include="Core\ComicStore.cs" />
     <Compile Include="Core\CountingFileDownloader.cs" />
     <Compile Include="Core\Engine\IStatement.cs" />
-    <Compile Include="Core\Engine\StartAt.cs" />
-    <Compile Include="Core\Engine\DoWhile.cs" />
     <Compile Include="Gui\ExRichTextBox.cs">
       <SubType>Component</SubType>
     </Compile>

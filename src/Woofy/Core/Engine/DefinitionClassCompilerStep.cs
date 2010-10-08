@@ -5,13 +5,13 @@ namespace Woofy.Core.Engine
 {
 	public class DefinitionClassCompilerStep : ImplicitBaseClassCompilerStep
 	{
-        public DefinitionClassCompilerStep()
-            : this(null)
-	    {
-	    }
+		public DefinitionClassCompilerStep()
+			: this(new ParameterDeclarationCollection { new ParameterDeclaration("context", TypeReference.Lift(typeof(Context))) })
+		{
+		}
 
 	    public DefinitionClassCompilerStep(ParameterDeclarationCollection parameters)
-            : base(typeof(Definition), "Run", parameters, 
+			: base(typeof(Definition), "RunImpl", parameters, 
                     "Woofy.Core.Engine",
                     "Woofy.Core.Engine.Macros", 
                     "Woofy.Core.Infrastructure"
