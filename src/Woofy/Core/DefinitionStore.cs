@@ -10,6 +10,7 @@ namespace Woofy.Core
 	{
 		Definition[] Definitions { get; }
 		Definition FindByFilename(string filename);
+		void InitializeDefinitionCache();
 	}
 
 	public class DefinitionStore : IDefinitionStore
@@ -23,8 +24,6 @@ namespace Woofy.Core
 		{
 			this.appSettings = appSettings;
 			this.compiler = compiler;
-
-            InitializeDefinitionCache();
 		}
 
 		public Definition FindByFilename(string filename)
@@ -33,7 +32,7 @@ namespace Woofy.Core
             //return Definitions.SingleOrDefault(x => x.Filename == filename);
         }
 
-	    private void InitializeDefinitionCache()
+	    public void InitializeDefinitionCache()
 	    {
             if (!Directory.Exists(appSettings.ComicDefinitionsFolder))
             {
@@ -46,18 +45,5 @@ namespace Woofy.Core
 
             Definitions = definitions.Select(definition => (Definition)Activator.CreateInstance(definition)).ToArray();
 	    }
-
-        /// <summary>
-        /// Creates a definition based on its filename.
-        /// </summary>
-        /// <param name="definitionFileName">The definition's filename (usually without path information).</param>
-        /// <returns></returns>
-		private ComicDefinition Create(string definitionFileName)
-		{
-			var definitionFile = Path.IsPathRooted(definitionFileName) ? definitionFileName : Path.Combine(appSettings.ComicDefinitionsFolder, definitionFileName);
-			if (!File.Exists(definitionFile))
-				return null;
-			return new ComicDefinition(Path.GetFileName(definitionFile), new FileStream(definitionFile, FileMode.Open, FileAccess.Read));
-		}
 	}
 }

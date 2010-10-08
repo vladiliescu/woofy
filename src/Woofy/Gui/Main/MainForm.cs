@@ -142,8 +142,6 @@ namespace Woofy.Gui.Main
         }
         #endregion
 
-        
-
         #region Events - Tool Strip Menus
 
        private void toolStripMenuItemPauseTask_Click(object sender, EventArgs e)
@@ -288,8 +286,6 @@ namespace Woofy.Gui.Main
         }
         #endregion        
 
-		
-
 		#region Helper Methods
 		private void ToggleSelectedTasksState()
 		{
@@ -321,9 +317,7 @@ namespace Woofy.Gui.Main
 
 		private void InitControls()
 		{
-			var appIcon = new Icon(typeof(Program), "Woofy.ico");
-			Icon =
-				notifyIcon.Icon = appIcon;
+			Icon = notifyIcon.Icon = Resources.PrimaryIcon;
 
 			dgvwTasks.AutoGenerateColumns = false;
 			dgvwTasks.DataSource = Controller.Comics;

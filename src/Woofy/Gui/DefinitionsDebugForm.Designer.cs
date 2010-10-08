@@ -1,3 +1,4 @@
+using System.Windows.Forms;
 using Woofy.External;
 
 namespace Woofy.Gui
@@ -144,14 +145,12 @@ namespace Woofy.Gui
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.eventsRichTextBox.ContextMenuStrip = this.outputContextMenu;
-            this.eventsRichTextBox.HiglightColor = RtfColor.White;
             this.eventsRichTextBox.Location = new System.Drawing.Point(6, 19);
             this.eventsRichTextBox.Name = "eventsRichTextBox";
             this.eventsRichTextBox.ReadOnly = true;
             this.eventsRichTextBox.Size = new System.Drawing.Size(596, 280);
             this.eventsRichTextBox.TabIndex = 6;
             this.eventsRichTextBox.Text = "";
-            this.eventsRichTextBox.TextColor = RtfColor.Black;
             this.eventsRichTextBox.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.eventsRichTextBox_LinkClicked);
             // 
             // outputContextMenu
@@ -261,7 +260,7 @@ namespace Woofy.Gui
 
         private System.Windows.Forms.Button startButton;
         private System.Windows.Forms.Button closeButton;
-        private ExRichTextBox eventsRichTextBox;
+        private RichTextBox eventsRichTextBox;
         private System.Windows.Forms.ListView comicDefinitionsList;
         private System.Windows.Forms.TextBox txtOverrideStartUrl;
         private System.Windows.Forms.CheckBox chkOverrideStartUrl;

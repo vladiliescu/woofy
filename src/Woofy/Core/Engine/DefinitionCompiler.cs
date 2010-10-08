@@ -36,7 +36,7 @@ namespace Woofy.Core.Engine
 			var context = compiler.Run();
 
 			if (context.Errors.Count > 0)
-				throw new CompilerError(context.Errors.ToString(true));
+				throw new CompilationException(context.Errors);
 
 			return context.GeneratedAssembly;
 
