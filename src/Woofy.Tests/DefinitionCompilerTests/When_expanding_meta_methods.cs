@@ -56,7 +56,13 @@ namespace Woofy.Tests.DefinitionCompilerTests
 		[Fact]
 		public void Should_pass_the_argument_to_the_expression()
 		{
-			Assert.True(false);
+			var assembly = CompileReferencingTests("custom_keywords.boo");
+
+			var definition = (Definition)assembly.CreateInstance("_custom_keywords");
+			definition.Run();
+            
+			var bar = (BarExpression)ContainerAccessor.Resolve<IExpression>("bar");
+			Assert.Equal("baz", bar.Argument);
 		}
     }
 
@@ -79,7 +85,7 @@ namespace Woofy.Tests.DefinitionCompilerTests
         public int TimesInvoked { get; private set; }
 		public Context Context { get; private set; }
 
-        public object Invoke(Context context)
+        public object Invoke(object argument, Context context)
         {
 			Context = context;
             return ++TimesInvoked;
@@ -89,10 +95,12 @@ namespace Woofy.Tests.DefinitionCompilerTests
 	public class BarExpression : IExpression
 	{
 		public Context Context { get; private set; }
+		public string Argument { get; private set; }
 
-		public object Invoke(Context context)
+		public object Invoke(object argument, Context context)
 		{
 			Context = context;
+			Argument = (string)argument;
 			return null;
 		}
 	}
@@ -106,13 +114,13 @@ namespace Woofy.Core.Engine.Macros
 		[Meta]
 		public static MethodInvocationExpression foo()
 		{
-			return MetaMethods.GenerateIExpressionInvocationFor("foo");
+			return MetaMethods.GenerateIExpressionInvocationFor("foo", null);
 		}
 
 		[Meta]
-		public static MethodInvocationExpression bar()
+		public static MethodInvocationExpression bar(StringLiteralExpression argument)
 		{
-			return MetaMethods.GenerateIExpressionInvocationFor("bar");
+			return MetaMethods.GenerateIExpressionInvocationFor("bar", argument);
 		}
 	}
 }

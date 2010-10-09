@@ -7,7 +7,7 @@ namespace Woofy.Core.Engine.Macros
     [CompilerGlobalScope]
     public static class MetaMethods
     {
-		public static MethodInvocationExpression GenerateIExpressionInvocationFor(string keyword)
+		public static MethodInvocationExpression GenerateIExpressionInvocationFor(string keyword, StringLiteralExpression argument)
 		{
 			//todo: it would be best if i accessed the types and their corresponding method via strong-typed expressions, instead of string literals
 			var containerAccessor = new ReferenceExpression("ContainerAccessor");
@@ -19,20 +19,22 @@ namespace Woofy.Core.Engine.Macros
 			var invokeVisit = new MethodInvocationExpression(genericReference, new StringLiteralExpression(keyword));
 			var execute = new MemberReferenceExpression(invokeVisit, "Invoke");
 
-			var invokeExecute = new MethodInvocationExpression(execute, new ReferenceExpression("context"));
+			var invokeExecute = argument != null ?
+				new MethodInvocationExpression(execute, argument, new ReferenceExpression("context")) :
+				new MethodInvocationExpression(execute, new NullLiteralExpression(), new ReferenceExpression("context"));
 			return invokeExecute;
 		}
 
     	[Meta]
-        public static MethodInvocationExpression visit()
+		public static MethodInvocationExpression visit(StringLiteralExpression regex)
         {
-			return GenerateIExpressionInvocationFor("visit");
+			return GenerateIExpressionInvocationFor("visit", regex);
         }
 
 		[Meta]
-		public static MethodInvocationExpression download()
+		public static MethodInvocationExpression download(StringLiteralExpression regex)
 		{
-			return GenerateIExpressionInvocationFor("download");
+			return GenerateIExpressionInvocationFor("download", regex);
 		}
     }
 }

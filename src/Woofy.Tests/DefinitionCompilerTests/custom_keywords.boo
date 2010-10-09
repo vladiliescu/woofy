@@ -1,3 +1,3 @@
 foo()
-variable = bar()
+variable = bar("baz")
 print foo()
