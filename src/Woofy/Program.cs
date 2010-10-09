@@ -2,7 +2,9 @@ using System;
 using System.Threading;
 using System.Windows.Forms;
 using Woofy.Core;
+using Woofy.Core.Engine;
 using Woofy.Core.Infrastructure;
+using Woofy.Gui.CompilationError;
 using Woofy.Gui.Main;
 
 namespace Woofy
@@ -18,6 +20,8 @@ namespace Woofy
 
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
             AppDomain.CurrentDomain.UnhandledException += (sender, e) => Logger.LogException((Exception)e.ExceptionObject);
+
+			CompileDefinitions();
 
 			var mainForm = new MainForm();
 			//the synchronization context only becomes available after creating the form
@@ -38,25 +42,19 @@ namespace Woofy
 				try
 				{
 					definitionStore.InitializeDefinitionCache();
+					return;
 				}
 				catch (CompilationException ex)
 				{
 					var shouldRetry = compilationErrorController.DisplayError(ex);
 					if (!shouldRetry)
+					{
 						Environment.Exit(1);
+						return;
+					}
 				}
 			}
 			while (true);
     	}
-
-    	/// <summary>
-        /// Log exceptions on the additional threads.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
-        {
-            Logger.LogException((Exception)e.ExceptionObject);
-        }
     }
 }

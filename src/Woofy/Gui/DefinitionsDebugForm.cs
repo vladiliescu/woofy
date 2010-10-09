@@ -14,7 +14,7 @@ namespace Woofy.Gui
 {
     public partial class DefinitionsDebugForm : Form
     {
-        private Bot bot;
+        //private Bot bot;
         private string currentUrl;
         private TestMode currentMode = TestMode.StandBy;
 		readonly IDefinitionStore definitionStore = ContainerAccessor.Resolve<IDefinitionStore>();
@@ -115,7 +115,7 @@ namespace Woofy.Gui
             this.currentMode = TestMode.Paused;
             DisplayAppropriateControlsForCurrentMode();
 
-            this.bot.StopDownload();
+            //this.bot.StopDownload();
             CheckForLatestDebugMessages();
         }
 
@@ -124,8 +124,8 @@ namespace Woofy.Gui
             this.currentMode = TestMode.StandBy;
             DisplayAppropriateControlsForCurrentMode();
 
-            if (this.bot != null)
-                this.bot.StopDownload();
+            //if (this.bot != null)
+            //    this.bot.StopDownload();
             CheckForLatestDebugMessages();
         }
 

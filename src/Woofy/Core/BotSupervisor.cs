@@ -39,7 +39,7 @@ namespace Woofy.Core
 	{
 		public BindingList<Comic> Comics { get; private set; }
 
-		readonly Dictionary<Comic, Bot> bots = new Dictionary<Comic, Bot>();
+		readonly List<Comic> bots = new List<Comic>();
 
 		readonly IComicRepository comicRepository;
 
@@ -67,7 +67,7 @@ namespace Woofy.Core
 
 		public void StartAllBots()
 		{
-			bots.ForEach(x => x.Value.DownloadComicsAsync());
+			bots.ForEach(x => x.Definition.Run());
 		}
 
 		/// <summary>
@@ -76,15 +76,16 @@ namespace Woofy.Core
 		/// <param name="comic"></param>
 		public void Delete(Comic comic)
 		{
-			var bot = bots[comic];
-			if (comic.Status == TaskStatus.Running)
-				bot.StopDownload();
+			return;
+			//var bot = bots[comic];
+			//if (comic.Status == TaskStatus.Running)
+			//    bot.StopDownload();
 
-			Comics.Remove(comic);
+			//Comics.Remove(comic);
 
-			bot.DownloadComicCompleted -= DownloadComicCompletedCallback;
-			bot.DownloadCompleted -= DownloadComicsCompletedCallback;
-			bots.Remove(comic);
+			//bot.DownloadComicCompleted -= DownloadComicCompletedCallback;
+			//bot.DownloadCompleted -= DownloadComicsCompletedCallback;
+			//bots.Remove(comic);
 		}
 
 		/// <summary>
@@ -105,26 +106,27 @@ namespace Woofy.Core
 
 		public void Pause(Comic comic)
 		{
-			if (comic.Status != TaskStatus.Running)
-				return;
+			return;
+			//if (comic.Status != TaskStatus.Running)
+			//    return;
 			
-			comic.Status = TaskStatus.Stopped;
-			comicRepository.PersistComics();
+			//comic.Status = TaskStatus.Stopped;
+			//comicRepository.PersistComics();
 
-			var bot = bots[comic];
-			bot.StopDownload();
+			//var bot = bots[comic];
+			//bot.StopDownload();
 		}
 
 		public void Resume(Comic comic)
 		{
-			comic.Status = TaskStatus.Running;
-			comicRepository.PersistComics();
+			//comic.Status = TaskStatus.Running;
+			//comicRepository.PersistComics();
 
-			var bot = bots[comic];
-			if (string.IsNullOrEmpty(comic.CurrentUrl))
-				bot.DownloadComicsAsync();
-			else
-				bot.DownloadComicsAsync(comic.CurrentUrl);
+			//var bot = bots[comic];
+			//if (string.IsNullOrEmpty(comic.CurrentUrl))
+			//    bot.DownloadComicsAsync();
+			//else
+			//    bot.DownloadComicsAsync(comic.CurrentUrl);
 		}
 
 		public void ResetComicsBindings()
@@ -134,66 +136,66 @@ namespace Woofy.Core
 
 		private void AddBot(Comic comic)
 		{
-			var bot = new Bot(comic);
-			bot.DownloadComicCompleted += DownloadComicCompletedCallback;
-			bot.DownloadCompleted += DownloadComicsCompletedCallback;
+			//var bot = new Bot(comic);
+			//bot.DownloadComicCompleted += DownloadComicCompletedCallback;
+			//bot.DownloadCompleted += DownloadComicsCompletedCallback;
 
-			bots.Add(comic, bot);
+			//bots.Add(comic, bot);
 		}
 
 		private void DownloadComicCompletedCallback(object sender, DownloadStripCompletedEventArgs e)
 		{
-			synchronizationContext.Post(o =>
-											{
-												var comic = ((Bot)sender).Comic;
-												if (!bots.ContainsKey(comic)) //in case the comic has already been removed.
-													return;
+			//synchronizationContext.Post(o =>
+			//                                {
+			//                                    var comic = ((Bot)sender).Comic;
+			//                                    if (!bots.ContainsKey(comic)) //in case the comic has already been removed.
+			//                                        return;
 
-												comic.DownloadedComics++;
-												comic.CurrentUrl = e.CurrentUrl;
-												comicRepository.PersistComics();
+			//                                    comic.DownloadedComics++;
+			//                                    comic.CurrentUrl = e.CurrentUrl;
+			//                                    comicRepository.PersistComics();
 
-												ResetComicsBindings();
-											}, null);
+			//                                    ResetComicsBindings();
+			//                                }, null);
 		}
 
 		private void DownloadComicsCompletedCallback(object sender, DownloadCompletedEventArgs e)
 		{
-			synchronizationContext.Post(o =>
-											{
-												var comic = ((Bot)sender).Comic;
-												if (!bots.ContainsKey(comic)) //in case the comic has already been removed.
-													return;
+			//synchronizationContext.Post(o =>
+			//                                {
+			//                                    var comic = ((Bot)sender).Comic;
+			//                                    if (!bots.ContainsKey(comic)) //in case the comic has already been removed.
+			//                                        return;
 
-												comic.Status = e.DownloadOutcome == DownloadOutcome.Cancelled
-																? TaskStatus.Stopped
-																: TaskStatus.Finished;
+			//                                    comic.Status = e.DownloadOutcome == DownloadOutcome.Cancelled
+			//                                                    ? TaskStatus.Stopped
+			//                                                    : TaskStatus.Finished;
 
-												//only set the currentUrl to null if the outcome is successful
-												if (e.DownloadOutcome == DownloadOutcome.Successful)
-													comic.CurrentUrl = null;
+			//                                    //only set the currentUrl to null if the outcome is successful
+			//                                    if (e.DownloadOutcome == DownloadOutcome.Successful)
+			//                                        comic.CurrentUrl = null;
 
-												comic.DownloadOutcome = e.DownloadOutcome;
-												comicRepository.PersistComics();
+			//                                    comic.DownloadOutcome = e.DownloadOutcome;
+			//                                    comicRepository.PersistComics();
 
-												ResetComicsBindings();
+			//                                    ResetComicsBindings();
 
-												if (!UserSettingsOld.CloseWhenAllComicsHaveFinished)
-													return;
+			//                                    if (!UserSettingsOld.CloseWhenAllComicsHaveFinished)
+			//                                        return;
 
-												var allTasksHaveFinished = true;
-												foreach (var _task in Comics)
-												{
-													if (_task.Status != TaskStatus.Running)
-														continue;
+			//                                    var allTasksHaveFinished = true;
+			//                                    foreach (var _task in Comics)
+			//                                    {
+			//                                        if (_task.Status != TaskStatus.Running)
+			//                                            continue;
 
-													allTasksHaveFinished = false;
-													break;
-												}
+			//                                        allTasksHaveFinished = false;
+			//                                        break;
+			//                                    }
 
-												if (allTasksHaveFinished)
-													Application.Exit();
-											}, null);
+			//                                    if (allTasksHaveFinished)
+			//                                        Application.Exit();
+			//                                }, null);
 		}
 	}
 }

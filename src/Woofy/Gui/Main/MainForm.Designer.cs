@@ -135,7 +135,6 @@ namespace Woofy.Gui.Main
 			this.toolStripMenuItemOpenTaskFolder.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
 			this.toolStripMenuItemOpenTaskFolder.Size = new System.Drawing.Size(182, 22);
 			this.toolStripMenuItemOpenTaskFolder.Text = "Open folder";
-			this.toolStripMenuItemOpenTaskFolder.Click += new System.EventHandler(this.toolStripMenuItemOpenTaskFolder_Click);
 			// 
 			// toolStripSeparator1
 			// 
@@ -157,7 +156,6 @@ namespace Woofy.Gui.Main
 			this.toolStripMenuItemPauseTask.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
 			this.toolStripMenuItemPauseTask.Size = new System.Drawing.Size(182, 22);
 			this.toolStripMenuItemPauseTask.Text = "Pause";
-			this.toolStripMenuItemPauseTask.Click += new System.EventHandler(this.toolStripMenuItemPauseTask_Click);
 			// 
 			// toolStrip
 			// 
@@ -182,7 +180,6 @@ namespace Woofy.Gui.Main
 			this.toolStripButtonSelectComics.Size = new System.Drawing.Size(102, 22);
 			this.toolStripButtonSelectComics.Text = "Select comics...";
 			this.toolStripButtonSelectComics.ToolTipText = "Creates a new task (Ctrl+S)";
-			this.toolStripButtonSelectComics.Click += new System.EventHandler(this.OnSelectComics);
 			// 
 			// toolStripButtonPauseTask
 			// 
@@ -192,8 +189,7 @@ namespace Woofy.Gui.Main
 			this.toolStripButtonPauseTask.Name = "toolStripButtonPauseTask";
 			this.toolStripButtonPauseTask.Size = new System.Drawing.Size(56, 22);
 			this.toolStripButtonPauseTask.Text = "Pause";
-			this.toolStripButtonPauseTask.ToolTipText = "Pauses/unpauses the selected tasks (Ctrl+P)";
-			this.toolStripButtonPauseTask.Click += new System.EventHandler(this.toolStripButtonPauseTask_Click);
+			this.toolStripButtonPauseTask.ToolTipText = "Pauses/resumes the selected tasks (Ctrl+P)";
 			// 
 			// toolStripSeparator2
 			// 
@@ -210,7 +206,6 @@ namespace Woofy.Gui.Main
 			this.toolStripButtonOpenFolder.Text = "Open folder";
 			this.toolStripButtonOpenFolder.ToolTipText = "Opens the folder where the comics of the selected task have been downloaded (Ctrl" +
 				"+O)";
-			this.toolStripButtonOpenFolder.Click += new System.EventHandler(this.toolStripButtonOpenFolder_Click);
 			// 
 			// toolStripButtonSettings
 			// 
@@ -221,13 +216,11 @@ namespace Woofy.Gui.Main
 			this.toolStripButtonSettings.Size = new System.Drawing.Size(66, 22);
 			this.toolStripButtonSettings.Text = "Settings";
 			this.toolStripButtonSettings.ToolTipText = "Displays the settings form";
-			this.toolStripButtonSettings.Click += new System.EventHandler(this.toolStripButtonSettings_Click);
 			// 
 			// notifyIcon
 			// 
 			this.notifyIcon.ContextMenuStrip = this.trayMenuStrip;
 			this.notifyIcon.Visible = true;
-			this.notifyIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon_MouseDoubleClick);
 			// 
 			// trayMenuStrip
 			// 
@@ -259,14 +252,12 @@ namespace Woofy.Gui.Main
 			this.stopAllTasksToolStripMenuItem.Name = "stopAllTasksToolStripMenuItem";
 			this.stopAllTasksToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
 			this.stopAllTasksToolStripMenuItem.Text = "&Pause all tasks";
-			this.stopAllTasksToolStripMenuItem.Click += new System.EventHandler(this.stopAllTasksToolStripMenuItem_Click);
 			// 
 			// startAllTasksToolStripMenuItem
 			// 
 			this.startAllTasksToolStripMenuItem.Name = "startAllTasksToolStripMenuItem";
 			this.startAllTasksToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
 			this.startAllTasksToolStripMenuItem.Text = "&Resume all tasks";
-			this.startAllTasksToolStripMenuItem.Click += new System.EventHandler(this.startAllTasksToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator4
 			// 
@@ -278,7 +269,6 @@ namespace Woofy.Gui.Main
 			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
 			this.exitToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
 			this.exitToolStripMenuItem.Text = "E&xit";
-			this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
 			// 
 			// MainForm
 			// 

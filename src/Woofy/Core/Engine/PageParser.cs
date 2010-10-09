@@ -66,8 +66,8 @@ namespace Woofy.Core
                     continue;
 
                 string capturedContent;
-                if (match.Groups[Bot.ContentGroup].Success)
-                    capturedContent = match.Groups[Bot.ContentGroup].Value;
+                if (match.Groups[appSettings.ContentGroupName].Success)
+					capturedContent = match.Groups[appSettings.ContentGroupName].Value;
                 else
                     capturedContent = match.Value;
 

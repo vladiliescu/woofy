@@ -10,7 +10,7 @@ using Woofy.Exceptions;
 
 namespace Woofy.Core.Engine
 {
-	public class Bot
+	public class BotOldAndOnlyUsedForReference
 	{
 		private readonly bool randomPausesBetweenRequests;
 
@@ -24,7 +24,7 @@ namespace Woofy.Core.Engine
 #warning appSettings.ContentGroupName should be used instead.
 		public const string ContentGroup = "content";
 
-		public Bot(Definition definition, IFileDownloader comicsDownloader, bool randomPausesBetweenRequests)
+		public BotOldAndOnlyUsedForReference(Definition definition, IFileDownloader comicsDownloader, bool randomPausesBetweenRequests)
 		{
 			this.definition = definition;
 			this.comicsDownloader = comicsDownloader;
@@ -33,7 +33,7 @@ namespace Woofy.Core.Engine
 			webClient = WebConnectionFactory.GetNewWebClientInstance();
 		}
 
-		public Bot(Comic comic)
+		public BotOldAndOnlyUsedForReference(Comic comic)
 			: this(comic.Definition, new FileDownloader(comic.DownloadFolder), comic.RandomPausesBetweenRequests)
 		{
 			Comic = comic;

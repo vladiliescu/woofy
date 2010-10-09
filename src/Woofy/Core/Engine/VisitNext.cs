@@ -15,15 +15,15 @@ namespace Woofy.Core.Engine
 
         public object Invoke(object argument, Context context)
         {
-            var links = Bot.RetrieveLinksFromPage(context.PageContent, context.CurrentAddress, Regex);
-            if (links.Length == 0)
-                return null;
+			//var links = Bot.RetrieveLinksFromPage(context.PageContent, context.CurrentAddress, Regex);
+			//if (links.Length == 0)
+			//    return null;
 
-            var pageContent = webClient.DownloadString(links[0]);
-            context.CurrentAddress = links[0];
-            context.PageContent = pageContent;
+			//var pageContent = webClient.DownloadString(links[0]);
+			//context.CurrentAddress = links[0];
+			//context.PageContent = pageContent;
 
-            return true;
+            return false;
         }
     }
 }
