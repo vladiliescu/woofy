@@ -14,12 +14,11 @@ namespace Woofy.Core
 		public string DefinitionId { get; set; }
 
     	public DownloadOutcome DownloadOutcome { get; set; }
-    	public string Name { get; private set; }
+    	public string Name { get; set; }
     	public long DownloadedComics { get; set; }
-    	public string DownloadFolder { get; private set; }
+    	public string DownloadFolder { get; set; }
     	public TaskStatus Status { get; set; }
     	public string CurrentUrl { get; set; }
-		public bool RandomPausesBetweenRequests { get; set; }
 
 		[JsonIgnore]
     	public Definition Definition { get; set; }
