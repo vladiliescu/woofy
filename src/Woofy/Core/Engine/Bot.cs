@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using System.Net;
 using System.Threading;
 using System.Web;
+using Woofy.Enums;
 using Woofy.Exceptions;
 
 namespace Woofy.Core.Engine

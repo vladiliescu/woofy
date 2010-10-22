@@ -5,15 +5,18 @@ using System.IO;
 using System.Windows.Forms;
 using Woofy.Core;
 using Woofy.Core.Engine;
+using Woofy.Core.Infrastructure;
+using Woofy.Flows.ComicDetails;
 using Woofy.Gui.ComicSelection;
 using System.Linq;
+using Woofy.Gui.Main;
 using Woofy.Updates;
 
-namespace Woofy.Gui.Main
+namespace Woofy.Flows.Main
 {
-	public interface IMainController
+	public interface IMainPresenter
 	{
-		void DisplayComicSelectionForm();
+		void AddComicRequested();
 
 		/// <summary>
 		/// Opens the folder associated with the specified task, using Windows Explorer.
@@ -27,37 +30,42 @@ namespace Woofy.Gui.Main
 		void Initialize(MainForm form);
 	}
 
-	public class MainController : IMainController
+	public class MainPresenter : IMainPresenter
 	{
-		readonly IComicSelectionController comicSelectionController;
-		readonly IComicRepository comicRepository;
-		readonly IBotSupervisor botSupervisor;
-		readonly IUserSettings userSettings;
-		readonly IDefinitionCompiler compiler;
-		readonly IAppSettings appSettings;
+		private readonly IComicSelectionController comicSelectionController;
+		private readonly IComicRepository comicRepository;
+		private readonly IBotSupervisor botSupervisor;
+		private readonly IUserSettings userSettings;
+		private readonly IDefinitionCompiler compiler;
+		private readonly IAppSettings appSettings;
+		private readonly IApplicationController applicationController;
 
 		public BindingList<Comic> Comics
 		{
 			get { return botSupervisor.Comics; }
 		}
 
-        public MainController(IComicSelectionController comicSelectionController, IComicRepository comicRepository, IBotSupervisor botSupervisor, IUserSettings userSettings, IDefinitionCompiler compiler, IAppSettings appSettings)
+		public MainPresenter(IApplicationController applicationController, IComicSelectionController comicSelectionController, IComicRepository comicRepository, IBotSupervisor botSupervisor, IUserSettings userSettings, IDefinitionCompiler compiler, IAppSettings appSettings)
 		{
+			this.applicationController = applicationController;
 			this.comicSelectionController = comicSelectionController;
-        	this.appSettings = appSettings;
-        	this.compiler = compiler;
-        	this.userSettings = userSettings;
-        	this.botSupervisor = botSupervisor;
-        	this.comicRepository = comicRepository;
+			this.appSettings = appSettings;
+			this.compiler = compiler;
+			this.userSettings = userSettings;
+			this.botSupervisor = botSupervisor;
+			this.comicRepository = comicRepository;
 		}
 
-		public void DisplayComicSelectionForm()
+		public void AddComicRequested()
 		{
+			applicationController.Execute<AddComic>();
+			return;
+
 			var result = comicSelectionController.DisplayComicSelectionForm();
 			if (result == DialogResult.Cancel)
 				return;
 
-            //refresh the already running comics
+			//refresh the already running comics
 			var comics = comicRepository.RetrieveActiveComics();
 			for (var i = 0; i < botSupervisor.Comics.Count;)
 			{

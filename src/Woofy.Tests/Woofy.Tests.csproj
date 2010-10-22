@@ -70,6 +70,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Boo\Boo.Lang.Useful.dll</HintPath>
     </Reference>
+    <Reference Include="Moq, Version=4.0.10827.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Moq\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -83,11 +87,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ComicsProviderTest.cs" />
+    <Compile Include="ComicStoreTests\TestDefinitions.cs" />
+    <Compile Include="ComicStoreTests\When_initializing_the_comic_cache.cs" />
     <Compile Include="DefinitionCompilerTests\BaseDefinitionCompilerTest.cs" />
     <Compile Include="DefinitionCompilerTests\Compiled_definitions.cs" />
     <Compile Include="DefinitionCompilerTests\When_expanding_meta_methods.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ComicInfoTest.cs" />
+    <Compile Include="ObjectMother.cs" />
     <Compile Include="UpdateDescriptionTest.cs" />
     <Compile Include="WebPathTest.cs" />
   </ItemGroup>
@@ -111,6 +117,9 @@
     <None Include="DefinitionCompilerTests\custom_keywords.boo">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

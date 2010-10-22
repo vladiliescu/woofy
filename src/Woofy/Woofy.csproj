@@ -112,13 +112,29 @@
     <Compile Include="Core\Engine\Macros\MetaMethods.cs" />
     <Compile Include="Core\Engine\VisitNext.cs" />
     <Compile Include="Core\ForEach.cs" />
+    <Compile Include="Core\Infrastructure\ApplicationController.cs" />
     <Compile Include="Core\Infrastructure\Bootstrapper.cs" />
     <Compile Include="Core\Capture.cs" />
     <Compile Include="Core\CaptureTarget.cs" />
     <Compile Include="Core\ComicStore.cs" />
     <Compile Include="Core\CountingFileDownloader.cs" />
     <Compile Include="Core\Engine\IStatement.cs" />
-    <Compile Include="Gui\ExRichTextBox.cs">
+    <Compile Include="Core\Infrastructure\ICommandHandler.cs" />
+    <Compile Include="Core\SystemProxies\DateTimeProxy.cs" />
+    <Compile Include="Core\SystemProxies\DirectoryProxy.cs" />
+    <Compile Include="Core\SystemProxies\FileProxy.cs" />
+    <Compile Include="Core\SystemProxies\PathProxy.cs" />
+    <Compile Include="Core\SystemProxies\WebClientProxy.cs" />
+    <Compile Include="Flows\ComicDetails\AddComic.cs" />
+    <Compile Include="Flows\ComicDetails\ComicDetailsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Flows\ComicDetails\ComicDetailsForm.designer.cs">
+      <DependentUpon>ComicDetailsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Flows\ComicDetails\ComicDetailsModel.cs" />
+    <Compile Include="Flows\ComicDetails\ComicDetailsPresenter.cs" />
+    <Compile Include="Flows\ExRichTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Core\Infrastructure\DefaultComponentsModule.cs" />
@@ -127,31 +143,31 @@
     <Compile Include="Core\Engine\PageParser.cs" />
     <Compile Include="Core\StringExtensions.cs" />
     <Compile Include="Exceptions\RegexException.cs" />
-    <Compile Include="Gui\BaseForm.cs">
+    <Compile Include="Flows\BaseForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Gui\ComicSelection\ComicDto.cs" />
-    <Compile Include="Gui\ComicSelection\ComicSelectionController.cs" />
-    <Compile Include="Gui\ComicSelection\ComicSelectionForm.cs">
+    <Compile Include="Flows\ComicSelection\ComicDto.cs" />
+    <Compile Include="Flows\ComicSelection\ComicSelectionController.cs" />
+    <Compile Include="Flows\ComicSelection\ComicSelectionForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Gui\ComicSelection\ComicSelectionForm.Designer.cs">
+    <Compile Include="Flows\ComicSelection\ComicSelectionForm.Designer.cs">
       <DependentUpon>ComicSelectionForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\ComicSelection\ComicSelectionInputModel.cs" />
-    <Compile Include="Gui\ComicSelection\ComicSelectionViewModel.cs" />
+    <Compile Include="Flows\ComicSelection\ComicSelectionInputModel.cs" />
+    <Compile Include="Flows\ComicSelection\ComicSelectionViewModel.cs" />
     <Compile Include="Core\DefinitionStore.cs" />
-    <Compile Include="Gui\CompilationError\CompilationErrorDetails.cs">
+    <Compile Include="Flows\CompilationError\CompilationErrorDetails.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Gui\CompilationError\CompilationErrorDetails.Designer.cs">
+    <Compile Include="Flows\CompilationError\CompilationErrorDetails.Designer.cs">
       <DependentUpon>CompilationErrorDetails.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\CompilationError\CompilationErrorController.cs" />
-    <Compile Include="Gui\CompilationError\CompilationErrorModel.cs" />
-    <Compile Include="Gui\Main\MainController.cs" />
+    <Compile Include="Flows\CompilationError\CompilationErrorController.cs" />
+    <Compile Include="Flows\CompilationError\CompilationErrorModel.cs" />
+    <Compile Include="Flows\Main\MainPresenter.cs" />
     <Compile Include="Core\UserSettings.cs" />
-    <Compile Include="Gui\Main\MainModel.cs" />
+    <Compile Include="Flows\Main\MainModel.cs" />
     <Compile Include="Settings\UserSettingsData.cs" />
     <Compile Include="EventArgs\DownloadCompletedEventArgs.cs" />
     <Compile Include="EventArgs\DownloadedFileChunkEventArgs.cs" />
@@ -171,47 +187,47 @@
     <Compile Include="Enums\TaskStatus.cs" />
     <Compile Include="EventArgs\ResponseReceivedEventArgs.cs" />
     <Compile Include="Exceptions\MissingFriendlyNameException.cs" />
-    <Compile Include="Gui\AboutForm.cs">
+    <Compile Include="Flows\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Gui\AboutForm.Designer.cs">
+    <Compile Include="Flows\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\DefinitionsDebugForm.cs">
+    <Compile Include="Flows\DefinitionsDebugForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Gui\DefinitionsDebugForm.Designer.cs">
+    <Compile Include="Flows\DefinitionsDebugForm.Designer.cs">
       <DependentUpon>DefinitionsDebugForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\DownloadProgressForm.cs">
+    <Compile Include="Flows\DownloadProgressForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Gui\DownloadProgressForm.Designer.cs">
+    <Compile Include="Flows\DownloadProgressForm.Designer.cs">
       <DependentUpon>DownloadProgressForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\Main\MainForm.cs">
+    <Compile Include="Flows\Main\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Gui\Main\MainForm.Designer.cs">
+    <Compile Include="Flows\Main\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\SettingsForm.cs">
+    <Compile Include="Flows\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Gui\SettingsForm.Designer.cs">
+    <Compile Include="Flows\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Gui\AboutForm.resx">
+    <EmbeddedResource Include="Flows\AboutForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gui\Main\MainForm.resx">
+    <EmbeddedResource Include="Flows\Main\MainForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gui\SettingsForm.resx">
+    <EmbeddedResource Include="Flows\SettingsForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>SettingsForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -245,17 +261,20 @@
     <None Include="Resources\error.png" />
     <None Include="Resources\world_go.png" />
     <None Include="Resources\WoofyLogo.png" />
-    <EmbeddedResource Include="Gui\ComicSelection\ComicSelectionForm.resx">
+    <EmbeddedResource Include="Flows\ComicDetails\ComicDetailsForm.resx">
+      <DependentUpon>ComicDetailsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Flows\ComicSelection\ComicSelectionForm.resx">
       <DependentUpon>ComicSelectionForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gui\CompilationError\CompilationErrorDetails.resx">
+    <EmbeddedResource Include="Flows\CompilationError\CompilationErrorDetails.resx">
       <DependentUpon>CompilationErrorDetails.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gui\DefinitionsDebugForm.resx">
+    <EmbeddedResource Include="Flows\DefinitionsDebugForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>DefinitionsDebugForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gui\DownloadProgressForm.resx">
+    <EmbeddedResource Include="Flows\DownloadProgressForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>DownloadProgressForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -270,6 +289,9 @@
     <None Include="Resources\cog.png" />
     <None Include="Resources\add.png" />
     <None Include="Resources\accept.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

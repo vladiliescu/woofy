@@ -9,6 +9,7 @@ using log4net.Core;
 using Woofy.Core;
 using Woofy.Core.Engine;
 using Woofy.Core.Infrastructure;
+using Woofy.Enums;
 
 namespace Woofy.Gui
 {
@@ -155,7 +156,7 @@ namespace Woofy.Gui
 
             string selectedFile = (string)comicDefinitionsList.SelectedItems[0].Tag;
 #warning commented out
-			//ComicDefinition comicDefinition = definitionStore.FindByFilename(selectedFile);
+			//ComicDefinition comicDefinition = definitionStore.Find(selectedFile);
 
 			//string startupUrl;
 			//if (this.currentMode == TestMode.Paused)

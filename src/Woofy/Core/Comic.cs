@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Newtonsoft.Json;
 using Woofy.Core.Engine;
+using Woofy.Enums;
 
 namespace Woofy.Core
 {

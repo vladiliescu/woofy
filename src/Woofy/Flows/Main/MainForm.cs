@@ -4,15 +4,17 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Woofy.Core;
+using Woofy.Enums;
+using Woofy.Gui;
 using Woofy.Properties;
 using Woofy.Settings;
 using Woofy.Updates;
 
-namespace Woofy.Gui.Main
+namespace Woofy.Flows.Main
 {
 	public partial class MainForm : BaseForm
 	{
-		public IMainController Controller { get; set; }
+		public IMainPresenter Presenter { get; set; }
 
 		public MainForm()
 		{
@@ -26,8 +28,8 @@ namespace Woofy.Gui.Main
 			toolStripMenuItemPauseTask.Click += (o, e) => ToggleSelectedTasksState();
 			toolStripMenuItemOpenTaskFolder.Click += (o, e) => OpenSelectedTaskFolder();
 			toolStripButtonOpenFolder.Click += (o, e) => OpenSelectedTaskFolder();
-			toolStripButtonSelectComics.Click += (o, e) => Controller.DisplayComicSelectionForm();
-			toolStripButtonPauseTask.Click += (o, e) => Controller.DisplayComicSelectionForm();
+			tsbAddComic.Click += (o, e) => Presenter.AddComicRequested();
+			//toolStripButtonPauseTask.Click += (o, e) => Presenter.AddComicRequested();
 			toolStripButtonSettings.Click += (o, e) =>
 			{
 				using (var settingsForm = new SettingsForm())
@@ -46,7 +48,7 @@ namespace Woofy.Gui.Main
 		{
 			InitControls();
 
-			Controller.Initialize(this);
+			Presenter.Initialize(this);
 		}
 
 		private void MainForm_Resize(object sender, EventArgs e)
@@ -58,7 +60,6 @@ namespace Woofy.Gui.Main
 				Hide();
 		}
 
-		#region Events - dgvwTasks
 		private void dgvwTasks_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
 		{
 			foreach (DataGridViewRow row in dgvwTasks.Rows)
@@ -128,7 +129,7 @@ namespace Woofy.Gui.Main
 
 			var task = (Comic)dgvwTasks.SelectedRows[0].DataBoundItem;
 			if (task.Status == TaskStatus.Finished)
-				Controller.OpenFolder(task);
+				Presenter.OpenFolder(task);
 			else
 				ToggleSelectedTasksState();
 		}
@@ -163,11 +164,7 @@ namespace Woofy.Gui.Main
 					break;
 			}
 		}
-		#endregion
-
-
-		#region Events - Tool Strip Buttons
-
+		
 		private void OnAboutClick(object sender, EventArgs e)
 		{
 			using (var aboutForm = new AboutForm())
@@ -176,9 +173,7 @@ namespace Woofy.Gui.Main
 			}
 		}
 
-		#endregion
-
-		#region Events - Tray Tool Strip Menus
+	
 		private void hideShowWoofyToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (Visible)
@@ -192,10 +187,7 @@ namespace Woofy.Gui.Main
 				WindowState = FormWindowState.Normal;
 			}
 		}
-		#endregion
 		
-
-		#region Public Threading Methods
 		/// <summary>
 		/// Initializes the download progress form for downloading updates, on the UI thread. Also, hides itself.
 		/// </summary>
@@ -238,16 +230,14 @@ namespace Woofy.Gui.Main
 
 			return result;
 		}
-		#endregion
-
-		#region Helper Methods
+		
 		private void ToggleSelectedTasksState()
 		{
 			if (dgvwTasks.SelectedRows.Count == 0)
 				return;
 
 			var selectedRows = (from row in dgvwTasks.SelectedRows.Cast<DataGridViewRow>() select (Comic)row.DataBoundItem).ToArray();
-			Controller.ToggleBotState(selectedRows);
+			Presenter.ToggleBotState(selectedRows);
 		}
 
 		private void OpenSelectedTaskFolder()
@@ -256,17 +246,17 @@ namespace Woofy.Gui.Main
 				return;
 
 			var task = (Comic)dgvwTasks.SelectedRows[0].DataBoundItem;
-			Controller.OpenFolder(task);
+			Presenter.OpenFolder(task);
 		}
 
 		private void PauseAllBots()
 		{
-			Controller.StopBots((from row in dgvwTasks.Rows.Cast<DataGridViewRow>() select (Comic)row.DataBoundItem).ToArray());
+			Presenter.StopBots((from row in dgvwTasks.Rows.Cast<DataGridViewRow>() select (Comic)row.DataBoundItem).ToArray());
 		}
 
 		private void ResumeAllBots()
 		{
-			Controller.StartBots((from row in dgvwTasks.Rows.Cast<DataGridViewRow>() select (Comic)row.DataBoundItem).ToArray());
+			Presenter.StartBots((from row in dgvwTasks.Rows.Cast<DataGridViewRow>() select (Comic)row.DataBoundItem).ToArray());
 		}
 
 		private void InitControls()
@@ -274,7 +264,7 @@ namespace Woofy.Gui.Main
 			Icon = notifyIcon.Icon = Resources.PrimaryIcon;
 
 			dgvwTasks.AutoGenerateColumns = false;
-			dgvwTasks.DataSource = Controller.Comics;
+			dgvwTasks.DataSource = Presenter.Comics;
 
 			var splitButton = new ToolStripSplitButton("About..", Resources.About);
 			splitButton.ButtonClick += OnAboutClick;
@@ -294,6 +284,11 @@ namespace Woofy.Gui.Main
 
 			toolStrip.Items.Insert(0, splitButton);
 		}
-		#endregion
+
+        private void OnKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Control && e.KeyCode == Keys.N)
+                Presenter.AddComicRequested();
+        }
 	}
 }

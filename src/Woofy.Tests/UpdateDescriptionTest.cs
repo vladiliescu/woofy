@@ -1,11 +1,10 @@
 using System;
 using System.Text;
 using System.IO;
-
 using Woofy.Updates;
 using Xunit;
 
-namespace UnitTests
+namespace Woofy.Tests
 {
 
     public class UpdateDescriptionTest

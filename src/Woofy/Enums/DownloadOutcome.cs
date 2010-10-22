@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Woofy.Core
+namespace Woofy.Enums
 {
     public enum DownloadOutcome
     {

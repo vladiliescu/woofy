@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Woofy.Core.Engine;
@@ -9,7 +8,7 @@ namespace Woofy.Core
 	public interface IDefinitionStore
 	{
 		Definition[] Definitions { get; }
-		Definition FindByFilename(string filename);
+		Definition Find(string id);
 		void InitializeDefinitionCache();
 	}
 
@@ -26,10 +25,9 @@ namespace Woofy.Core
 			this.compiler = compiler;
 		}
 
-		public Definition FindByFilename(string filename)
+		public Definition Find(string id)
         {
-			return null;
-            //return Definitions.SingleOrDefault(x => x.Filename == filename);
+            return Definitions.SingleOrDefault(x => x.Id == id);
         }
 
 	    public void InitializeDefinitionCache()

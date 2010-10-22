@@ -4,8 +4,8 @@ using System.Windows.Forms;
 using Woofy.Core;
 using Woofy.Core.Engine;
 using Woofy.Core.Infrastructure;
+using Woofy.Flows.Main;
 using Woofy.Gui.CompilationError;
-using Woofy.Gui.Main;
 
 namespace Woofy
 {
@@ -22,12 +22,13 @@ namespace Woofy
             AppDomain.CurrentDomain.UnhandledException += (sender, e) => Logger.LogException((Exception)e.ExceptionObject);
 
 			CompileDefinitions();
+            ContainerAccessor.Resolve<IComicStore>().InitializeComicCache();
 
 			var mainForm = new MainForm();
 			//the synchronization context only becomes available after creating the form
 			SynchronizationContext = SynchronizationContext.Current;	
 			//the BotSupervisor needs the SynchronizationContext, so I resolve it only after initializing the context
-			mainForm.Controller = ContainerAccessor.Resolve<IMainController>();
+			mainForm.Presenter = ContainerAccessor.Resolve<IMainPresenter>();
 
             Application.Run(mainForm);
         }
@@ -48,10 +49,7 @@ namespace Woofy
 				{
 					var shouldRetry = compilationErrorController.DisplayError(ex);
 					if (!shouldRetry)
-					{
 						Environment.Exit(1);
-						return;
-					}
 				}
 			}
 			while (true);
