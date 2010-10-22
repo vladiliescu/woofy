@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Windows.Forms;
 using Woofy.Core;
 using System.Linq;
+using Woofy.Core.ComicManagement;
 
 namespace Woofy.Gui.ComicSelection
 {

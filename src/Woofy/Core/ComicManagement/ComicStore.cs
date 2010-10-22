@@ -1,10 +1,12 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
 using System.Linq;
+using Woofy.Core.Engine;
 using Woofy.Core.SystemProxies;
 
-namespace Woofy.Core
+namespace Woofy.Core.ComicManagement
 {
 	public interface IComicStore
 	{
@@ -20,10 +22,12 @@ namespace Woofy.Core
 		private readonly IAppSettings appSettings;
 		private readonly IDefinitionStore definitionStore;
         private readonly IFileProxy file;
+        private readonly IUserSettings userSettings;
 
-		public ComicStore(IAppSettings appSettings, IDefinitionStore definitionStore, IFileProxy file)
+		public ComicStore(IAppSettings appSettings, IDefinitionStore definitionStore, IFileProxy file, IUserSettings userSettings)
 		{
 			this.appSettings = appSettings;
+		    this.userSettings = userSettings;
 		    this.file = file;
 		    this.definitionStore = definitionStore;
 		}
@@ -39,7 +43,7 @@ namespace Woofy.Core
                 if (associatedComic != null)
                     associatedComic.Definition = definition;
                 else
-                    associatedComic = new Comic(definition);
+                    associatedComic = CreateComicFor(definition);
                 
                 comics.Add(associatedComic);
 		    }
@@ -48,7 +52,21 @@ namespace Woofy.Core
 			PersistComics();
 		}
 
-		private IEnumerable<Comic> ReadSerializedComics()
+	    private Comic CreateComicFor(Definition definition)
+	    {
+            var comic = new Comic
+            {
+                Name = definition.Comic,
+			    Definition = definition,
+			    DefinitionId = definition.Id,
+                DownloadFolder = userSettings.DefaultDownloadFolder.IsNotNullOrEmpty() ? Path.Combine(userSettings.DefaultDownloadFolder, definition.Id) : definition.Id,
+			    Status = TaskStatus.Running
+            };
+
+            return comic;
+	    }
+
+	    private IEnumerable<Comic> ReadSerializedComics()
 		{
 			var json = file.ReadAllText(appSettings.ComicsFile);
 			var comics = JsonConvert.DeserializeObject<Comic[]>(json) ?? new Comic[0];

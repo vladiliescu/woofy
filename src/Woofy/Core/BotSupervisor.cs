@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
 using System.ComponentModel;
+using Woofy.Core.ComicManagement;
 using Woofy.Core.Engine;
 using Woofy.Settings;
 using System.Linq;

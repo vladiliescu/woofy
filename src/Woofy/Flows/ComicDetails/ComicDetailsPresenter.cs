@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Woofy.Core;
+using Woofy.Core.ComicManagement;
 using Woofy.Core.Infrastructure;
 using Woofy.Gui.ComicSelection;
 using System.Linq;

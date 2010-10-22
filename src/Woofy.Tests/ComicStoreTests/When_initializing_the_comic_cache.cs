@@ -1,5 +1,6 @@
 using Moq;
 using Woofy.Core;
+using Woofy.Core.ComicManagement;
 using Woofy.Core.Engine;
 using Woofy.Enums;
 using Xunit;
@@ -29,6 +30,27 @@ namespace Woofy.Tests.ComicStoreTests
             Assert.Equal(2, comics.Length);
             Assert.Equal("alpha", comics[0].Name);
             Assert.Equal("beta", comics[1].Name);
+        }
+
+        [Fact]
+        public void Should_properly_instantiate_comics_based_on_their_definitions()
+        {
+            factory.File.Setup(x => x.ReadAllText(It.IsAny<string>())).Returns("");
+            factory.UserSettings.Setup(x => x.DefaultDownloadFolder).Returns("d:\\comics");
+
+            comicStore.InitializeComicCache();
+            var comics = comicStore.Comics;
+
+            Assert.Equal(2, comics.Length);
+            var comic = comics[0];
+            Assert.Equal("AlphaTestDefinition", comic.DefinitionId);
+            Assert.NotNull(comic.Definition);
+            Assert.Equal("alpha", comic.Name);
+            Assert.Equal("d:\\comics\\AlphaTestDefinition", comic.DownloadFolder);
+            Assert.Equal(null, comic.CurrentUrl);
+            Assert.Equal(false, comic.IsActive);
+            Assert.Equal(DownloadOutcome.None, comic.DownloadOutcome);
+            Assert.Equal(TaskStatus.Running, comic.Status);
         }
 
         [Fact]

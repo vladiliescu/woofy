@@ -1,10 +1,9 @@
 using System;
-using System.IO;
 using Newtonsoft.Json;
 using Woofy.Core.Engine;
 using Woofy.Enums;
 
-namespace Woofy.Core
+namespace Woofy.Core.ComicManagement
 {
     public class Comic: IEquatable<Comic>
     {
@@ -19,33 +18,12 @@ namespace Woofy.Core
     	public string DownloadFolder { get; set; }
     	public TaskStatus Status { get; set; }
     	public string CurrentUrl { get; set; }
+#warning This should be merged with Status, once the whole thing is stable.
+        public bool IsActive { get; set; }
 
 		[JsonIgnore]
     	public Definition Definition { get; set; }
-
-#warning This should be merged with Status, once the whole thing is stable.
-		/// <summary>
-		/// Gets or sets whether the comic is active or not.
-		/// </summary>
-    	public bool IsActive { get; set; }
-
-    	/// <summary>
-		/// Used for the Json.NET deserialization
-		/// </summary>
-		public Comic()
-		{
-		}
-
-    	public Comic(Definition definition)
-    	{
-			Name = definition.Comic;
-			Definition = definition;
-			DefinitionId = definition.Id;
-#warning the download folder should be combined with the default download folder
-			DownloadFolder = definition.Id;
-			Status = TaskStatus.Running;
-    	}
-
+    
     	public override string ToString()
         {
             return Name;

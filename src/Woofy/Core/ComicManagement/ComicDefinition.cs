@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Xml;
 using System.IO;
 
-namespace Woofy.Core
+namespace Woofy.Core.ComicManagement
 {
 	public class ComicDefinition : IEquatable<ComicDefinition>
 	{

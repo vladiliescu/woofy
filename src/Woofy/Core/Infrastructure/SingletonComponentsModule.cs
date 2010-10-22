@@ -1,4 +1,5 @@
 using Autofac;
+using Woofy.Core.ComicManagement;
 
 namespace Woofy.Core.Infrastructure
 {

@@ -2,6 +2,7 @@ using System;
 using System.Threading;
 using System.Windows.Forms;
 using Woofy.Core;
+using Woofy.Core.ComicManagement;
 using Woofy.Core.Engine;
 using Woofy.Core.Infrastructure;
 using Woofy.Flows.Main;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Web;
+using Woofy.Core.ComicManagement;
 using Woofy.Core.Engine;
 
 namespace Woofy.Core

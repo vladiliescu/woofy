@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using Woofy.Core;
+using Woofy.Core.ComicManagement;
 using Woofy.Enums;
 using Woofy.Gui;
 using Woofy.Properties;

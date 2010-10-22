@@ -1,6 +1,6 @@
 using System.Linq;
 
-namespace Woofy.Core
+namespace Woofy.Core.ComicManagement
 {
     public interface IComicRepository
     {

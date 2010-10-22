@@ -1,4 +1,5 @@
 using Woofy.Core;
+using Woofy.Core.ComicManagement;
 
 namespace Woofy.Gui.ComicSelection
 {

@@ -99,7 +99,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\ApplicationInfo.cs" />
-    <Compile Include="Core\ComicRepository.cs" />
+    <Compile Include="Core\ComicManagement\ComicRepository.cs" />
     <Compile Include="Core\Engine\CompilationException.cs" />
     <Compile Include="Core\Engine\Definition.cs" />
     <Compile Include="Core\Engine\DefinitionClassCompilerStep.cs" />
@@ -111,12 +111,12 @@
     <Compile Include="Core\Engine\Macros\StartAtMacro.cs" />
     <Compile Include="Core\Engine\Macros\MetaMethods.cs" />
     <Compile Include="Core\Engine\VisitNext.cs" />
-    <Compile Include="Core\ForEach.cs" />
+    <Compile Include="Core\Infrastructure\ForEach.cs" />
     <Compile Include="Core\Infrastructure\ApplicationController.cs" />
     <Compile Include="Core\Infrastructure\Bootstrapper.cs" />
     <Compile Include="Core\Capture.cs" />
     <Compile Include="Core\CaptureTarget.cs" />
-    <Compile Include="Core\ComicStore.cs" />
+    <Compile Include="Core\ComicManagement\ComicStore.cs" />
     <Compile Include="Core\CountingFileDownloader.cs" />
     <Compile Include="Core\Engine\IStatement.cs" />
     <Compile Include="Core\Infrastructure\ICommandHandler.cs" />
@@ -176,9 +176,9 @@
     <Compile Include="EventArgs\DownloadStripCompletedEventArgs.cs" />
     <Compile Include="Core\IFileDownloader.cs" />
     <Compile Include="Core\FileDownloader.cs" />
-    <Compile Include="Core\ComicDefinition.cs" />
+    <Compile Include="Core\ComicManagement\ComicDefinition.cs" />
     <Compile Include="Core\Engine\Bot.cs" />
-    <Compile Include="Core\Comic.cs" />
+    <Compile Include="Core\ComicManagement\Comic.cs" />
     <Compile Include="Core\BotSupervisor.cs" />
     <Compile Include="Core\Logger.cs" />
     <Compile Include="Core\WebConnectionFactory.cs" />
