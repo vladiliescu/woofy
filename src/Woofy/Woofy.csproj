@@ -120,20 +120,22 @@
     <Compile Include="Core\CountingFileDownloader.cs" />
     <Compile Include="Core\Engine\IStatement.cs" />
     <Compile Include="Core\Infrastructure\ICommandHandler.cs" />
+    <Compile Include="Core\Result.cs" />
+    <Compile Include="Core\ServiceResult.cs" />
     <Compile Include="Core\SystemProxies\DateTimeProxy.cs" />
     <Compile Include="Core\SystemProxies\DirectoryProxy.cs" />
     <Compile Include="Core\SystemProxies\FileProxy.cs" />
     <Compile Include="Core\SystemProxies\PathProxy.cs" />
     <Compile Include="Core\SystemProxies\WebClientProxy.cs" />
-    <Compile Include="Flows\ComicDetails\AddComic.cs" />
-    <Compile Include="Flows\ComicDetails\ComicDetailsForm.cs">
+    <Compile Include="Flows\AddComic\AddComic.cs" />
+    <Compile Include="Flows\AddComic\ComicDetailsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Flows\ComicDetails\ComicDetailsForm.designer.cs">
+    <Compile Include="Flows\AddComic\ComicDetailsForm.designer.cs">
       <DependentUpon>ComicDetailsForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Flows\ComicDetails\ComicDetailsModel.cs" />
-    <Compile Include="Flows\ComicDetails\ComicDetailsPresenter.cs" />
+    <Compile Include="Flows\AddComic\ComicDetailsModel.cs" />
+    <Compile Include="Flows\AddComic\ComicDetailsPresenter.cs" />
     <Compile Include="Flows\ExRichTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -261,7 +263,7 @@
     <None Include="Resources\error.png" />
     <None Include="Resources\world_go.png" />
     <None Include="Resources\WoofyLogo.png" />
-    <EmbeddedResource Include="Flows\ComicDetails\ComicDetailsForm.resx">
+    <EmbeddedResource Include="Flows\AddComic\ComicDetailsForm.resx">
       <DependentUpon>ComicDetailsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Flows\ComicSelection\ComicSelectionForm.resx">

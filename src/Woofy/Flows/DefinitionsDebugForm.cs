@@ -102,7 +102,7 @@ namespace Woofy.Gui
 			foreach (var comic in comicRepository.RetrieveAllComics())
             {
                 var item = new ListViewItem(new[] { comic.Definition.Comic, ""});
-                item.Tag = comic.DefinitionId;
+                item.Tag = comic.Id;
 
                 comicDefinitionsList.Items.Add(item);
             }

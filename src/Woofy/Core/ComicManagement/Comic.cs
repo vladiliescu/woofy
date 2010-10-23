@@ -10,11 +10,12 @@ namespace Woofy.Core.ComicManagement
 		/// <summary>
 		/// The definition's filename. It uniquely identifies a comic/definition.
 		/// </summary>
-		public string DefinitionId { get; set; }
+		public string Id { get; set; }
 
     	public DownloadOutcome DownloadOutcome { get; set; }
     	public string Name { get; set; }
     	public long DownloadedComics { get; set; }
+		[Obsolete("No longer used")]
     	public string DownloadFolder { get; set; }
     	public TaskStatus Status { get; set; }
     	public string CurrentUrl { get; set; }

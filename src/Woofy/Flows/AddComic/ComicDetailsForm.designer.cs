@@ -1,4 +1,4 @@
-namespace Woofy.Flows.ComicDetails
+namespace Woofy.Flows.AddComic
 {
 	partial class ComicDetailsForm
 	{
@@ -28,37 +28,33 @@ namespace Woofy.Flows.ComicDetails
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.Label label3;
-			System.Windows.Forms.Label label1;
+			System.Windows.Forms.GroupBox groupBox1;
 			this.cbComics = new System.Windows.Forms.ComboBox();
 			this.btnOk = new System.Windows.Forms.Button();
 			this.btnCancel = new System.Windows.Forms.Button();
-			this.txtDownloadFolder = new System.Windows.Forms.TextBox();
-			this.btnBrowse = new System.Windows.Forms.Button();
-			label3 = new System.Windows.Forms.Label();
-			label1 = new System.Windows.Forms.Label();
+			groupBox1 = new System.Windows.Forms.GroupBox();
+			groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// cbComics
 			// 
 			this.cbComics.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
+			                                                             | System.Windows.Forms.AnchorStyles.Right)));
 			this.cbComics.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
 			this.cbComics.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.cbComics.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.cbComics.FormattingEnabled = true;
-			this.cbComics.Location = new System.Drawing.Point(11, 28);
+			this.cbComics.Location = new System.Drawing.Point(5, 18);
 			this.cbComics.Margin = new System.Windows.Forms.Padding(2);
 			this.cbComics.MaxDropDownItems = 15;
 			this.cbComics.Name = "cbComics";
-			this.cbComics.Size = new System.Drawing.Size(370, 21);
+			this.cbComics.Size = new System.Drawing.Size(393, 21);
 			this.cbComics.TabIndex = 1;
 			// 
 			// btnOk
 			// 
 			this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnOk.Location = new System.Drawing.Point(227, 100);
+			this.btnOk.Location = new System.Drawing.Point(262, 85);
 			this.btnOk.Margin = new System.Windows.Forms.Padding(2);
 			this.btnOk.Name = "btnOk";
 			this.btnOk.Size = new System.Drawing.Size(75, 23);
@@ -71,7 +67,7 @@ namespace Woofy.Flows.ComicDetails
 			// 
 			this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.btnCancel.Location = new System.Drawing.Point(306, 100);
+			this.btnCancel.Location = new System.Drawing.Point(341, 85);
 			this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(75, 23);
@@ -79,46 +75,17 @@ namespace Woofy.Flows.ComicDetails
 			this.btnCancel.Text = "Cancel";
 			this.btnCancel.UseVisualStyleBackColor = true;
 			// 
-			// label3
+			// groupBox1
 			// 
-			label3.AutoSize = true;
-			label3.Location = new System.Drawing.Point(8, 51);
-			label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-			label3.Name = "label3";
-			label3.Size = new System.Drawing.Size(84, 13);
-			label3.TabIndex = 8;
-			label3.Text = "Download folder";
-			// 
-			// txtDownloadFolder
-			// 
-			this.txtDownloadFolder.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			this.txtDownloadFolder.Location = new System.Drawing.Point(11, 66);
-			this.txtDownloadFolder.Margin = new System.Windows.Forms.Padding(2);
-			this.txtDownloadFolder.Name = "txtDownloadFolder";
-			this.txtDownloadFolder.Size = new System.Drawing.Size(291, 20);
-			this.txtDownloadFolder.TabIndex = 9;
-			// 
-			// btnBrowse
-			// 
-			this.btnBrowse.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.btnBrowse.Location = new System.Drawing.Point(306, 63);
-			this.btnBrowse.Margin = new System.Windows.Forms.Padding(2);
-			this.btnBrowse.Name = "btnBrowse";
-			this.btnBrowse.Size = new System.Drawing.Size(75, 23);
-			this.btnBrowse.TabIndex = 10;
-			this.btnBrowse.Text = "B&rowse";
-			this.btnBrowse.UseVisualStyleBackColor = true;
-			this.btnBrowse.Click += new System.EventHandler(this.OnBrowse);
-			// 
-			// label1
-			// 
-			label1.AutoSize = true;
-			label1.Location = new System.Drawing.Point(8, 13);
-			label1.Name = "label1";
-			label1.Size = new System.Drawing.Size(36, 13);
-			label1.TabIndex = 13;
-			label1.Text = "Comic";
+			groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+			                                                         | System.Windows.Forms.AnchorStyles.Right)));
+			groupBox1.Controls.Add(this.cbComics);
+			groupBox1.Location = new System.Drawing.Point(12, 12);
+			groupBox1.Name = "groupBox1";
+			groupBox1.Size = new System.Drawing.Size(403, 54);
+			groupBox1.TabIndex = 14;
+			groupBox1.TabStop = false;
+			groupBox1.Text = "Comic";
 			// 
 			// ComicDetailsForm
 			// 
@@ -126,13 +93,9 @@ namespace Woofy.Flows.ComicDetails
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.btnCancel;
-			this.ClientSize = new System.Drawing.Size(392, 134);
-			this.Controls.Add(label1);
-			this.Controls.Add(this.cbComics);
-			this.Controls.Add(this.txtDownloadFolder);
-			this.Controls.Add(label3);
+			this.ClientSize = new System.Drawing.Size(427, 119);
+			this.Controls.Add(groupBox1);
 			this.Controls.Add(this.btnCancel);
-			this.Controls.Add(this.btnBrowse);
 			this.Controls.Add(this.btnOk);
 			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
 			this.Margin = new System.Windows.Forms.Padding(2);
@@ -142,10 +105,10 @@ namespace Woofy.Flows.ComicDetails
 			this.ShowIcon = false;
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-			this.Text = "Comic Details";
+			this.Text = "Add Comic";
 			this.Load += new System.EventHandler(this.OnLoad);
+			groupBox1.ResumeLayout(false);
 			this.ResumeLayout(false);
-			this.PerformLayout();
 
 		}
 
@@ -154,7 +117,5 @@ namespace Woofy.Flows.ComicDetails
 		private System.Windows.Forms.ComboBox cbComics;
 		private System.Windows.Forms.Button btnOk;
 		private System.Windows.Forms.Button btnCancel;
-		private System.Windows.Forms.Button btnBrowse;
-		private System.Windows.Forms.TextBox txtDownloadFolder;
 	}
 }

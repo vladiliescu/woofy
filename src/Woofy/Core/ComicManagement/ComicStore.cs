@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
@@ -12,7 +11,7 @@ namespace Woofy.Core.ComicManagement
 	{
         Comic[] Comics { get; }
 	    void PersistComics();
-	    Comic FindByFilename(string definitionFilename);
+	    Comic Find(string id);
 	    void InitializeComicCache();
 	}
 
@@ -39,7 +38,7 @@ namespace Woofy.Core.ComicManagement
             var serializedComics = ReadSerializedComics();
 		    foreach (var definition in definitionStore.Definitions)
 		    {
-                var associatedComic = serializedComics.SingleOrDefault(x => x.DefinitionId == definition.Id);
+                var associatedComic = serializedComics.SingleOrDefault(x => x.Id == definition.Id);
                 if (associatedComic != null)
                     associatedComic.Definition = definition;
                 else
@@ -58,7 +57,7 @@ namespace Woofy.Core.ComicManagement
             {
                 Name = definition.Comic,
 			    Definition = definition,
-			    DefinitionId = definition.Id,
+			    Id = definition.Id,
                 DownloadFolder = userSettings.DefaultDownloadFolder.IsNotNullOrEmpty() ? Path.Combine(userSettings.DefaultDownloadFolder, definition.Id) : definition.Id,
 			    Status = TaskStatus.Running
             };
@@ -78,18 +77,9 @@ namespace Woofy.Core.ComicManagement
 			file.WriteAllText(appSettings.ComicsFile, JsonConvert.SerializeObject(Comics, Formatting.Indented));
 		}
 
-        public Comic FindByFilename(string definitionFilename)
+        public Comic Find(string id)
         {
-            return Comics.SingleOrDefault(x => x.DefinitionId == definitionFilename);
+            return Comics.SingleOrDefault(x => x.Id == id);
         }
-
-#warning this should be handled by a startup task
-	    private static void EnsureFileExists(string file)
-		{
-			if (File.Exists(file))
-				return;
-
-			File.Create(file).Close();
-		}
 	}
 }

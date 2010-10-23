@@ -12,6 +12,7 @@ using Woofy.Exceptions;
 
 namespace Woofy.Core.Engine
 {
+	[Obsolete]
 	public class BotOldAndOnlyUsedForReference
 	{
 		private readonly bool randomPausesBetweenRequests;

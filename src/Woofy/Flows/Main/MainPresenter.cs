@@ -7,10 +7,8 @@ using Woofy.Core;
 using Woofy.Core.ComicManagement;
 using Woofy.Core.Engine;
 using Woofy.Core.Infrastructure;
-using Woofy.Flows.ComicDetails;
 using Woofy.Gui.ComicSelection;
 using System.Linq;
-using Woofy.Gui.Main;
 using Woofy.Updates;
 
 namespace Woofy.Flows.Main
@@ -59,7 +57,7 @@ namespace Woofy.Flows.Main
 
 		public void AddComicRequested()
 		{
-			applicationController.Execute<AddComic>();
+			applicationController.Execute<AddComic.AddComic>();
 			return;
 
 			var result = comicSelectionController.DisplayComicSelectionForm();

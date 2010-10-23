@@ -5,6 +5,7 @@ using System.IO;
 
 namespace Woofy.Core.ComicManagement
 {
+	[Obsolete("Replaced by Definition")]
 	public class ComicDefinition : IEquatable<ComicDefinition>
 	{
 		/// <summary>

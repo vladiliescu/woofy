@@ -43,7 +43,7 @@ namespace Woofy.Tests.ComicStoreTests
 
             Assert.Equal(2, comics.Length);
             var comic = comics[0];
-            Assert.Equal("AlphaTestDefinition", comic.DefinitionId);
+            Assert.Equal("AlphaTestDefinition", comic.Id);
             Assert.NotNull(comic.Definition);
             Assert.Equal("alpha", comic.Name);
             Assert.Equal("d:\\comics\\AlphaTestDefinition", comic.DownloadFolder);
@@ -59,7 +59,7 @@ namespace Woofy.Tests.ComicStoreTests
             factory.File.Setup(x => x.ReadAllText(It.IsAny<string>())).Returns(@"
 [
     {
-        ""DefinitionId"": ""AlphaTestDefinition"",
+        ""Id"": ""AlphaTestDefinition"",
         ""DownloadOutcome"": 2,
         ""Name"": ""not alpha"",
         ""DownloadedComics"": 10,
@@ -81,7 +81,7 @@ namespace Woofy.Tests.ComicStoreTests
             factory.File.Setup(x => x.ReadAllText(It.IsAny<string>())).Returns(@"
 [
     {
-        ""DefinitionId"": ""AlphaTestDefinition"",
+        ""Id"": ""AlphaTestDefinition"",
         ""DownloadOutcome"": 2,
         ""Name"": ""not alpha"",
         ""DownloadedComics"": 10,
@@ -94,7 +94,7 @@ namespace Woofy.Tests.ComicStoreTests
             comicStore.InitializeComicCache();
             Assert.Equal(2, comicStore.Comics.Length);
             var comic = comicStore.Comics[0];
-            Assert.Equal("AlphaTestDefinition", comic.DefinitionId);
+            Assert.Equal("AlphaTestDefinition", comic.Id);
             Assert.NotNull(comic.Definition);
             Assert.Equal(DownloadOutcome.MultipleStripMatchesRuleBroken, comic.DownloadOutcome);
             Assert.Equal("not alpha", comic.Name);

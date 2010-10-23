@@ -1,7 +1,9 @@
+using System;
 using System.Linq;
 
 namespace Woofy.Core.ComicManagement
 {
+	[Obsolete("Use IComicStore instead")]
     public interface IComicRepository
     {
         Comic[] RetrieveActiveComics();
@@ -31,7 +33,7 @@ namespace Woofy.Core.ComicManagement
 
         public Comic Retrieve(string definitionFilename)
         {
-            return comicStore.Comics.Where(x => x.DefinitionId == definitionFilename).SingleOrDefault();
+            return comicStore.Comics.Where(x => x.Id == definitionFilename).SingleOrDefault();
         }
 
         public void PersistComics()
