@@ -1,5 +1,5 @@
-﻿name "xkcd" 
+﻿comic "xkcd" 
 start_at "http://xkcd.com/"
 
-for page in visit("<a\shref=\"(?<content>/[\d]*/)\"\saccesskey=\"n\">"):
-    download("<img\ssrc=\"(?<content>http://imgs.xkcd.com/comics/[\w()-]*\.(gif|jpg|jpeg|png))")
+for page in visit("""<a\shref=\"(?<content>/[\d]*/)\"\saccesskey=\"n\">"""):
+    download("""<img\ssrc=\"(?<content>http://imgs.xkcd.com/comics/[\w()-]*\.(gif|jpg|jpeg|png))""")
