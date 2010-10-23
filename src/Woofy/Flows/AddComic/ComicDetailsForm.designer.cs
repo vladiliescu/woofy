@@ -36,10 +36,22 @@ namespace Woofy.Flows.AddComic
 			groupBox1.SuspendLayout();
 			this.SuspendLayout();
 			// 
+			// groupBox1
+			// 
+			groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+						| System.Windows.Forms.AnchorStyles.Right)));
+			groupBox1.Controls.Add(this.cbComics);
+			groupBox1.Location = new System.Drawing.Point(12, 12);
+			groupBox1.Name = "groupBox1";
+			groupBox1.Size = new System.Drawing.Size(403, 54);
+			groupBox1.TabIndex = 0;
+			groupBox1.TabStop = false;
+			groupBox1.Text = "Comic";
+			// 
 			// cbComics
 			// 
 			this.cbComics.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-			                                                             | System.Windows.Forms.AnchorStyles.Right)));
+						| System.Windows.Forms.AnchorStyles.Right)));
 			this.cbComics.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
 			this.cbComics.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
 			this.cbComics.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -49,7 +61,7 @@ namespace Woofy.Flows.AddComic
 			this.cbComics.MaxDropDownItems = 15;
 			this.cbComics.Name = "cbComics";
 			this.cbComics.Size = new System.Drawing.Size(393, 21);
-			this.cbComics.TabIndex = 1;
+			this.cbComics.TabIndex = 0;
 			// 
 			// btnOk
 			// 
@@ -58,7 +70,7 @@ namespace Woofy.Flows.AddComic
 			this.btnOk.Margin = new System.Windows.Forms.Padding(2);
 			this.btnOk.Name = "btnOk";
 			this.btnOk.Size = new System.Drawing.Size(75, 23);
-			this.btnOk.TabIndex = 11;
+			this.btnOk.TabIndex = 1;
 			this.btnOk.Text = "Ok";
 			this.btnOk.UseVisualStyleBackColor = true;
 			this.btnOk.Click += new System.EventHandler(this.OnOK);
@@ -71,21 +83,9 @@ namespace Woofy.Flows.AddComic
 			this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
 			this.btnCancel.Name = "btnCancel";
 			this.btnCancel.Size = new System.Drawing.Size(75, 23);
-			this.btnCancel.TabIndex = 12;
+			this.btnCancel.TabIndex = 2;
 			this.btnCancel.Text = "Cancel";
 			this.btnCancel.UseVisualStyleBackColor = true;
-			// 
-			// groupBox1
-			// 
-			groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
-			                                                         | System.Windows.Forms.AnchorStyles.Right)));
-			groupBox1.Controls.Add(this.cbComics);
-			groupBox1.Location = new System.Drawing.Point(12, 12);
-			groupBox1.Name = "groupBox1";
-			groupBox1.Size = new System.Drawing.Size(403, 54);
-			groupBox1.TabIndex = 14;
-			groupBox1.TabStop = false;
-			groupBox1.Text = "Comic";
 			// 
 			// ComicDetailsForm
 			// 

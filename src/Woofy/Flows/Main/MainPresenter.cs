@@ -33,7 +33,7 @@ namespace Woofy.Flows.Main
 	{
 		private readonly IComicSelectionController comicSelectionController;
 		private readonly IComicRepository comicRepository;
-		private readonly IBotSupervisor botSupervisor;
+		private readonly IWorkerSupervisor workerSupervisor;
 		private readonly IUserSettings userSettings;
 		private readonly IDefinitionCompiler compiler;
 		private readonly IAppSettings appSettings;
@@ -41,17 +41,17 @@ namespace Woofy.Flows.Main
 
 		public BindingList<Comic> Comics
 		{
-			get { return botSupervisor.Comics; }
+			get { return workerSupervisor.Comics; }
 		}
 
-		public MainPresenter(IApplicationController applicationController, IComicSelectionController comicSelectionController, IComicRepository comicRepository, IBotSupervisor botSupervisor, IUserSettings userSettings, IDefinitionCompiler compiler, IAppSettings appSettings)
+		public MainPresenter(IApplicationController applicationController, IComicSelectionController comicSelectionController, IComicRepository comicRepository, IWorkerSupervisor workerSupervisor, IUserSettings userSettings, IDefinitionCompiler compiler, IAppSettings appSettings)
 		{
 			this.applicationController = applicationController;
 			this.comicSelectionController = comicSelectionController;
 			this.appSettings = appSettings;
 			this.compiler = compiler;
 			this.userSettings = userSettings;
-			this.botSupervisor = botSupervisor;
+			this.workerSupervisor = workerSupervisor;
 			this.comicRepository = comicRepository;
 		}
 
@@ -60,36 +60,36 @@ namespace Woofy.Flows.Main
 			applicationController.Execute<AddComic.AddComic>();
 			return;
 
-			var result = comicSelectionController.DisplayComicSelectionForm();
-			if (result == DialogResult.Cancel)
-				return;
+			//var result = comicSelectionController.DisplayComicSelectionForm();
+			//if (result == DialogResult.Cancel)
+			//    return;
 
-			//refresh the already running comics
-			var comics = comicRepository.RetrieveActiveComics();
-			for (var i = 0; i < botSupervisor.Comics.Count;)
-			{
-				var activeComic = botSupervisor.Comics[i];
-				var comicIsStillActive = comics.FirstOrDefault(x => x == activeComic) != null;
-				if (comicIsStillActive)
-				{
-					i++;
-					continue;
-				}
+			////refresh the already running comics
+			//var comics = comicRepository.RetrieveActiveComics();
+			//for (var i = 0; i < workerSupervisor.Comics.Count;)
+			//{
+			//    var activeComic = workerSupervisor.Comics[i];
+			//    var comicIsStillActive = comics.FirstOrDefault(x => x == activeComic) != null;
+			//    if (comicIsStillActive)
+			//    {
+			//        i++;
+			//        continue;
+			//    }
 
-				botSupervisor.Delete(activeComic);
-			}
+			//    workerSupervisor.Delete(activeComic);
+			//}
 
-			foreach (var comic in comics)
-			{
-				var comicIsAlreadyActive = botSupervisor.Comics.FirstOrDefault(x => x == comic) != null;
-				if (comicIsAlreadyActive)
-					continue;
+			//foreach (var comic in comics)
+			//{
+			//    var comicIsAlreadyActive = workerSupervisor.Comics.FirstOrDefault(x => x == comic) != null;
+			//    if (comicIsAlreadyActive)
+			//        continue;
 
-				botSupervisor.Add(comic);
-				botSupervisor.Resume(comic);
-			}
+			//    workerSupervisor.Add(comic);
+			//    workerSupervisor.Resume(comic);
+			//}
 
-			botSupervisor.ResetComicsBindings();
+			//workerSupervisor.ResetComicsBindings();
 		}
 
 		/// <summary>
@@ -105,30 +105,30 @@ namespace Woofy.Flows.Main
 		public void ToggleBotState(Comic[] comics)
 		{
 			foreach (var comic in comics)
-				botSupervisor.Toggle(comic);
+				workerSupervisor.Toggle(comic);
 
-			botSupervisor.ResetComicsBindings();
+			workerSupervisor.ResetComicsBindings();
 		}
 
 		public void StartBots(Comic[] comics)
 		{
 			foreach (var comic in comics)
-				botSupervisor.Resume(comic);
+				workerSupervisor.Resume(comic);
 
-			botSupervisor.ResetComicsBindings();
+			workerSupervisor.ResetComicsBindings();
 		}
 
 		public void StartAllBots()
 		{
-			botSupervisor.StartAllBots();
+			workerSupervisor.StartAllBots();
 		}
 
 		public void StopBots(Comic[] comics)
 		{
 			foreach (var comic in comics)
-				botSupervisor.Pause(comic);
+				workerSupervisor.Pause(comic);
 
-			botSupervisor.ResetComicsBindings();
+			workerSupervisor.ResetComicsBindings();
 		}
 
 		public void Initialize(MainForm form)

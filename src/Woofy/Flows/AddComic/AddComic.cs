@@ -11,18 +11,22 @@ namespace Woofy.Flows.AddComic
 
 	public class AddComicHandler : ICommandHandler<AddComic>
 	{
-		private readonly IComicActivator detailsPresenter;
+		private readonly IComicActivator comicActivator;
 		private readonly IComicStore comicStore;
+		private readonly IApplicationController applicationController;
+		readonly IWorkerSupervisor w;
 
-		public AddComicHandler(IComicActivator detailsPresenter, IComicStore comicStore)
+		public AddComicHandler(IComicActivator comicActivator, IComicStore comicStore, IApplicationController applicationController, IWorkerSupervisor w)
 		{
-			this.detailsPresenter = detailsPresenter;
+			this.comicActivator = comicActivator;
+			this.w = w;
+			this.applicationController = applicationController;
 			this.comicStore = comicStore;
 		}
 
 		public void Handle(AddComic command)
 		{
-			var result = detailsPresenter.Activate();
+			var result = comicActivator.Activate();
 			if (result.ServiceResult != ServiceResult.Ok)
 				return;
 
@@ -30,6 +34,8 @@ namespace Woofy.Flows.AddComic
 			var comic = comicStore.Find(comicId);
 			comic.IsActive = true;
 			comicStore.PersistComics();
+
+			applicationController.Raise(new ComicActivated(comic));
 		}
 	}
 }

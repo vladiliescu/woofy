@@ -5,13 +5,15 @@ using System.Windows.Forms;
 using System.ComponentModel;
 using Woofy.Core.ComicManagement;
 using Woofy.Core.Engine;
+using Woofy.Core.Infrastructure;
+using Woofy.Flows.AddComic;
 using Woofy.Settings;
 using System.Linq;
 using MoreLinq;
 
 namespace Woofy.Core
 {
-	public interface IBotSupervisor
+	public interface IWorkerSupervisor
 	{
 		BindingList<Comic> Comics { get; }
 
@@ -36,22 +38,20 @@ namespace Woofy.Core
 		void StartAllBots();
 	}
 
-	public class BotSupervisor : IBotSupervisor
+	public class WorkerSupervisor : IWorkerSupervisor, IEventHandler<ComicActivated>
 	{
 		public BindingList<Comic> Comics { get; private set; }
 
-		readonly List<Comic> bots = new List<Comic>();
+		private readonly List<Definition> workers = new List<Definition>();
+		private readonly IComicStore comicStore;
+		private readonly IUiThreadAccess uiThread;
 
-		readonly IComicRepository comicRepository;
-
-		readonly SynchronizationContext synchronizationContext;
-
-		public BotSupervisor(IComicRepository comicRepository, SynchronizationContext synchronizationContext)
+		public WorkerSupervisor(IComicStore comicStore, IUiThreadAccess uiThread)
 		{
-			this.comicRepository = comicRepository;
-			this.synchronizationContext = synchronizationContext;
+			this.comicStore = comicStore;
+			this.uiThread = uiThread;
 
-			var comics = comicRepository.RetrieveActiveComics();
+			var comics = comicStore.Comics.Where(c => c.IsActive);
 			comics.ForEach(AddBot);
 			Comics = new BindingList<Comic>(comics.ToList());
 		}
@@ -68,7 +68,8 @@ namespace Woofy.Core
 
 		public void StartAllBots()
 		{
-			bots.ForEach(x => x.Definition.Run());
+			return;
+			workers.ForEach(x => x.Run());
 		}
 
 		/// <summary>
@@ -94,6 +95,7 @@ namespace Woofy.Core
 		/// </summary>
 		public void Toggle(Comic comic)
 		{
+			return;
 			switch (comic.Status)
 			{
 				case TaskStatus.Stopped:
@@ -132,6 +134,7 @@ namespace Woofy.Core
 
 		public void ResetComicsBindings()
 		{
+			return;
 			Comics.ResetBindings();
 		}
 
@@ -197,6 +200,13 @@ namespace Woofy.Core
 			//                                    if (allTasksHaveFinished)
 			//                                        Application.Exit();
 			//                                }, null);
+		}
+
+		public void Handle(ComicActivated eventData)
+		{
+			var comic = eventData.Comic;
+
+			uiThread.Send(() => Comics.Add(comic));
 		}
 	}
 }

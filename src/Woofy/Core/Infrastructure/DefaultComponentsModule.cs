@@ -11,7 +11,9 @@ namespace Woofy.Core.Infrastructure
             builder
                 .RegisterAssemblyTypes(Assembly.GetExecutingAssembly())
                 .AsImplementedInterfaces()
-                .InstancePerDependency();
+                .SingleInstance();
+
+			builder.Register(c => Program.SynchronizationContext).SingleInstance();
 		}
 	}
 }

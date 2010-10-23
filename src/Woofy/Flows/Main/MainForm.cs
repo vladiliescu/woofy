@@ -173,7 +173,6 @@ namespace Woofy.Flows.Main
 				aboutForm.ShowDialog();
 			}
 		}
-
 	
 		private void hideShowWoofyToolStripMenuItem_Click(object sender, EventArgs e)
 		{

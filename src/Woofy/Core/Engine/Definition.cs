@@ -1,5 +1,6 @@
 namespace Woofy.Core.Engine
 {
+#warning should be renamed to Worker, for clarity purposes
 	public abstract class Definition
 	{
         public abstract string Comic { get; }

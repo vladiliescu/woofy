@@ -120,13 +120,16 @@
     <Compile Include="Core\CountingFileDownloader.cs" />
     <Compile Include="Core\Engine\IStatement.cs" />
     <Compile Include="Core\Infrastructure\ICommandHandler.cs" />
+    <Compile Include="Core\Infrastructure\IEventHandler.cs" />
     <Compile Include="Core\Result.cs" />
+    <Compile Include="Core\UiThreadAccess.cs" />
     <Compile Include="Core\ServiceResult.cs" />
     <Compile Include="Core\SystemProxies\DateTimeProxy.cs" />
     <Compile Include="Core\SystemProxies\DirectoryProxy.cs" />
     <Compile Include="Core\SystemProxies\FileProxy.cs" />
     <Compile Include="Core\SystemProxies\PathProxy.cs" />
     <Compile Include="Core\SystemProxies\WebClientProxy.cs" />
+    <Compile Include="Flows\AddComic\ComicActivated.cs" />
     <Compile Include="Flows\AddComic\AddComic.cs" />
     <Compile Include="Flows\AddComic\ComicDetailsForm.cs">
       <SubType>Form</SubType>
@@ -141,7 +144,6 @@
     </Compile>
     <Compile Include="Core\Infrastructure\DefaultComponentsModule.cs" />
     <Compile Include="Core\Infrastructure\ContainerAccessor.cs" />
-    <Compile Include="Core\Infrastructure\SingletonComponentsModule.cs" />
     <Compile Include="Core\Engine\PageParser.cs" />
     <Compile Include="Core\StringExtensions.cs" />
     <Compile Include="Exceptions\RegexException.cs" />
@@ -181,7 +183,7 @@
     <Compile Include="Core\ComicManagement\ComicDefinition.cs" />
     <Compile Include="Core\Engine\Bot.cs" />
     <Compile Include="Core\ComicManagement\Comic.cs" />
-    <Compile Include="Core\BotSupervisor.cs" />
+    <Compile Include="Core\WorkerSupervisor.cs" />
     <Compile Include="Core\Logger.cs" />
     <Compile Include="Core\WebConnectionFactory.cs" />
     <Compile Include="Core\WebPath.cs" />

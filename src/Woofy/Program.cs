@@ -28,7 +28,7 @@ namespace Woofy
 			var mainForm = new MainForm();
 			//the synchronization context only becomes available after creating the form
 			SynchronizationContext = SynchronizationContext.Current;	
-			//the BotSupervisor needs the SynchronizationContext, so I resolve it only after initializing the context
+			//the WorkerSupervisor needs the SynchronizationContext, so I resolve it only after initializing the context
 			mainForm.Presenter = ContainerAccessor.Resolve<IMainPresenter>();
 
             Application.Run(mainForm);

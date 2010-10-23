@@ -13,9 +13,7 @@ namespace Woofy.Core.Infrastructure
 				throw new InvalidOperationException("The container has already been initialized.");
 
 			var builder = new ContainerBuilder();
-
 			builder.RegisterModule<DefaultComponentsModule>();
-			builder.RegisterModule<SingletonComponentsModule>();
 
 		    foreach (var module in additionalModules)
                 builder.RegisterModule(module);

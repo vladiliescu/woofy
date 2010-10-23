@@ -67,7 +67,10 @@ namespace Woofy.Core.ComicManagement
 
 	    private IEnumerable<Comic> ReadSerializedComics()
 		{
-			var json = file.ReadAllText(appSettings.ComicsFile);
+			var json = file.Exists(appSettings.ComicsFile) ?
+				file.ReadAllText(appSettings.ComicsFile) :
+				"";
+
 			var comics = JsonConvert.DeserializeObject<Comic[]>(json) ?? new Comic[0];
 			return comics;
 		}
