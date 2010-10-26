@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Xml;
 
-namespace Woofy.Updates
+namespace Woofy.Flows.AutoUpdate
 {
     /// <summary>
     /// Contains a collection of releases for a given package.

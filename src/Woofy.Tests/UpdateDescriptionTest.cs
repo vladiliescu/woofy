@@ -1,7 +1,7 @@
 using System;
 using System.Text;
 using System.IO;
-using Woofy.Updates;
+using Woofy.Flows.AutoUpdate;
 using Xunit;
 
 namespace Woofy.Tests

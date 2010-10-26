@@ -7,7 +7,7 @@ using Woofy.Core.ComicManagement;
 using Woofy.Core.Infrastructure;
 using System.Linq;
 using Woofy.Flows.AddComic;
-using Woofy.Updates;
+using Woofy.Flows.AutoUpdate;
 
 namespace Woofy.Flows.Main
 {
@@ -30,7 +30,6 @@ namespace Woofy.Flows.Main
 	public class MainPresenter : IMainPresenter, IEventHandler<ComicActivated>
 	{
 		private readonly IWorkerSupervisor workerSupervisor;
-		private readonly IUserSettings userSettings;
 		private readonly IApplicationController applicationController;
         private readonly IUiThread uiThread;
 	    private readonly IComicStore comicStore;
@@ -42,7 +41,6 @@ namespace Woofy.Flows.Main
 			this.applicationController = applicationController;
 		    this.comicStore = comicStore;
 		    this.uiThread = uiThread;
-		    this.userSettings = userSettings;
 			this.workerSupervisor = workerSupervisor;
 		}
 
@@ -92,8 +90,7 @@ namespace Woofy.Flows.Main
 
 		public void Initialize(MainForm form)
 		{
-			if (userSettings.AutomaticallyCheckForUpdates)
-				UpdateManager.CheckForUpdatesAsync(false, form);
+            applicationController.Execute(new CheckForUpdates(form));
 
             var comics = comicStore.Comics.Where(c => c.IsActive);
             Comics = new BindingList<Comic>(comics.ToList());

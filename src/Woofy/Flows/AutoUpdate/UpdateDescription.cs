@@ -1,7 +1,7 @@
 using System.IO;
 using System.Xml;
 
-namespace Woofy.Updates
+namespace Woofy.Flows.AutoUpdate
 {
     /// <summary>
     /// Contains data about the available updates for Woofy.

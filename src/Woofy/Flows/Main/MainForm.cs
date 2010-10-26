@@ -6,10 +6,10 @@ using System.Windows.Forms;
 using Woofy.Core;
 using Woofy.Core.ComicManagement;
 using Woofy.Enums;
+using Woofy.Flows.AutoUpdate;
 using Woofy.Gui;
 using Woofy.Properties;
 using Woofy.Settings;
-using Woofy.Updates;
 
 namespace Woofy.Flows.Main
 {

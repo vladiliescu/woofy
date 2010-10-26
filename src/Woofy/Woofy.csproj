@@ -139,6 +139,7 @@
     </Compile>
     <Compile Include="Flows\AddComic\ComicDetailsModel.cs" />
     <Compile Include="Flows\AddComic\ComicDetailsPresenter.cs" />
+    <Compile Include="Flows\AutoUpdate\CheckForUpdates.cs" />
     <Compile Include="Flows\ExRichTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -248,11 +249,11 @@
     <None Include="app.config" />
     <Compile Include="Core\AppSettings.cs" />
     <Compile Include="Settings\UserSettingsOld.cs" />
-    <Compile Include="Updates\ChangeCollection.cs" />
-    <Compile Include="Updates\Release.cs" />
-    <Compile Include="Updates\ReleaseCollection.cs" />
-    <Compile Include="Updates\UpdateDescription.cs" />
-    <Compile Include="Updates\UpdateManager.cs" />
+    <Compile Include="Flows\AutoUpdate\ChangeCollection.cs" />
+    <Compile Include="Flows\AutoUpdate\Release.cs" />
+    <Compile Include="Flows\AutoUpdate\ReleaseCollection.cs" />
+    <Compile Include="Flows\AutoUpdate\UpdateDescription.cs" />
+    <Compile Include="Flows\AutoUpdate\UpdateManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="license.txt">

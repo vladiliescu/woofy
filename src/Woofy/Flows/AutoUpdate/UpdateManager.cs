@@ -4,14 +4,12 @@ using System.Net;
 using System.Windows.Forms;
 using System.IO;
 using System.Diagnostics;
-
 using Woofy.Core;
 using Woofy.Flows.Main;
-using Woofy.Gui.Main;
 using Woofy.Settings;
 using Woofy.Gui;
 
-namespace Woofy.Updates
+namespace Woofy.Flows.AutoUpdate
 {
     public class UpdateManager
     {
@@ -29,6 +27,7 @@ namespace Woofy.Updates
         }        
         #endregion
 
+        [Obsolete("The update code shouldn't need a reference to the main form.")]
         public static void CheckForUpdatesAsync(bool userInitiated, MainForm parentForm)
         {
             if (isRunning)

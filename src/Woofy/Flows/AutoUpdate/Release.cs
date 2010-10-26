@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Xml;
 
-namespace Woofy.Updates
+namespace Woofy.Flows.AutoUpdate
 {
     /// <summary>
     /// Contains data about a given release.
