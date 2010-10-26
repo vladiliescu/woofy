@@ -50,6 +50,7 @@ namespace Woofy.Flows.Main
 			InitControls();
 
 			Presenter.Initialize(this);
+            dgvwTasks.DataSource = Presenter.Comics;
 		}
 
 		private void MainForm_Resize(object sender, EventArgs e)
@@ -264,7 +265,6 @@ namespace Woofy.Flows.Main
 			Icon = notifyIcon.Icon = Resources.PrimaryIcon;
 
 			dgvwTasks.AutoGenerateColumns = false;
-			dgvwTasks.DataSource = Presenter.Comics;
 
 			var splitButton = new ToolStripSplitButton("About..", Resources.About);
 			splitButton.ButtonClick += OnAboutClick;

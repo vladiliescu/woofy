@@ -33,7 +33,6 @@ namespace Woofy.Core.ComicManagement
 
 		public void InitializeComicCache()
 		{
-			//EnsureFileExists(appSettings.ComicsFile);
             var comics = new List<Comic>();
             var serializedComics = ReadSerializedComics();
 		    foreach (var definition in definitionStore.Definitions)

@@ -122,7 +122,7 @@
     <Compile Include="Core\Infrastructure\ICommandHandler.cs" />
     <Compile Include="Core\Infrastructure\IEventHandler.cs" />
     <Compile Include="Core\Result.cs" />
-    <Compile Include="Core\UiThreadAccess.cs" />
+    <Compile Include="Core\UiThread.cs" />
     <Compile Include="Core\ServiceResult.cs" />
     <Compile Include="Core\SystemProxies\DateTimeProxy.cs" />
     <Compile Include="Core\SystemProxies\DirectoryProxy.cs" />

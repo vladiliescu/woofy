@@ -2,13 +2,11 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Windows.Forms;
 using Woofy.Core;
 using Woofy.Core.ComicManagement;
-using Woofy.Core.Engine;
 using Woofy.Core.Infrastructure;
-using Woofy.Gui.ComicSelection;
 using System.Linq;
+using Woofy.Flows.AddComic;
 using Woofy.Updates;
 
 namespace Woofy.Flows.Main
@@ -29,67 +27,28 @@ namespace Woofy.Flows.Main
 		void Initialize(MainForm form);
 	}
 
-	public class MainPresenter : IMainPresenter
+	public class MainPresenter : IMainPresenter, IEventHandler<ComicActivated>
 	{
-		private readonly IComicSelectionController comicSelectionController;
-		private readonly IComicRepository comicRepository;
 		private readonly IWorkerSupervisor workerSupervisor;
 		private readonly IUserSettings userSettings;
-		private readonly IDefinitionCompiler compiler;
-		private readonly IAppSettings appSettings;
 		private readonly IApplicationController applicationController;
+        private readonly IUiThread uiThread;
+	    private readonly IComicStore comicStore;
 
-		public BindingList<Comic> Comics
-		{
-			get { return workerSupervisor.Comics; }
-		}
+	    public BindingList<Comic> Comics { get; private set; }
 
-		public MainPresenter(IApplicationController applicationController, IComicSelectionController comicSelectionController, IComicRepository comicRepository, IWorkerSupervisor workerSupervisor, IUserSettings userSettings, IDefinitionCompiler compiler, IAppSettings appSettings)
+		public MainPresenter(IApplicationController applicationController, IWorkerSupervisor workerSupervisor, IUserSettings userSettings, IUiThread uiThread, IComicStore comicStore)
 		{
 			this.applicationController = applicationController;
-			this.comicSelectionController = comicSelectionController;
-			this.appSettings = appSettings;
-			this.compiler = compiler;
-			this.userSettings = userSettings;
+		    this.comicStore = comicStore;
+		    this.uiThread = uiThread;
+		    this.userSettings = userSettings;
 			this.workerSupervisor = workerSupervisor;
-			this.comicRepository = comicRepository;
 		}
 
 		public void AddComicRequested()
 		{
 			applicationController.Execute<AddComic.AddComic>();
-			return;
-
-			//var result = comicSelectionController.DisplayComicSelectionForm();
-			//if (result == DialogResult.Cancel)
-			//    return;
-
-			////refresh the already running comics
-			//var comics = comicRepository.RetrieveActiveComics();
-			//for (var i = 0; i < workerSupervisor.Comics.Count;)
-			//{
-			//    var activeComic = workerSupervisor.Comics[i];
-			//    var comicIsStillActive = comics.FirstOrDefault(x => x == activeComic) != null;
-			//    if (comicIsStillActive)
-			//    {
-			//        i++;
-			//        continue;
-			//    }
-
-			//    workerSupervisor.Delete(activeComic);
-			//}
-
-			//foreach (var comic in comics)
-			//{
-			//    var comicIsAlreadyActive = workerSupervisor.Comics.FirstOrDefault(x => x == comic) != null;
-			//    if (comicIsAlreadyActive)
-			//        continue;
-
-			//    workerSupervisor.Add(comic);
-			//    workerSupervisor.Resume(comic);
-			//}
-
-			//workerSupervisor.ResetComicsBindings();
 		}
 
 		/// <summary>
@@ -107,7 +66,7 @@ namespace Woofy.Flows.Main
 			foreach (var comic in comics)
 				workerSupervisor.Toggle(comic);
 
-			workerSupervisor.ResetComicsBindings();
+			//workerSupervisor.ResetComicsBindings();
 		}
 
 		public void StartBots(Comic[] comics)
@@ -115,7 +74,7 @@ namespace Woofy.Flows.Main
 			foreach (var comic in comics)
 				workerSupervisor.Resume(comic);
 
-			workerSupervisor.ResetComicsBindings();
+			//workerSupervisor.ResetComicsBindings();
 		}
 
 		public void StartAllBots()
@@ -128,7 +87,7 @@ namespace Woofy.Flows.Main
 			foreach (var comic in comics)
 				workerSupervisor.Pause(comic);
 
-			workerSupervisor.ResetComicsBindings();
+			//workerSupervisor.ResetComicsBindings();
 		}
 
 		public void Initialize(MainForm form)
@@ -136,7 +95,15 @@ namespace Woofy.Flows.Main
 			if (userSettings.AutomaticallyCheckForUpdates)
 				UpdateManager.CheckForUpdatesAsync(false, form);
 
-			StartBots(Comics.ToArray());
+            var comics = comicStore.Comics.Where(c => c.IsActive);
+            Comics = new BindingList<Comic>(comics.ToList());
 		}
+
+        public void Handle(ComicActivated eventData)
+        {
+            var comic = eventData.Comic;
+
+            uiThread.Send(() => Comics.Add(comic));
+        }
 	}
 }

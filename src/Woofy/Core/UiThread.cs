@@ -3,16 +3,16 @@ using System.Threading;
 
 namespace Woofy.Core
 {
-	public interface IUiThreadAccess
+	public interface IUiThread
 	{
 		void Send(Action action);
 	}
 
-	public class UiThreadAccess : IUiThreadAccess
+	public class UiThread : IUiThread
 	{
 		private readonly SynchronizationContext synchContext;
 
-		public UiThreadAccess(SynchronizationContext synchContext)
+		public UiThread(SynchronizationContext synchContext)
 		{
 			this.synchContext = synchContext;
 		}

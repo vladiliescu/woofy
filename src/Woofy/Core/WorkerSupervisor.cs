@@ -1,13 +1,9 @@
-using System;
 using System.Collections.Generic;
-using System.Threading;
-using System.Windows.Forms;
 using System.ComponentModel;
 using Woofy.Core.ComicManagement;
 using Woofy.Core.Engine;
 using Woofy.Core.Infrastructure;
 using Woofy.Flows.AddComic;
-using Woofy.Settings;
 using System.Linq;
 using MoreLinq;
 
@@ -15,8 +11,6 @@ namespace Woofy.Core
 {
 	public interface IWorkerSupervisor
 	{
-		BindingList<Comic> Comics { get; }
-
 		/// <summary>
 		/// Adds a new comic to the tasks list and database. Also starts its download.
 		/// </summary>
@@ -34,26 +28,21 @@ namespace Woofy.Core
 		void Pause(Comic comic);
 		void Resume(Comic comic);
 
-		void ResetComicsBindings();
 		void StartAllBots();
 	}
 
-	public class WorkerSupervisor : IWorkerSupervisor, IEventHandler<ComicActivated>
+	public class WorkerSupervisor : IWorkerSupervisor
 	{
-		public BindingList<Comic> Comics { get; private set; }
-
 		private readonly List<Definition> workers = new List<Definition>();
 		private readonly IComicStore comicStore;
-		private readonly IUiThreadAccess uiThread;
 
-		public WorkerSupervisor(IComicStore comicStore, IUiThreadAccess uiThread)
+		public WorkerSupervisor(IComicStore comicStore)
 		{
 			this.comicStore = comicStore;
-			this.uiThread = uiThread;
 
 			var comics = comicStore.Comics.Where(c => c.IsActive);
 			comics.ForEach(AddBot);
-			Comics = new BindingList<Comic>(comics.ToList());
+			//Comics = new BindingList<Comic>(comics.ToList());
 		}
 
 		/// <summary>
@@ -63,7 +52,7 @@ namespace Woofy.Core
 		public void Add(Comic comic)
 		{
 			AddBot(comic);
-			Comics.Add(comic);
+			//Comics.Add(comic);
 		}
 
 		public void StartAllBots()
@@ -132,12 +121,6 @@ namespace Woofy.Core
 			//    bot.DownloadComicsAsync(comic.CurrentUrl);
 		}
 
-		public void ResetComicsBindings()
-		{
-			return;
-			Comics.ResetBindings();
-		}
-
 		private void AddBot(Comic comic)
 		{
 			//var bot = new Bot(comic);
@@ -200,13 +183,6 @@ namespace Woofy.Core
 			//                                    if (allTasksHaveFinished)
 			//                                        Application.Exit();
 			//                                }, null);
-		}
-
-		public void Handle(ComicActivated eventData)
-		{
-			var comic = eventData.Comic;
-
-			uiThread.Send(() => Comics.Add(comic));
 		}
 	}
 }
