@@ -264,6 +264,8 @@ namespace Woofy.Flows.Main
 			splitButton.Alignment = ToolStripItemAlignment.Right;
 
 			toolStrip.Items.Insert(0, splitButton);
+
+            txtAppLog.DataBindings.Add(new Binding("Text", Presenter, "AppLog")); 
 		}
 
         private void OnKeyDown(object sender, KeyEventArgs e)

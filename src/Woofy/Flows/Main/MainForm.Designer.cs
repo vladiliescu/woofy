@@ -29,7 +29,8 @@ namespace Woofy.Flows.Main
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.SplitContainer splitContainer1;
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.dgvwTasks = new System.Windows.Forms.DataGridView();
             this.TaskStatusColumn = new System.Windows.Forms.DataGridViewImageColumn();
@@ -40,6 +41,7 @@ namespace Woofy.Flows.Main
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItemNewTask = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItemPauseTask = new System.Windows.Forms.ToolStripMenuItem();
+            this.txtAppLog = new System.Windows.Forms.RichTextBox();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.tsbAddComic = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonPauseTask = new System.Windows.Forms.ToolStripButton();
@@ -54,34 +56,54 @@ namespace Woofy.Flows.Main
             this.startAllTasksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            splitContainer1 = new System.Windows.Forms.SplitContainer();
+            splitContainer1.Panel1.SuspendLayout();
+            splitContainer1.Panel2.SuspendLayout();
+            splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvwTasks)).BeginInit();
             this.contextMenuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.trayMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
+            // splitContainer1
+            // 
+            splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            splitContainer1.Location = new System.Drawing.Point(0, 25);
+            splitContainer1.Name = "splitContainer1";
+            splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer1.Panel1
+            // 
+            splitContainer1.Panel1.Controls.Add(this.dgvwTasks);
+            // 
+            // splitContainer1.Panel2
+            // 
+            splitContainer1.Panel2.Controls.Add(this.txtAppLog);
+            splitContainer1.Size = new System.Drawing.Size(462, 390);
+            splitContainer1.SplitterDistance = 326;
+            splitContainer1.TabIndex = 10;
+            // 
             // dgvwTasks
             // 
             this.dgvwTasks.AllowUserToAddRows = false;
             this.dgvwTasks.AllowUserToDeleteRows = false;
             this.dgvwTasks.AllowUserToResizeRows = false;
-            this.dgvwTasks.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvwTasks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvwTasks.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.TaskStatusColumn,
             this.TaskNameColumn,
             this.ComicsColumn});
             this.dgvwTasks.ContextMenuStrip = this.contextMenuStrip;
-            this.dgvwTasks.Location = new System.Drawing.Point(9, 23);
+            this.dgvwTasks.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvwTasks.Location = new System.Drawing.Point(0, 0);
             this.dgvwTasks.Margin = new System.Windows.Forms.Padding(2);
             this.dgvwTasks.Name = "dgvwTasks";
             this.dgvwTasks.ReadOnly = true;
             this.dgvwTasks.RowHeadersVisible = false;
             this.dgvwTasks.RowTemplate.Height = 24;
             this.dgvwTasks.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvwTasks.Size = new System.Drawing.Size(614, 410);
+            this.dgvwTasks.Size = new System.Drawing.Size(462, 326);
             this.dgvwTasks.TabIndex = 7;
             this.dgvwTasks.DoubleClick += new System.EventHandler(this.dgvwTasks_DoubleClick);
             this.dgvwTasks.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvwTasks_DataBindingComplete);
@@ -89,11 +111,11 @@ namespace Woofy.Flows.Main
             // 
             // TaskStatusColumn
             // 
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.NullValue = null;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Menu;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.MenuText;
-            this.TaskStatusColumn.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.NullValue = null;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Menu;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.MenuText;
+            this.TaskStatusColumn.DefaultCellStyle = dataGridViewCellStyle2;
             this.TaskStatusColumn.HeaderText = "";
             this.TaskStatusColumn.MinimumWidth = 20;
             this.TaskStatusColumn.Name = "TaskStatusColumn";
@@ -157,6 +179,16 @@ namespace Woofy.Flows.Main
             this.toolStripMenuItemPauseTask.Size = new System.Drawing.Size(182, 22);
             this.toolStripMenuItemPauseTask.Text = "Pause";
             // 
+            // txtAppLog
+            // 
+            this.txtAppLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtAppLog.Location = new System.Drawing.Point(0, 0);
+            this.txtAppLog.Name = "txtAppLog";
+            this.txtAppLog.ReadOnly = true;
+            this.txtAppLog.Size = new System.Drawing.Size(462, 60);
+            this.txtAppLog.TabIndex = 9;
+            this.txtAppLog.Text = "";
+            // 
             // toolStrip
             // 
             this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -168,7 +200,7 @@ namespace Woofy.Flows.Main
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStrip.Size = new System.Drawing.Size(632, 25);
+            this.toolStrip.Size = new System.Drawing.Size(462, 25);
             this.toolStrip.TabIndex = 8;
             this.toolStrip.Text = "toolStrip";
             // 
@@ -274,9 +306,9 @@ namespace Woofy.Flows.Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(632, 442);
+            this.ClientSize = new System.Drawing.Size(462, 415);
+            this.Controls.Add(splitContainer1);
             this.Controls.Add(this.toolStrip);
-            this.Controls.Add(this.dgvwTasks);
             this.KeyPreview = true;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "MainForm";
@@ -284,6 +316,9 @@ namespace Woofy.Flows.Main
             this.Load += new System.EventHandler(this.OnLoad);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
+            splitContainer1.Panel1.ResumeLayout(false);
+            splitContainer1.Panel2.ResumeLayout(false);
+            splitContainer1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvwTasks)).EndInit();
             this.contextMenuStrip.ResumeLayout(false);
             this.toolStrip.ResumeLayout(false);
@@ -319,5 +354,6 @@ namespace Woofy.Flows.Main
         private System.Windows.Forms.ToolStripMenuItem startAllTasksToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+        private System.Windows.Forms.RichTextBox txtAppLog;
     }
 }

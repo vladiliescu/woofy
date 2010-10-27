@@ -4,6 +4,7 @@ using Woofy.Core;
 using Woofy.Core.ComicManagement;
 using Woofy.Core.Engine;
 using Woofy.Core.SystemProxies;
+using Woofy.Flows.ApplicationLog;
 
 namespace Woofy.Tests
 {
@@ -15,6 +16,7 @@ namespace Woofy.Tests
         public readonly Mock<IUserSettings> UserSettings = new Mock<IUserSettings>();
         public readonly Mock<IPageParser> PageParser = new Mock<IPageParser>();
         public readonly Mock<IWebClientProxy> WebClient = new Mock<IWebClientProxy>();
+        public readonly Mock<IAppLog> AppLog = new Mock<IAppLog>();
 
         public ComicStore CreateComicStore()
         {
@@ -23,12 +25,12 @@ namespace Woofy.Tests
 
         public VisitExpression CreateVisitExpression()
         {
-            return new VisitExpression(PageParser.Object, WebClient.Object);
+            return new VisitExpression(PageParser.Object, WebClient.Object, AppLog.Object);
         }
 
         public VisitExpression CreateVisitExpression(IPageParser parser)
         {
-            return new VisitExpression(parser, WebClient.Object);
+            return new VisitExpression(parser, WebClient.Object, AppLog.Object);
         }
     }
 }

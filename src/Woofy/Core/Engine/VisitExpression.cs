@@ -1,6 +1,6 @@
-using System;
 using System.Collections.Generic;
 using Woofy.Core.SystemProxies;
+using Woofy.Flows.ApplicationLog;
 
 namespace Woofy.Core.Engine
 {
@@ -8,11 +8,13 @@ namespace Woofy.Core.Engine
     {
         private readonly IPageParser parser;
         private readonly IWebClientProxy webClient;
+        private readonly IAppLog appLog;
 
-        public VisitExpression(IPageParser parser, IWebClientProxy webClient)
+        public VisitExpression(IPageParser parser, IWebClientProxy webClient, IAppLog appLog)
         {
             this.parser = parser;
             this.webClient = webClient;
+            this.appLog = appLog;
         }
 
         public IEnumerable<object> Invoke(object argument, Context context)
@@ -26,15 +28,21 @@ namespace Woofy.Core.Engine
             var regex = (string)argument;
             do
             {
+                appLog.Send("Visiting page {0}", context.CurrentAddress);
                 var links = parser.RetrieveLinksFromPage(context.PageContent, regex, context.CurrentAddress);
+                appLog.Send("Found {0} links", links.Length);
                 if (links.Length == 0)
+                {
                     yield break;
+                }
 
-                context.CurrentAddress = links[0];
-                context.PageContent = webClient.DownloadString(links[0]);
-                yield return links[0];
+                var link = links[0];
+                context.CurrentAddress = link;
+                context.PageContent = webClient.DownloadString(link);
+                yield return link;
             }
             while (true);
+            
         }
     }
 }

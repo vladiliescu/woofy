@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Woofy.Core.ComicManagement;
 using Woofy.Core.Infrastructure;

@@ -139,6 +139,8 @@
     </Compile>
     <Compile Include="Flows\AddComic\ComicDetailsModel.cs" />
     <Compile Include="Flows\AddComic\ComicDetailsPresenter.cs" />
+    <Compile Include="Flows\ApplicationLog\AppLog.cs" />
+    <Compile Include="Flows\ApplicationLog\AppLogEntryAdded.cs" />
     <Compile Include="Flows\AutoUpdate\CheckForUpdates.cs" />
     <Compile Include="Flows\ExRichTextBox.cs">
       <SubType>Component</SubType>
