@@ -25,5 +25,10 @@ namespace Woofy.Tests
         {
             return new VisitExpression(PageParser.Object, WebClient.Object);
         }
+
+        public VisitExpression CreateVisitExpression(IPageParser parser)
+        {
+            return new VisitExpression(parser, WebClient.Object);
+        }
     }
 }

@@ -23,21 +23,18 @@ namespace Woofy.Core.Engine
                 yield return context.CurrentAddress;
             }
 
-            //var regex = (string)argument;
-            //var links = parser.RetrieveLinksFromPage(context.PageContent, regex, context.CurrentAddress);
+            var regex = (string)argument;
+            do
+            {
+                var links = parser.RetrieveLinksFromPage(context.PageContent, regex, context.CurrentAddress);
+                if (links.Length == 0)
+                    yield break;
 
-            //if (links.Length == 0)
-            //    return null;
-
-            //context.CurrentAddress = links[0];
-            //context.PageContent = webClient.DownloadString(links[0]);
-            //return links[0];
-        }
-
-        private void InitializeContext(Context context)
-        {
-            webClient.DownloadString(context.CurrentAddress);
-
+                context.CurrentAddress = links[0];
+                context.PageContent = webClient.DownloadString(links[0]);
+                yield return links[0];
+            }
+            while (true);
         }
     }
 }
