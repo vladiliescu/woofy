@@ -105,12 +105,13 @@
     <Compile Include="Core\Engine\DefinitionClassCompilerStep.cs" />
     <Compile Include="Core\Engine\Context.cs" />
     <Compile Include="Core\Engine\DefinitionCompiler.cs" />
-    <Compile Include="Core\Engine\Download.cs" />
+    <Compile Include="Core\Engine\DownloadExpression.cs" />
     <Compile Include="Core\Engine\IExpression.cs" />
-    <Compile Include="Core\Engine\Macros\ComicMacro.cs" />
-    <Compile Include="Core\Engine\Macros\StartAtMacro.cs" />
-    <Compile Include="Core\Engine\Macros\MetaMethods.cs" />
-    <Compile Include="Core\Engine\VisitNext.cs" />
+    <Compile Include="Core\Engine\ComicMacro.cs" />
+    <Compile Include="Core\Engine\StartAtMacro.cs" />
+    <Compile Include="Core\Engine\MetaMethods.cs" />
+    <Compile Include="Core\Engine\VisitExpression.cs" />
+    <Compile Include="Core\Infrastructure\ExpressionsModule.cs" />
     <Compile Include="Core\Infrastructure\ForEach.cs" />
     <Compile Include="Core\Infrastructure\ApplicationController.cs" />
     <Compile Include="Core\Infrastructure\Bootstrapper.cs" />
@@ -118,7 +119,6 @@
     <Compile Include="Core\CaptureTarget.cs" />
     <Compile Include="Core\ComicManagement\ComicStore.cs" />
     <Compile Include="Core\CountingFileDownloader.cs" />
-    <Compile Include="Core\Engine\IStatement.cs" />
     <Compile Include="Core\Infrastructure\ICommandHandler.cs" />
     <Compile Include="Core\Infrastructure\IEventHandler.cs" />
     <Compile Include="Core\Result.cs" />

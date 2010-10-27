@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using Newtonsoft.Json;
@@ -10,6 +11,7 @@ namespace Woofy.Core.ComicManagement
 	public interface IComicStore
 	{
         Comic[] Comics { get; }
+        Comic[] GetActiveComics();
 	    void PersistComics();
 	    Comic Find(string id);
 	    void InitializeComicCache();
@@ -74,7 +76,12 @@ namespace Woofy.Core.ComicManagement
 			return comics;
 		}
 
-		public void PersistComics()
+	    public Comic[] GetActiveComics()
+	    {
+            return Comics.Where(x => x.IsActive).ToArray();
+	    }
+
+	    public void PersistComics()
 		{
 			file.WriteAllText(appSettings.ComicsFile, JsonConvert.SerializeObject(Comics, Formatting.Indented));
 		}

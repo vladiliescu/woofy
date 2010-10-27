@@ -13,7 +13,6 @@ namespace Woofy.Core.Engine
 	    public DefinitionClassCompilerStep(ParameterDeclarationCollection parameters)
 			: base(typeof(Definition), "RunImpl", parameters, 
                     "Woofy.Core.Engine",
-                    "Woofy.Core.Engine.Macros", 
                     "Woofy.Core.Infrastructure"
                 )
 	    {

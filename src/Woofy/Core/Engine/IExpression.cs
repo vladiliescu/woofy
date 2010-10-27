@@ -1,7 +1,9 @@
-﻿namespace Woofy.Core.Engine
+﻿using System.Collections.Generic;
+
+namespace Woofy.Core.Engine
 {
     public interface IExpression
     {
-        object Invoke(object argument, Context context);
+        IEnumerable<object> Invoke(object argument, Context context);
     }
 }

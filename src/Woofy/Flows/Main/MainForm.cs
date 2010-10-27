@@ -26,7 +26,7 @@ namespace Woofy.Flows.Main
 
 		private void RegisterCommands()
 		{
-			toolStripMenuItemPauseTask.Click += (o, e) => ToggleSelectedTasksState();
+			//toolStripMenuItemPauseTask.Click += (o, e) => ToggleSelectedTasksState();
 			toolStripMenuItemOpenTaskFolder.Click += (o, e) => OpenSelectedTaskFolder();
 			toolStripButtonOpenFolder.Click += (o, e) => OpenSelectedTaskFolder();
 			tsbAddComic.Click += (o, e) => Presenter.AddComicRequested();
@@ -36,8 +36,8 @@ namespace Woofy.Flows.Main
 				using (var settingsForm = new SettingsForm())
 					settingsForm.ShowDialog();
 			};
-			stopAllTasksToolStripMenuItem.Click += (o, e) => PauseAllBots();
-			startAllTasksToolStripMenuItem.Click += (o, e) => ResumeAllBots();
+			//stopAllTasksToolStripMenuItem.Click += (o, e) => PauseAllBots();
+			//startAllTasksToolStripMenuItem.Click += (o, e) => ResumeAllBots();
 			exitToolStripMenuItem.Click += (o, e) => Application.Exit();
 			notifyIcon.MouseDoubleClick += (o, e) => {
         		Visible = true;
@@ -130,10 +130,10 @@ namespace Woofy.Flows.Main
 				return;
 
 			var task = (Comic)dgvwTasks.SelectedRows[0].DataBoundItem;
-			if (task.Status == TaskStatus.Finished)
-				Presenter.OpenFolder(task);
-			else
-				ToggleSelectedTasksState();
+            //if (task.Status == TaskStatus.Finished)
+            //    Presenter.OpenFolder(task);
+            //else
+            //    ToggleSelectedTasksState();
 		}
 
 		private void dgvwTasks_SelectionChanged(object sender, EventArgs e)
@@ -231,15 +231,6 @@ namespace Woofy.Flows.Main
 
 			return result;
 		}
-		
-		private void ToggleSelectedTasksState()
-		{
-			if (dgvwTasks.SelectedRows.Count == 0)
-				return;
-
-			var selectedRows = (from row in dgvwTasks.SelectedRows.Cast<DataGridViewRow>() select (Comic)row.DataBoundItem).ToArray();
-			Presenter.ToggleBotState(selectedRows);
-		}
 
 		private void OpenSelectedTaskFolder()
 		{
@@ -250,16 +241,6 @@ namespace Woofy.Flows.Main
 			Presenter.OpenFolder(task);
 		}
 
-		private void PauseAllBots()
-		{
-			Presenter.StopBots((from row in dgvwTasks.Rows.Cast<DataGridViewRow>() select (Comic)row.DataBoundItem).ToArray());
-		}
-
-		private void ResumeAllBots()
-		{
-			Presenter.StartBots((from row in dgvwTasks.Rows.Cast<DataGridViewRow>() select (Comic)row.DataBoundItem).ToArray());
-		}
-
 		private void InitControls()
 		{
 			Icon = notifyIcon.Icon = Resources.PrimaryIcon;
@@ -268,12 +249,12 @@ namespace Woofy.Flows.Main
 
 			var splitButton = new ToolStripSplitButton("About..", Resources.About);
 			splitButton.ButtonClick += OnAboutClick;
-			splitButton.DropDown.Items.Add("Debug comic definitions..", Resources.DebugDefinitions, (o, e) => {
-				PauseAllBots();
+            //splitButton.DropDown.Items.Add("Debug comic definitions..", Resources.DebugDefinitions, (o, e) => {
+            //    PauseAllBots();
 
-				using (var definitionsDebugForm = new DefinitionsDebugForm())
-					definitionsDebugForm.ShowDialog();
-			});
+            //    using (var definitionsDebugForm = new DefinitionsDebugForm())
+            //        definitionsDebugForm.ShowDialog();
+            //});
 
 			splitButton.DropDown.Items.Add(new ToolStripSeparator());
 			splitButton.DropDown.Items.Add("Check for updates", Resources.CheckForUpdates, (o, e) => UpdateManager.CheckForUpdatesAsync(true, this));

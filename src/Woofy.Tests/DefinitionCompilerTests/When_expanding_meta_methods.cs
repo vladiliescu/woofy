@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Autofac;
 using Boo.Lang;
@@ -85,10 +86,11 @@ namespace Woofy.Tests.DefinitionCompilerTests
         public int TimesInvoked { get; private set; }
 		public Context Context { get; private set; }
 
-        public object Invoke(object argument, Context context)
+        public IEnumerable<object> Invoke(object argument, Context context)
         {
 			Context = context;
-            return ++TimesInvoked;
+            TimesInvoked++;
+            return new object[] { TimesInvoked };
         }
     }
 
@@ -97,7 +99,7 @@ namespace Woofy.Tests.DefinitionCompilerTests
 		public Context Context { get; private set; }
 		public string Argument { get; private set; }
 
-		public object Invoke(object argument, Context context)
+        public IEnumerable<object> Invoke(object argument, Context context)
 		{
 			Context = context;
 			Argument = (string)argument;
@@ -106,7 +108,7 @@ namespace Woofy.Tests.DefinitionCompilerTests
 	}
 }
 
-namespace Woofy.Core.Engine.Macros
+namespace Woofy.Core.Engine
 {
 	[CompilerGlobalScope]
 	public static class CustomKeywordMetaMethodContainer

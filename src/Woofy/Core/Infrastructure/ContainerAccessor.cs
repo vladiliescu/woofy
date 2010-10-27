@@ -14,6 +14,7 @@ namespace Woofy.Core.Infrastructure
 
 			var builder = new ContainerBuilder();
 			builder.RegisterModule<DefaultComponentsModule>();
+            builder.RegisterModule<ExpressionsModule>();
 
 		    foreach (var module in additionalModules)
                 builder.RegisterModule(module);

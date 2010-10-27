@@ -2,7 +2,7 @@ using System.Runtime.CompilerServices;
 using Boo.Lang;
 using Boo.Lang.Compiler.Ast;
 
-namespace Woofy.Core.Engine.Macros
+namespace Woofy.Core.Engine
 {
     [CompilerGlobalScope]
     public static class MetaMethods

@@ -19,10 +19,7 @@ namespace Woofy.Flows.Main
 		/// Opens the folder associated with the specified task, using Windows Explorer.
 		/// </summary>
 		void OpenFolder(Comic task);
-
-		void ToggleBotState(Comic[] comics);
-		void StartBots(Comic[] comics);
-		void StopBots(Comic[] comics);
+		
 		BindingList<Comic> Comics { get; }
 		void Initialize(MainForm form);
 	}
@@ -59,41 +56,11 @@ namespace Woofy.Flows.Main
 				Process.Start(downloadFolder);
 		}
 
-		public void ToggleBotState(Comic[] comics)
-		{
-			foreach (var comic in comics)
-				workerSupervisor.Toggle(comic);
-
-			//workerSupervisor.ResetComicsBindings();
-		}
-
-		public void StartBots(Comic[] comics)
-		{
-			foreach (var comic in comics)
-				workerSupervisor.Resume(comic);
-
-			//workerSupervisor.ResetComicsBindings();
-		}
-
-		public void StartAllBots()
-		{
-			workerSupervisor.StartAllBots();
-		}
-
-		public void StopBots(Comic[] comics)
-		{
-			foreach (var comic in comics)
-				workerSupervisor.Pause(comic);
-
-			//workerSupervisor.ResetComicsBindings();
-		}
-
 		public void Initialize(MainForm form)
 		{
             applicationController.Execute(new CheckForUpdates(form));
-
-            var comics = comicStore.Comics.Where(c => c.IsActive);
-            Comics = new BindingList<Comic>(comics.ToList());
+            Comics = new BindingList<Comic>(comicStore.GetActiveComics().ToList());
+            applicationController.Execute<StartAllDownloads>();
 		}
 
         public void Handle(ComicActivated eventData)

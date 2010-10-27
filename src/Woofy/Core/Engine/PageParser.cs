@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Web;
 using Woofy.Core.ComicManagement;
-using Woofy.Core.Engine;
 
-namespace Woofy.Core
+namespace Woofy.Core.Engine
 {
 	public interface IPageParser
 	{
@@ -14,17 +13,6 @@ namespace Woofy.Core
 
     public class PageParser : IPageParser
     {
-    	private readonly string pageContent;
-    	private readonly string urlContent;
-    	private readonly ComicDefinition definition;
-
-    	public PageParser(string pageContent, string urlContent, ComicDefinition definition)
-        {
-            this.pageContent = pageContent;
-        	this.urlContent = urlContent;
-        	this.definition = definition;
-        }
-
 		private readonly IAppSettings appSettings;
 		public PageParser(IAppSettings appSettings)
 		{
@@ -53,7 +41,7 @@ namespace Woofy.Core
 		}
 
 
-        public Dictionary<string, string> GetCaptures()
+        public Dictionary<string, string> GetCaptures(string pageContent, string urlContent, ComicDefinition definition)
         {
             var captures = new Dictionary<string, string>();
 

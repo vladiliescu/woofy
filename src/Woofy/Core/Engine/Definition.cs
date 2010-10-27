@@ -1,3 +1,6 @@
+using System;
+using Woofy.Core.Infrastructure;
+
 namespace Woofy.Core.Engine
 {
 #warning should be renamed to Worker, for clarity purposes
@@ -20,8 +23,8 @@ namespace Woofy.Core.Engine
 
 		public void Run()
 		{
-			var context = new Context();
-			RunImpl(context);
+            var context = new Context { CurrentAddress = new Uri(StartAt) };
+		    RunImpl(context);
 		}
 	}
 }

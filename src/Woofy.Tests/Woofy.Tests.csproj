@@ -84,15 +84,20 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\xUnit.net\xunit.dll</HintPath>
     </Reference>
+    <Reference Include="xunit.extensions, Version=1.6.1.1521, Culture=neutral, PublicKeyToken=8d05b1bb7a6fdb6c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\xUnit.net\xunit.extensions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BddExtensions.cs" />
     <Compile Include="ComicsProviderTest.cs" />
     <Compile Include="ComicStoreTests\TestDefinitions.cs" />
     <Compile Include="ComicStoreTests\When_initializing_the_comic_cache.cs" />
     <Compile Include="DefinitionCompilerTests\BaseDefinitionCompilerTest.cs" />
     <Compile Include="DefinitionCompilerTests\Compiled_definitions.cs" />
     <Compile Include="DefinitionCompilerTests\When_expanding_meta_methods.cs" />
-    <Compile Include="ComicInfoTest.cs" />
+    <Compile Include="ExpressionTests\When_visiting.cs" />
     <Compile Include="ObjectMother.cs" />
     <Compile Include="UpdateDescriptionTest.cs" />
     <Compile Include="WebPathTest.cs" />
