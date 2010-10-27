@@ -273,5 +273,10 @@ namespace Woofy.Flows.Main
             if (e.Control && e.KeyCode == Keys.N)
                 Presenter.AddComicRequested();
         }
+
+        private void OnAppLogLinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            Presenter.Open(e.LinkText);
+        }
 	}
 }

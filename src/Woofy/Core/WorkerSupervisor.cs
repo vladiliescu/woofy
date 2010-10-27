@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using Woofy.Core.ComicManagement;
 using Woofy.Core.Infrastructure;
 using MoreLinq;
@@ -78,7 +79,7 @@ namespace Woofy.Core
 
 	    public void Handle(StartAllDownloads command)
 	    {
-            comics.ForEach(c => c.Definition.Run());
+            comics.ForEach(c => ThreadPool.QueueUserWorkItem(o => c.Definition.Run()));
 	    }
 	}
 

@@ -21,6 +21,7 @@ namespace Woofy.Flows.Main
 		void AddComicRequested();
 		void OpenFolder(Comic task);
 		void Initialize(MainForm form);
+	    void Open(string command);
 	}
 
 	public class MainPresenter : IMainPresenter, IEventHandler<ComicActivated>, IEventHandler<AppLogEntryAdded>, INotifyPropertyChanged
@@ -60,7 +61,7 @@ namespace Woofy.Flows.Main
 		{
 			var downloadFolder = (Path.IsPathRooted(task.DownloadFolder) ? task.DownloadFolder : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, task.DownloadFolder));
 			if (Directory.Exists(downloadFolder))
-				Process.Start(downloadFolder);
+                applicationController.Execute(new StartProcess(downloadFolder));
 		}
 
 		public void Initialize(MainForm form)
@@ -72,7 +73,12 @@ namespace Woofy.Flows.Main
             applicationController.Execute<StartAllDownloads>();
 		}
 
-        public void Handle(ComicActivated eventData)
+	    public void Open(string command)
+	    {
+            applicationController.Execute(new StartProcess(command));
+	    }
+
+	    public void Handle(ComicActivated eventData)
         {
             var comic = eventData.Comic;
 

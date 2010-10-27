@@ -175,6 +175,7 @@
     <Compile Include="Flows\Main\MainPresenter.cs" />
     <Compile Include="Core\UserSettings.cs" />
     <Compile Include="Flows\Main\MainModel.cs" />
+    <Compile Include="Core\StartProcess.cs" />
     <Compile Include="Settings\UserSettingsData.cs" />
     <Compile Include="EventArgs\DownloadCompletedEventArgs.cs" />
     <Compile Include="EventArgs\DownloadedFileChunkEventArgs.cs" />

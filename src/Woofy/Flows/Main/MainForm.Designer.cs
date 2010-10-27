@@ -30,7 +30,7 @@ namespace Woofy.Flows.Main
         {
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.SplitContainer splitContainer1;
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.dgvwTasks = new System.Windows.Forms.DataGridView();
             this.TaskStatusColumn = new System.Windows.Forms.DataGridViewImageColumn();
@@ -111,11 +111,11 @@ namespace Woofy.Flows.Main
             // 
             // TaskStatusColumn
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.NullValue = null;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Menu;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.MenuText;
-            this.TaskStatusColumn.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.NullValue = null;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Menu;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.MenuText;
+            this.TaskStatusColumn.DefaultCellStyle = dataGridViewCellStyle1;
             this.TaskStatusColumn.HeaderText = "";
             this.TaskStatusColumn.MinimumWidth = 20;
             this.TaskStatusColumn.Name = "TaskStatusColumn";
@@ -188,6 +188,7 @@ namespace Woofy.Flows.Main
             this.txtAppLog.Size = new System.Drawing.Size(462, 60);
             this.txtAppLog.TabIndex = 9;
             this.txtAppLog.Text = "";
+            this.txtAppLog.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.OnAppLogLinkClicked);
             // 
             // toolStrip
             // 

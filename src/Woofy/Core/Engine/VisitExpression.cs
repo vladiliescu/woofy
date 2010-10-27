@@ -21,6 +21,7 @@ namespace Woofy.Core.Engine
         {
             if (string.IsNullOrEmpty(context.PageContent))
             {
+                appLog.Send("Visiting {0}", context.CurrentAddress);
                 context.PageContent = webClient.DownloadString(context.CurrentAddress);
                 yield return context.CurrentAddress;
             }
@@ -28,7 +29,6 @@ namespace Woofy.Core.Engine
             var regex = (string)argument;
             do
             {
-                appLog.Send("Visiting page {0}", context.CurrentAddress);
                 var links = parser.RetrieveLinksFromPage(context.PageContent, regex, context.CurrentAddress);
                 appLog.Send("Found {0} links", links.Length);
                 if (links.Length == 0)
@@ -38,6 +38,7 @@ namespace Woofy.Core.Engine
 
                 var link = links[0];
                 context.CurrentAddress = link;
+                appLog.Send("Visiting {0}", context.CurrentAddress);
                 context.PageContent = webClient.DownloadString(link);
                 yield return link;
             }
