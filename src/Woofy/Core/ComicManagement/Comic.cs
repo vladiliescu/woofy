@@ -12,7 +12,6 @@ namespace Woofy.Core.ComicManagement
 		/// </summary>
 		public string Id { get; set; }
 
-    	public DownloadOutcome DownloadOutcome { get; set; }
     	public string Name { get; set; }
     	public long DownloadedComics { get; set; }
 		[Obsolete("No longer used")]

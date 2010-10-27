@@ -79,7 +79,7 @@ namespace Woofy.Flows.Main
 						row.Cells["TaskStatusColumn"].Value = Resources.Running;
 						break;
 					case TaskStatus.Finished:
-						DisplayDownloadOutcome(row, task.DownloadOutcome, task.CurrentUrl);
+						//DisplayDownloadOutcome(row, task.DownloadOutcome, task.CurrentUrl);
 						break;
 					default:
 						break;
