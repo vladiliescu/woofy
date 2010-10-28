@@ -39,7 +39,7 @@ namespace Woofy.Core.Engine
         private void ReportComicDownloaded(Context context, Uri[] links)
         {
             Log(context, "downloaded {0}", links[0]);
-            //applicationController.Execute(
+            applicationController.Raise(new StripDownloaded(context.ComicId));
         }
 
         private void ReportComicDownloading(Context context, Uri[] links)

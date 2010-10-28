@@ -14,12 +14,10 @@ namespace Woofy.Flows.AddComic
 		private readonly IComicActivator comicActivator;
 		private readonly IComicStore comicStore;
 		private readonly IApplicationController applicationController;
-		readonly IWorkerSupervisor w;
 
-		public AddComicHandler(IComicActivator comicActivator, IComicStore comicStore, IApplicationController applicationController, IWorkerSupervisor w)
+		public AddComicHandler(IComicActivator comicActivator, IComicStore comicStore, IApplicationController applicationController)
 		{
 			this.comicActivator = comicActivator;
-			this.w = w;
 			this.applicationController = applicationController;
 			this.comicStore = comicStore;
 		}

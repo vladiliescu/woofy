@@ -9,96 +9,109 @@ using System.Linq;
 using Woofy.Flows.AddComic;
 using Woofy.Flows.ApplicationLog;
 using Woofy.Flows.AutoUpdate;
+using Woofy.Flows.Download;
 
 namespace Woofy.Flows.Main
 {
-	public interface IMainPresenter
-	{
-        BindingList<ComicDisplayModel> Comics { get; }
+    public interface IMainPresenter
+    {
+        BindingList<ComicViewModel> Comics { get; }
         string AppLog { get; }
 
-		void AddComicRequested();
-		void OpenFolder(Comic task);
-		void Initialize(MainForm form);
-	    void Open(string command);
-	}
+        void AddComicRequested();
+        void OpenFolder(Comic task);
+        void Initialize(MainForm form);
+        void Open(string command);
+    }
 
-	public class MainPresenter : IMainPresenter, IEventHandler<ComicActivated>, IEventHandler<AppLogEntryAdded>, INotifyPropertyChanged
-	{
-		private readonly IApplicationController applicationController;
+    public class MainPresenter : IMainPresenter, INotifyPropertyChanged,
+        IEventHandler<ComicActivated>,
+        IEventHandler<AppLogEntryAdded>,
+        IEventHandler<ComicChanged>
+    {
+        private readonly IApplicationController applicationController;
         private readonly IUiThread uiThread;
-	    private readonly IComicStore comicStore;
+        private readonly IComicStore comicStore;
         private readonly IAppLog appLog;
 
-        public BindingList<ComicDisplayModel> Comics { get; private set; }
-        
+        public BindingList<ComicViewModel> Comics { get; private set; }
+
         private readonly StringBuilder appLogBuilder = new StringBuilder();
-	    public string AppLog 
+        public string AppLog
         {
             get { return appLogBuilder.ToString(); }
         }
 
-	    public MainPresenter(IApplicationController applicationController, IUiThread uiThread, IComicStore comicStore, IAppLog appLog)
-		{
-			this.applicationController = applicationController;
-		    this.appLog = appLog;
-		    this.comicStore = comicStore;
-		    this.uiThread = uiThread;
-		}
+        public MainPresenter(IApplicationController applicationController, IUiThread uiThread, IComicStore comicStore, IAppLog appLog)
+        {
+            this.applicationController = applicationController;
+            this.appLog = appLog;
+            this.comicStore = comicStore;
+            this.uiThread = uiThread;
+        }
 
-		public void AddComicRequested()
-		{
-			applicationController.Execute<AddComic.AddComic>();
-		}
+        public void AddComicRequested()
+        {
+            applicationController.Execute<AddComic.AddComic>();
+        }
 
-		/// <summary>
-		/// Opens the folder associated with the specified task, using Windows Explorer.
-		/// </summary>
-		public void OpenFolder(Comic task)
-		{
-			var downloadFolder = (Path.IsPathRooted(task.DownloadFolder) ? task.DownloadFolder : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, task.DownloadFolder));
-			if (Directory.Exists(downloadFolder))
+        /// <summary>
+        /// Opens the folder associated with the specified task, using Windows Explorer.
+        /// </summary>
+        public void OpenFolder(Comic task)
+        {
+            var downloadFolder = (Path.IsPathRooted(task.DownloadFolder) ? task.DownloadFolder : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, task.DownloadFolder));
+            if (Directory.Exists(downloadFolder))
                 applicationController.Execute(new StartProcess(downloadFolder));
-		}
+        }
 
-		public void Initialize(MainForm form)
-		{
+        public void Initialize(MainForm form)
+        {
             appLog.Send("Hello World");
 
             applicationController.Execute(new CheckForUpdates(form));
-            Comics = new BindingList<ComicDisplayModel>(
+            Comics = new BindingList<ComicViewModel>(
                 comicStore
                     .GetActiveComics()
-                    .Select<Comic, ComicDisplayModel>(MapToDisplayModel)
+                    .Select<Comic, ComicViewModel>(MapToViewModel)
                     .ToList()
             );
             applicationController.Execute<StartAllDownloads>();
-		}
+        }
 
-	    public void Open(string command)
-	    {
+        public void Open(string command)
+        {
             applicationController.Execute(new StartProcess(command));
-	    }
+        }
 
-	    public void Handle(ComicActivated eventData)
+        public void Handle(ComicActivated eventData)
         {
             var comic = eventData.Comic;
 
-            uiThread.Send(() => Comics.Add(MapToDisplayModel(comic)));
+            uiThread.Send(() => Comics.Add(MapToViewModel(comic)));
         }
 
-	    public void Handle(AppLogEntryAdded eventData)
-	    {
+        public void Handle(AppLogEntryAdded eventData)
+        {
             appLogBuilder.AppendFormat("{0}\n", eventData);
             uiThread.Send(OnAppLogChanged);
-	    }
-
-        private ComicDisplayModel MapToDisplayModel(Comic comic)
-        {
-            return new ComicDisplayModel { Name = comic.Name, DownloadedStrips = comic.DownloadedStrips };
         }
 
-	    public event PropertyChangedEventHandler PropertyChanged;
+        private void MapToViewModel(Comic comic, ComicViewModel viewModel)
+        {
+            viewModel.Id = comic.Id;
+            viewModel.Name = comic.Name;
+            viewModel.DownloadedStrips = comic.DownloadedStrips;
+        }
+
+        private ComicViewModel MapToViewModel(Comic comic)
+        {
+            var viewModel = new ComicViewModel();
+            MapToViewModel(comic, viewModel);
+            return viewModel;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
         private void OnAppLogChanged()
         {
             var eventHandler = PropertyChanged;
@@ -107,5 +120,15 @@ namespace Woofy.Flows.Main
 
             eventHandler(this, new PropertyChangedEventArgs("AppLog"));
         }
-	}
+
+        public void Handle(ComicChanged eventData)
+        {
+            uiThread.Send(() =>
+            {
+                var viewModel = Comics.Single(c => c.Id == eventData.Comic.Id);
+                MapToViewModel(eventData.Comic, viewModel);
+                Comics.ResetItem(Comics.IndexOf(viewModel));
+            });
+        }
+    }
 }

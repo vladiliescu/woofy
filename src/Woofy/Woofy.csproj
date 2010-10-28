@@ -125,6 +125,7 @@
     <Compile Include="Core\Infrastructure\ICommandHandler.cs" />
     <Compile Include="Core\Infrastructure\IEventHandler.cs" />
     <Compile Include="Core\Result.cs" />
+    <Compile Include="Core\StripDownloaded.cs" />
     <Compile Include="Core\UiThread.cs" />
     <Compile Include="Core\ServiceResult.cs" />
     <Compile Include="Core\SystemProxies\DateTimeProxy.cs" />
@@ -145,6 +146,8 @@
     <Compile Include="Flows\ApplicationLog\AppLog.cs" />
     <Compile Include="Flows\ApplicationLog\AppLogEntryAdded.cs" />
     <Compile Include="Flows\AutoUpdate\CheckForUpdates.cs" />
+    <Compile Include="Flows\Download\ComicChanged.cs" />
+    <Compile Include="Flows\Download\StripDownloadedHandler.cs" />
     <Compile Include="Flows\ExRichTextBox.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -162,7 +165,7 @@
     </Compile>
     <Compile Include="Flows\CompilationError\CompilationErrorController.cs" />
     <Compile Include="Flows\CompilationError\CompilationErrorModel.cs" />
-    <Compile Include="Flows\Main\ComicDisplayModel.cs" />
+    <Compile Include="Flows\Main\ComicViewModel.cs" />
     <Compile Include="Flows\Main\MainPresenter.cs" />
     <Compile Include="Core\UserSettings.cs" />
     <Compile Include="Core\StartProcess.cs" />

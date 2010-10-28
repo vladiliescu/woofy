@@ -9,7 +9,7 @@ namespace Woofy.Tests.ExpressionTests
     public class When_visiting
     {
         private readonly ObjectMother factory = new ObjectMother();
-        private readonly Context context = new Context { CurrentAddress = new Uri("http://example.com") };
+        private readonly Context context = new Context("comic", "Comic", new Uri("http://example.com"));
         private readonly IPageParser parser = new PageParser(new AppSettings());
         private readonly VisitExpression visit;
         private const string regex = @"http://example.com/[\d]";
