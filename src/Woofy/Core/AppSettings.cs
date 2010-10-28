@@ -4,6 +4,7 @@ using System.Reflection;
 
 namespace Woofy.Core
 {
+    [Obsolete("Use IAppSettings instead.")]
 	public static class AppSettingsOld
 	{
 		public static readonly string VersionNumber = Assembly.GetAssembly(typeof(Program)).GetName().Version.ToString();

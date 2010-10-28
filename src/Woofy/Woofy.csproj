@@ -112,6 +112,8 @@
     <Compile Include="Core\Engine\StartAtMacro.cs" />
     <Compile Include="Core\Engine\MetaMethods.cs" />
     <Compile Include="Core\Engine\VisitExpression.cs" />
+    <Compile Include="Core\Infrastructure\ICommand.cs" />
+    <Compile Include="Core\Infrastructure\IEvent.cs" />
     <Compile Include="Core\Infrastructure\ExpressionsModule.cs" />
     <Compile Include="Core\Infrastructure\ForEach.cs" />
     <Compile Include="Core\Infrastructure\ApplicationController.cs" />
@@ -160,9 +162,9 @@
     </Compile>
     <Compile Include="Flows\CompilationError\CompilationErrorController.cs" />
     <Compile Include="Flows\CompilationError\CompilationErrorModel.cs" />
+    <Compile Include="Flows\Main\ComicDisplayModel.cs" />
     <Compile Include="Flows\Main\MainPresenter.cs" />
     <Compile Include="Core\UserSettings.cs" />
-    <Compile Include="Flows\Main\MainModel.cs" />
     <Compile Include="Core\StartProcess.cs" />
     <Compile Include="Settings\UserSettingsData.cs" />
     <Compile Include="EventArgs\DownloadCompletedEventArgs.cs" />

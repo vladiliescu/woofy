@@ -5,6 +5,7 @@ using Woofy.Core;
 
 namespace Woofy.Settings
 {
+    [Obsolete("Use IUserSettings instead.")]
 	public class UserSettingsOld
 	{
 		private static readonly UserSettingsData DefaultSettings = new UserSettingsData

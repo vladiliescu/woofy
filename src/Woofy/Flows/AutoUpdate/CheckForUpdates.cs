@@ -5,7 +5,7 @@ using Woofy.Flows.Main;
 
 namespace Woofy.Flows.AutoUpdate
 {
-    public class CheckForUpdates
+    public class CheckForUpdates : ICommand
     {
         [Obsolete]
         public MainForm Form { get; private set; }

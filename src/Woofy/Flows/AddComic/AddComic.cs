@@ -4,7 +4,7 @@ using Woofy.Core.Infrastructure;
 
 namespace Woofy.Flows.AddComic
 {
-	public class AddComic
+	public class AddComic : ICommand
 	{
 		
 	}

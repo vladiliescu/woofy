@@ -21,7 +21,7 @@ namespace Woofy.Core.Engine
         {
             if (string.IsNullOrEmpty(context.PageContent))
             {
-                Log(context, "Visiting {0}", context.CurrentAddress);
+                Log(context, "{0}", context.CurrentAddress);
                 context.PageContent = webClient.DownloadString(context.CurrentAddress);
                 yield return context.CurrentAddress;
             }
@@ -37,7 +37,7 @@ namespace Woofy.Core.Engine
                 }
 
                 var link = links[0];
-                Log(context, "Visiting {0}", context.CurrentAddress);
+                Log(context, "{0}", link);
 
                 context.CurrentAddress = link;
                 context.PageContent = webClient.DownloadString(link);

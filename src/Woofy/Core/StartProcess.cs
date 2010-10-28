@@ -1,10 +1,9 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Woofy.Core.Infrastructure;
 
 namespace Woofy.Core
 {
-    public class StartProcess
+    public class StartProcess : ICommand
     {
         public string Process { get; private set; }
 

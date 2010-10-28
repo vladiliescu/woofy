@@ -13,12 +13,12 @@ namespace Woofy.Core.ComicManagement
 		public string Id { get; set; }
 
     	public string Name { get; set; }
-    	public long DownloadedComics { get; set; }
+    	public int DownloadedStrips { get; set; }
 		[Obsolete("No longer used")]
     	public string DownloadFolder { get; set; }
     	public TaskStatus Status { get; set; }
     	public string CurrentUrl { get; set; }
-#warning This should be merged with Status, once the whole thing is stable.
+        [Obsolete("It should be merged with Status, once the whole thing is stable.")]
         public bool IsActive { get; set; }
 
 		[JsonIgnore]

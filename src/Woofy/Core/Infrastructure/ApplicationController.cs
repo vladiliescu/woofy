@@ -8,10 +8,10 @@ namespace Woofy.Core.Infrastructure
 {
 	public interface IApplicationController
 	{
-		void Execute<T>() where T : class;
-		void Execute<T>(T commandData) where T : class;
-		void Raise<T>() where T : class;
-		void Raise<T>(T eventData) where T : class;
+        void Execute<T>() where T : class, ICommand;
+        void Execute<T>(T commandData) where T : class, ICommand;
+		void Raise<T>() where T : class, IEvent;
+        void Raise<T>(T eventData) where T : class, IEvent;
 	}
 
 	public class ApplicationController : IApplicationController
@@ -23,23 +23,23 @@ namespace Woofy.Core.Infrastructure
 			this.container = container;
 		}
 
-		public void Execute<T>() where T : class
+        public void Execute<T>() where T : class, ICommand
 		{
 			Execute<T>(null);
 		}
 
-		public void Execute<T>(T commandData) where T : class
+        public void Execute<T>(T commandData) where T : class, ICommand
 		{
 			var commandHandler = container.Resolve<ICommandHandler<T>>();
 			commandHandler.Handle(commandData);
 		}
 
-		public void Raise<T>() where T : class
+        public void Raise<T>() where T : class, IEvent
 		{
 			Raise<T>(null);
 		}
 
-		public void Raise<T>(T eventData) where T : class
+        public void Raise<T>(T eventData) where T : class, IEvent
 		{
 			var eventHandlers = container.Resolve<IEnumerable<IEventHandler<T>>>();
 			if (!eventHandlers.Any())

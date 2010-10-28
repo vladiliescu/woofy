@@ -14,7 +14,7 @@ namespace Woofy.Flows.Main
 {
 	public interface IMainPresenter
 	{
-        BindingList<Comic> Comics { get; }
+        BindingList<ComicDisplayModel> Comics { get; }
         string AppLog { get; }
 
 		void AddComicRequested();
@@ -30,7 +30,7 @@ namespace Woofy.Flows.Main
 	    private readonly IComicStore comicStore;
         private readonly IAppLog appLog;
 
-	    public BindingList<Comic> Comics { get; private set; }
+        public BindingList<ComicDisplayModel> Comics { get; private set; }
         
         private readonly StringBuilder appLogBuilder = new StringBuilder();
 	    public string AppLog 
@@ -66,7 +66,12 @@ namespace Woofy.Flows.Main
             appLog.Send("Hello World");
 
             applicationController.Execute(new CheckForUpdates(form));
-            Comics = new BindingList<Comic>(comicStore.GetActiveComics().ToList());
+            Comics = new BindingList<ComicDisplayModel>(
+                comicStore
+                    .GetActiveComics()
+                    .Select<Comic, ComicDisplayModel>(MapToDisplayModel)
+                    .ToList()
+            );
             applicationController.Execute<StartAllDownloads>();
 		}
 
@@ -79,7 +84,7 @@ namespace Woofy.Flows.Main
         {
             var comic = eventData.Comic;
 
-            uiThread.Send(() => Comics.Add(comic));
+            uiThread.Send(() => Comics.Add(MapToDisplayModel(comic)));
         }
 
 	    public void Handle(AppLogEntryAdded eventData)
@@ -87,6 +92,11 @@ namespace Woofy.Flows.Main
             appLogBuilder.AppendFormat("{0}\n", eventData);
             uiThread.Send(OnAppLogChanged);
 	    }
+
+        private ComicDisplayModel MapToDisplayModel(Comic comic)
+        {
+            return new ComicDisplayModel { Name = comic.Name, DownloadedStrips = comic.DownloadedStrips };
+        }
 
 	    public event PropertyChangedEventHandler PropertyChanged;
         private void OnAppLogChanged()

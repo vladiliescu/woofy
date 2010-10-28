@@ -1,5 +1,6 @@
 using System.Reflection;
 using Autofac;
+using Woofy.Core.SystemProxies;
 using Module = Autofac.Module;
 
 namespace Woofy.Core.Infrastructure
@@ -14,6 +15,8 @@ namespace Woofy.Core.Infrastructure
                 .SingleInstance();
 
 			builder.Register(c => Program.SynchronizationContext).SingleInstance();
+
+            builder.RegisterType<WebClientProxy>().As<IWebClientProxy>().InstancePerDependency();
 		}
 	}
 }

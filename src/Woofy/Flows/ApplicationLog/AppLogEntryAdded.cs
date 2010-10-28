@@ -1,8 +1,9 @@
 ﻿using Woofy.Core;
+using Woofy.Core.Infrastructure;
 
 namespace Woofy.Flows.ApplicationLog
 {
-    public class AppLogEntryAdded
+    public class AppLogEntryAdded : IEvent
     {
         public string Message { get; private set; }
         public string Tag { get; private set; }

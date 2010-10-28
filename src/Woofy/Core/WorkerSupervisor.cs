@@ -83,7 +83,7 @@ namespace Woofy.Core
 	    }
 	}
 
-    public class StartAllDownloads
+    public class StartAllDownloads : ICommand
     {
     }
 }
