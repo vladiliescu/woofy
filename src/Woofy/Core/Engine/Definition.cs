@@ -23,7 +23,11 @@ namespace Woofy.Core.Engine
 
 		public void Run()
 		{
-            var context = new Context { CurrentAddress = new Uri(StartAt) };
+            var context = new Context 
+            { 
+                CurrentAddress = new Uri(StartAt),
+                Comic = Comic
+            };
 		    RunImpl(context);
 		}
 	}

@@ -1,6 +1,5 @@
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Text;
 using Woofy.Core;
@@ -32,14 +31,12 @@ namespace Woofy.Flows.Main
         private readonly IAppLog appLog;
 
 	    public BindingList<Comic> Comics { get; private set; }
-
-        private const string appLogFormat = "{0}\n";
+        
         private readonly StringBuilder appLogBuilder = new StringBuilder();
 	    public string AppLog 
         {
             get { return appLogBuilder.ToString(); }
         }
-	    
 
 	    public MainPresenter(IApplicationController applicationController, IUiThread uiThread, IComicStore comicStore, IAppLog appLog)
 		{
@@ -87,7 +84,7 @@ namespace Woofy.Flows.Main
 
 	    public void Handle(AppLogEntryAdded eventData)
 	    {
-            appLogBuilder.AppendFormat(appLogFormat, eventData.Message);
+            appLogBuilder.AppendFormat("{0}\n", eventData);
             uiThread.Send(OnAppLogChanged);
 	    }
 

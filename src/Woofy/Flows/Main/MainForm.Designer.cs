@@ -188,7 +188,6 @@ namespace Woofy.Flows.Main
             this.txtAppLog.Size = new System.Drawing.Size(462, 60);
             this.txtAppLog.TabIndex = 9;
             this.txtAppLog.Text = "";
-            this.txtAppLog.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.OnAppLogLinkClicked);
             // 
             // toolStrip
             // 

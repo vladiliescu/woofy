@@ -100,6 +100,7 @@
   <ItemGroup>
     <Compile Include="Core\ApplicationInfo.cs" />
     <Compile Include="Core\ComicManagement\ComicRepository.cs" />
+    <Compile Include="Core\Engine\BaseExpression.cs" />
     <Compile Include="Core\Engine\CompilationException.cs" />
     <Compile Include="Core\Engine\Definition.cs" />
     <Compile Include="Core\Engine\DefinitionClassCompilerStep.cs" />
@@ -150,19 +151,6 @@
     <Compile Include="Core\Engine\PageParser.cs" />
     <Compile Include="Core\StringExtensions.cs" />
     <Compile Include="Exceptions\RegexException.cs" />
-    <Compile Include="Flows\BaseForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Flows\ComicSelection\ComicDto.cs" />
-    <Compile Include="Flows\ComicSelection\ComicSelectionController.cs" />
-    <Compile Include="Flows\ComicSelection\ComicSelectionForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Flows\ComicSelection\ComicSelectionForm.Designer.cs">
-      <DependentUpon>ComicSelectionForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Flows\ComicSelection\ComicSelectionInputModel.cs" />
-    <Compile Include="Flows\ComicSelection\ComicSelectionViewModel.cs" />
     <Compile Include="Core\DefinitionStore.cs" />
     <Compile Include="Flows\CompilationError\CompilationErrorDetails.cs">
       <SubType>Form</SubType>
@@ -200,12 +188,6 @@
     </Compile>
     <Compile Include="Flows\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Flows\DefinitionsDebugForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Flows\DefinitionsDebugForm.Designer.cs">
-      <DependentUpon>DefinitionsDebugForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Flows\DownloadProgressForm.cs">
       <SubType>Form</SubType>
@@ -272,15 +254,8 @@
     <EmbeddedResource Include="Flows\AddComic\ComicDetailsForm.resx">
       <DependentUpon>ComicDetailsForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Flows\ComicSelection\ComicSelectionForm.resx">
-      <DependentUpon>ComicSelectionForm.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Flows\CompilationError\CompilationErrorDetails.resx">
       <DependentUpon>CompilationErrorDetails.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Flows\DefinitionsDebugForm.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>DefinitionsDebugForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Flows\DownloadProgressForm.resx">
       <SubType>Designer</SubType>

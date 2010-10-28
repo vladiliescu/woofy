@@ -8,6 +8,7 @@ namespace Woofy.Flows.ApplicationLog
     {
         void Send(string message);
         void Send(string messageFormat, params object[] args);
+        void Send(AppLogEntryAdded logEntry);
     }
 
     public class AppLog : IAppLog
@@ -27,6 +28,11 @@ namespace Woofy.Flows.ApplicationLog
         public void Send(string messageFormat, params object[] args)
         {
             Send(messageFormat.FormatTo(args));
+        }
+
+        public void Send(AppLogEntryAdded logEntry)
+        {
+            applicationController.Raise(logEntry);
         }
     }
 }

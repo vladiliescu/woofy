@@ -13,7 +13,7 @@ using Woofy.Settings;
 
 namespace Woofy.Flows.Main
 {
-	public partial class MainForm : BaseForm
+	public partial class MainForm : Form
 	{
 		public IMainPresenter Presenter { get; set; }
 
@@ -43,6 +43,12 @@ namespace Woofy.Flows.Main
         		Visible = true;
         		WindowState = FormWindowState.Normal;
         	};
+
+            txtAppLog.LinkClicked += (o, e) => Presenter.Open(e.LinkText);
+            txtAppLog.TextChanged += (o, e) => {
+                txtAppLog.SelectionStart = txtAppLog.Text.Length;
+                txtAppLog.ScrollToCaret();
+            };
 		}
 
 		private void OnLoad(object sender, EventArgs e)
@@ -272,11 +278,6 @@ namespace Woofy.Flows.Main
         {
             if (e.Control && e.KeyCode == Keys.N)
                 Presenter.AddComicRequested();
-        }
-
-        private void OnAppLogLinkClicked(object sender, LinkClickedEventArgs e)
-        {
-            Presenter.Open(e.LinkText);
         }
 	}
 }
