@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using Woofy.Core.Infrastructure;
 using Woofy.Flows.ApplicationLog;
 
@@ -26,6 +27,7 @@ namespace Woofy.Core.Engine
             }
 
             ReportStripDownloading(context, links);
+            Thread.Sleep(500);
             ReportStripDownloaded(context, links);
 
             return null;

@@ -1,6 +1,6 @@
 using Woofy.Core.Infrastructure;
 
-namespace Woofy.Core
+namespace Woofy.Core.Engine
 {
     public class StripDownloaded : IEvent
     {

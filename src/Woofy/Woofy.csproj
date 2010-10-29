@@ -99,9 +99,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\ApplicationInfo.cs" />
+    <Compile Include="Core\ComicManagement\ComicAutoPersister.cs" />
     <Compile Include="Core\ComicManagement\ComicRepository.cs" />
     <Compile Include="Core\Engine\BaseExpression.cs" />
     <Compile Include="Core\Engine\CompilationException.cs" />
+    <Compile Include="Core\Engine\CurrentPageChanged.cs" />
     <Compile Include="Core\Engine\Definition.cs" />
     <Compile Include="Core\Engine\DefinitionClassCompilerStep.cs" />
     <Compile Include="Core\Engine\Context.cs" />
@@ -125,7 +127,7 @@
     <Compile Include="Core\Infrastructure\ICommandHandler.cs" />
     <Compile Include="Core\Infrastructure\IEventHandler.cs" />
     <Compile Include="Core\Result.cs" />
-    <Compile Include="Core\StripDownloaded.cs" />
+    <Compile Include="Core\Engine\StripDownloaded.cs" />
     <Compile Include="Core\UiThread.cs" />
     <Compile Include="Core\ServiceResult.cs" />
     <Compile Include="Core\SystemProxies\DateTimeProxy.cs" />
@@ -147,6 +149,7 @@
     <Compile Include="Flows\ApplicationLog\AppLogEntryAdded.cs" />
     <Compile Include="Flows\AutoUpdate\CheckForUpdates.cs" />
     <Compile Include="Flows\Download\ComicChanged.cs" />
+    <Compile Include="Flows\Download\CurrentPageChangedHandler.cs" />
     <Compile Include="Flows\Download\StripDownloadedHandler.cs" />
     <Compile Include="Flows\ExRichTextBox.cs">
       <SubType>Component</SubType>

@@ -1,3 +1,4 @@
+using System;
 using Moq;
 using Woofy.Core.ComicManagement;
 using Woofy.Core.Engine;
@@ -97,7 +98,7 @@ namespace Woofy.Tests.ComicStoreTests
             Assert.Equal("not alpha", comic.Name);
             Assert.Equal("alpha", comic.DownloadFolder);
             Assert.Equal(WorkerStatus.Finished, comic.Status);
-            Assert.Equal("http://example.com/54", comic.CurrentUrl);
+            Assert.Equal(new Uri("http://example.com/54"), comic.CurrentUrl);
             Assert.Equal(true, comic.IsActive);
         }
     }

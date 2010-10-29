@@ -17,7 +17,7 @@ namespace Woofy.Core.ComicManagement
 		[Obsolete("No longer used")]
     	public string DownloadFolder { get; set; }
     	public WorkerStatus Status { get; set; }
-    	public string CurrentUrl { get; set; }
+    	public Uri CurrentUrl { get; set; }
         [Obsolete("It should be merged with Status, once the whole thing is stable.")]
         public bool IsActive { get; set; }
 

@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using Woofy.Core.Infrastructure;
 using Woofy.Core.SystemProxies;
 using Woofy.Flows.ApplicationLog;
 
@@ -8,11 +10,13 @@ namespace Woofy.Core.Engine
     {
         private readonly IPageParser parser;
         private readonly IWebClientProxy webClient;
+        private readonly IApplicationController applicationController;
 
-        public VisitExpression(IPageParser parser, IWebClientProxy webClient, IAppLog appLog)
+        public VisitExpression(IPageParser parser, IWebClientProxy webClient, IAppLog appLog, IApplicationController applicationController)
             : base(appLog)
         {
             this.parser = parser;
+            this.applicationController = applicationController;
             this.webClient = webClient;
         }
 
@@ -20,7 +24,7 @@ namespace Woofy.Core.Engine
         {
             if (string.IsNullOrEmpty(context.PageContent))
             {
-                Log(context, "{0}", context.CurrentAddress);
+                ReportVisitingPage(context, context.CurrentAddress);
                 context.PageContent = webClient.DownloadString(context.CurrentAddress);
                 yield return context.CurrentAddress;
             }
@@ -29,20 +33,29 @@ namespace Woofy.Core.Engine
             do
             {
                 var links = parser.RetrieveLinksFromPage(context.PageContent, regex, context.CurrentAddress);
-                Log(context, "Found {0} links", links.Length);
+                ReportLinksFound(context, links);
                 if (links.Length == 0)
-                {
                     yield break;
-                }
 
                 var link = links[0];
-                Log(context, "{0}", link);
+                ReportVisitingPage(context, link);
 
                 context.CurrentAddress = link;
                 context.PageContent = webClient.DownloadString(link);
                 yield return link;
             }
             while (true);
+        }
+
+        private void ReportLinksFound(Context context, Uri[] links)
+        {
+            Log(context, "Found {0} links", links.Length);
+        }
+
+        private void ReportVisitingPage(Context context, Uri page)
+        {
+            Log(context, "{0}", page);
+            applicationController.Raise(new CurrentPageChanged(context.ComicId, page));
         }
 
         protected override string ExpressionName
