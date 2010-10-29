@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Woofy.Core.Infrastructure;
 
 namespace Woofy.Core.Engine
@@ -27,5 +28,11 @@ namespace Woofy.Core.Engine
             
 		    RunImpl(context);
 		}
+
+	    protected IEnumerable<object> InvokeExpression(string expressionName, object argument, Context context)
+        {
+            var expression = ContainerAccessor.Resolve<IExpression>(expressionName);
+            return expression.Invoke(argument, context);
+        }
 	}
 }

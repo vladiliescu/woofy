@@ -7,22 +7,17 @@ namespace Woofy.Core.Engine
     [CompilerGlobalScope]
     public static class MetaMethods
     {
-		public static MethodInvocationExpression GenerateIExpressionInvocationFor(string keyword, StringLiteralExpression argument)
+		public static MethodInvocationExpression GenerateIExpressionInvocationFor(string expressionName, StringLiteralExpression argument)
 		{
 			//todo: it would be best if i accessed the types and their corresponding method via strong-typed expressions, instead of string literals
-			var containerAccessor = new ReferenceExpression("ContainerAccessor");
-			var resolve = new MemberReferenceExpression(containerAccessor, "Resolve");
-			var genericReference = new GenericReferenceExpression();
-			genericReference.Target = resolve;
-			genericReference.GenericArguments.Add(new SimpleTypeReference("IExpression"));
+            var @this = new SelfLiteralExpression();
+            var invoke = new MemberReferenceExpression(@this, "InvokeExpression");
 
-			var invokeVisit = new MethodInvocationExpression(genericReference, new StringLiteralExpression(keyword));
-			var execute = new MemberReferenceExpression(invokeVisit, "Invoke");
-
-			var invokeExecute = argument != null ?
-				new MethodInvocationExpression(execute, argument, new ReferenceExpression("context")) :
-				new MethodInvocationExpression(execute, new NullLiteralExpression(), new ReferenceExpression("context"));
-			return invokeExecute;
+            return new MethodInvocationExpression(invoke,
+                new StringLiteralExpression(expressionName),
+                argument ?? (Expression)new NullLiteralExpression(), 
+                new ReferenceExpression("context")
+            );
 		}
 
     	[Meta]
