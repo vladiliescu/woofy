@@ -90,7 +90,7 @@ namespace Woofy.Flows.Main
             //            row.Cells["TaskStatusColumn"].Value = Resources.Running;
             //            break;
             //        case WorkerStatus.Finished:
-            //            //DisplayDownloadOutcome(row, task.DownloadOutcome, task.CurrentUrl);
+            //            //DisplayDownloadOutcome(row, task.DownloadOutcome, task.CurrentPage);
             //            break;
             //        default:
             //            break;
@@ -277,7 +277,8 @@ namespace Woofy.Flows.Main
 
         private void OnGridCellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-            if (e.ColumnIndex != 0 || e.Value == null)
+#warning I should extract these indexes and place them in some instance members
+            if (e.ColumnIndex != dgvwTasks.Columns.IndexOf(colStatus) || e.Value == null)
                 return;
 
             var status = (WorkerStatus)e.Value;
@@ -295,6 +296,18 @@ namespace Woofy.Flows.Main
                 default:
                     throw new ArgumentOutOfRangeException();
             }
+        }
+
+        private void OnGridCellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex != dgvwTasks.Columns.IndexOf(colCurrentPage))
+                return;
+
+            var value = dgvwTasks.Rows[e.RowIndex].Cells[e.ColumnIndex].Value as string;
+            if (value == null)
+                return;
+
+            Presenter.Open(value);
         }
 	}
 }

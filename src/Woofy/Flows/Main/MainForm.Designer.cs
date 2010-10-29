@@ -31,7 +31,7 @@ namespace Woofy.Flows.Main
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.SplitContainer splitContainer1;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dgvwTasks = new System.Windows.Forms.DataGridView();
             this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItemOpenTaskFolder = new System.Windows.Forms.ToolStripMenuItem();
@@ -55,6 +55,7 @@ namespace Woofy.Flows.Main
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colStatus = new System.Windows.Forms.DataGridViewImageColumn();
             this.colComic = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colCurrentPage = new System.Windows.Forms.DataGridViewLinkColumn();
             this.colDownloadedStrips = new System.Windows.Forms.DataGridViewTextBoxColumn();
             splitContainer1 = new System.Windows.Forms.SplitContainer();
             splitContainer1.Panel1.SuspendLayout();
@@ -93,6 +94,7 @@ namespace Woofy.Flows.Main
             this.dgvwTasks.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colStatus,
             this.colComic,
+            this.colCurrentPage,
             this.colDownloadedStrips});
             this.dgvwTasks.ContextMenuStrip = this.contextMenuStrip;
             this.dgvwTasks.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -109,6 +111,7 @@ namespace Woofy.Flows.Main
             this.dgvwTasks.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.OnGridCellFormatting);
             this.dgvwTasks.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvwTasks_DataBindingComplete);
             this.dgvwTasks.SelectionChanged += new System.EventHandler(this.dgvwTasks_SelectionChanged);
+            this.dgvwTasks.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnGridCellContentClick);
             // 
             // contextMenuStrip
             // 
@@ -276,11 +279,11 @@ namespace Woofy.Flows.Main
             // colStatus
             // 
             this.colStatus.DataPropertyName = "Status";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.NullValue = null;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Menu;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.MenuText;
-            this.colStatus.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.NullValue = null;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Menu;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.MenuText;
+            this.colStatus.DefaultCellStyle = dataGridViewCellStyle2;
             this.colStatus.HeaderText = "";
             this.colStatus.MinimumWidth = 20;
             this.colStatus.Name = "colStatus";
@@ -296,6 +299,16 @@ namespace Woofy.Flows.Main
             this.colComic.Name = "colComic";
             this.colComic.ReadOnly = true;
             this.colComic.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // colCurrentPage
+            // 
+            this.colCurrentPage.DataPropertyName = "CurrentPage";
+            this.colCurrentPage.HeaderText = "Current page";
+            this.colCurrentPage.LinkColor = System.Drawing.Color.Blue;
+            this.colCurrentPage.Name = "colCurrentPage";
+            this.colCurrentPage.ReadOnly = true;
+            this.colCurrentPage.VisitedLinkColor = System.Drawing.Color.Blue;
+            this.colCurrentPage.Width = 200;
             // 
             // colDownloadedStrips
             // 
@@ -357,6 +370,7 @@ namespace Woofy.Flows.Main
         private System.Windows.Forms.RichTextBox txtAppLog;
         private System.Windows.Forms.DataGridViewImageColumn colStatus;
         private System.Windows.Forms.DataGridViewTextBoxColumn colComic;
+        private System.Windows.Forms.DataGridViewLinkColumn colCurrentPage;
         private System.Windows.Forms.DataGridViewTextBoxColumn colDownloadedStrips;
     }
 }

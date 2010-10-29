@@ -30,7 +30,7 @@ namespace Woofy.Core
             //                                        return;
 
             //                                    comic.DownloadedComics++;
-            //                                    comic.CurrentUrl = e.CurrentUrl;
+            //                                    comic.CurrentPage = e.CurrentPage;
             //                                    comicRepository.PersistComics();
 
             //                                    ResetComicsBindings();
@@ -51,7 +51,7 @@ namespace Woofy.Core
 
             //                                    //only set the currentUrl to null if the outcome is successful
             //                                    if (e.DownloadOutcome == DownloadOutcome.Successful)
-            //                                        comic.CurrentUrl = null;
+            //                                        comic.CurrentPage = null;
 
             //                                    comic.DownloadOutcome = e.DownloadOutcome;
             //                                    comicRepository.PersistComics();

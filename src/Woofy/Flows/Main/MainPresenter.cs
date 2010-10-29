@@ -103,6 +103,7 @@ namespace Woofy.Flows.Main
             viewModel.Name = comic.Name;
             viewModel.DownloadedStrips = comic.DownloadedStrips;
             viewModel.Status = comic.Status;
+            viewModel.CurrentPage = comic.CurrentPage.AbsoluteUri;
         }
 
         private ComicViewModel MapToViewModel(Comic comic)

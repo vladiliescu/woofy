@@ -20,7 +20,7 @@ namespace Woofy.Flows.Download
         {
 #warning race condition (although there should be at most one thread updating any given comic).
             var comic = comicStore.Find(eventData.ComicId);
-            comic.CurrentUrl = eventData.Url;
+            comic.CurrentPage = eventData.Url;
 
             applicationController.Raise(new ComicChanged(comic));
         }

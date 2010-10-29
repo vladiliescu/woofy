@@ -45,7 +45,7 @@ namespace Woofy.Tests.ComicStoreTests
             Assert.NotNull(comic.Definition);
             Assert.Equal("alpha", comic.Name);
             Assert.Equal("d:\\comics\\AlphaTestDefinition", comic.DownloadFolder);
-            Assert.Equal(null, comic.CurrentUrl);
+            Assert.Equal(null, comic.CurrentPage);
             Assert.Equal(false, comic.IsActive);
             Assert.Equal(WorkerStatus.Running, comic.Status);
         }
@@ -63,7 +63,7 @@ namespace Woofy.Tests.ComicStoreTests
         ""DownloadedStrips"": 10,
         ""DownloadFolder"": ""alpha"",
         ""Status"": 2,
-        ""CurrentUrl"": ""http://example.com/54"",
+        ""CurrentPage"": ""http://example.com/54"",
         ""IsActive"": true
     }
 ]");
@@ -86,7 +86,7 @@ namespace Woofy.Tests.ComicStoreTests
         ""DownloadedStrips"": 10,
         ""DownloadFolder"": ""alpha"",
         ""Status"": 2,
-        ""CurrentUrl"": ""http://example.com/54"",
+        ""CurrentPage"": ""http://example.com/54"",
         ""IsActive"": true
     }
 ]");
@@ -98,7 +98,7 @@ namespace Woofy.Tests.ComicStoreTests
             Assert.Equal("not alpha", comic.Name);
             Assert.Equal("alpha", comic.DownloadFolder);
             Assert.Equal(WorkerStatus.Finished, comic.Status);
-            Assert.Equal(new Uri("http://example.com/54"), comic.CurrentUrl);
+            Assert.Equal(new Uri("http://example.com/54"), comic.CurrentPage);
             Assert.Equal(true, comic.IsActive);
         }
     }

@@ -1,3 +1,4 @@
+using System;
 using Woofy.Enums;
 
 namespace Woofy.Flows.Main
@@ -8,5 +9,6 @@ namespace Woofy.Flows.Main
         public string Name { get; set; }
         public int DownloadedStrips { get; set; }
         public WorkerStatus Status { get; set; }
+        public string CurrentPage { get; set; }
     }
 }
