@@ -1,3 +1,4 @@
+comic "Foo Bar"
 start_at "http://example.com"
 
 foo()
