@@ -1,7 +1,7 @@
 using Moq;
-using Woofy.Core;
 using Woofy.Core.ComicManagement;
 using Woofy.Core.Engine;
+using Woofy.Enums;
 using Xunit;
 
 namespace Woofy.Tests.ComicStoreTests
@@ -46,7 +46,7 @@ namespace Woofy.Tests.ComicStoreTests
             Assert.Equal("d:\\comics\\AlphaTestDefinition", comic.DownloadFolder);
             Assert.Equal(null, comic.CurrentUrl);
             Assert.Equal(false, comic.IsActive);
-            Assert.Equal(TaskStatus.Running, comic.Status);
+            Assert.Equal(WorkerStatus.Running, comic.Status);
         }
 
         [Fact]
@@ -96,7 +96,7 @@ namespace Woofy.Tests.ComicStoreTests
             Assert.NotNull(comic.Definition);
             Assert.Equal("not alpha", comic.Name);
             Assert.Equal("alpha", comic.DownloadFolder);
-            Assert.Equal(TaskStatus.Finished, comic.Status);
+            Assert.Equal(WorkerStatus.Finished, comic.Status);
             Assert.Equal("http://example.com/54", comic.CurrentUrl);
             Assert.Equal(true, comic.IsActive);
         }

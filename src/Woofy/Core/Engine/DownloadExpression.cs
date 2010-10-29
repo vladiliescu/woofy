@@ -21,30 +21,30 @@ namespace Woofy.Core.Engine
             var links = parser.RetrieveLinksFromPage(context.PageContent, (string)argument, context.CurrentAddress);
             if (links.Length == 0)
             {
-                ReportNoComicsFound(context);
+                ReportNoStripsFound(context);
                 return null;
             }
 
-            ReportComicDownloading(context, links);
-            ReportComicDownloaded(context, links);
+            ReportStripDownloading(context, links);
+            ReportStripDownloaded(context, links);
 
             return null;
         }
 
-        private void ReportNoComicsFound(Context context)
+        private void ReportNoStripsFound(Context context)
         {
-            Log(context, "No comics found.");
+            Log(context, "No strips found.");
         }
 
-        private void ReportComicDownloaded(Context context, Uri[] links)
+        private void ReportStripDownloaded(Context context, Uri[] links)
         {
             Log(context, "downloaded {0}", links[0]);
             applicationController.Raise(new StripDownloaded(context.ComicId));
         }
 
-        private void ReportComicDownloading(Context context, Uri[] links)
+        private void ReportStripDownloading(Context context, Uri[] links)
         {
-            Log(context, "{0}", links[0]);
+            Log(context, "downloading {0}", links[0]);
         }
 
         protected override string ExpressionName

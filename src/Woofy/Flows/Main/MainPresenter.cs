@@ -102,6 +102,7 @@ namespace Woofy.Flows.Main
             viewModel.Id = comic.Id;
             viewModel.Name = comic.Name;
             viewModel.DownloadedStrips = comic.DownloadedStrips;
+            viewModel.Status = comic.Status;
         }
 
         private ComicViewModel MapToViewModel(Comic comic)

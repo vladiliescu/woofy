@@ -185,7 +185,7 @@
     <Compile Include="Core\WebConnectionFactory.cs" />
     <Compile Include="Core\WebPath.cs" />
     <Compile Include="Enums\DownloadOutcome.cs" />
-    <Compile Include="Enums\TaskStatus.cs" />
+    <Compile Include="Enums\WorkerStatus.cs" />
     <Compile Include="EventArgs\ResponseReceivedEventArgs.cs" />
     <Compile Include="Exceptions\MissingFriendlyNameException.cs" />
     <Compile Include="Flows\AboutForm.cs">

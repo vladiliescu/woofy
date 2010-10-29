@@ -83,13 +83,13 @@ namespace Woofy.Flows.Main
 
             //    switch (task.Status)
             //    {
-            //        case TaskStatus.Stopped:
+            //        case WorkerStatus.Stopped:
             //            row.Cells["TaskStatusColumn"].Value = Resources.Paused;
             //            break;
-            //        case TaskStatus.Running:
+            //        case WorkerStatus.Running:
             //            row.Cells["TaskStatusColumn"].Value = Resources.Running;
             //            break;
-            //        case TaskStatus.Finished:
+            //        case WorkerStatus.Finished:
             //            //DisplayDownloadOutcome(row, task.DownloadOutcome, task.CurrentUrl);
             //            break;
             //        default:
@@ -141,7 +141,7 @@ namespace Woofy.Flows.Main
             //    return;
 
             //var task = (Comic)dgvwTasks.SelectedRows[0].DataBoundItem;
-            //if (task.Status == TaskStatus.Finished)
+            //if (task.Status == WorkerStatus.Finished)
             //    Presenter.OpenFolder(task);
             //else
             //    ToggleSelectedTasksState();
@@ -162,17 +162,17 @@ namespace Woofy.Flows.Main
 
             //switch (task.Status)
             //{
-            //    case TaskStatus.Stopped:
+            //    case WorkerStatus.Stopped:
             //        toolStripButtonPauseTask.Enabled = true;
             //        toolStripButtonPauseTask.Image = Resources.Running;
             //        toolStripButtonPauseTask.Text = "Unpause";
             //        break;
-            //    case TaskStatus.Running:
+            //    case WorkerStatus.Running:
             //        toolStripButtonPauseTask.Enabled = true;
             //        toolStripButtonPauseTask.Image = Resources.Paused;
             //        toolStripButtonPauseTask.Text = "Pause";
             //        break;
-            //    case TaskStatus.Finished:
+            //    case WorkerStatus.Finished:
             //        toolStripButtonPauseTask.Enabled = false;
             //        break;
             //}
@@ -274,5 +274,27 @@ namespace Woofy.Flows.Main
         }
 
         #endregion
+
+        private void OnGridCellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.ColumnIndex != 0 || e.Value == null)
+                return;
+
+            var status = (WorkerStatus)e.Value;
+            switch (status)
+            {
+                case WorkerStatus.Stopped:
+                    e.Value = Resources.Paused;
+                    break;
+                case WorkerStatus.Running:
+                    e.Value = Resources.Running;
+                    break;
+                case WorkerStatus.Finished:
+                    e.Value = Resources.Finished;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
 	}
 }

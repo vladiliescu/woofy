@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System.Linq;
 using Woofy.Core.Engine;
 using Woofy.Core.SystemProxies;
+using Woofy.Enums;
 
 namespace Woofy.Core.ComicManagement
 {
@@ -60,7 +61,7 @@ namespace Woofy.Core.ComicManagement
 			    Definition = definition,
 			    Id = definition.Id,
                 DownloadFolder = userSettings.DefaultDownloadFolder.IsNotNullOrEmpty() ? Path.Combine(userSettings.DefaultDownloadFolder, definition.Id) : definition.Id,
-			    Status = TaskStatus.Running
+			    Status = WorkerStatus.Running
             };
 
             return comic;

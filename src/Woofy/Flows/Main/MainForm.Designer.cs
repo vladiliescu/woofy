@@ -53,9 +53,9 @@ namespace Woofy.Flows.Main
             this.startAllTasksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.TaskStatusColumn = new System.Windows.Forms.DataGridViewImageColumn();
-            this.TaskNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ComicsColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colStatus = new System.Windows.Forms.DataGridViewImageColumn();
+            this.colComic = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colDownloadedStrips = new System.Windows.Forms.DataGridViewTextBoxColumn();
             splitContainer1 = new System.Windows.Forms.SplitContainer();
             splitContainer1.Panel1.SuspendLayout();
             splitContainer1.Panel2.SuspendLayout();
@@ -91,9 +91,9 @@ namespace Woofy.Flows.Main
             this.dgvwTasks.AllowUserToResizeRows = false;
             this.dgvwTasks.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvwTasks.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.TaskStatusColumn,
-            this.TaskNameColumn,
-            this.ComicsColumn});
+            this.colStatus,
+            this.colComic,
+            this.colDownloadedStrips});
             this.dgvwTasks.ContextMenuStrip = this.contextMenuStrip;
             this.dgvwTasks.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvwTasks.Location = new System.Drawing.Point(0, 0);
@@ -106,6 +106,7 @@ namespace Woofy.Flows.Main
             this.dgvwTasks.Size = new System.Drawing.Size(512, 320);
             this.dgvwTasks.TabIndex = 7;
             this.dgvwTasks.DoubleClick += new System.EventHandler(this.dgvwTasks_DoubleClick);
+            this.dgvwTasks.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.OnGridCellFormatting);
             this.dgvwTasks.DataBindingComplete += new System.Windows.Forms.DataGridViewBindingCompleteEventHandler(this.dgvwTasks_DataBindingComplete);
             this.dgvwTasks.SelectionChanged += new System.EventHandler(this.dgvwTasks_SelectionChanged);
             // 
@@ -272,36 +273,37 @@ namespace Woofy.Flows.Main
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             // 
-            // TaskStatusColumn
+            // colStatus
             // 
+            this.colStatus.DataPropertyName = "Status";
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.NullValue = null;
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Menu;
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.MenuText;
-            this.TaskStatusColumn.DefaultCellStyle = dataGridViewCellStyle1;
-            this.TaskStatusColumn.HeaderText = "";
-            this.TaskStatusColumn.MinimumWidth = 20;
-            this.TaskStatusColumn.Name = "TaskStatusColumn";
-            this.TaskStatusColumn.ReadOnly = true;
-            this.TaskStatusColumn.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.TaskStatusColumn.Width = 20;
+            this.colStatus.DefaultCellStyle = dataGridViewCellStyle1;
+            this.colStatus.HeaderText = "";
+            this.colStatus.MinimumWidth = 20;
+            this.colStatus.Name = "colStatus";
+            this.colStatus.ReadOnly = true;
+            this.colStatus.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.colStatus.Width = 20;
             // 
-            // TaskNameColumn
+            // colComic
             // 
-            this.TaskNameColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.TaskNameColumn.DataPropertyName = "Name";
-            this.TaskNameColumn.HeaderText = "Comic";
-            this.TaskNameColumn.Name = "TaskNameColumn";
-            this.TaskNameColumn.ReadOnly = true;
-            this.TaskNameColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colComic.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.colComic.DataPropertyName = "Name";
+            this.colComic.HeaderText = "Comic";
+            this.colComic.Name = "colComic";
+            this.colComic.ReadOnly = true;
+            this.colComic.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // ComicsColumn
+            // colDownloadedStrips
             // 
-            this.ComicsColumn.DataPropertyName = "DownloadedStrips";
-            this.ComicsColumn.HeaderText = "Downloaded strips";
-            this.ComicsColumn.Name = "ComicsColumn";
-            this.ComicsColumn.ReadOnly = true;
-            this.ComicsColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.colDownloadedStrips.DataPropertyName = "DownloadedStrips";
+            this.colDownloadedStrips.HeaderText = "Downloaded strips";
+            this.colDownloadedStrips.Name = "colDownloadedStrips";
+            this.colDownloadedStrips.ReadOnly = true;
+            this.colDownloadedStrips.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // MainForm
             // 
@@ -353,8 +355,8 @@ namespace Woofy.Flows.Main
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.RichTextBox txtAppLog;
-        private System.Windows.Forms.DataGridViewImageColumn TaskStatusColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TaskNameColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ComicsColumn;
+        private System.Windows.Forms.DataGridViewImageColumn colStatus;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colComic;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colDownloadedStrips;
     }
 }

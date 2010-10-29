@@ -46,8 +46,8 @@ namespace Woofy.Core
             //                                        return;
 
             //                                    comic.Status = e.DownloadOutcome == DownloadOutcome.Cancelled
-            //                                                    ? TaskStatus.Stopped
-            //                                                    : TaskStatus.Finished;
+            //                                                    ? WorkerStatus.Stopped
+            //                                                    : WorkerStatus.Finished;
 
             //                                    //only set the currentUrl to null if the outcome is successful
             //                                    if (e.DownloadOutcome == DownloadOutcome.Successful)
@@ -64,7 +64,7 @@ namespace Woofy.Core
             //                                    var allTasksHaveFinished = true;
             //                                    foreach (var _task in Comics)
             //                                    {
-            //                                        if (_task.Status != TaskStatus.Running)
+            //                                        if (_task.Status != WorkerStatus.Running)
             //                                            continue;
 
             //                                        allTasksHaveFinished = false;
