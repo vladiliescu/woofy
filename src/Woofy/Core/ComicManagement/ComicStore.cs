@@ -21,10 +21,12 @@ namespace Woofy.Core.ComicManagement
 	public class ComicStore : IComicStore
 	{
         public Comic[] Comics { get; private set; }
+		
 		private readonly IAppSettings appSettings;
 		private readonly IDefinitionStore definitionStore;
         private readonly IFileProxy file;
         private readonly IUserSettings userSettings;
+		private readonly object writeLock = new object();
 
 		public ComicStore(IAppSettings appSettings, IDefinitionStore definitionStore, IFileProxy file, IUserSettings userSettings)
 		{
@@ -84,7 +86,10 @@ namespace Woofy.Core.ComicManagement
 
 	    public void PersistComics()
 		{
-			file.WriteAllText(appSettings.ComicsFile, JsonConvert.SerializeObject(Comics, Formatting.Indented));
+	    	lock (writeLock)
+	    	{
+				file.WriteAllText(appSettings.ComicsFile, JsonConvert.SerializeObject(Comics, Formatting.Indented));
+	    	}
 		}
 
         public Comic Find(string id)
