@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Woofy.Core.ComicManagement;
 using Woofy.Core.Infrastructure;
 
 namespace Woofy.Core.Engine
@@ -16,15 +17,16 @@ namespace Woofy.Core.Engine
 		/// Basically the definition's filename without the extension.
 		/// </summary>
 		public string Id { get; set; }
+	    public Comic ComicInstance { get; set; }
 
-		protected Definition()
+	    protected Definition()
 		{
 			Id = GetType().Name.Substring(1);
 		}
 
 		public void Run()
 		{
-            var context = new Context(Id, Comic, new Uri(StartAt)); 
+            var context = new Context(Id, Comic, ComicInstance.CurrentPage ?? new Uri(StartAt));
             
 		    RunImpl(context);
 		}

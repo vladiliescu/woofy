@@ -44,7 +44,7 @@ namespace Woofy.Core.ComicManagement
 		    {
                 var associatedComic = serializedComics.SingleOrDefault(x => x.Id == definition.Id);
                 if (associatedComic != null)
-                    associatedComic.Definition = definition;
+                    associatedComic.SetDefinition(definition);
                 else
                     associatedComic = CreateComicFor(definition);
                 
@@ -60,11 +60,12 @@ namespace Woofy.Core.ComicManagement
             var comic = new Comic
             {
                 Name = definition.Comic,
-			    Definition = definition,
 			    Id = definition.Id,
                 DownloadFolder = userSettings.DefaultDownloadFolder.IsNotNullOrEmpty() ? Path.Combine(userSettings.DefaultDownloadFolder, definition.Id) : definition.Id,
 			    Status = WorkerStatus.Running
             };
+
+            comic.SetDefinition(definition);
 
             return comic;
 	    }

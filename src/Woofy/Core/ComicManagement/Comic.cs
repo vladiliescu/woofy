@@ -22,9 +22,15 @@ namespace Woofy.Core.ComicManagement
         public bool IsActive { get; set; }
 
 		[JsonIgnore]
-    	public Definition Definition { get; set; }
-    
-    	public override string ToString()
+    	public Definition Definition { get; private set; }
+
+        public void SetDefinition(Definition definition)
+        {
+            Definition = definition;
+            definition.ComicInstance = this;
+        }
+
+        public override string ToString()
         {
             return Name;
         }
