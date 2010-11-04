@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using Woofy.Core.ComicManagement;
 using Woofy.Core.Infrastructure;
 
@@ -19,6 +20,8 @@ namespace Woofy.Core.Engine
 		public string Id { get; set; }
 	    public Comic ComicInstance { get; set; }
 
+		private readonly ThreadCanceler canceler = new ThreadCanceler();
+
 	    protected Definition()
 		{
 			Id = GetType().Name.Substring(1);
@@ -27,14 +30,27 @@ namespace Woofy.Core.Engine
 		public void Run()
 		{
             var context = new Context(Id, Comic, ComicInstance.CurrentPage ?? new Uri(StartAt));
-            
-		    RunImpl(context);
+
+			try
+			{
+				RunImpl(context);
+			}
+			catch (OperationCanceledException)
+			{
+			}
 		}
 
 	    protected IEnumerable<object> InvokeExpression(string expressionName, object argument, Context context)
         {
-            var expression = ContainerAccessor.Resolve<IExpression>(expressionName);
+			canceler.ThrowIfCancellationRequested();
+
+	    	var expression = ContainerAccessor.Resolve<IExpression>(expressionName);
             return expression.Invoke(argument, context);
         }
+
+		public void Stop()
+		{
+			canceler.Cancel();
+		}
 	}
 }

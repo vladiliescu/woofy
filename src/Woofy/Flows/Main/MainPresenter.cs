@@ -4,6 +4,7 @@ using System.IO;
 using System.Text;
 using Woofy.Core;
 using Woofy.Core.ComicManagement;
+using Woofy.Core.Engine;
 using Woofy.Core.Infrastructure;
 using System.Linq;
 using Woofy.Flows.AddComic;
@@ -22,6 +23,7 @@ namespace Woofy.Flows.Main
         void OpenFolder(Comic task);
         void Initialize(MainForm form);
         void Open(string command);
+        void ToggleComicState(ComicInputModel inputModel);
     }
 
     public class MainPresenter : IMainPresenter, INotifyPropertyChanged,
@@ -82,6 +84,18 @@ namespace Woofy.Flows.Main
         public void Open(string command)
         {
             applicationController.Execute(new StartProcess(command));
+        }
+
+        public void ToggleComicState(ComicInputModel inputModel)
+        {
+            var comic = comicStore.Find(inputModel.Id);
+            if (comic.Status == WorkerStatus.Finished)
+                return;
+
+            if (comic.Status == WorkerStatus.Paused)
+                applicationController.Execute(new StartDownload(comic));
+            else
+                applicationController.Execute(new PauseDownload(comic));
         }
 
         public void Handle(ComicActivated eventData)

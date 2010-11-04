@@ -1,13 +1,13 @@
 ﻿using Woofy.Core.ComicManagement;
 using Woofy.Core.Infrastructure;
 
-namespace Woofy.Flows.Download
+namespace Woofy.Flows.Main
 {
-    public class ComicChanged : IEvent
+    public class PauseDownload : ICommand
     {
         public Comic Comic { get; private set; }
 
-        public ComicChanged(Comic comic)
+        public PauseDownload(Comic comic)
         {
             Comic = comic;
         }

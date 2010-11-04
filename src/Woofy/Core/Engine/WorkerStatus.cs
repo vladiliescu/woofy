@@ -1,8 +1,8 @@
-namespace Woofy.Enums
+namespace Woofy.Core.Engine
 {
     public enum WorkerStatus
     {
-        Stopped = 0,
+        Paused = 0,
         Running = 1,
         Finished = 2
     }

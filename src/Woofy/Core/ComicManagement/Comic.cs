@@ -1,7 +1,6 @@
 using System;
 using Newtonsoft.Json;
 using Woofy.Core.Engine;
-using Woofy.Enums;
 
 namespace Woofy.Core.ComicManagement
 {

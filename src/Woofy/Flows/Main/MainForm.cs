@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using Woofy.Core;
+using Woofy.Core.Engine;
 using Woofy.Enums;
 using Woofy.Flows.AutoUpdate;
 using Woofy.Gui;
@@ -34,8 +35,6 @@ namespace Woofy.Flows.Main
 				using (var settingsForm = new SettingsForm())
 					settingsForm.ShowDialog();
 			};
-			//stopAllTasksToolStripMenuItem.Click += (o, e) => PauseAllBots();
-			//startAllTasksToolStripMenuItem.Click += (o, e) => ResumeAllBots();
 			exitToolStripMenuItem.Click += (o, e) => Application.Exit();
 			notifyIcon.MouseDoubleClick += (o, e) => {
         		Visible = true;
@@ -83,7 +82,7 @@ namespace Woofy.Flows.Main
 
             //    switch (task.Status)
             //    {
-            //        case WorkerStatus.Stopped:
+            //        case WorkerStatus.Paused:
             //            row.Cells["TaskStatusColumn"].Value = Resources.Paused;
             //            break;
             //        case WorkerStatus.Running:
@@ -162,7 +161,7 @@ namespace Woofy.Flows.Main
 
             //switch (task.Status)
             //{
-            //    case WorkerStatus.Stopped:
+            //    case WorkerStatus.Paused:
             //        toolStripButtonPauseTask.Enabled = true;
             //        toolStripButtonPauseTask.Image = Resources.Running;
             //        toolStripButtonPauseTask.Text = "Unpause";
@@ -284,7 +283,7 @@ namespace Woofy.Flows.Main
             var status = (WorkerStatus)e.Value;
             switch (status)
             {
-                case WorkerStatus.Stopped:
+                case WorkerStatus.Paused:
                     e.Value = Resources.Paused;
                     break;
                 case WorkerStatus.Running:
@@ -308,6 +307,15 @@ namespace Woofy.Flows.Main
                 return;
 
             Presenter.Open(value);
+        }
+
+        private void OnToggleComicState(object sender, EventArgs e)
+        {
+            if (dgvwTasks.SelectedRows.Count == 0)
+                return;
+            var comic = (ComicViewModel)dgvwTasks.SelectedRows[0].DataBoundItem;
+
+            Presenter.ToggleComicState(new ComicInputModel { Id = comic.Id });
         }
 	}
 }

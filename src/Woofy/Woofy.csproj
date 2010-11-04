@@ -108,6 +108,8 @@
     <Compile Include="Core\Engine\DefinitionClassCompilerStep.cs" />
     <Compile Include="Core\Engine\Context.cs" />
     <Compile Include="Core\Engine\DefinitionCompiler.cs" />
+    <Compile Include="Core\ThreadCanceler.cs" />
+    <Compile Include="Core\Engine\WorkerStoppedException.cs" />
     <Compile Include="Core\Engine\DownloadExpression.cs" />
     <Compile Include="Core\Engine\IExpression.cs" />
     <Compile Include="Core\Engine\ComicMacro.cs" />
@@ -148,7 +150,7 @@
     <Compile Include="Flows\ApplicationLog\AppLog.cs" />
     <Compile Include="Flows\ApplicationLog\AppLogEntryAdded.cs" />
     <Compile Include="Flows\AutoUpdate\CheckForUpdates.cs" />
-    <Compile Include="Flows\Download\ComicChanged.cs" />
+    <Compile Include="Core\Engine\ComicChanged.cs" />
     <Compile Include="Flows\Download\CurrentPageChangedHandler.cs" />
     <Compile Include="Flows\Download\StripDownloadedHandler.cs" />
     <Compile Include="Flows\ExRichTextBox.cs">
@@ -168,10 +170,13 @@
     </Compile>
     <Compile Include="Flows\CompilationError\CompilationErrorController.cs" />
     <Compile Include="Flows\CompilationError\CompilationErrorModel.cs" />
-    <Compile Include="Flows\Main\ComicViewModel.cs" />
+    <Compile Include="Flows\Main\ComicModel.cs" />
     <Compile Include="Flows\Main\MainPresenter.cs" />
     <Compile Include="Core\UserSettings.cs" />
     <Compile Include="Core\StartProcess.cs" />
+    <Compile Include="Flows\Main\PauseDownload.cs" />
+    <Compile Include="Flows\Main\StartDownload.cs" />
+    <Compile Include="Flows\Main\ToggleDownload.cs" />
     <Compile Include="Settings\UserSettingsData.cs" />
     <Compile Include="EventArgs\DownloadCompletedEventArgs.cs" />
     <Compile Include="EventArgs\DownloadedFileChunkEventArgs.cs" />
@@ -183,12 +188,12 @@
     <Compile Include="Core\ComicManagement\ComicDefinition.cs" />
     <Compile Include="Core\Engine\Bot.cs" />
     <Compile Include="Core\ComicManagement\Comic.cs" />
-    <Compile Include="Core\WorkerSupervisor.cs" />
+    <Compile Include="Flows\Main\WorkerSupervisor.cs" />
     <Compile Include="Core\Logger.cs" />
     <Compile Include="Core\WebConnectionFactory.cs" />
     <Compile Include="Core\WebPath.cs" />
     <Compile Include="Enums\DownloadOutcome.cs" />
-    <Compile Include="Enums\WorkerStatus.cs" />
+    <Compile Include="Core\Engine\WorkerStatus.cs" />
     <Compile Include="EventArgs\ResponseReceivedEventArgs.cs" />
     <Compile Include="Exceptions\MissingFriendlyNameException.cs" />
     <Compile Include="Flows\AboutForm.cs">
