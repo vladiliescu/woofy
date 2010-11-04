@@ -23,6 +23,7 @@ namespace Woofy.Tests.DefinitionCompilerTests
 			var assembly = CompileReferencingTests("custom_keywords.boo");
 
 			var definition = (Definition)assembly.CreateInstance("_custom_keywords");
+            definition.ComicInstance = new Woofy.Core.ComicManagement.Comic();
             definition.Run();
 
 			var foo = (FooExpression)ContainerAccessor.Resolve<IExpression>("foo");
@@ -35,6 +36,7 @@ namespace Woofy.Tests.DefinitionCompilerTests
 			var assembly = CompileReferencingTests("custom_keywords.boo");
 
 			var definition = (Definition)assembly.CreateInstance("_custom_keywords");
+            definition.ComicInstance = new Woofy.Core.ComicManagement.Comic();
 			definition.Run();
 
 			var foo = (FooExpression)ContainerAccessor.Resolve<IExpression>("foo");
@@ -47,6 +49,7 @@ namespace Woofy.Tests.DefinitionCompilerTests
 			var assembly = CompileReferencingTests("custom_keywords.boo");
 
 			var definition = (Definition)assembly.CreateInstance("_custom_keywords");
+            definition.ComicInstance = new Woofy.Core.ComicManagement.Comic();
 			definition.Run();
 
 			var foo = (FooExpression)ContainerAccessor.Resolve<IExpression>("foo");
@@ -60,6 +63,7 @@ namespace Woofy.Tests.DefinitionCompilerTests
 			var assembly = CompileReferencingTests("custom_keywords.boo");
 
 			var definition = (Definition)assembly.CreateInstance("_custom_keywords");
+            definition.ComicInstance = new Woofy.Core.ComicManagement.Comic();
 			definition.Run();
             
 			var bar = (BarExpression)ContainerAccessor.Resolve<IExpression>("bar");
