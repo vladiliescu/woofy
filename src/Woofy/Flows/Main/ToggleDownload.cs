@@ -30,23 +30,21 @@ namespace Woofy.Flows.Main
             if (comic.Status == WorkerStatus.Finished)
                 return;
 
-            ICommand action = null;
             switch (comic.Status)
             {
                 case WorkerStatus.Paused:
                     comic.Status = WorkerStatus.Running;
-                    action = new StartDownload(comic);
+					applicationController.Raise(new ComicChanged(comic));
+                    applicationController.Execute(new StartDownload(comic));
                     break;
                 case WorkerStatus.Running:
                     comic.Status = WorkerStatus.Paused;
-                    action = new PauseDownload(comic);
+					applicationController.Raise(new ComicChanged(comic));
+					applicationController.Execute(new PauseDownload(comic));
                     break;
                 default:
                    throw new InvalidEnumArgumentException("command.Comic.Status", (int)command.Comic.Status, typeof(WorkerStatus));
             }
-
-            applicationController.Raise(new ComicChanged(comic));
-            applicationController.Execute(action);
         }
     }
 }

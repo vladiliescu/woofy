@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 namespace Woofy.Exceptions
 {
     [Serializable]
+	[Obsolete]
     public class RegexException : Exception
     {
         public RegexException()

@@ -195,7 +195,6 @@
     <Compile Include="Enums\DownloadOutcome.cs" />
     <Compile Include="Core\Engine\WorkerStatus.cs" />
     <Compile Include="EventArgs\ResponseReceivedEventArgs.cs" />
-    <Compile Include="Exceptions\MissingFriendlyNameException.cs" />
     <Compile Include="Flows\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>

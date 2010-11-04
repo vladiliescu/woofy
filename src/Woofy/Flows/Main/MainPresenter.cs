@@ -89,13 +89,7 @@ namespace Woofy.Flows.Main
         public void ToggleComicState(ComicInputModel inputModel)
         {
             var comic = comicStore.Find(inputModel.Id);
-            if (comic.Status == WorkerStatus.Finished)
-                return;
-
-            if (comic.Status == WorkerStatus.Paused)
-                applicationController.Execute(new StartDownload(comic));
-            else
-                applicationController.Execute(new PauseDownload(comic));
+			applicationController.Execute(new ToggleDownload(comic));
         }
 
         public void Handle(ComicActivated eventData)
