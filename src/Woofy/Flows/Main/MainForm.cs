@@ -72,32 +72,6 @@ namespace Woofy.Flows.Main
                 Hide();
         }
 
-        private void dgvwTasks_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)
-        {
-            //foreach (DataGridViewRow row in dgvwTasks.Rows)
-            //{
-            //    var task = (Comic)row.DataBoundItem;
-
-            //    row.Cells["ComicsColumn"].Value = string.Format("{0}", task.DownloadedStrips);
-
-            //    switch (task.Status)
-            //    {
-            //        case WorkerStatus.Paused:
-            //            row.Cells["TaskStatusColumn"].Value = Resources.Paused;
-            //            break;
-            //        case WorkerStatus.Running:
-            //            row.Cells["TaskStatusColumn"].Value = Resources.Running;
-            //            break;
-            //        case WorkerStatus.Finished:
-            //            //DisplayDownloadOutcome(row, task.DownloadOutcome, task.CurrentPage);
-            //            break;
-            //        default:
-            //            break;
-            //    }
-
-            //}
-        }
-
         private void DisplayDownloadOutcome(DataGridViewRow row, DownloadOutcome downloadOutcome, string url)
         {
             Bitmap icon;
