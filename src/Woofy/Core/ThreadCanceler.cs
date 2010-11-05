@@ -6,20 +6,25 @@ namespace Woofy.Core
 	{
 		private readonly object @lock = new object();
 		private bool cancelRequest;
-
-		public bool IsCancellationRequested
+		public bool CancelRequest
 		{
 			get { lock (@lock) { return cancelRequest; } }
+            set { lock (@lock) { cancelRequest = value; } }
 		}
 
 		public void Cancel()
 		{
-			lock (@lock) { cancelRequest = true; }
+            CancelRequest = true;
 		}
 
-		public void ThrowIfCancellationRequested()
+        public void AllowResuming()
+        {
+            CancelRequest = false;
+        }
+
+	    public void ThrowIfCancellationRequested()
 		{
-			if (IsCancellationRequested)
+            if (CancelRequest)
 				throw new OperationCanceledException();
 		}
 	}

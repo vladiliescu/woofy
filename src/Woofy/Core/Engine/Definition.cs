@@ -29,8 +29,9 @@ namespace Woofy.Core.Engine
 
 		public void Run()
 		{
-            var context = new Context(Id, Comic, ComicInstance.CurrentPage ?? new Uri(StartAt));
+            canceler.AllowResuming();
 
+            var context = new Context(Id, Comic, ComicInstance.CurrentPage ?? new Uri(StartAt));
 			try
 			{
 				RunImpl(context);

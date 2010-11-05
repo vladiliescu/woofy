@@ -26,7 +26,7 @@ namespace Woofy.Flows.Main
 
         public void Handle(StartDownload command)
         {
-            command.Comic.Definition.Run();
+            ThreadPool.QueueUserWorkItem(o => command.Comic.Definition.Run());
         }
 
         public void Handle(PauseDownload command)
