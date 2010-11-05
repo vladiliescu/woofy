@@ -171,10 +171,13 @@
     <Compile Include="Flows\CompilationError\CompilationErrorController.cs" />
     <Compile Include="Flows\CompilationError\CompilationErrorModel.cs" />
     <Compile Include="Flows\Main\ComicModel.cs" />
+    <Compile Include="Flows\Main\ComicRemoved.cs" />
+    <Compile Include="Flows\Main\DeactivateComic.cs" />
     <Compile Include="Flows\Main\MainPresenter.cs" />
     <Compile Include="Core\UserSettings.cs" />
     <Compile Include="Core\StartProcess.cs" />
     <Compile Include="Flows\Main\PauseDownload.cs" />
+    <Compile Include="Flows\Main\StartAllDownloads.cs" />
     <Compile Include="Flows\Main\StartDownload.cs" />
     <Compile Include="Flows\Main\ToggleDownload.cs" />
     <Compile Include="Settings\UserSettingsData.cs" />
@@ -188,7 +191,7 @@
     <Compile Include="Core\ComicManagement\ComicDefinition.cs" />
     <Compile Include="Core\Engine\Bot.cs" />
     <Compile Include="Core\ComicManagement\Comic.cs" />
-    <Compile Include="Flows\Main\WorkerSupervisor.cs" />
+    <Compile Include="Flows\Main\DownloadSupervisor.cs" />
     <Compile Include="Core\Logger.cs" />
     <Compile Include="Core\WebConnectionFactory.cs" />
     <Compile Include="Core\WebPath.cs" />

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading;
 using Woofy.Core.ComicManagement;
 using Woofy.Core.Engine;
@@ -9,26 +8,24 @@ using Woofy.Flows.AddComic;
 
 namespace Woofy.Flows.Main
 {
-    public class StartAllDownloads : ICommand
-    {
-    }
-
-    public class WorkerSupervisor : 
+	public class DownloadSupervisor : 
 		ICommandHandler<StartAllDownloads>, 
 		ICommandHandler<StartDownload>, 
 		ICommandHandler<PauseDownload>,
 		IEventHandler<ComicActivated>
     {
-        private readonly IList<Comic> comics;
+		private readonly IComicStore comicStore;
+		
 
-        public WorkerSupervisor(IComicStore comicStore)
+        public DownloadSupervisor(IComicStore comicStore)
         {
-            comics = comicStore.GetActiveComics();
+        	this.comicStore = comicStore;
+        	
         }
 
-        public void Handle(StartAllDownloads command)
+		public void Handle(StartAllDownloads command)
         {
-            comics
+            comicStore.GetActiveComics()
                 .Where(c => c.Status != WorkerStatus.Paused)
                 .ForEach(Start);
         }
@@ -45,7 +42,9 @@ namespace Woofy.Flows.Main
 
     	public void Handle(ComicActivated eventData)
     	{
-			Start(eventData.Comic);
+			var comic = eventData.Comic;
+			if (comic.Status == WorkerStatus.Running)
+				Start(eventData.Comic);
     	}
 
 		private static void Start(Comic comic)

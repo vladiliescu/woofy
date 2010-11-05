@@ -10,7 +10,6 @@ using System.Linq;
 using Woofy.Flows.AddComic;
 using Woofy.Flows.ApplicationLog;
 using Woofy.Flows.AutoUpdate;
-using Woofy.Flows.Download;
 
 namespace Woofy.Flows.Main
 {
@@ -19,17 +18,18 @@ namespace Woofy.Flows.Main
         BindingList<ComicViewModel> Comics { get; }
         string AppLog { get; }
 
-        void AddComicRequested();
-        void OpenFolder(Comic task);
+        void AddComic();
         void Initialize(MainForm form);
         void Open(string command);
-        void ToggleComicState(ComicInputModel inputModel);
+        void ToggleComicState(string comicId);
+    	void Remove(string comicId);
     }
 
     public class MainPresenter : IMainPresenter, INotifyPropertyChanged,
         IEventHandler<ComicActivated>,
         IEventHandler<AppLogEntryAdded>,
-        IEventHandler<ComicChanged>
+        IEventHandler<ComicChanged>,
+		IEventHandler<ComicRemoved>
     {
         private readonly IApplicationController applicationController;
         private readonly IUiThread uiThread;
@@ -52,7 +52,7 @@ namespace Woofy.Flows.Main
             this.uiThread = uiThread;
         }
 
-        public void AddComicRequested()
+        public void AddComic()
         {
             applicationController.Execute<AddComic.AddComic>();
         }
@@ -86,13 +86,19 @@ namespace Woofy.Flows.Main
             applicationController.Execute(new StartProcess(command));
         }
 
-        public void ToggleComicState(ComicInputModel inputModel)
+    	public void ToggleComicState(string comicId)
         {
-            var comic = comicStore.Find(inputModel.Id);
+            var comic = comicStore.Find(comicId);
 			applicationController.Execute(new ToggleDownload(comic));
         }
 
-        public void Handle(ComicActivated eventData)
+    	public void Remove(string comicId)
+    	{
+			var comic = comicStore.Find(comicId);
+			applicationController.Execute(new DeactivateComic(comic));
+    	}
+
+    	public void Handle(ComicActivated eventData)
         {
             var comic = eventData.Comic;
 
@@ -138,10 +144,22 @@ namespace Woofy.Flows.Main
         {
             uiThread.Send(() =>
             {
-                var viewModel = Comics.Single(c => c.Id == eventData.Comic.Id);
+                var viewModel = Comics.SingleOrDefault(c => c.Id == eventData.Comic.Id);
+				if (viewModel == null)	//in case the comic is removed before the ComicChanged event has fired.
+					return;
+
                 MapToViewModel(eventData.Comic, viewModel);
                 Comics.ResetItem(Comics.IndexOf(viewModel));
             });
         }
+
+    	public void Handle(ComicRemoved eventData)
+    	{
+			uiThread.Send(() =>
+			{
+				var viewModel = Comics.SingleOrDefault(c => c.Id == eventData.Comic.Id);
+				Comics.Remove(viewModel);
+			});
+    	}
     }
 }
