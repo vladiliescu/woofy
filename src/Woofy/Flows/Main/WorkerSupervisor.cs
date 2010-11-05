@@ -5,6 +5,7 @@ using Woofy.Core.Engine;
 using Woofy.Core.Infrastructure;
 using MoreLinq;
 using System.Linq;
+using Woofy.Flows.AddComic;
 
 namespace Woofy.Flows.Main
 {
@@ -12,7 +13,11 @@ namespace Woofy.Flows.Main
     {
     }
 
-    public class WorkerSupervisor : ICommandHandler<StartAllDownloads>, ICommandHandler<StartDownload>, ICommandHandler<PauseDownload>
+    public class WorkerSupervisor : 
+		ICommandHandler<StartAllDownloads>, 
+		ICommandHandler<StartDownload>, 
+		ICommandHandler<PauseDownload>,
+		IEventHandler<ComicActivated>
     {
         private readonly IList<Comic> comics;
 
@@ -25,17 +30,27 @@ namespace Woofy.Flows.Main
         {
             comics
                 .Where(c => c.Status != WorkerStatus.Paused)
-                .ForEach(c => ThreadPool.QueueUserWorkItem(o => c.Definition.Run()));
+                .ForEach(Start);
         }
 
         public void Handle(StartDownload command)
         {
-            ThreadPool.QueueUserWorkItem(o => command.Comic.Definition.Run());
+            Start(command.Comic);
         }
 
         public void Handle(PauseDownload command)
         {
 			command.Comic.Definition.Stop();
         }
+
+    	public void Handle(ComicActivated eventData)
+    	{
+			Start(eventData.Comic);
+    	}
+
+		private static void Start(Comic comic)
+		{
+			ThreadPool.QueueUserWorkItem(o => comic.Definition.Run());
+		}
     }
 }
