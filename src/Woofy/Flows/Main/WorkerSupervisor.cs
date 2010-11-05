@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using System.Threading;
 using Woofy.Core.ComicManagement;
+using Woofy.Core.Engine;
 using Woofy.Core.Infrastructure;
 using MoreLinq;
+using System.Linq;
 
 namespace Woofy.Flows.Main
 {
@@ -21,7 +23,9 @@ namespace Woofy.Flows.Main
 
         public void Handle(StartAllDownloads command)
         {
-            comics.ForEach(c => ThreadPool.QueueUserWorkItem(o => c.Definition.Run()));
+            comics
+                .Where(c => c.Status != WorkerStatus.Paused)
+                .ForEach(c => ThreadPool.QueueUserWorkItem(o => c.Definition.Run()));
         }
 
         public void Handle(StartDownload command)
