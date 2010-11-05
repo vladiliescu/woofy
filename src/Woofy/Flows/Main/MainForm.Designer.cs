@@ -115,9 +115,8 @@ namespace Woofy.Flows.Main
             this.dgvwTasks.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dgvwTasks.Size = new System.Drawing.Size(642, 335);
             this.dgvwTasks.TabIndex = 7;
-            this.dgvwTasks.DoubleClick += new System.EventHandler(this.dgvwTasks_DoubleClick);
+			this.dgvwTasks.DoubleClick += new System.EventHandler(this.OnToggleComicState);
             this.dgvwTasks.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.OnGridCellFormatting);
-            this.dgvwTasks.SelectionChanged += new System.EventHandler(this.dgvwTasks_SelectionChanged);
             this.dgvwTasks.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.OnGridCellContentClick);
             // 
             // colStatus

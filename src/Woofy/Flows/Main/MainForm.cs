@@ -108,49 +108,6 @@ namespace Woofy.Flows.Main
             }
         }
 
-        private void dgvwTasks_DoubleClick(object sender, EventArgs e)
-        {
-            //if (dgvwTasks.SelectedRows.Count == 0)
-            //    return;
-
-            //var task = (Comic)dgvwTasks.SelectedRows[0].DataBoundItem;
-            //if (task.Status == WorkerStatus.Finished)
-            //    Presenter.OpenFolder(task);
-            //else
-            //    ToggleSelectedTasksState();
-        }
-
-        private void dgvwTasks_SelectionChanged(object sender, EventArgs e)
-        {
-            //if (dgvwTasks.SelectedRows.Count == 0)
-            //{
-            //    toolStripButtonPauseTask.Enabled = false;
-            //    toolStripButtonOpenFolder.Enabled = false;
-            //    return;
-            //}
-            //toolStripButtonPauseTask.Enabled = true;
-            //toolStripButtonOpenFolder.Enabled = true;
-
-            //var task = (Comic)dgvwTasks.SelectedRows[0].DataBoundItem;
-
-            //switch (task.Status)
-            //{
-            //    case WorkerStatus.Paused:
-            //        toolStripButtonPauseTask.Enabled = true;
-            //        toolStripButtonPauseTask.Image = Resources.Running;
-            //        toolStripButtonPauseTask.Text = "Unpause";
-            //        break;
-            //    case WorkerStatus.Running:
-            //        toolStripButtonPauseTask.Enabled = true;
-            //        toolStripButtonPauseTask.Image = Resources.Paused;
-            //        toolStripButtonPauseTask.Text = "Pause";
-            //        break;
-            //    case WorkerStatus.Finished:
-            //        toolStripButtonPauseTask.Enabled = false;
-            //        break;
-            //}
-        }
-
         private void OnAboutClick(object sender, EventArgs e)
         {
             using (var aboutForm = new AboutForm())
