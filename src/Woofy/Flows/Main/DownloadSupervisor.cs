@@ -26,7 +26,7 @@ namespace Woofy.Flows.Main
 		public void Handle(StartAllDownloads command)
         {
             comicStore.GetActiveComics()
-                .Where(c => c.Status != WorkerStatus.Paused)
+                .Where(c => c.Status != Status.Paused)
                 .ForEach(Start);
         }
 
@@ -43,7 +43,7 @@ namespace Woofy.Flows.Main
     	public void Handle(ComicActivated eventData)
     	{
 			var comic = eventData.Comic;
-			if (comic.Status == WorkerStatus.Running)
+			if (comic.Status == Status.Running)
 				Start(eventData.Comic);
     	}
 

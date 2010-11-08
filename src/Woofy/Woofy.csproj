@@ -100,7 +100,6 @@
   <ItemGroup>
     <Compile Include="Core\ApplicationInfo.cs" />
     <Compile Include="Core\ComicManagement\ComicAutoPersister.cs" />
-    <Compile Include="Core\ComicManagement\ComicRepository.cs" />
     <Compile Include="Core\Engine\BaseExpression.cs" />
     <Compile Include="Core\Engine\CompilationException.cs" />
     <Compile Include="Core\Engine\CurrentPageChanged.cs" />
@@ -108,6 +107,7 @@
     <Compile Include="Core\Engine\DefinitionClassCompilerStep.cs" />
     <Compile Include="Core\Engine\Context.cs" />
     <Compile Include="Core\Engine\DefinitionCompiler.cs" />
+    <Compile Include="Core\Engine\DownloadFinished.cs" />
     <Compile Include="Core\ThreadCanceler.cs" />
     <Compile Include="Core\Engine\WorkerStoppedException.cs" />
     <Compile Include="Core\Engine\DownloadExpression.cs" />
@@ -172,6 +172,7 @@
     <Compile Include="Flows\CompilationError\CompilationErrorModel.cs" />
     <Compile Include="Flows\Main\ComicModel.cs" />
     <Compile Include="Flows\Main\ComicRemoved.cs" />
+    <Compile Include="Flows\Main\ComicViewModelMapper.cs" />
     <Compile Include="Flows\Main\DeactivateComic.cs" />
     <Compile Include="Flows\Main\MainPresenter.cs" />
     <Compile Include="Core\UserSettings.cs" />
@@ -196,7 +197,7 @@
     <Compile Include="Core\WebConnectionFactory.cs" />
     <Compile Include="Core\WebPath.cs" />
     <Compile Include="Enums\DownloadOutcome.cs" />
-    <Compile Include="Core\Engine\WorkerStatus.cs" />
+    <Compile Include="Core\Engine\Status.cs" />
     <Compile Include="EventArgs\ResponseReceivedEventArgs.cs" />
     <Compile Include="Flows\AboutForm.cs">
       <SubType>Form</SubType>

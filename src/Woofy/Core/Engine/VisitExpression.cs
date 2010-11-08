@@ -10,13 +10,13 @@ namespace Woofy.Core.Engine
     {
         private readonly IPageParser parser;
         private readonly IWebClientProxy webClient;
-        private readonly IApplicationController applicationController;
+        private readonly IApplicationController appController;
 
-        public VisitExpression(IPageParser parser, IWebClientProxy webClient, IAppLog appLog, IApplicationController applicationController)
+        public VisitExpression(IPageParser parser, IWebClientProxy webClient, IAppLog appLog, IApplicationController appController)
             : base(appLog)
         {
             this.parser = parser;
-            this.applicationController = applicationController;
+            this.appController = appController;
             this.webClient = webClient;
         }
 
@@ -34,10 +34,13 @@ namespace Woofy.Core.Engine
             {
                 var links = parser.RetrieveLinksFromPage(context.PageContent, regex, context.CurrentAddress);
                 ReportLinksFound(context, links);
-                if (links.Length == 0)
-                    yield break;
+				if (links.Length == 0)
+				{
+					appController.Raise(new DownloadFinished(context.ComicId));
+					yield break;
+				}
 
-                var link = links[0];
+            	var link = links[0];
                 ReportVisitingPage(context, link);
 
                 context.CurrentAddress = link;
@@ -55,7 +58,7 @@ namespace Woofy.Core.Engine
         private void ReportVisitingPage(Context context, Uri page)
         {
             Log(context, "{0}", page);
-            applicationController.Raise(new CurrentPageChanged(context.ComicId, page));
+            appController.Raise(new CurrentPageChanged(context.ComicId, page));
         }
 
         protected override string ExpressionName

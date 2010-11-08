@@ -15,11 +15,11 @@ namespace Woofy.Core.ComicManagement
     	public int DownloadedStrips { get; set; }
 		[Obsolete("No longer used")]
     	public string DownloadFolder { get; set; }
-    	public WorkerStatus Status { get; set; }
+    	public Status Status { get; set; }
     	public Uri CurrentPage { get; set; }
-        [Obsolete("It should be merged with Status, once the whole thing is stable.")]
-        public bool IsActive { get; set; }
 
+		[JsonIgnore]
+		public bool HasFinished { get; set; }
 		[JsonIgnore]
     	public Definition Definition { get; private set; }
 

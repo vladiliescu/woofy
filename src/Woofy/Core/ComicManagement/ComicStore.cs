@@ -11,6 +11,7 @@ namespace Woofy.Core.ComicManagement
 	{
         Comic[] Comics { get; }
         Comic[] GetActiveComics();
+		Comic[] GetInactiveComics();
 	    void PersistComics();
 	    Comic Find(string id);
 	    void InitializeComicCache();
@@ -60,7 +61,7 @@ namespace Woofy.Core.ComicManagement
                 Name = definition.Comic,
 			    Id = definition.Id,
                 DownloadFolder = userSettings.DefaultDownloadFolder.IsNotNullOrEmpty() ? Path.Combine(userSettings.DefaultDownloadFolder, definition.Id) : definition.Id,
-			    Status = WorkerStatus.Running
+			    Status = Status.Running
             };
 
             comic.SetDefinition(definition);
@@ -80,10 +81,15 @@ namespace Woofy.Core.ComicManagement
 
 	    public Comic[] GetActiveComics()
 	    {
-            return Comics.Where(x => x.IsActive).ToArray();
+            return Comics.Where(x => x.Status != Status.Inactive).ToArray();
 	    }
 
-	    public void PersistComics()
+		public Comic[] GetInactiveComics()
+		{
+			return Comics.Where(x => x.Status == Status.Inactive).ToArray();
+		}
+
+		public void PersistComics()
 		{
 	    	lock (writeLock)
 	    	{

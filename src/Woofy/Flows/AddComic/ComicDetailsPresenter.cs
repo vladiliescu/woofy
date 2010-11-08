@@ -34,8 +34,7 @@ namespace Woofy.Flows.AddComic
 		public ComicDetailsViewModel Load()
 		{
 			return new ComicDetailsViewModel(
-				comicStore.Comics
-					.Where(comic => !comic.IsActive)
+				comicStore.GetInactiveComics()
 					.Select(comic => new ComicDetailsViewModel.ComicModel(comic.Id, comic.Name))
 					.ToArray()
 				);

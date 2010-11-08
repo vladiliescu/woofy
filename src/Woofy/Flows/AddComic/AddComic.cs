@@ -1,5 +1,6 @@
 using Woofy.Core;
 using Woofy.Core.ComicManagement;
+using Woofy.Core.Engine;
 using Woofy.Core.Infrastructure;
 
 namespace Woofy.Flows.AddComic
@@ -30,11 +31,9 @@ namespace Woofy.Flows.AddComic
 
 			var comicId = result.Data;
 			var comic = comicStore.Find(comicId);
-			comic.IsActive = true;
+			comic.Status = Status.Running;
 
-#warning not thread-safe : what if another thread updates the comics file right now?
 			comicStore.PersistComics();
-
 			applicationController.Raise(new ComicActivated(comic));
 		}
 	}

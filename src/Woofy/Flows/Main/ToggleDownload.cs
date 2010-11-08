@@ -27,23 +27,23 @@ namespace Woofy.Flows.Main
         public void Handle(ToggleDownload command)
         {
             var comic = command.Comic;
-            if (comic.Status == WorkerStatus.Finished)
+            if (comic.HasFinished)
                 return;
 
             switch (comic.Status)
             {
-                case WorkerStatus.Paused:
-                    comic.Status = WorkerStatus.Running;
+                case Status.Paused:
+                    comic.Status = Status.Running;
 					applicationController.Raise(new ComicChanged(comic));
                     applicationController.Execute(new StartDownload(comic));
                     break;
-                case WorkerStatus.Running:
-                    comic.Status = WorkerStatus.Paused;
+                case Status.Running:
+                    comic.Status = Status.Paused;
 					applicationController.Raise(new ComicChanged(comic));
 					applicationController.Execute(new PauseDownload(comic));
                     break;
                 default:
-                   throw new InvalidEnumArgumentException("command.Comic.Status", (int)command.Comic.Status, typeof(WorkerStatus));
+                   throw new InvalidEnumArgumentException("command.Comic.Status", (int)command.Comic.Status, typeof(Status));
             }
         }
     }

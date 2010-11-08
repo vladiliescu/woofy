@@ -211,16 +211,16 @@ namespace Woofy.Flows.Main
 			if (e.ColumnIndex != dgvwTasks.Columns.IndexOf(colStatus) || e.Value == null)
 				return;
 
-			var status = (WorkerStatus)e.Value;
+			var status = (ComicViewModel.ComicStatus)e.Value;
 			switch (status)
 			{
-				case WorkerStatus.Paused:
+				case ComicViewModel.ComicStatus.Paused:
 					e.Value = Resources.Paused;
 					break;
-				case WorkerStatus.Running:
+				case ComicViewModel.ComicStatus.Running:
 					e.Value = Resources.Running;
 					break;
-				case WorkerStatus.Finished:
+				case ComicViewModel.ComicStatus.Finished:
 					e.Value = Resources.Finished;
 					break;
 				default:

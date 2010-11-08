@@ -27,7 +27,7 @@ namespace Woofy.Flows.Main
 		{
 			var comic = command.Comic;
 
-			comic.IsActive = false;
+			comic.Status = Status.Inactive;
 
 			appController.Execute(new PauseDownload(comic));
 			appController.Raise(new ComicChanged(comic));

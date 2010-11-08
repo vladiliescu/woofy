@@ -35,6 +35,7 @@ namespace Woofy.Flows.Main
         private readonly IUiThread uiThread;
         private readonly IComicStore comicStore;
         private readonly IAppLog appLog;
+		private readonly IComicViewModelMapper mapper;
 
         public BindingList<ComicViewModel> Comics { get; private set; }
 
@@ -44,10 +45,11 @@ namespace Woofy.Flows.Main
             get { return appLogBuilder.ToString(); }
         }
 
-        public MainPresenter(IApplicationController applicationController, IUiThread uiThread, IComicStore comicStore, IAppLog appLog)
+        public MainPresenter(IApplicationController applicationController, IUiThread uiThread, IComicStore comicStore, IAppLog appLog, IComicViewModelMapper mapper)
         {
             this.applicationController = applicationController;
-            this.appLog = appLog;
+        	this.mapper = mapper;
+        	this.appLog = appLog;
             this.comicStore = comicStore;
             this.uiThread = uiThread;
         }
@@ -75,7 +77,7 @@ namespace Woofy.Flows.Main
             Comics = new BindingList<ComicViewModel>(
                 comicStore
                     .GetActiveComics()
-                    .Select<Comic, ComicViewModel>(MapToViewModel)
+                    .Select<Comic, ComicViewModel>(mapper.MapToViewModel)
                     .ToList()
             );
             applicationController.Execute<StartAllDownloads>();
@@ -98,40 +100,14 @@ namespace Woofy.Flows.Main
 			applicationController.Execute(new DeactivateComic(comic));
     	}
 
-    	public void Handle(ComicActivated eventData)
-        {
-            var comic = eventData.Comic;
-
-            uiThread.Send(() => Comics.Add(MapToViewModel(comic)));
-        }
-
-        public void Handle(AppLogEntryAdded eventData)
+    	public void Handle(AppLogEntryAdded eventData)
         {
             appLogBuilder.AppendFormat("{0}\n", eventData);
             uiThread.Send(OnAppLogChanged);
         }
 
-        private void MapToViewModel(Comic comic, ComicViewModel viewModel)
-        {
-            viewModel.Id = comic.Id;
-            viewModel.Name = comic.Name;
-            viewModel.DownloadedStrips = comic.DownloadedStrips;
-            viewModel.Status = comic.Status;
-			if (comic.CurrentPage != null)
-				viewModel.CurrentPage = comic.CurrentPage.AbsoluteUri;
-			else
-				viewModel.CurrentPage = comic.Definition.StartAt;
-        }
-
-        private ComicViewModel MapToViewModel(Comic comic)
-        {
-            var viewModel = new ComicViewModel();
-            MapToViewModel(comic, viewModel);
-            return viewModel;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        private void OnAppLogChanged()
+    	public event PropertyChangedEventHandler PropertyChanged;
+    	private void OnAppLogChanged()
         {
             var eventHandler = PropertyChanged;
             if (eventHandler == null)
@@ -140,7 +116,14 @@ namespace Woofy.Flows.Main
             eventHandler(this, new PropertyChangedEventArgs("AppLog"));
         }
 
-        public void Handle(ComicChanged eventData)
+    	public void Handle(ComicActivated eventData)
+    	{
+    		var comic = eventData.Comic;
+
+    		uiThread.Send(() => Comics.Add(mapper.MapToViewModel(comic)));
+    	}
+
+    	public void Handle(ComicChanged eventData)
         {
             uiThread.Send(() =>
             {
@@ -148,7 +131,7 @@ namespace Woofy.Flows.Main
 				if (viewModel == null)	//in case the comic is removed before the ComicChanged event has fired.
 					return;
 
-                MapToViewModel(eventData.Comic, viewModel);
+                mapper.MapToViewModel(eventData.Comic, viewModel);
                 Comics.ResetItem(Comics.IndexOf(viewModel));
             });
         }

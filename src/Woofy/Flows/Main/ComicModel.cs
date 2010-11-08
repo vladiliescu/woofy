@@ -1,5 +1,4 @@
 using Woofy.Core.Engine;
-using Woofy.Enums;
 
 namespace Woofy.Flows.Main
 {
@@ -8,12 +7,14 @@ namespace Woofy.Flows.Main
         public string Id { get; set; }
         public string Name { get; set; }
         public int DownloadedStrips { get; set; }
-        public WorkerStatus Status { get; set; }
+		public ComicStatus Status { get; set; }
         public string CurrentPage { get; set; }
-    }
 
-    public class ComicInputModel
-    {
-        public string Id { get; set; }
+		public enum ComicStatus
+		{
+			Paused = 0,
+			Running = 1,
+			Finished = 2
+		}
     }
 }
