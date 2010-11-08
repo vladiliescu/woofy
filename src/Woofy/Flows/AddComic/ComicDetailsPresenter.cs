@@ -21,6 +21,8 @@ namespace Woofy.Flows.AddComic
 
 		public Result<string> Activate()
 		{
+			comicId = null;
+
 			using (var form = new ComicDetailsForm(this))
 			{
 				form.ShowDialog();
