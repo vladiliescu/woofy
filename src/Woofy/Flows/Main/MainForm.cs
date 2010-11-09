@@ -179,13 +179,6 @@ namespace Woofy.Flows.Main
 			dgvwTasks.AutoGenerateColumns = false;
 
 			var splitButton = new ToolStripSplitButton("About..", Resources.About);
-			splitButton.ButtonClick += OnAboutClick;
-
-			splitButton.DropDown.Items.Add(new ToolStripSeparator());
-			splitButton.DropDown.Items.Add("Check for updates", Resources.CheckForUpdates, (o, e) => UpdateManager.CheckForUpdatesAsync(true, this));
-			splitButton.DropDown.Items.Add("About..", Resources.About, OnAboutClick);
-			splitButton.DropDown.Items.Add(new ToolStripSeparator());
-			splitButton.DropDown.Items.Add("vladiliescu.ro", Resources.vladiliescu_ro, (o, e) => Process.Start(AppSettingsOld.AuthorHomePage));
 			splitButton.Alignment = ToolStripItemAlignment.Right;
 
 			toolStrip.Items.Insert(0, splitButton);

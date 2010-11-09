@@ -80,7 +80,7 @@ namespace Woofy.Flows.Main
 
             appLog.Send("Hello World");
 
-            applicationController.Execute(new CheckForUpdates(form));
+            applicationController.Execute<AppUpdateCheck>();
             Comics = new BindingList<ComicViewModel>(
                 comicStore
                     .GetActiveComics()

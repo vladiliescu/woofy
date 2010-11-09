@@ -8,16 +8,10 @@ namespace Woofy.Core
 	public static class AppSettingsOld
 	{
 		public static readonly string VersionNumber = Assembly.GetAssembly(typeof(Program)).GetName().Version.ToString();
-
-		public static readonly string UpdateDescriptionFileAddress = "http://woofy.googlecode.com/hg/serve/updatesDescriptionFile.xml";
-		public static readonly string DatabaseConnectionString = BaseDirectory("comics.json");
-
 		public static readonly string UserSettingsFile = BaseDirectory("user.settings");
 		public static readonly string ComicDefinitionsFolder = BaseDirectory("definitions");
-
 		public static readonly string HomePage = "http://code.google.com/p/woofy/";
 		public static readonly string AuthorHomePage = "http://vladiliescu.ro";
-
 
 		private static string BaseDirectory(string fileName)
 		{
@@ -27,7 +21,7 @@ namespace Woofy.Core
 
 	public interface IAppSettings
 	{
-		string UpdateDescriptionFileAddress { get; }
+		Uri UpdateInfoAddress { get; }
 		string ComicsFile { get; }
 		string UserSettingsFile { get; }
 		string ComicDefinitionsFolder { get; }
@@ -43,7 +37,7 @@ namespace Woofy.Core
 	public class AppSettings : IAppSettings
 	{
 		public string VersionNumber { get; private set; }
-		public string UpdateDescriptionFileAddress { get; private set; }
+		public Uri UpdateInfoAddress { get; private set; }
 		public string ComicsFile { get; private set; }
 		public string UserSettingsFile { get; private set; }
 		public string ComicDefinitionsFolder { get; private set; }
@@ -54,7 +48,7 @@ namespace Woofy.Core
 
 		public AppSettings()
 		{
-			UpdateDescriptionFileAddress = "http://woofy.googlecode.com/hg/serve/updatesDescriptionFile.xml";
+			UpdateInfoAddress = new Uri("http://wiki.woofy.googlecode.com/hg/content/updateInfo.json");
 			ComicsFile = BaseDirectory("comics.json");
 
 			UserSettingsFile = BaseDirectory("user.settings");
@@ -74,7 +68,7 @@ namespace Woofy.Core
 				MinimizeToTray = true,
 				DefaultDownloadFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Comics"),
 				AutomaticallyCheckForUpdates = true,
-				LastReportedWoofyVersion = null,
+				AlreadyRejectedApplicationVersion = null,
 				CloseWhenAllComicsHaveFinishedDownloading = false,
 				ProxyUsername = null,
 				ProxyPassword = null

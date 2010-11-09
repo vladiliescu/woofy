@@ -99,7 +99,6 @@
     <Compile Include="DefinitionCompilerTests\When_expanding_meta_methods.cs" />
     <Compile Include="ExpressionTests\When_visiting.cs" />
     <Compile Include="ObjectMother.cs" />
-    <Compile Include="UpdateDescriptionTest.cs" />
     <Compile Include="WebPathTest.cs" />
   </ItemGroup>
   <ItemGroup>

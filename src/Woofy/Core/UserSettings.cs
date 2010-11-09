@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using Newtonsoft.Json;
 
@@ -12,7 +13,7 @@ namespace Woofy.Core
 		bool MinimizeToTray { get; set; }
 		string DefaultDownloadFolder { get; set; }
 		bool AutomaticallyCheckForUpdates { get; set; }
-		string LastReportedWoofyVersion { get; set; }
+		Version AlreadyRejectedApplicationVersion { get; set; }
 		bool CloseWhenAllComicsHaveFinishedDownloading { get; set; }
 		string ProxyUsername { get; set; }
 		string ProxyPassword { get; set; }
@@ -32,13 +33,15 @@ namespace Woofy.Core
 		public bool MinimizeToTray { get; set; }
 		public string DefaultDownloadFolder { get; set; }
 		public bool AutomaticallyCheckForUpdates { get; set; }
-		public string LastReportedWoofyVersion { get; set; }
+		public Version AlreadyRejectedApplicationVersion { get; set; }
 		public bool CloseWhenAllComicsHaveFinishedDownloading { get; set; }
 		public string ProxyUsername { get; set; }
 		public string ProxyPassword { get; set; }
 		public bool ShowAdvancedComicOptions { get; set; }
 
-		readonly IAppSettings appSettings;
+		private readonly IAppSettings appSettings;
+
+		private readonly JsonConverter[] converters = new JsonConverter[] { new VersionConverter() };
 
 		/// <summary>
 		/// Needed by Json.NET.
@@ -56,13 +59,13 @@ namespace Woofy.Core
 
 		public void Save()
 		{
-			File.WriteAllText(appSettings.UserSettingsFile, JsonConvert.SerializeObject(this, Formatting.Indented));
+			File.WriteAllText(appSettings.UserSettingsFile, JsonConvert.SerializeObject(this, Formatting.Indented, converters));
 		}
 
 		public void Load()
 		{
 			var rawSettings = File.Exists(appSettings.UserSettingsFile) ? File.ReadAllText(appSettings.UserSettingsFile) : "";
-			var settings = JsonConvert.DeserializeObject<UserSettings>(rawSettings) ?? appSettings.DefaultSettings;
+			var settings = JsonConvert.DeserializeObject<UserSettings>(rawSettings, converters) ?? appSettings.DefaultSettings;
 
 			CopyAttributesFrom(settings);
 		}
@@ -76,7 +79,7 @@ namespace Woofy.Core
 			MinimizeToTray = settings.MinimizeToTray;
 			DefaultDownloadFolder = settings.DefaultDownloadFolder;
 			AutomaticallyCheckForUpdates = settings.AutomaticallyCheckForUpdates;
-			LastReportedWoofyVersion = settings.LastReportedWoofyVersion;
+			AlreadyRejectedApplicationVersion = settings.AlreadyRejectedApplicationVersion;
 			CloseWhenAllComicsHaveFinishedDownloading = settings.CloseWhenAllComicsHaveFinishedDownloading;
 			ProxyUsername = settings.ProxyUsername;
 			ProxyPassword = settings.ProxyPassword;

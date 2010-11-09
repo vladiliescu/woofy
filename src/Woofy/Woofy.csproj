@@ -137,6 +137,7 @@
     <Compile Include="Core\SystemProxies\FileProxy.cs" />
     <Compile Include="Core\SystemProxies\PathProxy.cs" />
     <Compile Include="Core\SystemProxies\WebClientProxy.cs" />
+    <Compile Include="Core\VersionConverter.cs" />
     <Compile Include="Flows\AddComic\ComicActivated.cs" />
     <Compile Include="Flows\AddComic\AddComic.cs" />
     <Compile Include="Flows\AddComic\ComicDetailsForm.cs">
@@ -149,8 +150,11 @@
     <Compile Include="Flows\AddComic\ComicDetailsPresenter.cs" />
     <Compile Include="Flows\ApplicationLog\AppLog.cs" />
     <Compile Include="Flows\ApplicationLog\AppLogEntryAdded.cs" />
-    <Compile Include="Flows\AutoUpdate\CheckForUpdates.cs" />
+    <Compile Include="Flows\AutoUpdate\AppUpdateCheck.cs" />
+    <Compile Include="Flows\AutoUpdate\AppUpdateChecker.cs" />
+    <Compile Include="Flows\AutoUpdate\AppUpdateCheckHandler.cs" />
     <Compile Include="Core\Engine\ComicChanged.cs" />
+    <Compile Include="Flows\AutoUpdate\UpdateInfo.cs" />
     <Compile Include="Flows\Download\CurrentPageChangedHandler.cs" />
     <Compile Include="Flows\Download\StripDownloadedHandler.cs" />
     <Compile Include="Flows\ExRichTextBox.cs">
@@ -253,11 +257,6 @@
     <None Include="app.config" />
     <Compile Include="Core\AppSettings.cs" />
     <Compile Include="Settings\UserSettingsOld.cs" />
-    <Compile Include="Flows\AutoUpdate\ChangeCollection.cs" />
-    <Compile Include="Flows\AutoUpdate\Release.cs" />
-    <Compile Include="Flows\AutoUpdate\ReleaseCollection.cs" />
-    <Compile Include="Flows\AutoUpdate\UpdateDescription.cs" />
-    <Compile Include="Flows\AutoUpdate\UpdateManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="license.txt">
