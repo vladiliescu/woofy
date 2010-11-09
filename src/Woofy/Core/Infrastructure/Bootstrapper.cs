@@ -12,6 +12,8 @@ namespace Woofy.Core.Infrastructure
 
 			ContainerAccessor.RegisterComponents();
 			UserSettingsOld.Initialize();
+            
+            ConfigureLogging.Run();
 		}
 	}
 }

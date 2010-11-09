@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using System.IO;
 using System.Text;
+using System.Web;
 using Woofy.Core;
 using Woofy.Core.ComicManagement;
 using Woofy.Core.Engine;

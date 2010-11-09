@@ -10,6 +10,7 @@ namespace Woofy.Core
 		string Title { get; }
 		string Copyright { get; }
 		string Company { get; }
+	    string NameAndVersion { get; }
 	}
 
 	public class ApplicationInfo : IApplicationInfo
@@ -21,6 +22,7 @@ namespace Woofy.Core
 		public string Name { get; private set; }
 		public string Copyright { get; private set; }
 		public string Company { get; private set; }
+        public string NameAndVersion { get; private set; }
 
 		public ApplicationInfo()
 		{
@@ -31,6 +33,8 @@ namespace Woofy.Core
 			Title = GetCustomAttributeProperty<AssemblyTitleAttribute>(x => x.Title) ?? Name;
 			Copyright = GetCustomAttributeProperty<AssemblyCopyrightAttribute>(x => x.Copyright);
 			Company = GetCustomAttributeProperty<AssemblyCompanyAttribute>(x => x.Company);
+
+            NameAndVersion = "{0} {1}".FormatTo(Name, Version);
 		}
 
 		private string GetCustomAttributeProperty<T>(Func<T, string> extractProperty)

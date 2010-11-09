@@ -1,10 +1,5 @@
 using System;
 
-using log4net;
-using log4net.Core;
-using log4net.Config;
-using log4net.Appender;
-
 namespace Woofy.Core
 {
     /// <summary>
@@ -12,26 +7,26 @@ namespace Woofy.Core
     /// </summary>
     public class Logger
     {
-        private static readonly ILog logger;
-        private static readonly ILog debugLogger;
-        private static readonly MemoryAppender memoryAppender;
-        private static readonly IAppender fileAppender;
+        //private static readonly ILog logger;
+        //private static readonly ILog debugLogger;
+        //private static readonly MemoryAppender memoryAppender;
+        //private static readonly IAppender fileAppender;
 
         /// <summary>
         /// Initializes the internal logger.
         /// </summary>
         static Logger()
         {
-            XmlConfigurator.Configure();
-            logger = LogManager.GetLogger(typeof(Logger));
+            //XmlConfigurator.Configure();
+            //logger = LogManager.GetLogger(typeof(Logger));
 
-            debugLogger = LogManager.GetLogger("Debug Logger");
-            memoryAppender = new MemoryAppender();
-            memoryAppender.Name = "MemoryAppender";
-            memoryAppender.ActivateOptions();
+            //debugLogger = LogManager.GetLogger("Debug Logger");
+            //memoryAppender = new MemoryAppender();
+            //memoryAppender.Name = "MemoryAppender";
+            //memoryAppender.ActivateOptions();
 
-            fileAppender = ((log4net.Repository.Hierarchy.Logger)debugLogger.Logger).Parent.GetAppender("appender");
-            ((log4net.Repository.Hierarchy.Logger)debugLogger.Logger).AddAppender(memoryAppender);
+            //fileAppender = ((log4net.Repository.Hierarchy.Logger)debugLogger.Logger).Parent.GetAppender("appender");
+            //((log4net.Repository.Hierarchy.Logger)debugLogger.Logger).AddAppender(memoryAppender);
         }
 
         /// <summary>
@@ -40,7 +35,7 @@ namespace Woofy.Core
         /// <param name="message">The message to log</param>
         public static void LogInformation(string message)
         {
-            logger.Info(message);
+            //logger.Info(message);
         }
 
         /// <summary>
@@ -50,12 +45,12 @@ namespace Woofy.Core
         /// <param name="args">Arguments for formatting the message.</param>
         public static void LogInformation(string messageFormat, params object[] args)
         {
-            logger.InfoFormat(messageFormat, args);
+            //logger.InfoFormat(messageFormat, args);
         }
 
         public static void LogDebug(string message, params object[] args)
         {
-            logger.DebugFormat(message, args);
+           // logger.DebugFormat(message, args);
         }
 
         /// <summary>
@@ -64,7 +59,7 @@ namespace Woofy.Core
         /// <param name="ex">The exception to log.</param>
         public static void LogException(Exception ex)
         {
-            logger.Error("An exception has occured.", ex);
+            //logger.Error("An exception has occured.", ex);
         }
 
         /// <summary>
@@ -74,7 +69,7 @@ namespace Woofy.Core
         /// <param name="ex">The exception to log.</param>
         public static void LogException(string message, Exception ex)
         {
-            logger.Error(message, ex);
+            //logger.Error(message, ex);
         }
 
         private static readonly object debugLock = new object();
@@ -86,7 +81,7 @@ namespace Woofy.Core
 
             lock (debugLock)
             {
-                debugLogger.DebugFormat(message, args);
+                //debugLogger.DebugFormat(message, args);
             }
         }
 
@@ -97,26 +92,25 @@ namespace Woofy.Core
 
             lock (debugLock)
             {
-                debugLogger.Debug(count);
+                //debugLogger.Debug(count);
             }
         }
 
-        public static LoggingEvent[] GetLatestDebugMessages()
-        {
-            lock (debugLock)
-            {
-                LoggingEvent[] events = memoryAppender.GetEvents();
-                memoryAppender.Clear();
-                
-                return events;
-            }
-        }
+        //public static LoggingEvent[] GetLatestDebugMessages()
+        //{
+        //    lock (debugLock)
+        //    {
+        //        LoggingEvent[] events = memoryAppender.GetEvents();
+        //        memoryAppender.Clear();
+        //        return events;
+        //    }
+        //}
 
         public static void ClearDebugMessages()
         {
             lock (debugLock)
             {
-                memoryAppender.Clear();
+                //memoryAppender.Clear();
             }
         }
 
@@ -128,10 +122,10 @@ namespace Woofy.Core
             {
                 isDebugging = value;
 
-                if (isDebugging)
-                    ((log4net.Repository.Hierarchy.Logger)debugLogger.Logger).Parent.RemoveAppender(fileAppender);
-                else
-                    ((log4net.Repository.Hierarchy.Logger)debugLogger.Logger).Parent.AddAppender(fileAppender);
+                //if (isDebugging)
+                 //   ((log4net.Repository.Hierarchy.Logger)debugLogger.Logger).Parent.RemoveAppender(fileAppender);
+                //else
+                //    ((log4net.Repository.Hierarchy.Logger)debugLogger.Logger).Parent.AddAppender(fileAppender);
             }
         }
     }

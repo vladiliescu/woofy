@@ -1,12 +1,14 @@
 using System;
 using System.Threading;
 using System.Windows.Forms;
+using NLog;
 using Woofy.Core;
 using Woofy.Core.ComicManagement;
 using Woofy.Core.Engine;
 using Woofy.Core.Infrastructure;
 using Woofy.Flows.Main;
 using Woofy.Gui.CompilationError;
+using Logger = Woofy.Core.Logger;
 
 namespace Woofy
 {
@@ -42,7 +44,7 @@ namespace Woofy
 			Bootstrapper.BootstrapApplication();          
 
             Application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
-            AppDomain.CurrentDomain.UnhandledException += (sender, e) => Logger.LogException((Exception)e.ExceptionObject);
+            AppDomain.CurrentDomain.UnhandledException += (sender, e) => LogManager.GetLogger("errorLog").Error((Exception)e.ExceptionObject);
 
 			CompileDefinitions();
             ContainerAccessor.Resolve<IComicStore>().InitializeComicCache();

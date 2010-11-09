@@ -75,13 +75,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Boo\Boo.Lang.Useful.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\log4net.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\lib\Json.Net\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\NLog\NLog.dll</HintPath>
     </Reference>
     <Reference Include="Rhino.DSL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -108,6 +108,7 @@
     <Compile Include="Core\Engine\Context.cs" />
     <Compile Include="Core\Engine\DefinitionCompiler.cs" />
     <Compile Include="Core\Engine\DownloadFinished.cs" />
+    <Compile Include="Core\Infrastructure\ConfigureLogging.cs" />
     <Compile Include="Core\ThreadCanceler.cs" />
     <Compile Include="Core\Engine\WorkerStoppedException.cs" />
     <Compile Include="Core\Engine\DownloadExpression.cs" />
@@ -125,7 +126,6 @@
     <Compile Include="Core\Capture.cs" />
     <Compile Include="Core\CaptureTarget.cs" />
     <Compile Include="Core\ComicManagement\ComicStore.cs" />
-    <Compile Include="Core\CountingFileDownloader.cs" />
     <Compile Include="Core\Infrastructure\ICommandHandler.cs" />
     <Compile Include="Core\Infrastructure\IEventHandler.cs" />
     <Compile Include="Core\Result.cs" />
