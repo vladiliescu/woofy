@@ -26,18 +26,7 @@ namespace Woofy.Settings
 
 		private static UserSettingsData currentSettings;
 
-		public static string LastUsedComicDefinitionFile
-		{
-			get { return currentSettings.LastUsedComicDefinitionFile; }
-			set { currentSettings.LastUsedComicDefinitionFile = value; }
-		}
-
-		public static long? LastNumberOfComicsToDownload
-		{
-			get { return currentSettings.LastNumberOfComicsToDownload; }
-			set { currentSettings.LastNumberOfComicsToDownload = value; }
-		}
-
+		
 		public static string ProxyAddress
 		{
 			get { return currentSettings.ProxyAddress; }
@@ -68,12 +57,6 @@ namespace Woofy.Settings
 			set { currentSettings.AutomaticallyCheckForUpdates = value; }
 		}
 
-		public static string LastReportedWoofyVersion
-		{
-			get { return currentSettings.LastReportedWoofyVersion; }
-			set { currentSettings.LastReportedWoofyVersion = value; }
-		}
-
 		public static bool CloseWhenAllComicsHaveFinished
 		{
 			get { return currentSettings.CloseWhenAllComicsHaveFinishedDownloading; }
@@ -92,12 +75,7 @@ namespace Woofy.Settings
 			set { currentSettings.ProxyPassword = value; }
 		}
 
-		public static bool ShowAdvancedComicOptions
-		{
-			get { return currentSettings.ShowAdvancedComicOptions; }
-			set { currentSettings.ShowAdvancedComicOptions = value; }
-		}
-
+		
 		public static void Initialize()
 		{
 			EnsureSettingsFileExists();
