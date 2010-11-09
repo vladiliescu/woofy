@@ -67,6 +67,13 @@ namespace Woofy.Properties {
             }
         }
         
+        internal static System.Drawing.Icon ApplicationIcon {
+            get {
+                object obj = ResourceManager.GetObject("ApplicationIcon", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap CheckForUpdates {
             get {
                 object obj = ResourceManager.GetObject("CheckForUpdates", resourceCulture);
@@ -98,6 +105,13 @@ namespace Woofy.Properties {
         internal static System.Drawing.Bitmap Error {
             get {
                 object obj = ResourceManager.GetObject("Error", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Exit {
+            get {
+                object obj = ResourceManager.GetObject("Exit", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -137,13 +151,6 @@ namespace Woofy.Properties {
             }
         }
         
-        internal static System.Drawing.Icon PrimaryIcon {
-            get {
-                object obj = ResourceManager.GetObject("PrimaryIcon", resourceCulture);
-                return ((System.Drawing.Icon)(obj));
-            }
-        }
-        
         internal static System.Drawing.Bitmap Running {
             get {
                 object obj = ResourceManager.GetObject("Running", resourceCulture);
@@ -168,6 +175,13 @@ namespace Woofy.Properties {
         internal static System.Drawing.Bitmap Warning {
             get {
                 object obj = ResourceManager.GetObject("Warning", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Woofy {
+            get {
+                object obj = ResourceManager.GetObject("Woofy", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

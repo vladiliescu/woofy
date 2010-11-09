@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using Woofy.Core;
-using Woofy.Core.Engine;
 using Woofy.Enums;
 using Woofy.Flows.AutoUpdate;
 using Woofy.Gui;
@@ -25,7 +24,6 @@ namespace Woofy.Flows.Main
 
 		private void RegisterCommands()
 		{
-			toolStripMenuItemOpenTaskFolder.Click += (o, e) => OpenSelectedTaskFolder();
 			tsbOpenFolder.Click += (o, e) => OpenSelectedTaskFolder();
 			tsbAddComic.Click += (o, e) => Presenter.AddComic();
 			tsbSettings.Click += (o, e) =>
@@ -33,13 +31,6 @@ namespace Woofy.Flows.Main
 				using (var settingsForm = new SettingsForm())
 					settingsForm.ShowDialog();
 			};
-			exitToolStripMenuItem.Click += (o, e) => Application.Exit();
-			notifyIcon.MouseDoubleClick += (o, e) =>
-			{
-				Visible = true;
-				WindowState = FormWindowState.Normal;
-			};
-
 			txtAppLog.LinkClicked += (o, e) => Presenter.Open(e.LinkText);
 			txtAppLog.TextChanged += (o, e) =>
 			{
@@ -116,7 +107,7 @@ namespace Woofy.Flows.Main
 			}
 		}
 
-		private void hideShowWoofyToolStripMenuItem_Click(object sender, EventArgs e)
+		public void HideOrShow()
 		{
 			if (Visible)
 			{
@@ -184,8 +175,7 @@ namespace Woofy.Flows.Main
 
 		private void InitControls()
 		{
-			Icon = notifyIcon.Icon = Resources.PrimaryIcon;
-
+			Icon = Resources.ApplicationIcon;
 			dgvwTasks.AutoGenerateColumns = false;
 
 			var splitButton = new ToolStripSplitButton("About..", Resources.About);

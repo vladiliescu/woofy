@@ -8,7 +8,7 @@ namespace Woofy.Core.Infrastructure
     {
         public static void Run()
         {
-            var appInfo = ContainerAccessor.Resolve<IApplicationInfo>();
+            var appInfo = ContainerAccessor.Resolve<IAppInfo>();
             var config = new LoggingConfiguration();
 
             var errorTarget = new EventLogTarget

@@ -7,8 +7,8 @@ using Woofy.Core.ComicManagement;
 using Woofy.Core.Engine;
 using Woofy.Core.Infrastructure;
 using Woofy.Flows.Main;
+using Woofy.Flows.Tray;
 using Woofy.Gui.CompilationError;
-using Logger = Woofy.Core.Logger;
 
 namespace Woofy
 {
@@ -55,6 +55,7 @@ namespace Woofy
 			//the DownloadSupervisor needs the SynchronizationContext, so I resolve it only after initializing the context
 			mainForm.Presenter = ContainerAccessor.Resolve<IMainPresenter>();
 
+			ContainerAccessor.Resolve<ITrayIconController>().DisplayIcon();
             Application.Run(mainForm);
         }
     }

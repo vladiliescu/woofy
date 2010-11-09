@@ -28,7 +28,6 @@ namespace Woofy.Flows.Main
         /// </summary>
         private void InitializeComponent()
         {
-			this.components = new System.ComponentModel.Container();
 			System.Windows.Forms.SplitContainer splitContainer1;
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -40,33 +39,18 @@ namespace Woofy.Flows.Main
 			this.colCurrentPage = new System.Windows.Forms.DataGridViewLinkColumn();
 			this.txtAppLog = new System.Windows.Forms.RichTextBox();
 			this.tsbOpenFolder = new System.Windows.Forms.ToolStripButton();
-			this.contextMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.toolStripMenuItemOpenTaskFolder = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.toolStripMenuItemNewTask = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItemPauseTask = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
 			this.tsbAddComic = new System.Windows.Forms.ToolStripButton();
 			this.tsbRemoveComic = new System.Windows.Forms.ToolStripButton();
 			this.tsbPauseComic = new System.Windows.Forms.ToolStripButton();
 			this.tsbSettings = new System.Windows.Forms.ToolStripButton();
-			this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
-			this.trayMenuStrip = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.hideShowWoofyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-			this.stopAllTasksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.startAllTasksToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-			this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			splitContainer1 = new System.Windows.Forms.SplitContainer();
 			toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			splitContainer1.Panel1.SuspendLayout();
 			splitContainer1.Panel2.SuspendLayout();
 			splitContainer1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.dgvwTasks)).BeginInit();
-			this.contextMenuStrip.SuspendLayout();
 			this.toolStrip.SuspendLayout();
-			this.trayMenuStrip.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// splitContainer1
@@ -190,46 +174,6 @@ namespace Woofy.Flows.Main
 			this.tsbOpenFolder.Text = "Open folder";
 			this.tsbOpenFolder.ToolTipText = "Open the comic\'s download folder";
 			// 
-			// contextMenuStrip
-			// 
-			this.contextMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItemOpenTaskFolder,
-            this.toolStripSeparator1,
-            this.toolStripMenuItemNewTask,
-            this.toolStripMenuItemPauseTask});
-			this.contextMenuStrip.Name = "contextMenuStrip";
-			this.contextMenuStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-			this.contextMenuStrip.Size = new System.Drawing.Size(172, 76);
-			// 
-			// toolStripMenuItemOpenTaskFolder
-			// 
-			this.toolStripMenuItemOpenTaskFolder.Image = global::Woofy.Properties.Resources.OpenFolder;
-			this.toolStripMenuItemOpenTaskFolder.Name = "toolStripMenuItemOpenTaskFolder";
-			this.toolStripMenuItemOpenTaskFolder.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-			this.toolStripMenuItemOpenTaskFolder.Size = new System.Drawing.Size(171, 22);
-			this.toolStripMenuItemOpenTaskFolder.Text = "Open folder";
-			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(168, 6);
-			// 
-			// toolStripMenuItemNewTask
-			// 
-			this.toolStripMenuItemNewTask.Image = global::Woofy.Properties.Resources.New;
-			this.toolStripMenuItemNewTask.Name = "toolStripMenuItemNewTask";
-			this.toolStripMenuItemNewTask.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
-			this.toolStripMenuItemNewTask.Size = new System.Drawing.Size(171, 22);
-			this.toolStripMenuItemNewTask.Text = "New";
-			// 
-			// toolStripMenuItemPauseTask
-			// 
-			this.toolStripMenuItemPauseTask.Image = global::Woofy.Properties.Resources.Paused;
-			this.toolStripMenuItemPauseTask.Name = "toolStripMenuItemPauseTask";
-			this.toolStripMenuItemPauseTask.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.P)));
-			this.toolStripMenuItemPauseTask.Size = new System.Drawing.Size(171, 22);
-			this.toolStripMenuItemPauseTask.Text = "Pause";
-			// 
 			// toolStrip
 			// 
 			this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -283,59 +227,6 @@ namespace Woofy.Flows.Main
 			this.tsbSettings.Size = new System.Drawing.Size(66, 22);
 			this.tsbSettings.Text = "Settings";
 			// 
-			// notifyIcon
-			// 
-			this.notifyIcon.ContextMenuStrip = this.trayMenuStrip;
-			this.notifyIcon.Visible = true;
-			// 
-			// trayMenuStrip
-			// 
-			this.trayMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.hideShowWoofyToolStripMenuItem,
-            this.toolStripSeparator3,
-            this.stopAllTasksToolStripMenuItem,
-            this.startAllTasksToolStripMenuItem,
-            this.toolStripSeparator4,
-            this.exitToolStripMenuItem});
-			this.trayMenuStrip.Name = "trayMenuStrip";
-			this.trayMenuStrip.ShowImageMargin = false;
-			this.trayMenuStrip.Size = new System.Drawing.Size(136, 104);
-			// 
-			// hideShowWoofyToolStripMenuItem
-			// 
-			this.hideShowWoofyToolStripMenuItem.Name = "hideShowWoofyToolStripMenuItem";
-			this.hideShowWoofyToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
-			this.hideShowWoofyToolStripMenuItem.Text = "&Hide/Show Woofy";
-			this.hideShowWoofyToolStripMenuItem.Click += new System.EventHandler(this.hideShowWoofyToolStripMenuItem_Click);
-			// 
-			// toolStripSeparator3
-			// 
-			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(132, 6);
-			// 
-			// stopAllTasksToolStripMenuItem
-			// 
-			this.stopAllTasksToolStripMenuItem.Name = "stopAllTasksToolStripMenuItem";
-			this.stopAllTasksToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
-			this.stopAllTasksToolStripMenuItem.Text = "&Pause all tasks";
-			// 
-			// startAllTasksToolStripMenuItem
-			// 
-			this.startAllTasksToolStripMenuItem.Name = "startAllTasksToolStripMenuItem";
-			this.startAllTasksToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
-			this.startAllTasksToolStripMenuItem.Text = "&Resume all tasks";
-			// 
-			// toolStripSeparator4
-			// 
-			this.toolStripSeparator4.Name = "toolStripSeparator4";
-			this.toolStripSeparator4.Size = new System.Drawing.Size(132, 6);
-			// 
-			// exitToolStripMenuItem
-			// 
-			this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-			this.exitToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
-			this.exitToolStripMenuItem.Text = "E&xit";
-			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -354,10 +245,8 @@ namespace Woofy.Flows.Main
 			splitContainer1.Panel2.ResumeLayout(false);
 			splitContainer1.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.dgvwTasks)).EndInit();
-			this.contextMenuStrip.ResumeLayout(false);
 			this.toolStrip.ResumeLayout(false);
 			this.toolStrip.PerformLayout();
-			this.trayMenuStrip.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -367,20 +256,7 @@ namespace Woofy.Flows.Main
 
         private System.Windows.Forms.DataGridView dgvwTasks;
 		private System.Windows.Forms.ToolStrip toolStrip;
-        private System.Windows.Forms.ContextMenuStrip contextMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemNewTask;
-		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemPauseTask;
-		private System.Windows.Forms.ToolStripMenuItem toolStripMenuItemOpenTaskFolder;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripButton tsbSettings;
-        private System.Windows.Forms.NotifyIcon notifyIcon;
-        private System.Windows.Forms.ContextMenuStrip trayMenuStrip;
-        private System.Windows.Forms.ToolStripMenuItem hideShowWoofyToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripMenuItem stopAllTasksToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem startAllTasksToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
+		private System.Windows.Forms.ToolStripButton tsbSettings;
 		private System.Windows.Forms.RichTextBox txtAppLog;
 		private System.Windows.Forms.DataGridViewImageColumn colStatus;
 		private System.Windows.Forms.DataGridViewTextBoxColumn colComic;

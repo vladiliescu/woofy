@@ -10,15 +10,15 @@ namespace Woofy.Gui
 {
     partial class AboutForm : Form
     {
-		readonly IApplicationInfo applicationInfo = ContainerAccessor.Resolve<IApplicationInfo>();
+		readonly IAppInfo appInfo = ContainerAccessor.Resolve<IAppInfo>();
 		readonly IDefinitionStore definitionStore = ContainerAccessor.Resolve<IDefinitionStore>();
 
         public AboutForm()
         {
             InitializeComponent();
 
-            Text = string.Format("About {0}", applicationInfo.Name);
-            lblProductInfo.Text = string.Format("{0} {1} {2} {3}", applicationInfo.Name, applicationInfo.Version, applicationInfo.Copyright, applicationInfo.Company);
+            Text = string.Format("About {0}", appInfo.Name);
+            lblProductInfo.Text = string.Format("{0} {1} {2} {3}", appInfo.Name, appInfo.Version, appInfo.Copyright, appInfo.Company);
 
             btnOK.Focus();
 

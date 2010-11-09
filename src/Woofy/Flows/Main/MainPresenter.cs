@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel;
 using System.IO;
 using System.Text;
-using System.Web;
+using System.Windows.Forms;
 using Woofy.Core;
 using Woofy.Core.ComicManagement;
 using Woofy.Core.Engine;
@@ -11,6 +11,7 @@ using System.Linq;
 using Woofy.Flows.AddComic;
 using Woofy.Flows.ApplicationLog;
 using Woofy.Flows.AutoUpdate;
+using Woofy.Flows.Tray;
 
 namespace Woofy.Flows.Main
 {
@@ -30,7 +31,8 @@ namespace Woofy.Flows.Main
         IEventHandler<ComicActivated>,
         IEventHandler<AppLogEntryAdded>,
         IEventHandler<ComicChanged>,
-		IEventHandler<ComicRemoved>
+		IEventHandler<ComicRemoved>,
+		ICommandHandler<HideOrShowApplication>
     {
         private readonly IApplicationController applicationController;
         private readonly IUiThread uiThread;
@@ -45,6 +47,8 @@ namespace Woofy.Flows.Main
         {
             get { return appLogBuilder.ToString(); }
         }
+
+		private MainForm form;
 
         public MainPresenter(IApplicationController applicationController, IUiThread uiThread, IComicStore comicStore, IAppLog appLog, IComicViewModelMapper mapper)
         {
@@ -72,6 +76,8 @@ namespace Woofy.Flows.Main
 
         public void Initialize(MainForm form)
         {
+			this.form = form;
+
             appLog.Send("Hello World");
 
             applicationController.Execute(new CheckForUpdates(form));
@@ -144,6 +150,11 @@ namespace Woofy.Flows.Main
 				var viewModel = Comics.SingleOrDefault(c => c.Id == eventData.Comic.Id);
 				Comics.Remove(viewModel);
 			});
+    	}
+
+    	public void Handle(HideOrShowApplication command)
+    	{
+			uiThread.Send(() => form.HideOrShow());
     	}
     }
 }

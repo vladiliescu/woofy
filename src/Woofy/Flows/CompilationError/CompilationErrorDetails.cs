@@ -10,7 +10,7 @@ namespace Woofy.Gui.CompilationError
 		{
 			InitializeComponent();
 
-			Icon = Resources.PrimaryIcon;
+			Icon = Resources.ApplicationIcon;
 
 			BindToViewModel(error);
 		}

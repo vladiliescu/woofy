@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Reflection;
+using Woofy.Flows;
 
 namespace Woofy.Core
 {
-	public interface IApplicationInfo
+	public interface IAppInfo
 	{
 		Version Version { get; }
 		string Name { get; }
@@ -13,7 +14,7 @@ namespace Woofy.Core
 	    string NameAndVersion { get; }
 	}
 
-	public class ApplicationInfo : IApplicationInfo
+	public class AppInfo : IAppInfo
 	{
 		private readonly Assembly assembly = Assembly.GetExecutingAssembly();
 		
@@ -24,7 +25,7 @@ namespace Woofy.Core
 		public string Company { get; private set; }
         public string NameAndVersion { get; private set; }
 
-		public ApplicationInfo()
+		public AppInfo()
 		{
 			var assemblyName = assembly.GetName();
 
@@ -34,7 +35,7 @@ namespace Woofy.Core
 			Copyright = GetCustomAttributeProperty<AssemblyCopyrightAttribute>(x => x.Copyright);
 			Company = GetCustomAttributeProperty<AssemblyCompanyAttribute>(x => x.Company);
 
-            NameAndVersion = "{0} {1}".FormatTo(Name, Version);
+            NameAndVersion = "{0} {1}".FormatTo(Name, Version.ToPrettyString());
 		}
 
 		private string GetCustomAttributeProperty<T>(Func<T, string> extractProperty)

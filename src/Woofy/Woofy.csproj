@@ -98,7 +98,7 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\ApplicationInfo.cs" />
+    <Compile Include="Core\AppInfo.cs" />
     <Compile Include="Core\ComicManagement\ComicAutoPersister.cs" />
     <Compile Include="Core\Engine\BaseExpression.cs" />
     <Compile Include="Core\Engine\CompilationException.cs" />
@@ -170,6 +170,7 @@
     </Compile>
     <Compile Include="Flows\CompilationError\CompilationErrorController.cs" />
     <Compile Include="Flows\CompilationError\CompilationErrorModel.cs" />
+    <Compile Include="Flows\FormatExtensions.cs" />
     <Compile Include="Flows\Main\ComicModel.cs" />
     <Compile Include="Flows\Main\ComicRemoved.cs" />
     <Compile Include="Flows\Main\ComicViewModelMapper.cs" />
@@ -181,6 +182,8 @@
     <Compile Include="Flows\Main\StartAllDownloads.cs" />
     <Compile Include="Flows\Main\StartDownload.cs" />
     <Compile Include="Flows\Main\ToggleDownload.cs" />
+    <Compile Include="Flows\Tray\HideOrShowApplication.cs" />
+    <Compile Include="Flows\Tray\TrayIconController.cs" />
     <Compile Include="Settings\UserSettingsData.cs" />
     <Compile Include="EventArgs\DownloadCompletedEventArgs.cs" />
     <Compile Include="EventArgs\DownloadedFileChunkEventArgs.cs" />
@@ -260,8 +263,10 @@
     <Content Include="license.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\exit.png" />
     <Content Include="Resources\page_copy.png" />
     <Content Include="Resources\user.png" />
+    <None Include="Resources\woofy.png" />
     <None Include="Resources\bug_delete.png" />
     <None Include="Resources\warning.png" />
     <None Include="Resources\error.png" />
@@ -288,9 +293,6 @@
     <None Include="Resources\cog.png" />
     <None Include="Resources\add.png" />
     <None Include="Resources\accept.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
