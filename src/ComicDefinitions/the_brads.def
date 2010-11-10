@@ -1,5 +1,5 @@
 comic "The Brads"
 start_at "http://bradcolbow.com/archive/view/the_brads_impossible/"
 
-for page in visit("""<a class="next" href="(?<content>http://bradcolbow.com/archive/view/[^\n]*?/)" rel="next"""):
-    download("""<img alt="" src="(?<content>http://www.colbowdesign.com/blog_images/[^\n]*?)""");
+for page in visit("""<a class="next" href="(?<content>http://bradcolbow.com/archive/view/[^\n]*?/)" rel="next">"""):
+    download("""<div class="entry">[\n\s]*<p><img[^\n]*?src="(?<content>[^\n]*?)" """);
