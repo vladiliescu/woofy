@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Reflection;
+using Woofy.Core.SystemProxies;
 
 namespace Woofy.Core
 {
@@ -35,7 +36,6 @@ namespace Woofy.Core
 	/// </summary>
 	public class AppSettings : IAppSettings
 	{
-		public string VersionNumber { get; private set; }
 		public Uri UpdateInfoAddress { get; private set; }
 		public string ComicsFile { get; private set; }
 		public string UserSettingsFile { get; private set; }
@@ -45,12 +45,18 @@ namespace Woofy.Core
 		public string ContentGroupName { get; private set; }
 		public IUserSettings DefaultSettings { get; private set; }
 
-		public AppSettings()
-		{
-			UpdateInfoAddress = new Uri("http://wiki.woofy.googlecode.com/hg/content/updateInfo.json");
-			ComicsFile = BaseDirectory("comics.json");
+		private readonly bool isPortable = false;
+		private readonly IDirectoryProxy directory;
 
-			UserSettingsFile = BaseDirectory("user.settings");
+		public AppSettings(IDirectoryProxy directory)
+		{
+			this.directory = directory;
+
+			UpdateInfoAddress = new Uri("http://wiki.woofy.googlecode.com/hg/content/updateInfo.json");
+			
+			ComicsFile = AppSettingsDirectory("comics.json");
+			UserSettingsFile = AppSettingsDirectory("user.settings");
+
 			ComicDefinitionsFolder = BaseDirectory("definitions");
 
 			HomePage = "http://code.google.com/p/woofy/";
@@ -60,23 +66,29 @@ namespace Woofy.Core
 
 			DefaultSettings = new UserSettings
 			{
-				LastUsedComicDefinitionFile = null,
-				LastNumberOfComicsToDownload = null,
-				ProxyAddress = null,
-				ProxyPort = null,
 				MinimizeToTray = true,
-				DefaultDownloadFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Comics"),
+				DownloadFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Comics"),
 				AutomaticallyCheckForUpdates = true,
 				AlreadyRejectedApplicationVersion = null,
 				CloseWhenAllComicsHaveFinishedDownloading = false,
-				ProxyUsername = null,
-				ProxyPassword = null
 			};
 		}
 
-		private static string BaseDirectory(string fileName)
+		private string BaseDirectory(string fileName)
 		{
 			return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
+		}
+
+		private string AppSettingsDirectory(string fileName)
+		{
+			if (isPortable)
+				return BaseDirectory(fileName);
+
+			var folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Woofy");
+			if (!directory.Exists(folder))
+				directory.CreateDirectory(folder);
+
+			return Path.Combine(folder, fileName);
 		}
 	}
 }

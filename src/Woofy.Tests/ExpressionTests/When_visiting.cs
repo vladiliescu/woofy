@@ -2,6 +2,7 @@ using System;
 using Moq;
 using Woofy.Core;
 using Woofy.Core.Engine;
+using Woofy.Core.SystemProxies;
 using Xunit;
 
 namespace Woofy.Tests.ExpressionTests
@@ -10,7 +11,7 @@ namespace Woofy.Tests.ExpressionTests
     {
         private readonly ObjectMother factory = new ObjectMother();
         private readonly Context context = new Context("comic", "Comic", new Uri("http://example.com"));
-        private readonly IPageParser parser = new PageParser(new AppSettings());
+        private readonly IPageParser parser = new PageParser(new AppSettings(new Mock<IDirectoryProxy>().Object));
         private readonly VisitExpression visit;
         private const string regex = @"http://example.com/[\d]";
 

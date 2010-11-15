@@ -33,7 +33,7 @@ namespace Woofy.Tests.ComicStoreTests
         [Fact]
         public void Should_properly_instantiate_comics_based_on_their_definitions()
         {
-            factory.UserSettings.Setup(x => x.DefaultDownloadFolder).Returns("d:\\comics");
+            factory.UserSettings.Setup(x => x.DownloadFolder).Returns("d:\\comics");
 
             comicStore.InitializeComicCache();
             var comics = comicStore.Comics;

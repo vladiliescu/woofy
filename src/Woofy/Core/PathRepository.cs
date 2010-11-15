@@ -23,10 +23,10 @@ namespace Woofy.Core
 
         public string DownloadFolderFor(string comicId)
         {
-            if (string.IsNullOrEmpty(userSettings.DefaultDownloadFolder))
+            if (string.IsNullOrEmpty(userSettings.DownloadFolder))
                 return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, comicId);
 
-            return Path.Combine(userSettings.DefaultDownloadFolder, comicId);
+            return Path.Combine(userSettings.DownloadFolder, comicId);
         }
 
 		public string DownloadPathFor(string comicId, string fileName)
@@ -36,10 +36,10 @@ namespace Woofy.Core
 
     	public string DownloadFolderFor(Comic comic)
         {
-            if (string.IsNullOrEmpty(userSettings.DefaultDownloadFolder))
+            if (string.IsNullOrEmpty(userSettings.DownloadFolder))
                 return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, comic.Id);
 
-            return Path.Combine(userSettings.DefaultDownloadFolder, comic.Id);
+            return Path.Combine(userSettings.DownloadFolder, comic.Id);
         }
 
         public string DownloadPathFor(Comic comic, string fileName)

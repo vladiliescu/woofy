@@ -9,7 +9,7 @@ namespace Woofy.Flows.About
 {
 	partial class AboutForm : Form
 	{
-		readonly IAppInfo appInfo = ContainerAccessor.Resolve<IAppInfo>();
+		private readonly IAppInfo appInfo = ContainerAccessor.Resolve<IAppInfo>();
 
 		public AboutForm()
 		{
