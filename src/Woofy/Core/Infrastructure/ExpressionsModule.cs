@@ -7,8 +7,8 @@ namespace Woofy.Core.Infrastructure
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<VisitExpression>().Named<IExpression>("visit");
-            builder.RegisterType<DownloadExpression>().Named<IExpression>("download");
+            builder.RegisterType<VisitExpression>().Named<IExpression>("visit").InstancePerDependency();
+            builder.RegisterType<DownloadExpression>().Named<IExpression>("download").InstancePerDependency();
         }
     }
 }

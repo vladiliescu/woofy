@@ -46,7 +46,7 @@ namespace Woofy.Core.Engine
 
         private void ReportNoStripsFound(Context context)
         {
-            Log(context, "No strips found.");
+            Log(context, "WARNING: no strips found.");
         }
 
         private void ReportStripDownloaded(Context context, Uri link)

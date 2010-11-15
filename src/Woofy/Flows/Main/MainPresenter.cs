@@ -140,13 +140,14 @@ namespace Woofy.Flows.Main
 
     	public void Handle(ComicActivated eventData)
     	{
-    		var comic = eventData.Comic;
-
-    		uiThread.Send(() => Comics.Add(mapper.MapToViewModel(comic)));
+    		uiThread.Send(() => Comics.Add(mapper.MapToViewModel(eventData.Comic)));
     	}
 
     	public void Handle(ComicChanged eventData)
         {
+			if (eventData.Comic.Status == Status.Inactive)
+				return;
+
             uiThread.Send(() =>
             {
                 var viewModel = Comics.SingleOrDefault(c => c.Id == eventData.Comic.Id);
