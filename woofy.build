@@ -4,8 +4,8 @@
          default="all">
 
 	<property name="configuration" value="Release"/>
-	<property name="version.Major" value="0" />
-	<property name="version.Minor" value="8" />
+	<property name="version.Major" value="1" />
+	<property name="version.Minor" value="0" />
 	<property name="version.BuildNumber" value="0" />
 	<property name="version.Revision" value="0"  />
 	
@@ -22,7 +22,7 @@
     <property name="date.Today" value="${datetime::get-year(date.Now)}-${string::pad-left(int::to-string(datetime::get-month(date.Now)), 2, '0')}-${string::pad-left(int::to-string(datetime::get-day(date.Now)), 2, '0')}"/>
     
     <property name="woofy.Version" value="${version.Major}.${version.Minor}.${version.BuildNumber}" />
-    <property name="woofy.ZipFileName" value="Woofy-${woofy.Version}-zipped.zip"/>
+    <property name="woofy.ZipFileName" value="Woofy-${woofy.Version}.zip"/>
     <property name="woofy.ZipFile" value="${dir.Build}\${woofy.ZipFileName}"/>
     <property name="woofy.ExeFileName" value="Woofy-${woofy.Version}-setup.exe"/>
     <property name="woofy.ExeFile" value="${dir.Build}\${woofy.ExeFileName}" />
@@ -70,7 +70,7 @@
     <target name="copyToBuild" depends="compile">
         <copy todir="${dir.Build}\definitions">
             <fileset basedir="${dir.ComicDefinitions}">
-                <include name="*.xml"/>
+                <include name="*.def"/>
             </fileset>
         </copy>
 
@@ -78,6 +78,7 @@
             <fileset basedir="${dir.Woofy}">
                 <include name="**.*"/>
                 <exclude name="*.xml"/>
+                <exclude name="*.pdb"/>
             </fileset>
             <filterchain>
                 <replacetokens>
@@ -88,7 +89,7 @@
 
         <copy todir="${dir.Build}\Woofy\definitions">
             <fileset basedir="${dir.ComicDefinitions}">
-                <include name="*.xml"/>
+                <include name="*.def"/>
             </fileset>
         </copy>
 
