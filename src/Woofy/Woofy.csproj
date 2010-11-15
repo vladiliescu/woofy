@@ -100,6 +100,7 @@
   <ItemGroup>
     <Compile Include="Core\AppInfo.cs" />
     <Compile Include="Core\ComicManagement\ComicAutoPersister.cs" />
+    <Compile Include="Core\Donate.cs" />
     <Compile Include="Core\Engine\BaseExpression.cs" />
     <Compile Include="Core\Engine\CompilationException.cs" />
     <Compile Include="Core\Engine\CurrentPageChanged.cs" />
@@ -200,7 +201,6 @@
     <Compile Include="Core\ComicManagement\Comic.cs" />
     <Compile Include="Flows\Main\DownloadSupervisor.cs" />
     <Compile Include="Core\Logger.cs" />
-    <Compile Include="Core\WebConnectionFactory.cs" />
     <Compile Include="Core\WebPath.cs" />
     <Compile Include="Enums\DownloadOutcome.cs" />
     <Compile Include="Core\Engine\Status.cs" />
@@ -262,6 +262,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\exit.png" />
+    <Content Include="Resources\donate.png" />
     <Content Include="Resources\page_copy.png" />
     <Content Include="Resources\user.png" />
     <None Include="Resources\woofy.png" />

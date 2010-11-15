@@ -31,7 +31,7 @@ namespace Woofy.Core.Engine
 			this.definition = definition;
 			this.randomPausesBetweenRequests = randomPausesBetweenRequests;
 
-			webClient = WebConnectionFactory.GetNewWebClientInstance();
+			//webClient = WebConnectionFactory.GetNewWebClientInstance();
 		}
 
 		public BotOldAndOnlyUsedForReference(Comic comic)

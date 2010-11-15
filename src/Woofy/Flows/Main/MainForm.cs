@@ -1,10 +1,8 @@
 using System;
-using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using Woofy.Core;
 using Woofy.Enums;
-using Woofy.Flows.AutoUpdate;
 using Woofy.Gui;
 using Woofy.Properties;
 using Woofy.Settings;
@@ -24,7 +22,6 @@ namespace Woofy.Flows.Main
 
 		private void RegisterCommands()
 		{
-			tsbOpenFolder.Click += (o, e) => OpenSelectedTaskFolder();
 			tsbAddComic.Click += (o, e) => Presenter.AddComic();
 			tsbSettings.Click += (o, e) =>
 			{
@@ -45,11 +42,15 @@ namespace Woofy.Flows.Main
                 
                 Presenter.OpenFolder(comic.Id);
             };
+
+			tsbDonate.Click += (o, e) => Presenter.Donate();
 		}
 
 		private void OnLoad(object sender, EventArgs e)
 		{
-			InitControls();
+			Icon = Resources.ApplicationIcon;
+			dgvwTasks.AutoGenerateColumns = false;
+			txtAppLog.DataBindings.Add(new Binding("Text", Presenter, "AppLog"));
 
 			Presenter.Initialize(this);
 			dgvwTasks.DataSource = Presenter.Comics;
@@ -107,14 +108,6 @@ namespace Woofy.Flows.Main
 			}
 		}
 
-		private void OnAboutClick(object sender, EventArgs e)
-		{
-			using (var aboutForm = new AboutForm())
-			{
-				aboutForm.ShowDialog();
-			}
-		}
-
 		public void HideOrShow()
 		{
 			if (Visible)
@@ -145,55 +138,7 @@ namespace Woofy.Flows.Main
 				}
 			));
 		}
-
-		/// <summary>
-		/// Reports an error message to the user.
-		/// </summary>
-		/// <param name="errorMessage">The error message to report to the user.</param>
-		public void ReportError(string errorMessage)
-		{
-			Invoke(new MethodInvoker(
-					   () =>
-					   MessageBox.Show(errorMessage, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
-					   ));
-		}
-
-		public DialogResult DisplayMessageBox(string message, MessageBoxButtons buttons, MessageBoxIcon icon)
-		{
-			var result = DialogResult.None;
-
-			Invoke(new MethodInvoker(
-				delegate
-				{
-					result = MessageBox.Show(message, Application.ProductName, buttons, icon);
-				}
-			));
-
-			return result;
-		}
-
-		private void OpenSelectedTaskFolder()
-		{
-			//if (dgvwTasks.SelectedRows.Count == 0)
-			//    return;
-
-			//var task = (Comic)dgvwTasks.SelectedRows[0].DataBoundItem;
-			//Presenter.OpenFolder(task);
-		}
-
-		private void InitControls()
-		{
-			Icon = Resources.ApplicationIcon;
-			dgvwTasks.AutoGenerateColumns = false;
-
-			var splitButton = new ToolStripSplitButton("About..", Resources.About);
-			splitButton.Alignment = ToolStripItemAlignment.Right;
-
-			toolStrip.Items.Insert(0, splitButton);
-
-			txtAppLog.DataBindings.Add(new Binding("Text", Presenter, "AppLog"));
-		}
-
+		
 		#endregion
 
 		private void OnGridCellFormatting(object sender, DataGridViewCellFormattingEventArgs e)

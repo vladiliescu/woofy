@@ -102,6 +102,13 @@ namespace Woofy.Properties {
             }
         }
         
+        internal static System.Drawing.Bitmap Donate {
+            get {
+                object obj = ResourceManager.GetObject("Donate", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Error {
             get {
                 object obj = ResourceManager.GetObject("Error", resourceCulture);

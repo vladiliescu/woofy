@@ -1,5 +1,4 @@
 using System.ComponentModel;
-using System.IO;
 using System.Text;
 using Woofy.Core;
 using Woofy.Core.ComicManagement;
@@ -25,6 +24,7 @@ namespace Woofy.Flows.Main
         void ToggleComicState(string comicId);
     	void Remove(string comicId);
         void OpenFolder(string comicId);
+    	void Donate();
     }
 
     public class MainPresenter : IMainPresenter, INotifyPropertyChanged,
@@ -110,7 +110,12 @@ namespace Woofy.Flows.Main
             applicationController.Execute(new StartProcess(downloadFolder));
         }
 
-        public void Handle(AppLogEntryAdded eventData)
+    	public void Donate()
+    	{
+			applicationController.Execute<Donate>();
+    	}
+
+    	public void Handle(AppLogEntryAdded eventData)
         {
             appLogBuilder.AppendFormat("{0}\n", eventData);
             uiThread.Send(OnAppLogChanged);
