@@ -1,36 +1,33 @@
-namespace Woofy.Gui
+namespace Woofy.Flows.About
 {
-    partial class AboutForm
-    {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
-        private System.ComponentModel.IContainer components = null;
+	partial class AboutForm
+	{
+		/// <summary>
+		/// Required designer variable.
+		/// </summary>
+		private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing && (components != null))
-            {
-                components.Dispose();
-            }
-            base.Dispose(disposing);
-        }
+		/// <summary>
+		/// Clean up any resources being used.
+		/// </summary>
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing && (components != null))
+			{
+				components.Dispose();
+			}
+			base.Dispose(disposing);
+		}
 
-        #region Windows Form Designer generated code
+		#region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
-        private void InitializeComponent()
-        {
+		/// <summary>
+		/// Required method for Designer support - do not modify
+		/// the contents of this method with the code editor.
+		/// </summary>
+		private void InitializeComponent()
+		{
 			System.Windows.Forms.Label label1;
-			System.Windows.Forms.ColumnHeader columnHeader1;
-			System.Windows.Forms.GroupBox groupBox2;
-			this.definitionAuthors = new System.Windows.Forms.ListView();
 			this.btnOK = new System.Windows.Forms.Button();
 			this.lblProductInfo = new System.Windows.Forms.Label();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -40,9 +37,6 @@ namespace Woofy.Gui
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
 			this.lnkHomePage = new System.Windows.Forms.LinkLabel();
 			label1 = new System.Windows.Forms.Label();
-			columnHeader1 = new System.Windows.Forms.ColumnHeader();
-			groupBox2 = new System.Windows.Forms.GroupBox();
-			groupBox2.SuspendLayout();
 			this.groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.SuspendLayout();
@@ -57,49 +51,15 @@ namespace Woofy.Gui
 			label1.TabIndex = 1;
 			label1.Text = "Mark James for his wonderful silk icons";
 			// 
-			// columnHeader1
-			// 
-			columnHeader1.Width = 300;
-			// 
-			// groupBox2
-			// 
-			groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-						| System.Windows.Forms.AnchorStyles.Right)));
-			groupBox2.Controls.Add(this.definitionAuthors);
-			groupBox2.Location = new System.Drawing.Point(12, 244);
-			groupBox2.Name = "groupBox2";
-			groupBox2.Size = new System.Drawing.Size(346, 197);
-			groupBox2.TabIndex = 33;
-			groupBox2.TabStop = false;
-			groupBox2.Text = "Comic Definitions By";
-			// 
-			// definitionAuthors
-			// 
-			this.definitionAuthors.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            columnHeader1});
-			this.definitionAuthors.FullRowSelect = true;
-			this.definitionAuthors.GridLines = true;
-			this.definitionAuthors.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
-			this.definitionAuthors.HideSelection = false;
-			this.definitionAuthors.Location = new System.Drawing.Point(6, 19);
-			this.definitionAuthors.MultiSelect = false;
-			this.definitionAuthors.Name = "definitionAuthors";
-			this.definitionAuthors.Size = new System.Drawing.Size(332, 167);
-			this.definitionAuthors.TabIndex = 32;
-			this.definitionAuthors.UseCompatibleStateImageBehavior = false;
-			this.definitionAuthors.View = System.Windows.Forms.View.Details;
-			this.definitionAuthors.DoubleClick += new System.EventHandler(this.definitionAuthors_DoubleClick);
-			// 
 			// btnOK
 			// 
 			this.btnOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
 			this.btnOK.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.btnOK.Location = new System.Drawing.Point(283, 450);
+			this.btnOK.Location = new System.Drawing.Point(283, 267);
 			this.btnOK.Name = "btnOK";
 			this.btnOK.Size = new System.Drawing.Size(75, 23);
 			this.btnOK.TabIndex = 24;
 			this.btnOK.Text = "&Close";
-			this.btnOK.Click += new System.EventHandler(this.btnOK_Click);
 			// 
 			// lblProductInfo
 			// 
@@ -121,11 +81,11 @@ namespace Woofy.Gui
 			this.groupBox1.Controls.Add(this.lblIconCredit);
 			this.groupBox1.Controls.Add(label1);
 			this.groupBox1.Controls.Add(this.lnkFamFamFam);
-			this.groupBox1.Location = new System.Drawing.Point(12, 142);
+			this.groupBox1.Location = new System.Drawing.Point(11, 154);
 			this.groupBox1.Margin = new System.Windows.Forms.Padding(2);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Padding = new System.Windows.Forms.Padding(2);
-			this.groupBox1.Size = new System.Drawing.Size(346, 97);
+			this.groupBox1.Size = new System.Drawing.Size(347, 97);
 			this.groupBox1.TabIndex = 28;
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Thanks To";
@@ -179,7 +139,7 @@ namespace Woofy.Gui
 			// 
 			this.lnkHomePage.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.lnkHomePage.AutoSize = true;
-			this.lnkHomePage.Location = new System.Drawing.Point(12, 455);
+			this.lnkHomePage.Location = new System.Drawing.Point(12, 272);
 			this.lnkHomePage.Name = "lnkHomePage";
 			this.lnkHomePage.Size = new System.Drawing.Size(99, 13);
 			this.lnkHomePage.TabIndex = 34;
@@ -192,9 +152,8 @@ namespace Woofy.Gui
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.CancelButton = this.btnOK;
-			this.ClientSize = new System.Drawing.Size(370, 477);
+			this.ClientSize = new System.Drawing.Size(370, 302);
 			this.Controls.Add(this.lnkHomePage);
-			this.Controls.Add(groupBox2);
 			this.Controls.Add(this.pictureBox1);
 			this.Controls.Add(this.btnOK);
 			this.Controls.Add(this.groupBox1);
@@ -208,25 +167,23 @@ namespace Woofy.Gui
 			this.ShowInTaskbar = false;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
 			this.Text = "About";
-			groupBox2.ResumeLayout(false);
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
-        }
+		}
 
-        #endregion
+		#endregion
 
 		private System.Windows.Forms.Button btnOK;
-        private System.Windows.Forms.Label lblProductInfo;
-        private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.LinkLabel lnkFamFamFam;
-        private System.Windows.Forms.Label lblIconCredit;
-        private System.Windows.Forms.LinkLabel lnkIconCredits;
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.ListView definitionAuthors;
+		private System.Windows.Forms.Label lblProductInfo;
+		private System.Windows.Forms.GroupBox groupBox1;
+		private System.Windows.Forms.LinkLabel lnkFamFamFam;
+		private System.Windows.Forms.Label lblIconCredit;
+		private System.Windows.Forms.LinkLabel lnkIconCredits;
+		private System.Windows.Forms.PictureBox pictureBox1;
 		private System.Windows.Forms.LinkLabel lnkHomePage;
-    }
+	}
 }

@@ -29,9 +29,8 @@ namespace Woofy.Flows.Main
         private void InitializeComponent()
         {
 			System.Windows.Forms.SplitContainer splitContainer1;
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.dgvwTasks = new System.Windows.Forms.DataGridView();
 			this.colStatus = new System.Windows.Forms.DataGridViewImageColumn();
 			this.colComic = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -46,9 +45,7 @@ namespace Woofy.Flows.Main
 			this.tsbSettings = new System.Windows.Forms.ToolStripButton();
 			this.tsbDonate = new System.Windows.Forms.ToolStripButton();
 			this.tsbAbout = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			splitContainer1 = new System.Windows.Forms.SplitContainer();
-			toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
 			splitContainer1.Panel1.SuspendLayout();
 			splitContainer1.Panel2.SuspendLayout();
 			splitContainer1.SuspendLayout();
@@ -85,14 +82,14 @@ namespace Woofy.Flows.Main
             this.colComic,
             this.colDownloadedStrips,
             this.colCurrentPage});
-			dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			dataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window;
-			dataGridViewCellStyle12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			dataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.ControlText;
-			dataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.GradientActiveCaption;
-			dataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.dgvwTasks.DefaultCellStyle = dataGridViewCellStyle12;
+			dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.GradientActiveCaption;
+			dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.dgvwTasks.DefaultCellStyle = dataGridViewCellStyle14;
 			this.dgvwTasks.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.dgvwTasks.Location = new System.Drawing.Point(0, 0);
 			this.dgvwTasks.Margin = new System.Windows.Forms.Padding(2);
@@ -111,11 +108,11 @@ namespace Woofy.Flows.Main
 			// colStatus
 			// 
 			this.colStatus.DataPropertyName = "Status";
-			dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			dataGridViewCellStyle11.NullValue = null;
-			dataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Menu;
-			dataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.MenuText;
-			this.colStatus.DefaultCellStyle = dataGridViewCellStyle11;
+			dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			dataGridViewCellStyle13.NullValue = null;
+			dataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Menu;
+			dataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.MenuText;
+			this.colStatus.DefaultCellStyle = dataGridViewCellStyle13;
 			this.colStatus.HeaderText = "";
 			this.colStatus.MinimumWidth = 20;
 			this.colStatus.Name = "colStatus";
@@ -163,11 +160,6 @@ namespace Woofy.Flows.Main
 			this.txtAppLog.TabIndex = 9;
 			this.txtAppLog.Text = "";
 			// 
-			// toolStripSeparator2
-			// 
-			toolStripSeparator2.Name = "toolStripSeparator2";
-			toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
-			// 
 			// tsbOpenFolder
 			// 
 			this.tsbOpenFolder.Image = global::Woofy.Properties.Resources.OpenFolder;
@@ -183,9 +175,7 @@ namespace Woofy.Flows.Main
             this.tsbAddComic,
             this.tsbRemoveComic,
             this.tsbPauseComic,
-            toolStripSeparator2,
             this.tsbOpenFolder,
-            this.toolStripSeparator1,
             this.tsbAbout,
             this.tsbSettings,
             this.tsbDonate});
@@ -253,11 +243,6 @@ namespace Woofy.Flows.Main
 			this.tsbAbout.Size = new System.Drawing.Size(56, 22);
 			this.tsbAbout.Text = "About";
 			// 
-			// toolStripSeparator1
-			// 
-			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
-			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -299,6 +284,5 @@ namespace Woofy.Flows.Main
 		private System.Windows.Forms.ToolStripButton tsbOpenFolder;
 		private System.Windows.Forms.ToolStripButton tsbDonate;
 		private System.Windows.Forms.ToolStripButton tsbAbout;
-		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }

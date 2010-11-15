@@ -44,6 +44,7 @@ namespace Woofy.Flows.Main
             };
 
 			tsbDonate.Click += (o, e) => Presenter.Donate();
+			tsbAbout.Click += (o, e) => Presenter.DisplayAboutScreen();
 		}
 
 		private void OnLoad(object sender, EventArgs e)

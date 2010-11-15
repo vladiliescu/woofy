@@ -6,6 +6,7 @@ using Woofy.Core.Engine;
 using Woofy.Core.Infrastructure;
 using System.Linq;
 using Woofy.Core.SystemProxies;
+using Woofy.Flows.About;
 using Woofy.Flows.AddComic;
 using Woofy.Flows.ApplicationLog;
 using Woofy.Flows.AutoUpdate;
@@ -25,6 +26,7 @@ namespace Woofy.Flows.Main
     	void Remove(string comicId);
         void OpenFolder(string comicId);
     	void Donate();
+    	void DisplayAboutScreen();
     }
 
     public class MainPresenter : IMainPresenter, INotifyPropertyChanged,
@@ -113,6 +115,11 @@ namespace Woofy.Flows.Main
     	public void Donate()
     	{
 			applicationController.Execute<Donate>();
+    	}
+
+    	public void DisplayAboutScreen()
+    	{
+			applicationController.Execute<DisplayAboutScreen>();
     	}
 
     	public void Handle(AppLogEntryAdded eventData)

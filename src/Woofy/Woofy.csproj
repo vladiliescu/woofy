@@ -139,6 +139,8 @@
     <Compile Include="Core\SystemProxies\FileProxy.cs" />
     <Compile Include="Core\SystemProxies\WebClientProxy.cs" />
     <Compile Include="Core\VersionConverter.cs" />
+    <Compile Include="Flows\About\AboutPresenter.cs" />
+    <Compile Include="Flows\About\DisplayAboutScreen.cs" />
     <Compile Include="Flows\AddComic\ComicActivated.cs" />
     <Compile Include="Flows\AddComic\AddComic.cs" />
     <Compile Include="Flows\AddComic\ComicDetailsForm.cs">
@@ -205,10 +207,10 @@
     <Compile Include="Enums\DownloadOutcome.cs" />
     <Compile Include="Core\Engine\Status.cs" />
     <Compile Include="EventArgs\ResponseReceivedEventArgs.cs" />
-    <Compile Include="Flows\AboutForm.cs">
+    <Compile Include="Flows\About\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Flows\AboutForm.Designer.cs">
+    <Compile Include="Flows\About\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Flows\DownloadProgressForm.cs">
@@ -231,7 +233,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Flows\AboutForm.resx">
+    <EmbeddedResource Include="Flows\About\AboutForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
