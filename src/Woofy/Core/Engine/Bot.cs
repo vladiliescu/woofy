@@ -37,7 +37,7 @@ namespace Woofy.Core.Engine
 		}
 
 		public BotOldAndOnlyUsedForReference(Comic comic)
-			: this(comic.Definition, new FileDownloader(comic.DownloadFolder), false)
+			: this(comic.Definition, new FileDownloader(""), false)
 		{
 			Comic = comic;
 		}

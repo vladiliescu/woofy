@@ -109,6 +109,7 @@
     <Compile Include="Core\Engine\DefinitionCompiler.cs" />
     <Compile Include="Core\Engine\DownloadFinished.cs" />
     <Compile Include="Core\Infrastructure\ConfigureLogging.cs" />
+    <Compile Include="Core\PathRepository.cs" />
     <Compile Include="Core\ThreadCanceler.cs" />
     <Compile Include="Core\Engine\WorkerStoppedException.cs" />
     <Compile Include="Core\Engine\DownloadExpression.cs" />
@@ -135,7 +136,6 @@
     <Compile Include="Core\SystemProxies\DateTimeProxy.cs" />
     <Compile Include="Core\SystemProxies\DirectoryProxy.cs" />
     <Compile Include="Core\SystemProxies\FileProxy.cs" />
-    <Compile Include="Core\SystemProxies\PathProxy.cs" />
     <Compile Include="Core\SystemProxies\WebClientProxy.cs" />
     <Compile Include="Core\VersionConverter.cs" />
     <Compile Include="Flows\AddComic\ComicActivated.cs" />

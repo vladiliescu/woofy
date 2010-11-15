@@ -13,8 +13,6 @@ namespace Woofy.Core.ComicManagement
 
     	public string Name { get; set; }
     	public int DownloadedStrips { get; set; }
-		[Obsolete("No longer used")]
-    	public string DownloadFolder { get; set; }
     	public Status Status { get; set; }
     	public Uri CurrentPage { get; set; }
 

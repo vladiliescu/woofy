@@ -60,7 +60,6 @@ namespace Woofy.Core.ComicManagement
             {
                 Name = definition.Comic,
 			    Id = definition.Id,
-                DownloadFolder = userSettings.DefaultDownloadFolder.IsNotNullOrEmpty() ? Path.Combine(userSettings.DefaultDownloadFolder, definition.Id) : definition.Id,
 			    Status = Status.Running
             };
 

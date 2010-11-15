@@ -37,6 +37,14 @@ namespace Woofy.Flows.Main
 				txtAppLog.SelectionStart = txtAppLog.Text.Length;
 				txtAppLog.ScrollToCaret();
 			};
+
+            tsbOpenFolder.Click += (o, e) => {
+                var comic = GetSelectedComic();
+                if (comic == null)
+                    return;
+                
+                Presenter.OpenFolder(comic.Id);
+            };
 		}
 
 		private void OnLoad(object sender, EventArgs e)
