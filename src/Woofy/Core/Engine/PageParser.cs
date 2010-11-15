@@ -9,11 +9,13 @@ namespace Woofy.Core.Engine
 	public interface IPageParser
 	{
 		Uri[] RetrieveLinksFromPage(string pageContent, string regexPattern, Uri currentUri);
+		string RetrieveFileName(Uri link);
 	}
 
     public class PageParser : IPageParser
     {
 		private readonly IAppSettings appSettings;
+
 		public PageParser(IAppSettings appSettings)
 		{
 			this.appSettings = appSettings;
@@ -40,8 +42,12 @@ namespace Woofy.Core.Engine
 			return links.ToArray();
 		}
 
+    	public string RetrieveFileName(Uri link)
+    	{
+			return WebPath.GetFileName(link);
+    	}
 
-        public Dictionary<string, string> GetCaptures(string pageContent, string urlContent, ComicDefinition definition)
+    	public Dictionary<string, string> GetCaptures(string pageContent, string urlContent, ComicDefinition definition)
         {
             var captures = new Dictionary<string, string>();
 

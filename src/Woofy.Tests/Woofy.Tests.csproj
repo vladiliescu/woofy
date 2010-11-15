@@ -97,6 +97,7 @@
     <Compile Include="DefinitionCompilerTests\BaseDefinitionCompilerTest.cs" />
     <Compile Include="DefinitionCompilerTests\Compiled_definitions.cs" />
     <Compile Include="DefinitionCompilerTests\When_expanding_meta_methods.cs" />
+    <Compile Include="ExpressionTests\When_downloading.cs" />
     <Compile Include="ExpressionTests\When_visiting.cs" />
     <Compile Include="ObjectMother.cs" />
     <Compile Include="WebPathTest.cs" />

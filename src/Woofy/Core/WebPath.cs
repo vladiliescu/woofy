@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Text;
-using System.Web;
 
 namespace Woofy.Core
 {
@@ -25,11 +23,11 @@ namespace Woofy.Core
             if (!IsAbsolute(webPath))
                 throw new ArgumentException("The path has to start with either http:// or https://.", "webPath");
 
-            int lastSeparatorIndex = webPath.LastIndexOf(DirectorySeparator);
+            var lastSeparatorIndex = webPath.LastIndexOf(DirectorySeparator);
             if (lastSeparatorIndex == HttpLength - 1 || lastSeparatorIndex == HttpsLength - 1)
                 return webPath;
 
-            int lastDotIndex = webPath.LastIndexOf(".");
+            var lastDotIndex = webPath.LastIndexOf(".");
             if (lastDotIndex > lastSeparatorIndex)      //if it points to a file
                 return webPath.Substring(0, lastSeparatorIndex);
 
@@ -48,30 +46,29 @@ namespace Woofy.Core
         /// <returns></returns>
         public static string Combine(string path1, string path2)
         {
-            string path1AsDirectory = GetDirectory(path1);
+            var path1AsDirectory = GetDirectory(path1);
 
-            string protocol = "";
+            var protocol = "";
             if (path1AsDirectory.StartsWith("http://"))
                 protocol = "http://";
             else if (path1.StartsWith("https://"))
                 protocol = "https://";
 
 
-            string[] path1Tokens = path1AsDirectory.Replace(protocol, "")
-                                                    .Split(new string[] { DirectorySeparator }, StringSplitOptions.RemoveEmptyEntries);
-            string[] path2Tokens = path2.Split(new string[] { DirectorySeparator }, StringSplitOptions.RemoveEmptyEntries);
+            var path1Tokens = path1AsDirectory.Replace(protocol, "")
+                                                    .Split(new[] { DirectorySeparator }, StringSplitOptions.RemoveEmptyEntries);
+            var path2Tokens = path2.Split(new[] { DirectorySeparator }, StringSplitOptions.RemoveEmptyEntries);
 
             int i;
-            for (i = 0; i < path2Tokens.Length && path2Tokens[i] == ".."; i++)
-                ;
+            for (i = 0; i < path2Tokens.Length && path2Tokens[i] == ".."; i++) { }
 
-            StringBuilder builder = new StringBuilder();
-            for (int j = 0; j < path1Tokens.Length - i; j++)
+        	var builder = new StringBuilder();
+            for (var j = 0; j < path1Tokens.Length - i; j++)
             {
                 builder.AppendFormat("{0}/", path1Tokens[j]);
             }
 
-            for (int j = i; j < path2Tokens.Length; j++)
+            for (var j = i; j < path2Tokens.Length; j++)
             {
                 builder.AppendFormat("{0}/", path2Tokens[j]);
             }
@@ -87,7 +84,7 @@ namespace Woofy.Core
         /// <returns></returns>
         public static bool IsAbsolute(string path)
         {
-            string uppercasePath = path.ToUpper();
+            var uppercasePath = path.ToUpper();
             return uppercasePath.StartsWith("HTTP://") || uppercasePath.StartsWith("HTTPS://");
         }
 
@@ -101,13 +98,18 @@ namespace Woofy.Core
             if (!IsAbsolute(webPath))
                 throw new ArgumentException("The path has to start with either http:// or https://.", "webPath");
                 
-            int lastDotIndex = webPath.LastIndexOf(".");
-            int separatorIndex = webPath.IndexOf(DirectorySeparator, lastDotIndex);
+            var lastDotIndex = webPath.LastIndexOf(".");
+            var separatorIndex = webPath.IndexOf(DirectorySeparator, lastDotIndex);
 
             if (separatorIndex == -1)
                 return webPath;
 
             return webPath.Substring(0, separatorIndex);
         }
+
+		public static string GetFileName(Uri webPath)
+		{
+			return webPath.AbsoluteUri.Substring(webPath.AbsoluteUri.LastIndexOf('/') + 1);
+		}
     }
 }

@@ -1,379 +1,43 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.IO;
-using System.Net;
-using System.Text.RegularExpressions;
+using Woofy.Core.SystemProxies;
 
 namespace Woofy.Core
 {
+	public interface IFileDownloader
+	{
+		void Download(Uri address, string fileName);
+	}
+
     /// <summary>
     /// Downloads one or more files to a specified directory.
     /// </summary>
     public class FileDownloader : IFileDownloader
     {
-        #region Instance Members
-        private string _downloadDirectory;
-        /// <summary>
-        /// Gets the directory in which the files will be downloaded.
-        /// </summary>
-        public string DownloadDirectory
-        {
-            get { return _downloadDirectory; }
-        }
-        #endregion
+		private readonly IWebClientProxy webClient;
+		private readonly IDirectoryProxy directory;
 
-        #region Constants
-        /// <summary>
-        /// Specifies the maximum size, in bytes, of the download buffer.
-        /// </summary>
-        private const int MaxBufferSize = 16384;
-        #endregion
+    	public FileDownloader(IWebClientProxy webClient, IDirectoryProxy directory)
+    	{
+    		this.webClient = webClient;
+    		this.directory = directory;
+    	}
 
-        #region .ctor
-        /// <summary>
-        /// Creates a new instance of the <see cref="FileDownloader"/>.
-        /// </summary>
-        /// <param name="downloadDirectory">The directory in which the files will be downloaded. If it doesn't exist, it is created.</param>
-        public FileDownloader(string downloadDirectory)
-        {
-            if (string.IsNullOrEmpty(downloadDirectory))
-                throw new ArgumentNullException("downloadDirectory", "The <downloadDirectory> parameter must be used to specify the name of the directory to which to download the files.");
+    	public void Download(Uri address, string fileName)
+    	{
+#warning it should check for duplicates.
+			EnsureFolderExists(fileName);
 
-            if (!Path.IsPathRooted(downloadDirectory))
-                downloadDirectory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, downloadDirectory);
+    		webClient.Download(address, fileName);
+    	}
 
-            if (!Directory.Exists(downloadDirectory))
-                Directory.CreateDirectory(downloadDirectory);
+    	private void EnsureFolderExists(string fileName)
+    	{
+			var dir = Path.GetDirectoryName(fileName);
+			if (directory.Exists(dir))
+				return;
 
-            _downloadDirectory = downloadDirectory;
-        }
-
-        #endregion
-
-        #region Public Methods
-
-        /// <summary>
-        /// Downloads the specified file. If the file exists, then it is not downloaded again.
-        /// </summary>
-        /// <param name="fileLink">Link to the file to be downloaded.</param>
-        /// <param name="referrer">The page that refers the file. Used to prevent hotlink protection mechanisms.</param>
-        /// <param name="fileAlreadyDownloaded">True if the file was already downloaded, false otherwise.</param>
-        public string DownloadFile(string fileLink, string referrer, string fileName, out bool fileAlreadyDownloaded)
-        {
-            string filePath = GetFilePath(fileLink, fileName, _downloadDirectory);
-            if (File.Exists(filePath))
-            {
-                fileAlreadyDownloaded = true;
-                return null;
-            }
-
-            HttpWebRequest request = (HttpWebRequest)WebConnectionFactory.GetNewWebRequestInstance(fileLink);
-            if (!string.IsNullOrEmpty(referrer))
-                request.Referer = referrer;
-            WebResponse response = request.GetResponse();
-            Stream stream = response.GetResponseStream();
-
-            string tempFilePath = Path.GetTempFileName();
-            BinaryWriter writer = new BinaryWriter(File.Create(tempFilePath));
-            byte[] buffer = new byte[MaxBufferSize];
-
-            try
-            {
-                try
-                {
-                    int bytesRead;
-                    do
-                    {
-                        bytesRead = stream.Read(buffer, 0, MaxBufferSize);
-
-                        writer.Write(buffer, 0, bytesRead);
-                    }
-                    while (bytesRead > 0);
-                }
-                finally
-                {
-                    stream.Close();
-                    writer.Close();
-                }
-
-                if (!File.Exists(filePath))
-                    File.Move(tempFilePath, filePath);
-            }
-            catch
-            {
-                File.Delete(tempFilePath);
-                throw;
-            }
-
-            fileAlreadyDownloaded = false;
-            return filePath;
-        }
-
-        /// <summary>
-        /// Downloads the specified file asynchronously. If the file exists, then it is not downloaded again.
-        /// </summary>
-        /// <remarks>Use the <see cref="FileDownloader.DownloadFileCompleted"/> event to know when the download completes.</remarks>
-        /// <seealso cref="FileDownloader.DownloadFileCompleted"/>
-        /// <param name="fileLink">Link to the file to be downloaded.</param>
-        public void DownloadFileAsync(string fileLink)
-        {
-            DownloadFileAsync(fileLink, null);
-        }
-
-        /// <summary>
-        /// Downloads the specified file asynchronously. If the file exists, then it is not downloaded again.
-        /// </summary>
-        /// <remarks>Use the <see cref="FileDownloader.DownloadFileCompleted"/> event to know when the download completes.</remarks>
-        /// <seealso cref="FileDownloader.DownloadFileCompleted"/>
-        /// <param name="fileLink">Link to the file to be downloaded.</param>
-        public void DownloadFileAsync(string fileLink, string referrer)
-        {
-            DownloadFileAsync(fileLink, null, false, referrer);
-        }
-
-        /// <summary>
-        /// Downloads the specified file asynchronously.
-        /// </summary>
-        /// <remarks>Use the <see cref="FileDownloader.DownloadFileCompleted"/> event to know when the download completes.</remarks>
-        /// <seealso cref="FileDownloader.DownloadFileCompleted"/>
-        /// <param name="fileLink">Link to the file to be downloaded.</param>
-        /// <param name="downloadedFileName">Specify this if you want to override the original file name. Can be null.</param>
-        /// <param name="overwriteExisting">True to overwrite the existing file, false otherwise.</param>
-        public void DownloadFileAsync(string fileLink, string downloadedFileName, bool overwriteExisting, string referrer)
-        {
-            string filePath = GetFilePath(fileLink, downloadedFileName, _downloadDirectory);
-            if (!overwriteExisting && File.Exists(filePath))
-            {
-                OnDownloadFileCompleted(new DownloadFileCompletedEventArgs(filePath, true));
-                return;
-            }
-
-            if (overwriteExisting)
-                File.Delete(filePath);
-
-            HttpWebRequest request = (HttpWebRequest)WebConnectionFactory.GetNewWebRequestInstance(fileLink);
-            if (!string.IsNullOrEmpty(referrer))
-                request.Referer = referrer;
-            
-            request.BeginGetResponse(
-                delegate(IAsyncResult result)
-                {
-                    GetResponseCallback(result, filePath);
-                }, request);
-        }
-        #endregion
-
-        #region Callbacks
-        /// <summary>
-        /// Called when the application receives the response for the file request.
-        /// </summary>
-        /// <param name="result">The standard <see cref="IAsyncResult"/>.</param>
-        /// <param name="filePath">Path where the file will be downloaded.</param>
-        private void GetResponseCallback(IAsyncResult result, string filePath)
-        {
-            WebRequest request = (WebRequest)result.AsyncState;
-            WebResponse response = null;
-
-            try 
-            {
-                response = request.EndGetResponse(result); 
-            }
-            catch (Exception ex) 
-            { 
-                bool exceptionHandled;
-                OnDownloadError(ex, out exceptionHandled);
-
-                if (exceptionHandled)
-                    return;
-
-                throw;
-            }
-
-            OnResponseReceived(response);
-
-            Stream stream = response.GetResponseStream();
-
-            string tempFilePath = filePath + ".!wf";
-            BinaryWriter writer = new BinaryWriter(File.Create(tempFilePath));
-            byte[] buffer = new byte[MaxBufferSize];
-
-
-            if (IsDownloadCancelled(0))
-            {
-                File.Delete(tempFilePath);
-                return;
-            }            
-            
-            stream.BeginRead(buffer, 0, MaxBufferSize,
-                delegate(IAsyncResult innerResult)
-                {
-                    ReadBytesCallback(innerResult, buffer, writer, filePath, tempFilePath);
-                }, stream);
-        }        
-
-        /// <summary>
-        /// Called when the application receives a series of bytes from the file download.
-        /// </summary>
-        /// <param name="result">The standard <see cref="IAsyncResult"/>.</param>
-        /// <param name="buffer">The buffer in which the bytes are read into.</param>
-        /// <param name="writer">The <see cref="BinaryWriter"/> used to create the file on disk.</param>
-        /// <param name="filePath">Path where the file will be downloaded.</param>
-        /// <param name="tempFilePath">Path to the temporary file.</param>
-        private void ReadBytesCallback(IAsyncResult result, byte[] buffer, BinaryWriter writer, string filePath, string tempFilePath)
-        {
-            Stream stream = (Stream)result.AsyncState;
-            try
-            {
-                int bytesRead = -1;
-
-                try
-                {
-                    bytesRead = stream.EndRead(result);
-                }
-                catch (Exception ex)
-                {
-                    bool exceptionHandled;
-                    OnDownloadError(ex, out exceptionHandled);
-
-                    if (exceptionHandled)
-                        return;
-
-                    throw;
-                }
-                
-
-                if (bytesRead == 0)
-                {
-                    writer.Close();
-                    stream.Close();
-
-                    File.Move(tempFilePath, filePath);
-
-                    OnDownloadFileCompleted(new DownloadFileCompletedEventArgs(filePath, false));
-                    return;
-                }
-
-                writer.Write(buffer, 0, bytesRead);
-
-                if (IsDownloadCancelled(bytesRead))
-                {
-                    writer.Close();
-                    stream.Close();
-
-                    File.Delete(tempFilePath);
-                    return;
-                }
-
-                stream.BeginRead(buffer, 0, MaxBufferSize,
-                        delegate(IAsyncResult innerResult)
-                        {
-                            ReadBytesCallback(innerResult, buffer, writer, filePath, tempFilePath);
-                        }, stream);
-            }
-            catch
-            {
-                stream.Close();
-                writer.Close();
-
-                File.Delete(tempFilePath);
-
-                throw;
-            }
-        }
-        #endregion
-
-        #region Helper Methods
-        /// <summary>
-        /// Returns the full file path for a given file link, and the directory to which the file must be downloaded.
-        /// </summary>
-        /// <param name="fileLink">A link to the file to be downloaded.</param>
-        /// <param name="directoryName">The directory in which the file should be downloaded.</param>
-        /// <param name="downloadedFileName">Specify this if you want to override the original file name. Can be null.</param>
-        /// <returns>The full path of the file to be downloaded.</returns>
-        private string GetFilePath(string fileLink, string downloadedFileName, string directoryName)
-        {
-            if (string.IsNullOrEmpty(downloadedFileName))
-            {
-                string fileName = fileLink.Substring(fileLink.LastIndexOf('/') + 1);
-                return Path.Combine(directoryName, fileName);
-            }
-            else
-            {
-                return Path.Combine(directoryName, downloadedFileName);
-            }
-        }
-
-        private string GetFileName(string fileLink)
-        {
-            return fileLink.Substring(fileLink.LastIndexOf('/') + 1);
-        }
-
-        /// <summary>
-        /// Determines whether the user decided to stop the download.
-        /// </summary>
-        /// <param name="bytesDownloaded">Number of downloaded bytes.</param>
-        /// <returns>True if the user has decided to stop the download, false otherwise.</returns>
-        private bool IsDownloadCancelled(int bytesDownloaded)
-        {
-            DownloadedFileChunkEventArgs e = new DownloadedFileChunkEventArgs(bytesDownloaded);
-            OnDownloadedFileChunk(e);
-            return e.Cancel;
-        }
-        #endregion
-
-        /// <summary>
-        /// Occurs when an asynchronous download operation completes.
-        /// </summary>
-		public event EventHandler<DownloadFileCompletedEventArgs> DownloadFileCompleted;
-
-        protected virtual void OnDownloadFileCompleted(DownloadFileCompletedEventArgs e)
-        {
-            var eventReference = DownloadFileCompleted;
-            if (eventReference != null)
-                eventReference(this, e);
-        }
-
-		/// <summary>
-        /// Occurs when a comic chunk is downloaded. Can be used to cancel the download of the current strip.
-        /// </summary>
-        public event EventHandler<DownloadedFileChunkEventArgs> DownloadedFileChunk;
-
-        protected virtual void OnDownloadedFileChunk(DownloadedFileChunkEventArgs e)
-        {
-            var eventReference = DownloadedFileChunk;
-            if (eventReference != null)
-                eventReference(this, e);
-        }
-
-        /// <summary>
-        /// Use this to handle any exceptions that have occurred while downloading.
-        /// </summary>
-        public event EventHandler<DownloadErrorEventArgs> DownloadError;
-
-        protected virtual void OnDownloadError(Exception exception, out bool exceptionHandled)
-        {
-            var eventReference = DownloadError;
-            var e = new DownloadErrorEventArgs(exception);
-
-            if (eventReference != null)                
-                eventReference(this, e);
-
-            exceptionHandled = e.ExceptionHandled;
-        }
-
-        /// <summary>
-        /// Occurs when the site containing the file has responded to our request (right before downloading the file).
-        /// </summary>
-		public event EventHandler<ResponseReceivedEventArgs> ResponseReceived;
-
-        protected virtual void OnResponseReceived(WebResponse response)
-        {
-            var eventReference = ResponseReceived;
-            var e = new ResponseReceivedEventArgs(response);
-
-            if (eventReference != null)
-                eventReference(this, e);
-        }
+			directory.CreateDirectory(dir);
+    	}
     }
 }

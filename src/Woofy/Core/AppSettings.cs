@@ -9,7 +9,6 @@ namespace Woofy.Core
 	{
 		public static readonly string VersionNumber = Assembly.GetAssembly(typeof(Program)).GetName().Version.ToString();
 		public static readonly string UserSettingsFile = BaseDirectory("user.settings");
-		public static readonly string ComicDefinitionsFolder = BaseDirectory("definitions");
 		public static readonly string HomePage = "http://code.google.com/p/woofy/";
 		public static readonly string AuthorHomePage = "http://vladiliescu.ro";
 

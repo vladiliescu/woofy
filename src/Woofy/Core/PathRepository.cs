@@ -9,6 +9,7 @@ namespace Woofy.Core
         string DownloadFolderFor(Comic comic);
         string DownloadPathFor(Comic comic, string fileName);
         string DownloadFolderFor(string comicId);
+    	string DownloadPathFor(string comicId, string fileName);
     }
 
     public class PathRepository : IPathRepository
@@ -28,7 +29,12 @@ namespace Woofy.Core
             return Path.Combine(userSettings.DefaultDownloadFolder, comicId);
         }
 
-        public string DownloadFolderFor(Comic comic)
+		public string DownloadPathFor(string comicId, string fileName)
+		{
+			return Path.Combine(DownloadFolderFor(comicId), fileName);
+		}
+
+    	public string DownloadFolderFor(Comic comic)
         {
             if (string.IsNullOrEmpty(userSettings.DefaultDownloadFolder))
                 return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, comic.Id);

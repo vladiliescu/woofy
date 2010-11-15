@@ -17,6 +17,7 @@ namespace Woofy.Core.Infrastructure
 			builder.Register(c => Program.SynchronizationContext).SingleInstance();
 
             builder.RegisterType<WebClientProxy>().As<IWebClientProxy>().InstancePerDependency();
+			builder.RegisterType<FileDownloader>().As<IFileDownloader>().InstancePerDependency();
 		}
 	}
 }

@@ -18,7 +18,6 @@ namespace Woofy.Core.Engine
 		private readonly bool randomPausesBetweenRequests;
 
 		public Comic Comic { get; private set; }
-		private readonly IFileDownloader comicsDownloader;
 		private readonly Definition definition;
 		private WebClient webClient;
 		private bool isDownloadCancelled;
@@ -27,17 +26,16 @@ namespace Woofy.Core.Engine
 #warning appSettings.ContentGroupName should be used instead.
 		public const string ContentGroup = "content";
 
-		public BotOldAndOnlyUsedForReference(Definition definition, IFileDownloader comicsDownloader, bool randomPausesBetweenRequests)
+		public BotOldAndOnlyUsedForReference(Definition definition, bool randomPausesBetweenRequests)
 		{
 			this.definition = definition;
-			this.comicsDownloader = comicsDownloader;
 			this.randomPausesBetweenRequests = randomPausesBetweenRequests;
 
 			webClient = WebConnectionFactory.GetNewWebClientInstance();
 		}
 
 		public BotOldAndOnlyUsedForReference(Comic comic)
-			: this(comic.Definition, new FileDownloader(""), false)
+			: this(comic.Definition, false)
 		{
 			Comic = comic;
 		}

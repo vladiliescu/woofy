@@ -194,7 +194,6 @@
     <Compile Include="EventArgs\DownloadErrorEventArgs.cs" />
     <Compile Include="EventArgs\DownloadFileCompletedEventArgs.cs" />
     <Compile Include="EventArgs\DownloadStripCompletedEventArgs.cs" />
-    <Compile Include="Core\IFileDownloader.cs" />
     <Compile Include="Core\FileDownloader.cs" />
     <Compile Include="Core\ComicManagement\ComicDefinition.cs" />
     <Compile Include="Core\Engine\Bot.cs" />
