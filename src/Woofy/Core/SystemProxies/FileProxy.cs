@@ -8,6 +8,7 @@ namespace Woofy.Core.SystemProxies
 		string ReadAllText(string path);
 		bool Exists(string path);
 		void AppendAllText(string path, string contents);
+        void Move(string sourceFileName, string destFileName);
 	}
 
 	public class FileProxy : IFileProxy
@@ -31,5 +32,10 @@ namespace Woofy.Core.SystemProxies
 		{
 			File.AppendAllText(path, contents);
 		}
+
+        public void Move(string sourceFileName, string destFileName)
+        {
+            File.Move(sourceFileName, destFileName);
+        }
 	}
 }

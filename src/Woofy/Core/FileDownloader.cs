@@ -16,19 +16,24 @@ namespace Woofy.Core
     {
 		private readonly IWebClientProxy webClient;
 		private readonly IDirectoryProxy directory;
+        private readonly IFileProxy file;
 
-    	public FileDownloader(IWebClientProxy webClient, IDirectoryProxy directory)
+    	public FileDownloader(IWebClientProxy webClient, IDirectoryProxy directory, IFileProxy file)
     	{
     		this.webClient = webClient;
-    		this.directory = directory;
+    	    this.file = file;
+    	    this.directory = directory;
     	}
 
     	public void Download(Uri address, string fileName)
     	{
-#warning it should check for duplicates.
 			EnsureFolderExists(fileName);
 
-    		webClient.Download(address, fileName);
+            //in case Woofy gets shut down during the download process - prevents incomplete files from being created
+            var tempFile = Path.GetTempFileName();
+    		webClient.Download(address, tempFile);
+            
+            file.Move(tempFile, fileName);
     	}
 
     	private void EnsureFolderExists(string fileName)
