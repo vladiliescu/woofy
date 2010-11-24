@@ -1,7 +1,6 @@
 using Autofac;
-using Woofy.Core.Engine;
 
-namespace Woofy.Core.Infrastructure
+namespace Woofy.Core.Engine.Expressions
 {
     public class ExpressionsModule : Module
     {
@@ -9,6 +8,7 @@ namespace Woofy.Core.Infrastructure
         {
             builder.RegisterType<VisitExpression>().Named<IExpression>("visit").InstancePerDependency();
             builder.RegisterType<DownloadExpression>().Named<IExpression>("download").InstancePerDependency();
+            builder.RegisterType<SleepExpression>().Named<IExpression>("sleep").InstancePerDependency();
         }
     }
 }

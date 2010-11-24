@@ -2,6 +2,7 @@ using System;
 using Moq;
 using Woofy.Core;
 using Woofy.Core.Engine;
+using Woofy.Core.Engine.Expressions;
 using Woofy.Core.SystemProxies;
 using Xunit;
 

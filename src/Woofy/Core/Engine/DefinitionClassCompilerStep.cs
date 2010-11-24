@@ -1,5 +1,6 @@
 using Boo.Lang.Compiler.Ast;
 using Rhino.DSL;
+using Woofy.Core.Engine.Expressions;
 
 namespace Woofy.Core.Engine
 {
@@ -12,8 +13,8 @@ namespace Woofy.Core.Engine
 
 	    public DefinitionClassCompilerStep(ParameterDeclarationCollection parameters)
 			: base(typeof(Definition), "RunImpl", parameters, 
-                    "Woofy.Core.Engine",
-                    "Woofy.Core.Infrastructure"
+                    typeof(MetaMethods).Namespace,
+                    typeof(Definition).Namespace
                 )
 	    {
 	    }

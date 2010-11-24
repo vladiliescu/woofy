@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Woofy.Flows.ApplicationLog;
 
-namespace Woofy.Core.Engine
+namespace Woofy.Core.Engine.Expressions
 {
     public abstract class BaseExpression : IExpression
     {

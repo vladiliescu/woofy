@@ -1,5 +1,6 @@
 using System;
 using Autofac;
+using Woofy.Core.Engine.Expressions;
 
 namespace Woofy.Core.Infrastructure
 {

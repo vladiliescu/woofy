@@ -3,6 +3,7 @@ using Moq;
 using Woofy.Core;
 using Woofy.Core.ComicManagement;
 using Woofy.Core.Engine;
+using Woofy.Core.Engine.Expressions;
 using Woofy.Core.Infrastructure;
 using Woofy.Core.SystemProxies;
 using Woofy.Flows.ApplicationLog;

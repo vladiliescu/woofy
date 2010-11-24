@@ -4,7 +4,7 @@ using Woofy.Core.Infrastructure;
 using Woofy.Core.SystemProxies;
 using Woofy.Flows.ApplicationLog;
 
-namespace Woofy.Core.Engine
+namespace Woofy.Core.Engine.Expressions
 {
     public class DownloadExpression : BaseExpression
     {

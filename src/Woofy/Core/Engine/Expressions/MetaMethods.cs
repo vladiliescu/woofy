@@ -2,14 +2,13 @@ using System.Runtime.CompilerServices;
 using Boo.Lang;
 using Boo.Lang.Compiler.Ast;
 
-namespace Woofy.Core.Engine
+namespace Woofy.Core.Engine.Expressions
 {
     [CompilerGlobalScope]
     public static class MetaMethods
     {
 		public static MethodInvocationExpression GenerateIExpressionInvocationFor(string expressionName, StringLiteralExpression argument)
 		{
-			//todo: it would be best if i accessed the types and their corresponding method via strong-typed expressions, instead of string literals
             var @this = new SelfLiteralExpression();
             var invoke = new MemberReferenceExpression(@this, "InvokeExpression");
 
@@ -31,5 +30,11 @@ namespace Woofy.Core.Engine
 		{
 			return GenerateIExpressionInvocationFor("download", regex);
 		}
+
+        [Meta]
+        public static MethodInvocationExpression sleep()
+        {
+            return GenerateIExpressionInvocationFor("sleep", null);
+        }
     }
 }
