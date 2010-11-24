@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Web.UI.WebControls.WebParts;
 using Woofy.Core.ComicManagement;
-using Woofy.Core.Engine.Expressions;
 using Woofy.Core.Infrastructure;
+using Woofy.Core.SystemProxies;
+using Woofy.Flows.ApplicationLog;
 
 namespace Woofy.Core.Engine
 {
@@ -32,6 +34,8 @@ namespace Woofy.Core.Engine
             canceler.AllowResuming();
 
             var context = new Context(Id, Comic, ComicInstance.CurrentPage ?? new Uri(StartAt));
+            InitializeContent(context);
+
 			try
 			{
 				RunImpl(context);
@@ -40,6 +44,15 @@ namespace Woofy.Core.Engine
 			{
 			}
 		}
+
+	    private void InitializeContent(Context context)
+	    {
+            var log = ContainerAccessor.Resolve<IAppLog>();
+            var webClient = ContainerAccessor.Resolve<IWebClientProxy>();
+
+            log.Send(new AppLogEntryAdded(context.Comic, "starting at {0}".FormatTo(context.CurrentAddress)));
+            context.PageContent = webClient.DownloadString(context.CurrentAddress);
+	    }
 
 	    protected IEnumerable<object> InvokeExpression(string expressionName, object argument, Context context)
         {

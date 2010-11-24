@@ -22,13 +22,6 @@ namespace Woofy.Core.Engine.Expressions
 
         public override IEnumerable<object> Invoke(object argument, Context context)
         {
-            if (string.IsNullOrEmpty(context.PageContent))
-            {
-                ReportVisitingPage(context, context.CurrentAddress);
-                context.PageContent = webClient.DownloadString(context.CurrentAddress);
-                yield return context.CurrentAddress;
-            }
-
             var regex = (string)argument;
             do
             {
