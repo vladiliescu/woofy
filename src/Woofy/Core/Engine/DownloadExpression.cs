@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Woofy.Core.Infrastructure;
+using Woofy.Core.SystemProxies;
 using Woofy.Flows.ApplicationLog;
 
 namespace Woofy.Core.Engine
@@ -11,12 +12,14 @@ namespace Woofy.Core.Engine
         private readonly IApplicationController applicationController;
 		private readonly IFileDownloader downloader;
 		private readonly IPathRepository pathRepository;
+        private readonly IFileProxy file;
 
-		public DownloadExpression(IAppLog appLog, IPageParser parser, IApplicationController applicationController, IFileDownloader downloader, IPathRepository pathRepository)
+		public DownloadExpression(IAppLog appLog, IPageParser parser, IApplicationController applicationController, IFileDownloader downloader, IPathRepository pathRepository, IFileProxy file)
             : base(appLog)
         {
             this.parser = parser;
-			this.pathRepository = pathRepository;
+		    this.file = file;
+		    this.pathRepository = pathRepository;
 			this.downloader = downloader;
         	this.applicationController = applicationController;
         }
@@ -36,12 +39,22 @@ namespace Woofy.Core.Engine
 
 				var fileName = parser.RetrieveFileName(link);
 				var downloadPath = pathRepository.DownloadPathFor(context.ComicId, fileName);
-				downloader.Download(link, downloadPath);
-				
+                if (file.Exists(downloadPath))
+                {
+                    ReportStripAlreadyDownloaded(context, link);
+                    continue;
+                }
+
+        	    downloader.Download(link, downloadPath);
 				ReportStripDownloaded(context, link);
         	}
 
             return null;
+        }
+
+        private void ReportStripAlreadyDownloaded(Context context, Uri link)
+        {
+            Log(context, "WARNING: already downloaded {0}.", link);
         }
 
         private void ReportNoStripsFound(Context context)
