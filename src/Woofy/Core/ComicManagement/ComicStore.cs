@@ -60,7 +60,7 @@ namespace Woofy.Core.ComicManagement
             {
                 Name = definition.Comic,
 			    Id = definition.Id,
-			    Status = Status.Running
+			    Status = Status.Inactive
             };
 
             comic.SetDefinition(definition);

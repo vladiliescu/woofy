@@ -44,7 +44,7 @@ namespace Woofy.Tests.ComicStoreTests
             Assert.NotNull(comic.Definition);
             Assert.Equal("alpha", comic.Name);
             Assert.Equal(null, comic.CurrentPage);
-            Assert.Equal(Status.Running, comic.Status);
+            Assert.Equal(Status.Inactive, comic.Status);
         }
 
         [Fact]
