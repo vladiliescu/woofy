@@ -6,14 +6,14 @@ using Woofy.Flows.ApplicationLog;
 
 namespace Woofy.Core.Engine.Expressions
 {
-    public class VisitExpression : BaseExpression
+    public class VisitExpression : BaseWebExpression
     {
         private readonly IPageParser parser;
         private readonly IWebClientProxy webClient;
         private readonly IApplicationController appController;
 
         public VisitExpression(IPageParser parser, IWebClientProxy webClient, IAppLog appLog, IApplicationController appController)
-            : base(appLog)
+            : base(appLog, webClient)
         {
             this.parser = parser;
             this.appController = appController;
@@ -22,16 +22,19 @@ namespace Woofy.Core.Engine.Expressions
 
         public override IEnumerable<object> Invoke(object argument, Context context)
         {
+            if (ContentIsEmpty(context))
+            {
+                InitializeContent(context);
+                yield return context.CurrentAddress;
+            }
+
             var regex = (string)argument;
             do
             {
                 var links = parser.RetrieveLinksFromPage(context.PageContent, regex, context.CurrentAddress);
                 ReportLinksFound(context, links);
 				if (links.Length == 0)
-				{
-					appController.Raise(new DownloadFinished(context.ComicId));
 					yield break;
-				}
 
             	var link = links[0];
                 ReportVisitingPage(context, link);
@@ -45,7 +48,7 @@ namespace Woofy.Core.Engine.Expressions
 
         private void ReportLinksFound(Context context, Uri[] links)
         {
-            Log(context, "Found {0} links", links.Length);
+            Log(context, "found {0} links", links.Length);
         }
 
         private void ReportVisitingPage(Context context, Uri page)

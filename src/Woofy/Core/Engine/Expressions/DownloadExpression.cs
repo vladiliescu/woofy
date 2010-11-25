@@ -6,7 +6,7 @@ using Woofy.Flows.ApplicationLog;
 
 namespace Woofy.Core.Engine.Expressions
 {
-    public class DownloadExpression : BaseExpression
+    public class DownloadExpression : BaseWebExpression
     {
         private readonly IPageParser parser;
         private readonly IApplicationController applicationController;
@@ -14,8 +14,8 @@ namespace Woofy.Core.Engine.Expressions
 		private readonly IPathRepository pathRepository;
         private readonly IFileProxy file;
 
-		public DownloadExpression(IAppLog appLog, IPageParser parser, IApplicationController applicationController, IFileDownloader downloader, IPathRepository pathRepository, IFileProxy file)
-            : base(appLog)
+		public DownloadExpression(IAppLog appLog, IPageParser parser, IApplicationController applicationController, IFileDownloader downloader, IPathRepository pathRepository, IFileProxy file, IWebClientProxy webClient)
+            : base(appLog, webClient)
         {
             this.parser = parser;
 		    this.file = file;
@@ -26,12 +26,16 @@ namespace Woofy.Core.Engine.Expressions
 
         public override IEnumerable<object> Invoke(object argument, Context context)
         {
+            if (ContentIsEmpty(context))
+                InitializeContent(context);
+
             var links = parser.RetrieveLinksFromPage(context.PageContent, (string)argument, context.CurrentAddress);
             if (links.Length == 0)
             {
                 ReportNoStripsFound(context);
                 return null;
             }
+            ReportStripsFound(context, links);
 
         	foreach (var link in links)
         	{
@@ -50,6 +54,11 @@ namespace Woofy.Core.Engine.Expressions
         	}
 
             return null;
+        }
+
+        private void ReportStripsFound(Context context, Uri[] links)
+        {
+            Log(context, "found {0} strips", links.Length);
         }
 
         private void ReportStripAlreadyDownloaded(Context context, Uri link)
