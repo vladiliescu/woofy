@@ -192,7 +192,6 @@
     <Compile Include="Flows\Main\ToggleDownload.cs" />
     <Compile Include="Flows\Tray\HideOrShowApplication.cs" />
     <Compile Include="Flows\Tray\TrayIconController.cs" />
-    <Compile Include="Settings\UserSettingsData.cs" />
     <Compile Include="EventArgs\DownloadCompletedEventArgs.cs" />
     <Compile Include="EventArgs\DownloadedFileChunkEventArgs.cs" />
     <Compile Include="EventArgs\DownloadErrorEventArgs.cs" />
@@ -258,7 +257,6 @@
     </Compile>
     <None Include="app.config" />
     <Compile Include="Core\AppSettings.cs" />
-    <Compile Include="Settings\UserSettingsOld.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="license.txt">

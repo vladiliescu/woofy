@@ -18,6 +18,7 @@ namespace Woofy.Flows.Main
     {
         BindingList<ComicViewModel> Comics { get; }
         string AppLog { get; }
+        bool MinimizeToTray { get; }
 
         void AddComic();
         void Initialize(MainForm form);
@@ -43,6 +44,7 @@ namespace Woofy.Flows.Main
 		private readonly IComicViewModelMapper mapper;
         private readonly IPathRepository pathRepository;
         private readonly IDirectoryProxy directory;
+        private readonly IUserSettings settings;
 
         public BindingList<ComicViewModel> Comics { get; private set; }
 
@@ -52,11 +54,17 @@ namespace Woofy.Flows.Main
             get { return appLogBuilder.ToString(); }
         }
 
-		private MainForm form;
+        public bool MinimizeToTray
+        {
+            get { return settings.MinimizeToTray; }
+        }
 
-        public MainPresenter(IApplicationController applicationController, IUiThread uiThread, IComicStore comicStore, IAppLog appLog, IComicViewModelMapper mapper, IPathRepository pathRepository, IDirectoryProxy directory)
+        private MainForm form;
+
+        public MainPresenter(IApplicationController applicationController, IUiThread uiThread, IComicStore comicStore, IAppLog appLog, IComicViewModelMapper mapper, IPathRepository pathRepository, IDirectoryProxy directory, IUserSettings settings)
         {
             this.applicationController = applicationController;
+            this.settings = settings;
             this.directory = directory;
             this.pathRepository = pathRepository;
             this.mapper = mapper;

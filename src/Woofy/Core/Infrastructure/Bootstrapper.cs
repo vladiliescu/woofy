@@ -1,5 +1,4 @@
 using System.Windows.Forms;
-using Woofy.Settings;
 
 namespace Woofy.Core.Infrastructure
 {
@@ -11,7 +10,6 @@ namespace Woofy.Core.Infrastructure
 			Application.SetCompatibleTextRenderingDefault(false);
 
 			ContainerAccessor.RegisterComponents();
-			UserSettingsOld.Initialize();
             
             ConfigureLogging.Run();
 		}

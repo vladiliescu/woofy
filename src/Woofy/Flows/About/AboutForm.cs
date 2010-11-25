@@ -10,6 +10,7 @@ namespace Woofy.Flows.About
 	partial class AboutForm : Form
 	{
 		private readonly IAppInfo appInfo = ContainerAccessor.Resolve<IAppInfo>();
+        private readonly IAppSettings appSettings = ContainerAccessor.Resolve<IAppSettings>();
 
 		public AboutForm()
 		{
@@ -28,12 +29,12 @@ namespace Woofy.Flows.About
 
 		private void OnHomePageClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-			Process.Start(AppSettingsOld.AuthorHomePage);
+			Process.Start(appSettings.AuthorHomePage);
 		}
 
 		private void OnWoofyHomePageClicked(object sender, EventArgs e)
 		{
-			Process.Start(AppSettingsOld.HomePage);
+            Process.Start(appSettings.HomePage);
 		}
 	}
 }

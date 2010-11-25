@@ -1,24 +1,9 @@
 using System;
 using System.IO;
-using System.Reflection;
 using Woofy.Core.SystemProxies;
 
 namespace Woofy.Core
 {
-    [Obsolete("Use IAppSettings instead.")]
-	public static class AppSettingsOld
-	{
-		public static readonly string VersionNumber = Assembly.GetAssembly(typeof(Program)).GetName().Version.ToString();
-		public static readonly string UserSettingsFile = BaseDirectory("user.settings");
-		public static readonly string HomePage = "http://code.google.com/p/woofy/";
-		public static readonly string AuthorHomePage = "http://vladiliescu.ro";
-
-		private static string BaseDirectory(string fileName)
-		{
-			return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
-		}
-	}
-
 	public interface IAppSettings
 	{
 		Uri UpdateInfoAddress { get; }

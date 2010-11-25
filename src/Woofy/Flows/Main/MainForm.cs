@@ -1,11 +1,7 @@
 using System;
-using System.Drawing;
 using System.Windows.Forms;
 using Woofy.Core;
-using Woofy.Enums;
-using Woofy.Gui;
 using Woofy.Properties;
-using Woofy.Settings;
 
 namespace Woofy.Flows.Main
 {
@@ -66,7 +62,7 @@ namespace Woofy.Flows.Main
 		#region OBSOLETE
 		private void MainForm_Resize(object sender, EventArgs e)
 		{
-			if (!UserSettingsOld.MinimizeToTray)
+			if (!Presenter.MinimizeToTray)
 				return;
 
 			if (WindowState == FormWindowState.Minimized)
