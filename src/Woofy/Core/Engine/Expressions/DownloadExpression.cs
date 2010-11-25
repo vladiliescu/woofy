@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using Woofy.Core.Infrastructure;
 using Woofy.Core.SystemProxies;
 using Woofy.Flows.ApplicationLog;
@@ -35,33 +36,41 @@ namespace Woofy.Core.Engine.Expressions
                 ReportNoStripsFound(context);
                 return null;
             }
-            ReportStripsFound(context, links);
+            ReportStripsFound(links, context);
 
         	foreach (var link in links)
         	{
-				ReportStripDownloading(context, link);
+				ReportStripDownloading(link, context);
 
 				var fileName = parser.RetrieveFileName(link);
 				var downloadPath = pathRepository.DownloadPathFor(context.ComicId, fileName);
                 if (file.Exists(downloadPath))
                 {
-                    ReportStripAlreadyDownloaded(context, link);
+                    ReportStripAlreadyDownloaded(link, context);
                     continue;
                 }
 
         	    downloader.Download(link, downloadPath);
-				ReportStripDownloaded(context, link);
+				ReportStripDownloaded(link, context);
+
+				Sleep(context);
         	}
 
             return null;
         }
 
-        private void ReportStripsFound(Context context, Uri[] links)
+    	private void Sleep(Context context)
+    	{
+			Log(context, "sleeping for 2 seconds..");
+			Thread.Sleep(2000);
+    	}
+
+    	private void ReportStripsFound(Uri[] links, Context context)
         {
             Log(context, "found {0} strips", links.Length);
         }
 
-        private void ReportStripAlreadyDownloaded(Context context, Uri link)
+        private void ReportStripAlreadyDownloaded(Uri link, Context context)
         {
             Log(context, "WARNING: already downloaded {0}.", link);
         }
@@ -71,13 +80,13 @@ namespace Woofy.Core.Engine.Expressions
             Log(context, "WARNING: no strips found.");
         }
 
-        private void ReportStripDownloaded(Context context, Uri link)
+        private void ReportStripDownloaded(Uri link, Context context)
         {
             Log(context, "downloaded {0}", link);
             applicationController.Raise(new StripDownloaded(context.ComicId));
         }
 
-        private void ReportStripDownloading(Context context, Uri link)
+        private void ReportStripDownloading(Uri link, Context context)
         {
             Log(context, "downloading {0}", link);
         }

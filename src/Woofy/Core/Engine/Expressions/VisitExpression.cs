@@ -32,12 +32,12 @@ namespace Woofy.Core.Engine.Expressions
             do
             {
                 var links = parser.RetrieveLinksFromPage(context.PageContent, regex, context.CurrentAddress);
-                ReportLinksFound(context, links);
+                ReportLinksFound(links, context);
 				if (links.Length == 0)
 					yield break;
 
             	var link = links[0];
-                ReportVisitingPage(context, link);
+                ReportVisitingPage(link, context);
 
                 context.CurrentAddress = link;
                 context.PageContent = webClient.DownloadString(link);
@@ -46,12 +46,12 @@ namespace Woofy.Core.Engine.Expressions
             while (true);
         }
 
-        private void ReportLinksFound(Context context, Uri[] links)
+        private void ReportLinksFound(Uri[] links, Context context)
         {
             Log(context, "found {0} links", links.Length);
         }
 
-        private void ReportVisitingPage(Context context, Uri page)
+        private void ReportVisitingPage(Uri page, Context context)
         {
             Log(context, "{0}", page);
             appController.Raise(new CurrentPageChanged(context.ComicId, page));
