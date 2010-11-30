@@ -1,13 +1,14 @@
 using System;
 using System.Windows.Forms;
+using Woofy.Flows.AddComic;
 
-namespace Woofy.Flows.AddComic
+namespace Woofy.Flows.Comics
 {
-	public partial class ComicDetailsForm : Form
+	public partial class AddForm : Form
 	{
-		private readonly ComicDetailsPresenter presenter;
+        private readonly IComicsPresenter presenter;
 
-		public ComicDetailsForm(ComicDetailsPresenter presenter)
+        public AddForm(IComicsPresenter presenter)
 		{
 			InitializeComponent();
 

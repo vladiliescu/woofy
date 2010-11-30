@@ -113,6 +113,7 @@
     <Compile Include="Core\Engine\Expressions\SleepExpression.cs" />
     <Compile Include="Core\Infrastructure\ConfigureLogging.cs" />
     <Compile Include="Core\PathRepository.cs" />
+    <Compile Include="Core\ScreenActivator.cs" />
     <Compile Include="Core\ThreadCanceler.cs" />
     <Compile Include="Core\Engine\WorkerStoppedException.cs" />
     <Compile Include="Core\Engine\Expressions\DownloadExpression.cs" />
@@ -143,16 +144,18 @@
     <Compile Include="Core\VersionConverter.cs" />
     <Compile Include="Flows\About\AboutPresenter.cs" />
     <Compile Include="Flows\About\DisplayAboutScreen.cs" />
-    <Compile Include="Flows\AddComic\ComicActivated.cs" />
-    <Compile Include="Flows\AddComic\AddComic.cs" />
-    <Compile Include="Flows\AddComic\ComicDetailsForm.cs">
+    <Compile Include="Flows\Comics\ComicAdded.cs" />
+    <Compile Include="Flows\Comics\ComicActivated.cs" />
+    <Compile Include="Flows\Comics\AddComic.cs" />
+    <Compile Include="Flows\Comics\AddForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Flows\AddComic\ComicDetailsForm.designer.cs">
-      <DependentUpon>ComicDetailsForm.cs</DependentUpon>
+    <Compile Include="Flows\Comics\AddForm.designer.cs">
+      <DependentUpon>AddForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Flows\AddComic\ComicDetailsModel.cs" />
-    <Compile Include="Flows\AddComic\ComicDetailsPresenter.cs" />
+    <Compile Include="Flows\Comics\ComicDetailsModel.cs" />
+    <Compile Include="Flows\Comics\ComicManager.cs" />
+    <Compile Include="Flows\Comics\ComicsPresenter.cs" />
     <Compile Include="Flows\ApplicationLog\AppLog.cs" />
     <Compile Include="Flows\ApplicationLog\AppLogEntryAdded.cs" />
     <Compile Include="Flows\AutoUpdate\AppUpdateCheck.cs" />
@@ -265,6 +268,10 @@
     </Content>
     <None Include="Resources\exit.png" />
     <Content Include="Resources\donate.png" />
+    <Content Include="Resources\folder_image.png" />
+    <Content Include="Resources\image_add.png" />
+    <Content Include="Resources\image_delete.png" />
+    <Content Include="Resources\image_edit.png" />
     <Content Include="Resources\page_copy.png" />
     <Content Include="Resources\user.png" />
     <None Include="Resources\woofy.png" />
@@ -273,8 +280,8 @@
     <None Include="Resources\error.png" />
     <None Include="Resources\world_go.png" />
     <None Include="Resources\WoofyLogo.png" />
-    <EmbeddedResource Include="Flows\AddComic\ComicDetailsForm.resx">
-      <DependentUpon>ComicDetailsForm.cs</DependentUpon>
+    <EmbeddedResource Include="Flows\Comics\AddForm.resx">
+      <DependentUpon>AddForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Flows\CompilationError\CompilationErrorDetails.resx">
       <DependentUpon>CompilationErrorDetails.cs</DependentUpon>

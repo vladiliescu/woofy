@@ -1,6 +1,6 @@
-namespace Woofy.Flows.AddComic
+namespace Woofy.Flows.Comics
 {
-	partial class ComicDetailsForm
+	partial class AddForm
 	{
 		/// <summary>
 		/// Required designer variable.

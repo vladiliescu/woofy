@@ -1,7 +1,7 @@
 using Woofy.Core.ComicManagement;
 using Woofy.Core.Infrastructure;
 
-namespace Woofy.Flows.AddComic
+namespace Woofy.Flows.Comics
 {
 	public class ComicActivated : IEvent
 	{

@@ -5,6 +5,7 @@ using Woofy.Core.Infrastructure;
 using MoreLinq;
 using System.Linq;
 using Woofy.Flows.AddComic;
+using Woofy.Flows.Comics;
 
 namespace Woofy.Flows.Main
 {
