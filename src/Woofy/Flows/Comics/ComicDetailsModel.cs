@@ -1,10 +1,10 @@
-namespace Woofy.Flows.AddComic
+namespace Woofy.Flows.Comics
 {
-	public class ComicDetailsViewModel
+	public class AddViewModel
 	{
 		public ComicModel[] AvailableComics { get; private set; }
 
-		public ComicDetailsViewModel(ComicModel[] availableComics)
+		public AddViewModel(ComicModel[] availableComics)
 		{
 			AvailableComics = availableComics;
 		}
@@ -21,4 +21,16 @@ namespace Woofy.Flows.AddComic
 			}
 		}
 	}
+
+    public class AddInputModel
+    {
+        public string ComicId { get; private set; }
+        public bool PrependIndexToStrips { get; private set; }
+
+        public AddInputModel(string comicId, bool prependIndexToStrips)
+        {
+            ComicId = comicId;
+            PrependIndexToStrips = prependIndexToStrips;
+        }
+    }
 }

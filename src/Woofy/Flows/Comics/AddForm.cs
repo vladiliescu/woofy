@@ -1,6 +1,5 @@
 using System;
 using System.Windows.Forms;
-using Woofy.Flows.AddComic;
 
 namespace Woofy.Flows.Comics
 {
@@ -27,8 +26,8 @@ namespace Woofy.Flows.Comics
 			if (cbComics.SelectedItem == null)
 				return;
 
-			var comic = (ComicDetailsViewModel.ComicModel)cbComics.SelectedItem;
-			presenter.SelectComic(comic.Id);
+			var comic = (AddViewModel.ComicModel)cbComics.SelectedItem;
+			presenter.SelectComic(new AddInputModel(comic.Id, chkPrependIndexToDownloadedStrips.Checked));
 			
 			DialogResult = DialogResult.OK;
 		}

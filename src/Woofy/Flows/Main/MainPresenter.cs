@@ -7,7 +7,6 @@ using Woofy.Core.Infrastructure;
 using System.Linq;
 using Woofy.Core.SystemProxies;
 using Woofy.Flows.About;
-using Woofy.Flows.AddComic;
 using Woofy.Flows.ApplicationLog;
 using Woofy.Flows.AutoUpdate;
 using Woofy.Flows.Comics;
@@ -76,7 +75,7 @@ namespace Woofy.Flows.Main
 
         public void AddComic()
         {
-            applicationController.Execute<Comics.AddComic>();
+            applicationController.Execute<AddComic>();
         }           
 
         public void Initialize(MainForm form)

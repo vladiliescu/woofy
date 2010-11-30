@@ -15,6 +15,7 @@ namespace Woofy.Core.ComicManagement
     	public int DownloadedStrips { get; set; }
     	public Status Status { get; set; }
     	public Uri CurrentPage { get; set; }
+        public bool PrependIndexToStrips { get; set; }
 
 		[JsonIgnore]
 		public bool HasFinished { get; set; }
