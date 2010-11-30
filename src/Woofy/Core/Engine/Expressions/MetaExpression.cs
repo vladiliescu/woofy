@@ -29,7 +29,7 @@ namespace Woofy.Core.Engine.Expressions
 				return null;
 			}
 
-			Log(context, "found '{0}'", content[0]);
+			Log(context, "found {0}:{1}", key, content[0]);
 			context.Metadata[key] = content[0];
 
 			return null;
@@ -37,7 +37,7 @@ namespace Woofy.Core.Engine.Expressions
 
 		protected override string ExpressionName
 		{
-			get { return "meta"; }
+			get { return Expressions.Meta; }
 		}
 	}
 }

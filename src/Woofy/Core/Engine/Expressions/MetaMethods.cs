@@ -1,7 +1,6 @@
 using System.Runtime.CompilerServices;
 using Boo.Lang;
 using Boo.Lang.Compiler.Ast;
-using MoreLinq;
 
 namespace Woofy.Core.Engine.Expressions
 {
@@ -32,25 +31,31 @@ namespace Woofy.Core.Engine.Expressions
     	[Meta]
 		public static MethodInvocationExpression visit(StringLiteralExpression regex)
         {
-			return GenerateIExpressionInvocationFor("visit", regex);
+			return GenerateIExpressionInvocationFor(Expressions.Visit, regex);
         }
 
 		[Meta]
 		public static MethodInvocationExpression download(StringLiteralExpression regex)
 		{
-			return GenerateIExpressionInvocationFor("download", regex);
+			return GenerateIExpressionInvocationFor(Expressions.Download, regex);
 		}
 
         [Meta]
         public static MethodInvocationExpression sleep()
         {
-            return GenerateIExpressionInvocationFor("sleep", null);
+            return GenerateIExpressionInvocationFor(Expressions.Sleep);
         }
 
         [Meta]
 		public static MethodInvocationExpression meta(StringLiteralExpression key, StringLiteralExpression value)
 		{
-			return GenerateIExpressionInvocationFor("meta", key, value);
+			return GenerateIExpressionInvocationFor(Expressions.Meta, key, value);
 		}
+
+        [Meta]
+        public static MethodInvocationExpression write_meta_to_file()
+        {
+            return GenerateIExpressionInvocationFor(Expressions.WriteMetaToFile);
+        }
     }
 }

@@ -6,10 +6,11 @@ namespace Woofy.Core.Engine.Expressions
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<VisitExpression>().Named<IExpression>("visit").InstancePerDependency();
-            builder.RegisterType<DownloadExpression>().Named<IExpression>("download").InstancePerDependency();
-            builder.RegisterType<SleepExpression>().Named<IExpression>("sleep").InstancePerDependency();
-			builder.RegisterType<MetaExpression>().Named<IExpression>("meta").InstancePerDependency();
+            builder.RegisterType<VisitExpression>().Named<IExpression>(Expressions.Visit).InstancePerDependency();
+            builder.RegisterType<DownloadExpression>().Named<IExpression>(Expressions.Download).InstancePerDependency();
+            builder.RegisterType<SleepExpression>().Named<IExpression>(Expressions.Sleep).InstancePerDependency();
+			builder.RegisterType<MetaExpression>().Named<IExpression>(Expressions.Meta).InstancePerDependency();
+            builder.RegisterType<WriteMetaToFileExpression>().Named<IExpression>(Expressions.WriteMetaToFile).InstancePerDependency();
         }
     }
 }

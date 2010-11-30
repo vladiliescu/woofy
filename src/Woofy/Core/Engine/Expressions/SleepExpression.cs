@@ -20,7 +20,7 @@ namespace Woofy.Core.Engine.Expressions
 
         protected override string ExpressionName
         {
-            get { return "sleep"; }
+            get { return Expressions.Sleep; }
         }
     }
 }

@@ -2,4 +2,8 @@
 start_at "http://xkcd.com/1"
 
 for page in visit("""<a\shref=\"(?<content>/[\d]*/)\"\saccesskey=\"n\">"""):
+    meta("title", """<h1>(?<content>[^\n]*?)</h1>""")
+    meta("description", """<img src=\"http://imgs.xkcd.com/comics/[\w()-]*\.(gif|jpg|jpeg|png)" title="(?<content>[^\n]*?)" """)
+        
     download("""<img\ssrc=\"(?<content>http://imgs.xkcd.com/comics/[\w()-]*\.(gif|jpg|jpeg|png))""")
+    write_meta_to_file()
