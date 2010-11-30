@@ -7,19 +7,17 @@ namespace Woofy.Core.Engine
 	{
 	    public string Comic { get; private set; }
         public string ComicId { get; private set; }
+		public Dictionary<string, string> Metadata { get; private set; }
 
-	    /// <summary>
-		/// Should I keep these properties in the Session too? And maybe provide some strong-typed accessors?
-		/// </summary>
 		public Uri CurrentAddress { get; set; }
 	    public string PageContent { get; set; }
-	    public Dictionary<string, object> Session { get; set; }
 
-        public Context(string id, string comic, Uri startAt)
+		public Context(string id, string comic, Uri startAt)
         {
             ComicId = id;
             Comic = comic;
             CurrentAddress = startAt;
+			Metadata = new Dictionary<string, string>();
         }	    
 	}
 }

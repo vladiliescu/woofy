@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Web;
-using Woofy.Core.ComicManagement;
 
 namespace Woofy.Core.Engine
 {
 	public interface IPageParser
 	{
-		Uri[] RetrieveLinksFromPage(string pageContent, string regexPattern, Uri currentUri);
+		Uri[] RetrieveLinksFromPage(string regexPattern, Uri currentUri, string pageContent);
 		string RetrieveFileName(Uri link);
+		string[] RetrieveContent(string regex, string pageContent);
 	}
 
     public class PageParser : IPageParser
@@ -21,22 +21,16 @@ namespace Woofy.Core.Engine
 			this.appSettings = appSettings;
 		}
 
-		public Uri[] RetrieveLinksFromPage(string pageContent, string regexPattern, Uri currentUri)
+		public Uri[] RetrieveLinksFromPage(string regex, Uri currentUri, string pageContent)
 		{
-			var matches = Regex.Matches(pageContent, regexPattern, RegexOptions.IgnoreCase | RegexOptions.Multiline);
-
+			var rawLinks = RetrieveContent(regex, pageContent);
 			var links = new List<Uri>();
-			foreach (Match match in matches)
+			foreach (var link in rawLinks)
 			{
-				var capturedContent = match.Groups[appSettings.ContentGroupName].Success ? match.Groups[appSettings.ContentGroupName].Value : match.Value;
-
-				//just in case someone html-encoded the link; happened with Gone With The Blastwave;
-				capturedContent = HttpUtility.HtmlDecode(capturedContent);
-
-				if (WebPath.IsAbsolute(capturedContent))
-					links.Add(new Uri(capturedContent));
+				if (WebPath.IsAbsolute(link))
+					links.Add(new Uri(link));
 				else
-					links.Add(new Uri(currentUri, capturedContent));
+					links.Add(new Uri(currentUri, link));
 			}
 
 			return links.ToArray();
@@ -47,29 +41,22 @@ namespace Woofy.Core.Engine
 			return WebPath.GetFileName(link);
     	}
 
-    	public Dictionary<string, string> GetCaptures(string pageContent, string urlContent, ComicDefinition definition)
-        {
-            var captures = new Dictionary<string, string>();
+    	public string[] RetrieveContent(string regex, string pageContent)
+    	{
+			var matches = Regex.Matches(pageContent, regex, RegexOptions.IgnoreCase | RegexOptions.Multiline);
 
-            foreach (var capture in definition.Captures)
-            {
-				var match = capture.Target == CaptureTarget.Body ?
-					Regex.Match(pageContent, capture.Content) :
-					Regex.Match(urlContent, capture.Content);
+			var content = new List<string>();
+			foreach (Match match in matches)
+			{
+				var capturedContent = match.Groups[appSettings.ContentGroupName].Success ? 
+					match.Groups[appSettings.ContentGroupName].Value : 
+					match.Value;
 
-                if (!match.Success)
-                    continue;
+				capturedContent = HttpUtility.HtmlDecode(capturedContent);
+				content.Add(capturedContent);
+			}
 
-                string capturedContent;
-                if (match.Groups[appSettings.ContentGroupName].Success)
-					capturedContent = match.Groups[appSettings.ContentGroupName].Value;
-                else
-                    capturedContent = match.Value;
-
-                captures.Add(capture.Name, capturedContent);
-            }
-
-            return captures;
-        }
+			return content.ToArray();
+    	}
     }
 }

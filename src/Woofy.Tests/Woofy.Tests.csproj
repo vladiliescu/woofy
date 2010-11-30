@@ -122,6 +122,9 @@
     <None Include="DefinitionCompilerTests\custom_keywords.boo">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="DefinitionCompilerTests\several_arguments.boo">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Properties\" />

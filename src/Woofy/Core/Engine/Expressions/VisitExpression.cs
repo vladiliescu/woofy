@@ -31,7 +31,7 @@ namespace Woofy.Core.Engine.Expressions
             var regex = (string)argument;
             do
             {
-                var links = parser.RetrieveLinksFromPage(context.PageContent, regex, context.CurrentAddress);
+                var links = parser.RetrieveLinksFromPage(regex, context.CurrentAddress, context.PageContent);
                 ReportLinksFound(links, context);
 				if (links.Length == 0)
 					yield break;

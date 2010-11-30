@@ -30,7 +30,7 @@ namespace Woofy.Core.Engine.Expressions
             if (ContentIsEmpty(context))
                 InitializeContent(context);
 
-            var links = parser.RetrieveLinksFromPage(context.PageContent, (string)argument, context.CurrentAddress);
+            var links = parser.RetrieveLinksFromPage((string)argument, context.CurrentAddress, context.PageContent);
             if (links.Length == 0)
             {
                 ReportNoStripsFound(context);

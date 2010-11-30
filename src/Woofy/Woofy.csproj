@@ -110,6 +110,7 @@
     <Compile Include="Core\Engine\DefinitionCompiler.cs" />
     <Compile Include="Core\Engine\DownloadFinished.cs" />
     <Compile Include="Core\Engine\Expressions\BaseWebExpression.cs" />
+    <Compile Include="Core\Engine\Expressions\MetaExpression.cs" />
     <Compile Include="Core\Engine\Expressions\SleepExpression.cs" />
     <Compile Include="Core\Infrastructure\ConfigureLogging.cs" />
     <Compile Include="Core\PathRepository.cs" />

@@ -1,22 +1,32 @@
 using System.Runtime.CompilerServices;
 using Boo.Lang;
 using Boo.Lang.Compiler.Ast;
+using MoreLinq;
 
 namespace Woofy.Core.Engine.Expressions
 {
     [CompilerGlobalScope]
     public static class MetaMethods
     {
-		public static MethodInvocationExpression GenerateIExpressionInvocationFor(string expressionName, StringLiteralExpression argument)
+		public static MethodInvocationExpression GenerateIExpressionInvocationFor(string expressionName, params StringLiteralExpression[] arguments)
 		{
             var @this = new SelfLiteralExpression();
             var invoke = new MemberReferenceExpression(@this, "InvokeExpression");
 
-            return new MethodInvocationExpression(invoke,
-                new StringLiteralExpression(expressionName),
-                argument ?? (Expression)new NullLiteralExpression(), 
-                new ReferenceExpression("context")
-            );
+            Expression args;
+
+            if (arguments == null)
+                args = new NullLiteralExpression();
+            else if (arguments.Length == 1)
+                args = arguments[0];
+            else
+                args = new ArrayLiteralExpression { Items = ExpressionCollection.FromArray(arguments) };
+
+		    return new MethodInvocationExpression(invoke,
+                    new StringLiteralExpression(expressionName),
+                    args,
+                    new ReferenceExpression("context")
+                );
 		}
 
     	[Meta]
@@ -36,5 +46,11 @@ namespace Woofy.Core.Engine.Expressions
         {
             return GenerateIExpressionInvocationFor("sleep", null);
         }
+
+        [Meta]
+		public static MethodInvocationExpression meta(StringLiteralExpression key, StringLiteralExpression value)
+		{
+			return GenerateIExpressionInvocationFor("meta", key, value);
+		}
     }
 }
