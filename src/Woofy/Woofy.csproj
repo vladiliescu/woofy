@@ -113,7 +113,6 @@
     <Compile Include="Core\Engine\Expressions\SleepExpression.cs" />
     <Compile Include="Core\Infrastructure\ConfigureLogging.cs" />
     <Compile Include="Core\PathRepository.cs" />
-    <Compile Include="Core\ScreenActivator.cs" />
     <Compile Include="Core\ThreadCanceler.cs" />
     <Compile Include="Core\Engine\WorkerStoppedException.cs" />
     <Compile Include="Core\Engine\Expressions\DownloadExpression.cs" />
@@ -153,7 +152,7 @@
     <Compile Include="Flows\Comics\AddForm.designer.cs">
       <DependentUpon>AddForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Flows\Comics\ComicDetailsModel.cs" />
+    <Compile Include="Flows\Comics\AddModel.cs" />
     <Compile Include="Flows\Comics\ComicsPresenter.cs" />
     <Compile Include="Flows\ApplicationLog\AppLog.cs" />
     <Compile Include="Flows\ApplicationLog\AppLogEntryAdded.cs" />
@@ -162,6 +161,14 @@
     <Compile Include="Flows\AutoUpdate\AppUpdateCheckHandler.cs" />
     <Compile Include="Core\Engine\ComicChanged.cs" />
     <Compile Include="Flows\AutoUpdate\UpdateInfo.cs" />
+    <Compile Include="Flows\Comics\EditComic.cs" />
+    <Compile Include="Flows\Comics\EditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Flows\Comics\EditForm.Designer.cs">
+      <DependentUpon>EditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Flows\Comics\EditModel.cs" />
     <Compile Include="Flows\Download\CurrentPageChangedHandler.cs" />
     <Compile Include="Flows\Download\StripDownloadedHandler.cs" />
     <Compile Include="Flows\ExRichTextBox.cs">
@@ -281,6 +288,9 @@
     <None Include="Resources\WoofyLogo.png" />
     <EmbeddedResource Include="Flows\Comics\AddForm.resx">
       <DependentUpon>AddForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Flows\Comics\EditForm.resx">
+      <DependentUpon>EditForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Flows\CompilationError\CompilationErrorDetails.resx">
       <DependentUpon>CompilationErrorDetails.cs</DependentUpon>

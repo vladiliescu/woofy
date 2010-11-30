@@ -19,6 +19,14 @@ namespace Woofy.Flows.Main
 		private void RegisterCommands()
 		{
 			tsbAddComic.Click += (o, e) => Presenter.AddComic();
+            tsbEditComic.Click += (o, e) =>
+            {
+                var comic = GetSelectedComic();
+                if (comic == null)
+                    return;
+
+                Presenter.EditComic(comic.Id);
+            };
 			tsbSettings.Click += (o, e) =>
 			{
 				using (var settingsForm = new SettingsForm())
@@ -59,8 +67,7 @@ namespace Woofy.Flows.Main
 				Presenter.AddComic();
 		}
 
-		#region OBSOLETE
-		private void MainForm_Resize(object sender, EventArgs e)
+		private void OnResize(object sender, EventArgs e)
 		{
 			if (!Presenter.MinimizeToTray)
 				return;
@@ -82,8 +89,6 @@ namespace Woofy.Flows.Main
 				WindowState = FormWindowState.Normal;
 			}
 		}
-		
-		#endregion
 
 		private void OnGridCellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
 		{

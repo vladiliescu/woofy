@@ -16,7 +16,7 @@ namespace Woofy.Flows.Comics
 
 		private void OnLoad(object sender, EventArgs e)
 		{
-			var model = presenter.Load();
+			var model = presenter.InitializeAdd();
 			cbComics.DataSource = model.AvailableComics;
 			cbComics.DisplayMember = "Name";
 		}        
@@ -27,7 +27,7 @@ namespace Woofy.Flows.Comics
 				return;
 
 			var comic = (AddViewModel.ComicModel)cbComics.SelectedItem;
-			presenter.SelectComic(new AddInputModel(comic.Id, chkPrependIndexToDownloadedStrips.Checked));
+			presenter.AddComic(new AddInputModel(comic.Id, chkPrependIndex.Checked));
 			
 			DialogResult = DialogResult.OK;
 		}

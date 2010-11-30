@@ -28,6 +28,7 @@ namespace Woofy.Flows.Main
         void OpenFolder(string comicId);
     	void Donate();
     	void DisplayAboutScreen();
+        void EditComic(string comicId);
     }
 
     public class MainPresenter : IMainPresenter, INotifyPropertyChanged,
@@ -37,7 +38,7 @@ namespace Woofy.Flows.Main
 		IEventHandler<ComicRemoved>,
 		ICommandHandler<HideOrShowApplication>
     {
-        private readonly IApplicationController applicationController;
+        private readonly IApplicationController appController;
         private readonly IUiThread uiThread;
         private readonly IComicStore comicStore;
         private readonly IAppLog appLog;
@@ -61,9 +62,9 @@ namespace Woofy.Flows.Main
 
         private MainForm form;
 
-        public MainPresenter(IApplicationController applicationController, IUiThread uiThread, IComicStore comicStore, IAppLog appLog, IComicViewModelMapper mapper, IPathRepository pathRepository, IDirectoryProxy directory, IUserSettings settings)
+        public MainPresenter(IApplicationController appController, IUiThread uiThread, IComicStore comicStore, IAppLog appLog, IComicViewModelMapper mapper, IPathRepository pathRepository, IDirectoryProxy directory, IUserSettings settings)
         {
-            this.applicationController = applicationController;
+            this.appController = appController;
             this.settings = settings;
             this.directory = directory;
             this.pathRepository = pathRepository;
@@ -75,7 +76,7 @@ namespace Woofy.Flows.Main
 
         public void AddComic()
         {
-            applicationController.Execute<AddComic>();
+            appController.Execute<AddComic>();
         }           
 
         public void Initialize(MainForm form)
@@ -84,31 +85,31 @@ namespace Woofy.Flows.Main
 
             appLog.Send("Hello World");
 
-            applicationController.Execute<AppUpdateCheck>();
+            appController.Execute<AppUpdateCheck>();
             Comics = new BindingList<ComicViewModel>(
                 comicStore
                     .GetActiveComics()
                     .Select<Comic, ComicViewModel>(mapper.MapToViewModel)
                     .ToList()
             );
-            applicationController.Execute<StartAllDownloads>();
+            appController.Execute<StartAllDownloads>();
         }
 
         public void Open(string command)
         {
-            applicationController.Execute(new StartProcess(command));
+            appController.Execute(new StartProcess(command));
         }
 
     	public void ToggleComicState(string comicId)
         {
             var comic = comicStore.Find(comicId);
-			applicationController.Execute(new ToggleDownload(comic));
+			appController.Execute(new ToggleDownload(comic));
         }
 
     	public void Remove(string comicId)
     	{
 			var comic = comicStore.Find(comicId);
-			applicationController.Execute(new DeactivateComic(comic));
+			appController.Execute(new DeactivateComic(comic));
     	}
 
         public void OpenFolder(string comicId)
@@ -117,20 +118,25 @@ namespace Woofy.Flows.Main
             if (!directory.Exists(downloadFolder))
                 return;
             
-            applicationController.Execute(new StartProcess(downloadFolder));
+            appController.Execute(new StartProcess(downloadFolder));
         }
 
     	public void Donate()
     	{
-			applicationController.Execute<Donate>();
+			appController.Execute<Donate>();
     	}
 
     	public void DisplayAboutScreen()
     	{
-			applicationController.Execute<DisplayAboutScreen>();
+			appController.Execute<DisplayAboutScreen>();
     	}
 
-    	public void Handle(AppLogEntryAdded eventData)
+        public void EditComic(string comicId)
+        {
+            appController.Execute(new EditComic(comicId));
+        }
+
+        public void Handle(AppLogEntryAdded eventData)
         {
             appLogBuilder.AppendFormat("{0}\n", eventData);
             uiThread.Send(OnAppLogChanged);

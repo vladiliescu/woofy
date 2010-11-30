@@ -1,4 +1,3 @@
-using Woofy.Core;
 using Woofy.Core.ComicManagement;
 using System.Linq;
 using Woofy.Core.Engine;
@@ -8,24 +7,23 @@ namespace Woofy.Flows.Comics
 {
 	public interface IComicsPresenter
 	{
-        AddViewModel Load();
-	    void SelectComic(AddInputModel inputModel);
+        AddViewModel InitializeAdd();
+	    void AddComic(AddInputModel inputModel);
+	    void EditComic(EditInputModel editInputModel);
 	}
 
-	public class ComicsPresenter : IComicsPresenter, ICommandHandler<AddComic>
+	public class ComicsPresenter : IComicsPresenter, ICommandHandler<AddComic>, ICommandHandler<EditComic>
 	{
 		private readonly IComicStore comicStore;
         private readonly IApplicationController appController;
-        private readonly IScreenActivator screenActivator;
 
-		public ComicsPresenter(IComicStore comicStore, IApplicationController appController, IScreenActivator screenActivator)
+		public ComicsPresenter(IComicStore comicStore, IApplicationController appController)
 		{
 		    this.comicStore = comicStore;
-		    this.screenActivator = screenActivator;
 		    this.appController = appController;
 		}
 
-		public AddViewModel Load()
+		public AddViewModel InitializeAdd()
 		{
 			return new AddViewModel(
 				comicStore.GetInactiveComics()
@@ -34,10 +32,9 @@ namespace Woofy.Flows.Comics
 				);
 		}
 
-	    public void SelectComic(AddInputModel inputModel)
+	    public void AddComic(AddInputModel inputModel)
 	    {
-            var comicId = inputModel.ComicId;
-            var comic = comicStore.Find(comicId);
+            var comic = comicStore.Find(inputModel.ComicId);
             
             comic.Status = Status.Running;
             comic.PrependIndexToStrips = inputModel.PrependIndexToStrips;
@@ -46,9 +43,29 @@ namespace Woofy.Flows.Comics
             appController.Raise(new ComicActivated(comic));
 	    }
 
+	    public void EditComic(EditInputModel inputModel)
+	    {
+            var comic = comicStore.Find(inputModel.ComicId);
+            comic.PrependIndexToStrips = inputModel.PrependIndexToStrips;
+
+            comicStore.PersistComics();
+	    }
+
 	    public void Handle(AddComic command)
 	    {
-            screenActivator.AddComic();
+            using (var form = new AddForm(this))
+            {
+                form.ShowDialog();
+            }
+	    }
+
+	    public void Handle(EditComic command)
+	    {
+            var comic = comicStore.Find(command.ComicId);
+            using (var form = new EditForm(this, new EditViewModel(comic.Id, comic.Name, comic.PrependIndexToStrips)))
+            {
+                form.ShowDialog();
+            }
 	    }
 	}
 }

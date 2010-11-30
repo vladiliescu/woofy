@@ -32,7 +32,7 @@ namespace Woofy.Flows.Comics
             this.cbComics = new System.Windows.Forms.ComboBox();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.chkPrependIndexToDownloadedStrips = new System.Windows.Forms.CheckBox();
+            this.chkPrependIndex = new System.Windows.Forms.CheckBox();
             groupBox1 = new System.Windows.Forms.GroupBox();
             groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -88,15 +88,15 @@ namespace Woofy.Flows.Comics
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
-            // chkPrependIndexToDownloadedStrips
+            // chkPrependIndex
             // 
-            this.chkPrependIndexToDownloadedStrips.AutoSize = true;
-            this.chkPrependIndexToDownloadedStrips.Location = new System.Drawing.Point(17, 69);
-            this.chkPrependIndexToDownloadedStrips.Name = "chkPrependIndexToDownloadedStrips";
-            this.chkPrependIndexToDownloadedStrips.Size = new System.Drawing.Size(234, 17);
-            this.chkPrependIndexToDownloadedStrips.TabIndex = 4;
-            this.chkPrependIndexToDownloadedStrips.Text = "Prepend the index to each downloaded strip";
-            this.chkPrependIndexToDownloadedStrips.UseVisualStyleBackColor = true;
+            this.chkPrependIndex.AutoSize = true;
+            this.chkPrependIndex.Location = new System.Drawing.Point(17, 69);
+            this.chkPrependIndex.Name = "chkPrependIndex";
+            this.chkPrependIndex.Size = new System.Drawing.Size(234, 17);
+            this.chkPrependIndex.TabIndex = 4;
+            this.chkPrependIndex.Text = "Prepend the index to each downloaded strip";
+            this.chkPrependIndex.UseVisualStyleBackColor = true;
             // 
             // AddForm
             // 
@@ -105,7 +105,7 @@ namespace Woofy.Flows.Comics
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(427, 139);
-            this.Controls.Add(this.chkPrependIndexToDownloadedStrips);
+            this.Controls.Add(this.chkPrependIndex);
             this.Controls.Add(groupBox1);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOk);
@@ -130,6 +130,6 @@ namespace Woofy.Flows.Comics
 		private System.Windows.Forms.ComboBox cbComics;
 		private System.Windows.Forms.Button btnOk;
 		private System.Windows.Forms.Button btnCancel;
-        private System.Windows.Forms.CheckBox chkPrependIndexToDownloadedStrips;
+        private System.Windows.Forms.CheckBox chkPrependIndex;
 	}
 }

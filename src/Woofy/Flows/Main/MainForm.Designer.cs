@@ -274,7 +274,7 @@ namespace Woofy.Flows.Main
             this.Name = "MainForm";
             this.Text = "Woofy";
             this.Load += new System.EventHandler(this.OnLoad);
-            this.Resize += new System.EventHandler(this.MainForm_Resize);
+            this.Resize += new System.EventHandler(this.OnResize);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.OnKeyDown);
             splitContainer1.Panel1.ResumeLayout(false);
             splitContainer1.Panel2.ResumeLayout(false);
