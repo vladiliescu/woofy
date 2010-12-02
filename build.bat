@@ -1,1 +1,1 @@
-Tools\nant\bin\nant.exe -buildfile:woofy.build zipFiles
+Tools\nant\bin\nant.exe -buildfile:woofy.build all

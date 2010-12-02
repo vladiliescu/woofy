@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<project xmlns="http://nant.sf.net/release/0.86-beta1/nant.xsd"
+<project xmlns="http://nant.sf.net/release/0.91-alpha2/nant.xsd"
          name="Woofy"
          default="all">
 
 	<property name="configuration" value="Release"/>
 	<property name="version.Major" value="1" />
-	<property name="version.Minor" value="0" />
+	<property name="version.Minor" value="1" />
 	<property name="version.BuildNumber" value="0" />
 	<property name="version.Revision" value="0"  />
 	
@@ -100,10 +100,10 @@
             </fileset>
             <filterchain>
                 <replacetokens>
-                    <token key="WOOFYVERSION" value="${woofy.Version}" />
-                    <token key="WOOFYEXEFILENAME" value="${woofy.ExeFileName}" />
+                    <token key="APPVERSION" value="${woofy.Version}" />
+                    <!--<token key="WOOFYEXEFILENAME" value="${woofy.ExeFileName}" />
                     
-                    <token key="TODAY" value="${date.Today}" />
+                    <token key="TODAY" value="${date.Today}" />-->
                 </replacetokens>
             </filterchain>
         </copy>
@@ -120,7 +120,7 @@
 
     <target name="createInstallers" depends="zipFiles"
             >
-        <exec program="Tools\NSIS\makensis.exe" commandline='"${dir.Build}\setupWoofy.nsi"' workingdir="Tools\NSIS" />        
+        <exec program="tools\Inno Setup\ISCC.exe" commandline='"${dir.Build}\setup.iss"' />
     </target>    
 
     <target name="updateAutoUpdateFiles"  depends="createInstallers">
@@ -146,7 +146,7 @@
         </copy>
     </target>
 
-    <target name="all"  depends="updateAutoUpdateFiles">
+    <target name="all" depends="createInstallers">
     </target>
     
 </project>
