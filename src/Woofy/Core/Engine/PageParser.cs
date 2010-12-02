@@ -8,7 +8,6 @@ namespace Woofy.Core.Engine
 	public interface IPageParser
 	{
 		Uri[] RetrieveLinksFromPage(string regexPattern, Uri currentUri, string pageContent);
-		string RetrieveFileName(Uri link);
 		string[] RetrieveContent(string regex, string pageContent);
 	}
 
@@ -35,11 +34,6 @@ namespace Woofy.Core.Engine
 
 			return links.ToArray();
 		}
-
-    	public string RetrieveFileName(Uri link)
-    	{
-			return WebPath.GetFileName(link);
-    	}
 
     	public string[] RetrieveContent(string regex, string pageContent)
     	{

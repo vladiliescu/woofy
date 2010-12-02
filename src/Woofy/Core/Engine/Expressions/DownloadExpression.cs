@@ -12,15 +12,15 @@ namespace Woofy.Core.Engine.Expressions
         private readonly IPageParser parser;
         private readonly IApplicationController applicationController;
 		private readonly IFileDownloader downloader;
-		private readonly IPathRepository pathRepository;
+		private readonly IComicPath comicPath;
         private readonly IFileProxy file;
 
-		public DownloadExpression(IAppLog appLog, IPageParser parser, IApplicationController applicationController, IFileDownloader downloader, IPathRepository pathRepository, IFileProxy file, IWebClientProxy webClient)
+        public DownloadExpression(IAppLog appLog, IPageParser parser, IApplicationController applicationController, IFileDownloader downloader, IComicPath comicPath, IFileProxy file, IWebClientProxy webClient)
             : base(appLog, webClient)
         {
             this.parser = parser;
 		    this.file = file;
-		    this.pathRepository = pathRepository;
+            this.comicPath = comicPath;
 			this.downloader = downloader;
         	this.applicationController = applicationController;
         }
@@ -43,8 +43,7 @@ namespace Woofy.Core.Engine.Expressions
         	{
 				ReportStripDownloading(link, context);
 
-				var fileName = parser.RetrieveFileName(link);
-				var downloadPath = pathRepository.DownloadPathFor(context.ComicId, fileName);
+				var downloadPath = comicPath.DownloadPathFor(context.ComicId, link);
                 //i add each file to the downloaded files list regardless if it has actually been downloaded or not; 
                 //this is because I want other expressions (e.g. write_meta_to_xmp) to be able to access files that have already been downloaded - this is useful in case Woofy crashes after downloading but before embedding the metadata
                 downloadedFiles.Add(downloadPath);      
@@ -78,12 +77,12 @@ namespace Woofy.Core.Engine.Expressions
 
         private void ReportStripAlreadyDownloaded(Uri link, Context context)
         {
-            Log(context, "WARNING: already downloaded {0}.", link);
+            Warn(context, "already downloaded {0}.", link);
         }
 
         private void ReportNoStripsFound(Context context)
         {
-            Log(context, "WARNING: no strips found.");
+            Warn(context, "no strips found.");
         }
 
         private void ReportStripDownloaded(Uri link, Context context)

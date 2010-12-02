@@ -97,7 +97,7 @@
     <Compile Include="Core\Engine\Expressions\WriteMetaToTextExpression.cs" />
     <Compile Include="Core\Engine\Expressions\WriteMetaToXmpExpression.cs" />
     <Compile Include="Core\Infrastructure\ConfigureLogging.cs" />
-    <Compile Include="Core\PathRepository.cs" />
+    <Compile Include="Core\ComicPath.cs" />
     <Compile Include="Core\ThreadCanceler.cs" />
     <Compile Include="Core\Engine\WorkerStoppedException.cs" />
     <Compile Include="Core\Engine\Expressions\DownloadExpression.cs" />

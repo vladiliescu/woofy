@@ -8,12 +8,12 @@ namespace Woofy.Core.Engine.Expressions
     public class WriteMetaToTextExpression : BaseExpression
     {
         private readonly IFileProxy file;
-        private readonly IPathRepository pathRepository;
+        private readonly IComicPath comicPath;
 
-        public WriteMetaToTextExpression(IAppLog appLog, IFileProxy file, IPathRepository pathRepository) : base(appLog)
+        public WriteMetaToTextExpression(IAppLog appLog, IFileProxy file, IComicPath comicPath) : base(appLog)
         {
             this.file = file;
-            this.pathRepository = pathRepository;
+            this.comicPath = comicPath;
         }
 
         public override IEnumerable<object> Invoke(object argument, Context context)
@@ -24,7 +24,7 @@ namespace Woofy.Core.Engine.Expressions
             foreach (var entry in context.Metadata)
                 metadataBuilder.AppendFormat("{0}:{1}\n", entry.Key, entry.Value);
 
-            var path = pathRepository.DownloadPathFor(context.ComicId, context.ComicId + ".txt");
+            var path = comicPath.DownloadPathFor(context.ComicId, context.ComicId + ".txt");
             file.AppendAllText(path, metadataBuilder.ToString());
 
             return null;

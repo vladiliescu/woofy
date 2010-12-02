@@ -43,7 +43,7 @@ namespace Woofy.Flows.Main
         private readonly IComicStore comicStore;
         private readonly IAppLog appLog;
 		private readonly IComicViewModelMapper mapper;
-        private readonly IPathRepository pathRepository;
+        private readonly IComicPath comicPath;
         private readonly IDirectoryProxy directory;
         private readonly IUserSettings settings;
 
@@ -62,12 +62,12 @@ namespace Woofy.Flows.Main
 
         private MainForm form;
 
-        public MainPresenter(IApplicationController appController, IUiThread uiThread, IComicStore comicStore, IAppLog appLog, IComicViewModelMapper mapper, IPathRepository pathRepository, IDirectoryProxy directory, IUserSettings settings)
+        public MainPresenter(IApplicationController appController, IUiThread uiThread, IComicStore comicStore, IAppLog appLog, IComicViewModelMapper mapper, IComicPath comicPath, IDirectoryProxy directory, IUserSettings settings)
         {
             this.appController = appController;
             this.settings = settings;
             this.directory = directory;
-            this.pathRepository = pathRepository;
+            this.comicPath = comicPath;
             this.mapper = mapper;
         	this.appLog = appLog;
             this.comicStore = comicStore;
@@ -114,7 +114,7 @@ namespace Woofy.Flows.Main
 
         public void OpenFolder(string comicId)
         {
-            var downloadFolder = pathRepository.DownloadFolderFor(comicId);
+            var downloadFolder = comicPath.DownloadFolderFor(comicId);
             if (!directory.Exists(downloadFolder))
                 return;
             
