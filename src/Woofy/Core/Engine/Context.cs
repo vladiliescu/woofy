@@ -11,8 +11,9 @@ namespace Woofy.Core.Engine
 
 		public Uri CurrentAddress { get; set; }
 	    public string PageContent { get; set; }
+	    public string[] DownloadedFiles { get; set; }
 
-		public Context(string id, string comic, Uri startAt)
+	    public Context(string id, string comic, Uri startAt)
         {
             ComicId = id;
             Comic = comic;

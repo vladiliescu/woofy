@@ -14,6 +14,7 @@ namespace Woofy.Core
 		string AuthorHomePage { get; }
 		string ContentGroupName { get; }
 		IUserSettings DefaultSettings { get; }
+	    string ExifToolPath { get; }
 	}
 
 	/// <summary>
@@ -29,6 +30,7 @@ namespace Woofy.Core
 		public string AuthorHomePage { get; private set; }
 		public string ContentGroupName { get; private set; }
 		public IUserSettings DefaultSettings { get; private set; }
+        public string ExifToolPath { get; private set; }
 
 		private readonly bool isPortable = false;
 		private readonly IDirectoryProxy directory;
@@ -43,6 +45,7 @@ namespace Woofy.Core
 			UserSettingsFile = AppSettingsDirectory("user.settings");
 
 			ComicDefinitionsFolder = BaseDirectory("definitions");
+            ExifToolPath = BaseDirectory("exiftool.exe");
 
 			HomePage = "http://code.google.com/p/woofy/";
 			AuthorHomePage = "http://vladiliescu.ro";

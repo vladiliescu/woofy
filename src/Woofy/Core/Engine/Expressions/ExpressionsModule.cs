@@ -10,7 +10,8 @@ namespace Woofy.Core.Engine.Expressions
             builder.RegisterType<DownloadExpression>().Named<IExpression>(Expressions.Download).InstancePerDependency();
             builder.RegisterType<SleepExpression>().Named<IExpression>(Expressions.Sleep).InstancePerDependency();
 			builder.RegisterType<MetaExpression>().Named<IExpression>(Expressions.Meta).InstancePerDependency();
-            builder.RegisterType<WriteMetaToFileExpression>().Named<IExpression>(Expressions.WriteMetaToFile).InstancePerDependency();
+            builder.RegisterType<WriteMetaToTextExpression>().Named<IExpression>(Expressions.WriteMetaToText).InstancePerDependency();
+            builder.RegisterType<WriteMetaToXmpExpression>().Named<IExpression>(Expressions.WriteMetaToXmp).InstancePerDependency();
         }
     }
 }

@@ -53,9 +53,15 @@ namespace Woofy.Core.Engine.Expressions
 		}
 
         [Meta]
-        public static MethodInvocationExpression write_meta_to_file()
+        public static MethodInvocationExpression write_meta_to_text()
         {
-            return GenerateIExpressionInvocationFor(Expressions.WriteMetaToFile);
+            return GenerateIExpressionInvocationFor(Expressions.WriteMetaToText);
+        }
+
+        [Meta]
+        public static MethodInvocationExpression write_meta_to_xmp()
+        {
+            return GenerateIExpressionInvocationFor(Expressions.WriteMetaToXmp);
         }
     }
 }

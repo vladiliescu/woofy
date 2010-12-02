@@ -38,12 +38,16 @@ namespace Woofy.Core.Engine.Expressions
             }
             ReportStripsFound(links, context);
 
+            var downloadedFiles = new List<string>();
         	foreach (var link in links)
         	{
 				ReportStripDownloading(link, context);
 
 				var fileName = parser.RetrieveFileName(link);
 				var downloadPath = pathRepository.DownloadPathFor(context.ComicId, fileName);
+                //i add each file to the downloaded files list regardless if it has actually been downloaded or not; 
+                //this is because I want other expressions (e.g. write_meta_to_xmp) to be able to access files that have already been downloaded - this is useful in case Woofy crashes after downloading but before embedding the metadata
+                downloadedFiles.Add(downloadPath);      
                 if (file.Exists(downloadPath))
                 {
                     ReportStripAlreadyDownloaded(link, context);
@@ -55,6 +59,8 @@ namespace Woofy.Core.Engine.Expressions
 
 				Sleep(context);
         	}
+
+            context.DownloadedFiles = downloadedFiles.ToArray();
 
             return null;
         }

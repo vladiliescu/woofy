@@ -19,5 +19,10 @@ namespace Woofy.Core.Engine.Expressions
         {
             appLog.Send(new AppLogEntryAdded("{0}-{1}".FormatTo(context.Comic, ExpressionName), messageFormat.FormatTo(args)));
         }
+
+        protected void Warn(Context context, string messageFormat, params object[] args)
+        {
+            Log(context, "WARNING: " + messageFormat, args);
+        }
     }
 }

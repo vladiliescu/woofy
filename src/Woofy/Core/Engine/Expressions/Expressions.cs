@@ -6,6 +6,7 @@ namespace Woofy.Core.Engine.Expressions
         public static readonly string Download = "download";
         public static readonly string Sleep = "sleep";
         public static readonly string Meta = "meta";
-        public static readonly string WriteMetaToFile = "write_meta_to_file";
+        public static readonly string WriteMetaToText = "write_meta_to_text";
+        public static readonly string WriteMetaToXmp = "write_meta_to_xmp";
     }
 }
