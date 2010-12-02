@@ -30,7 +30,7 @@ namespace Woofy.Core.Engine.Expressions
             foreach (var downloadedFile in context.DownloadedFiles)
             {
                 var arguments = @"{0} ""{1}""".FormatTo(metaBuilder.ToString(), downloadedFile);
-                Log(context, "running exiftool with {0}", arguments);
+                Log(context, "running exiftool with the following arguments: {0}", arguments);
 
                 var run = new ProcessStartInfo(appSettings.ExifToolPath, arguments)
                               { CreateNoWindow = true, RedirectStandardOutput = true, UseShellExecute = false };

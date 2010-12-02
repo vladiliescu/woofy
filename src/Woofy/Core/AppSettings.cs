@@ -1,6 +1,8 @@
 using System;
+using System.Configuration;
 using System.IO;
 using Woofy.Core.SystemProxies;
+using Woofy.Core;
 
 namespace Woofy.Core
 {
@@ -39,30 +41,37 @@ namespace Woofy.Core
 		{
 			this.directory = directory;
 
+            isPortable = ConfigurationManager.AppSettings["isPortable"].ParseAsSafe<bool>();
+
 			UpdateInfoAddress = new Uri("http://wiki.woofy.googlecode.com/hg/content/updateInfo.json");
-			
+            HomePage = "http://code.google.com/p/woofy/";
+            AuthorHomePage = "http://vladiliescu.ro";
+
+            ContentGroupName = "content";
+
 			ComicsFile = AppSettingsDirectory("comics.json");
 			UserSettingsFile = AppSettingsDirectory("user.settings");
-
 			ComicDefinitionsFolder = BaseDirectory("definitions");
             ExifToolPath = BaseDirectory("exiftool.exe");
-
-			HomePage = "http://code.google.com/p/woofy/";
-			AuthorHomePage = "http://vladiliescu.ro";
-
-			ContentGroupName = "content";
-
 			DefaultSettings = new UserSettings
 			{
 				MinimizeToTray = true,
-				DownloadFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "My Comics"),
+				DownloadFolder = ContentFolder("My Comics"),
 				AutomaticallyCheckForUpdates = true,
 				AlreadyRejectedApplicationVersion = null,
 				CloseWhenAllComicsHaveFinishedDownloading = false,
 			};
 		}
 
-		private string BaseDirectory(string fileName)
+	    private string ContentFolder(string content)
+	    {
+            if (isPortable)
+                return BaseDirectory(content);
+
+            return Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), content);
+	    }
+
+	    private string BaseDirectory(string fileName)
 		{
 			return Path.Combine(AppDomain.CurrentDomain.BaseDirectory, fileName);
 		}
