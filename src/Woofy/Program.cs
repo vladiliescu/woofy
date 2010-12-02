@@ -41,22 +41,38 @@ namespace Woofy
     	[STAThread]
         static void Main()
         {
-			Bootstrapper.BootstrapApplication();          
+            ContainerAccessor.RegisterComponents();
+            using (var mutex = CreateApplicationSpecificMutex())
+            {
+                Bootstrapper.BootstrapApplication();
 
-            Application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
-            AppDomain.CurrentDomain.UnhandledException += (sender, e) => LogManager.GetLogger("errorLog").Error((Exception)e.ExceptionObject);
+                Application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
+                AppDomain.CurrentDomain.UnhandledException +=
+                    (sender, e) => LogManager.GetLogger("errorLog").Error((Exception) e.ExceptionObject);
 
-			CompileDefinitions();
-            ContainerAccessor.Resolve<IComicStore>().InitializeComicCache();
+                CompileDefinitions();
+                ContainerAccessor.Resolve<IComicStore>().InitializeComicCache();
 
-			var mainForm = new MainForm();
-			//the synchronization context only becomes available after creating the form
-			SynchronizationContext = SynchronizationContext.Current;	
-			//the DownloadSupervisor needs the SynchronizationContext, so I resolve it only after initializing the context
-			mainForm.Presenter = ContainerAccessor.Resolve<IMainPresenter>();
+                var mainForm = new MainForm();
+                //the synchronization context only becomes available after creating the form
+                SynchronizationContext = SynchronizationContext.Current;
+                //the DownloadSupervisor needs the SynchronizationContext, so I resolve it only after initializing the context
+                mainForm.Presenter = ContainerAccessor.Resolve<IMainPresenter>();
 
-			ContainerAccessor.Resolve<ITrayIconController>().DisplayIcon();
-            Application.Run(mainForm);
+                ContainerAccessor.Resolve<ITrayIconController>().DisplayIcon();
+                Application.Run(mainForm);
+
+                GC.KeepAlive(mutex);
+            }
+        }
+
+        /// <summary>
+        /// Used by the setup kit to determine if the app is running or not.
+        /// </summary>
+        private static Mutex CreateApplicationSpecificMutex()
+        {
+            var appSettings = ContainerAccessor.Resolve<IAppSettings>();
+            return new Mutex(true, appSettings.ApplicationGuid.ToString());
         }
     }
 }

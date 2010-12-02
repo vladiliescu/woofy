@@ -17,6 +17,8 @@ namespace Woofy.Core
 		string ContentGroupName { get; }
 		IUserSettings DefaultSettings { get; }
 	    string ExifToolPath { get; }
+	    Guid ApplicationGuid { get; }
+	    string DefinitionsAssemblyPath { get; }
 	}
 
 	/// <summary>
@@ -25,16 +27,21 @@ namespace Woofy.Core
 	public class AppSettings : IAppSettings
 	{
 		public Uri UpdateInfoAddress { get; private set; }
-		public string ComicsFile { get; private set; }
-		public string UserSettingsFile { get; private set; }
-		public string ComicDefinitionsFolder { get; private set; }
-		public string HomePage { get; private set; }
-		public string AuthorHomePage { get; private set; }
-		public string ContentGroupName { get; private set; }
-		public IUserSettings DefaultSettings { get; private set; }
-        public string ExifToolPath { get; private set; }
+	    public string HomePage { get; private set; }
+	    public string AuthorHomePage { get; private set; }
+	    public Guid ApplicationGuid { get; private set; }
 
-		private readonly bool isPortable = false;
+	    public string ContentGroupName { get; private set; }
+
+	    public string ComicsFile { get; private set; }
+	    public string UserSettingsFile { get; private set; }
+	    public string ComicDefinitionsFolder { get; private set; }
+	    public string ExifToolPath { get; private set; }
+	    public string DefinitionsAssemblyPath {get; private set; }
+
+	    public IUserSettings DefaultSettings { get; private set; }
+        
+	    private readonly bool isPortable = false;
 		private readonly IDirectoryProxy directory;
 
 		public AppSettings(IDirectoryProxy directory)
@@ -46,6 +53,7 @@ namespace Woofy.Core
 			UpdateInfoAddress = new Uri("http://wiki.woofy.googlecode.com/hg/content/updateInfo.json");
             HomePage = "http://code.google.com/p/woofy/";
             AuthorHomePage = "http://vladiliescu.ro";
+            ApplicationGuid = new Guid("C59EAB54-6C2C-41a0-B516-55452A5AB3D2");
 
             ContentGroupName = "content";
 
@@ -53,6 +61,8 @@ namespace Woofy.Core
 			UserSettingsFile = AppSettingsDirectory("user.settings");
 			ComicDefinitionsFolder = BaseDirectory("definitions");
             ExifToolPath = BaseDirectory("exiftool.exe");
+            DefinitionsAssemblyPath = AppSettingsDirectory("Definitions.dll");
+
 			DefaultSettings = new UserSettings
 			{
 				MinimizeToTray = true,

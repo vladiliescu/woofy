@@ -35,5 +35,10 @@ namespace Woofy.Tests
         {
             return new VisitExpression(parser, WebClient.Object, AppLog.Object, ApplicationController.Object);
         }
+
+        public DefinitionCompiler CreateDefinitionCompiler()
+        {
+            return new DefinitionCompiler(AppSettings.Object);
+        }
     }
 }

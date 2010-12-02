@@ -8,8 +8,6 @@ namespace Woofy.Core.Infrastructure
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-
-			ContainerAccessor.RegisterComponents();
             
             ConfigureLogging.Run();
 		}

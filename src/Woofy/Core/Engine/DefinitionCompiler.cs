@@ -14,13 +14,20 @@ namespace Woofy.Core.Engine
 
     public class DefinitionCompiler : IDefinitionCompiler
     {
-		public Assembly Compile(Assembly[] references, params string[] definitionFiles)
+        private readonly IAppSettings appSettings;
+
+        public DefinitionCompiler(IAppSettings appSettings)
+        {
+            this.appSettings = appSettings;
+        }
+
+        public Assembly Compile(Assembly[] references, params string[] definitionFiles)
 		{
 			var parameters = new CompilerParameters
 			{
 				OutputType = CompilerOutputType.Library,
 				Pipeline = new CompileToFile(),
-				OutputAssembly = "Definitions.dll"
+				OutputAssembly = appSettings.DefinitionsAssemblyPath
 			};
 			
 			parameters.References.Add(Assembly.GetExecutingAssembly());
