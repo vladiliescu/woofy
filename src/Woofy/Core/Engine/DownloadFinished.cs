@@ -15,10 +15,10 @@ namespace Woofy.Core.Engine
 
 	public class DownloadFinishedHandler : IEventHandler<DownloadFinished>
 	{
-		private readonly IApplicationController appController;
+		private readonly IAppController appController;
 		private readonly IComicStore comicStore;
 
-		public DownloadFinishedHandler(IApplicationController appController, IComicStore comicStore)
+		public DownloadFinishedHandler(IAppController appController, IComicStore comicStore)
 		{
 			this.appController = appController;
 			this.comicStore = comicStore;

@@ -35,7 +35,7 @@ namespace Woofy.Core.Engine
 			{
 				RunImpl(context);
 
-                ContainerAccessor.Resolve<IApplicationController>().Raise(new DownloadFinished(context.ComicId));
+                ContainerAccessor.Resolve<IAppController>().Raise(new DownloadFinished(context.ComicId));
 			}
 			catch (OperationCanceledException)
 			{

@@ -13,16 +13,16 @@ namespace Woofy.Flows.ApplicationLog
 
     public class AppLog : IAppLog
     {
-        private readonly IApplicationController applicationController;
+        private readonly IAppController appController;
 
-        public AppLog(IApplicationController applicationController)
+        public AppLog(IAppController appController)
         {
-            this.applicationController = applicationController;
+            this.appController = appController;
         }
 
         public void Send(string message)
         {
-            applicationController.Raise(new AppLogEntryAdded(message));
+            appController.Raise(new AppLogEntryAdded(message));
         }
 
         public void Send(string messageFormat, params object[] args)
@@ -32,7 +32,7 @@ namespace Woofy.Flows.ApplicationLog
 
         public void Send(AppLogEntryAdded logEntry)
         {
-            applicationController.Raise(logEntry);
+            appController.Raise(logEntry);
         }
     }
 }

@@ -12,13 +12,13 @@ namespace Woofy.Core.Engine.Expressions
     public class DownloadExpression : BaseWebExpression
     {
         private readonly IPageParser parser;
-        private readonly IApplicationController applicationController;
+        private readonly IAppController appController;
 		private readonly IFileDownloader downloader;
 		private readonly IComicPath comicPath;
         private readonly IFileProxy file;
         private readonly IAppSettings appSettings;
 
-        public DownloadExpression(IAppLog appLog, IPageParser parser, IApplicationController applicationController, IFileDownloader downloader, IComicPath comicPath, IFileProxy file, IWebClientProxy webClient, IAppSettings appSettings)
+        public DownloadExpression(IAppLog appLog, IPageParser parser, IAppController appController, IFileDownloader downloader, IComicPath comicPath, IFileProxy file, IWebClientProxy webClient, IAppSettings appSettings)
             : base(appLog, webClient)
         {
             this.parser = parser;
@@ -26,7 +26,7 @@ namespace Woofy.Core.Engine.Expressions
             this.file = file;
             this.comicPath = comicPath;
 			this.downloader = downloader;
-        	this.applicationController = applicationController;
+        	this.appController = appController;
         }
 
         public override IEnumerable<object> Invoke(object argument, Context context)
@@ -133,7 +133,7 @@ namespace Woofy.Core.Engine.Expressions
         private void ReportStripDownloaded(Uri link, Context context)
         {
             Log(context, "downloaded {0}", link);
-            applicationController.Raise(new StripDownloaded(context.ComicId));
+            appController.Raise(new StripDownloaded(context.ComicId));
         }
 
         protected override string ExpressionName

@@ -34,7 +34,13 @@ namespace Woofy.Core.Engine.Expressions
 			return GenerateIExpressionInvocationFor(Expressions.Visit, regex);
         }
 
-		[Meta]
+        [Meta]
+        public static MethodInvocationExpression peek(StringLiteralExpression regex)
+        {
+            return GenerateIExpressionInvocationFor(Expressions.Peek, regex);
+        }
+
+        [Meta]
 		public static MethodInvocationExpression download(StringLiteralExpression regex)
 		{
 			return GenerateIExpressionInvocationFor(Expressions.Download, regex);

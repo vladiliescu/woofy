@@ -5,7 +5,7 @@ namespace Woofy.Core.Engine.Expressions
 {
     public abstract class BaseWebExpression : BaseExpression
     {
-        private readonly IWebClientProxy webClient;
+        protected readonly IWebClientProxy webClient;
 
         protected BaseWebExpression(IAppLog appLog, IWebClientProxy webClient) : base(appLog)
         {

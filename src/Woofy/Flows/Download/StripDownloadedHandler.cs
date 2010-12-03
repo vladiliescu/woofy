@@ -7,12 +7,12 @@ namespace Woofy.Flows.Download
     public class StripDownloadedHandler : IEventHandler<StripDownloaded>
     {
         private readonly IComicStore comicStore;
-        private readonly IApplicationController applicationController;
+        private readonly IAppController appController;
 
-        public StripDownloadedHandler(IComicStore comicStore, IApplicationController applicationController)
+        public StripDownloadedHandler(IComicStore comicStore, IAppController appController)
         {
             this.comicStore = comicStore;
-            this.applicationController = applicationController;
+            this.appController = appController;
         }
 
         public void Handle(StripDownloaded eventData)
@@ -21,7 +21,7 @@ namespace Woofy.Flows.Download
             var comic = comicStore.Find(eventData.ComicId);
             comic.DownloadedStrips++;
 
-            applicationController.Raise(new ComicChanged(comic));
+            appController.Raise(new ComicChanged(comic));
         }
     }
 }

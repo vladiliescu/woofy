@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace Woofy.Core.Infrastructure
 {
-	public interface IApplicationController
+	public interface IAppController
 	{
         void Execute<T>() where T : class, ICommand;
         void Execute<T>(T commandData) where T : class, ICommand;
@@ -14,11 +14,11 @@ namespace Woofy.Core.Infrastructure
         void Raise<T>(T eventData) where T : class, IEvent;
 	}
 
-	public class ApplicationController : IApplicationController
+	public class AppController : IAppController
 	{
 		private readonly ILifetimeScope container;
 
-		public ApplicationController(ILifetimeScope container)
+		public AppController(ILifetimeScope container)
 		{
 			this.container = container;
 		}

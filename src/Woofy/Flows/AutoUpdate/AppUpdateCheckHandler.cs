@@ -9,15 +9,15 @@ namespace Woofy.Flows.AutoUpdate
 		private readonly IAppUpdateChecker updateChecker;
 		private readonly IAppSettings appSettings;
 		private readonly IAppInfo appInfo;
-		private readonly IApplicationController applicationController;
+		private readonly IAppController appController;
 		private readonly IUserSettings userSettings;
 
-		public AppUpdateCheckHandler(IAppUpdateChecker updateChecker, IAppSettings appSettings, IApplicationController applicationController, IUserSettings userSettings, IAppInfo appInfo)
+		public AppUpdateCheckHandler(IAppUpdateChecker updateChecker, IAppSettings appSettings, IAppController appController, IUserSettings userSettings, IAppInfo appInfo)
 		{
 			this.updateChecker = updateChecker;
 			this.appInfo = appInfo;
 			this.userSettings = userSettings;
-			this.applicationController = applicationController;
+			this.appController = appController;
 			this.appSettings = appSettings;
 		}
 
@@ -38,7 +38,7 @@ namespace Woofy.Flows.AutoUpdate
 				return;
 			}
 
-			applicationController.Execute(new StartProcess(updateInfo.UpdateAddress));
+			appController.Execute(new StartProcess(updateInfo.UpdateAddress));
 		}
 	}
 }

@@ -8,9 +8,9 @@ namespace Woofy.Core
 
 	public class DonateHandler : ICommandHandler<Donate>
 	{
-		private readonly IApplicationController appController;
+		private readonly IAppController appController;
 
-		public DonateHandler(IApplicationController appController)
+		public DonateHandler(IAppController appController)
 		{
 			this.appController = appController;
 		}

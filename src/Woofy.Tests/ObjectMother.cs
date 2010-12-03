@@ -19,7 +19,7 @@ namespace Woofy.Tests
         public readonly Mock<IPageParser> PageParser = new Mock<IPageParser>();
         public readonly Mock<IWebClientProxy> WebClient = new Mock<IWebClientProxy>();
         public readonly Mock<IAppLog> AppLog = new Mock<IAppLog>();
-        public readonly Mock<IApplicationController> ApplicationController = new Mock<IApplicationController>();
+        public readonly Mock<IAppController> ApplicationController = new Mock<IAppController>();
 
         public ComicStore CreateComicStore()
         {

@@ -16,9 +16,9 @@ namespace Woofy.Flows.Tray
 		private NotifyIcon icon;
 
 		private readonly IAppInfo appInfo;
-		private readonly IApplicationController appController;
+		private readonly IAppController appController;
 
-		public TrayIconController(IAppInfo appInfo, IApplicationController appController)
+		public TrayIconController(IAppInfo appInfo, IAppController appController)
 		{
 			this.appInfo = appInfo;
 			this.appController = appController;

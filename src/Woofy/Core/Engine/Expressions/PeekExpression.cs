@@ -6,13 +6,12 @@ using Woofy.Flows.ApplicationLog;
 
 namespace Woofy.Core.Engine.Expressions
 {
-    public class VisitExpression : BaseWebExpression
+    public class PeekExpression : BaseWebExpression
     {
         private readonly IPageParser parser;
         private readonly IAppController appController;
 
-        public VisitExpression(IPageParser parser, IWebClientProxy webClient, IAppLog appLog, IAppController appController)
-            : base(appLog, webClient)
+        public PeekExpression(IAppLog appLog, IWebClientProxy webClient, IPageParser parser, IAppController appController) : base(appLog, webClient)
         {
             this.parser = parser;
             this.appController = appController;
@@ -21,27 +20,22 @@ namespace Woofy.Core.Engine.Expressions
         public override IEnumerable<object> Invoke(object argument, Context context)
         {
             if (ContentIsEmpty(context))
-            {
                 InitializeContent(context);
-                yield return context.CurrentAddress;
-            }
 
             var regex = (string)argument;
-            do
-            {
-                var links = parser.RetrieveLinksFromPage(regex, context.CurrentAddress, context.PageContent);
-                ReportLinksFound(links, context);
-				if (links.Length == 0)
-					yield break;
+            var links = parser.RetrieveLinksFromPage(regex, context.CurrentAddress, context.PageContent);
+            ReportLinksFound(links, context);
+            if (links.Length == 0)
+                yield break;
 
-            	var link = links[0];
+            foreach (var link in links)
+            {
                 ReportVisitingPage(link, context);
 
                 context.CurrentAddress = link;
                 context.PageContent = webClient.DownloadString(link);
                 yield return link;
             }
-            while (true);
         }
 
         private void ReportLinksFound(Uri[] links, Context context)
@@ -57,7 +51,7 @@ namespace Woofy.Core.Engine.Expressions
 
         protected override string ExpressionName
         {
-            get { return Expressions.Visit; }
+            get { return Expressions.Peek; }
         }
     }
 }

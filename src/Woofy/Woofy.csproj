@@ -93,6 +93,7 @@
     <Compile Include="Core\Engine\Expressions\BaseWebExpression.cs" />
     <Compile Include="Core\Engine\Expressions\Expressions.cs" />
     <Compile Include="Core\Engine\Expressions\MetaExpression.cs" />
+    <Compile Include="Core\Engine\Expressions\PeekExpression.cs" />
     <Compile Include="Core\Engine\Expressions\SleepExpression.cs" />
     <Compile Include="Core\Engine\Expressions\WriteMetaToTextExpression.cs" />
     <Compile Include="Core\Infrastructure\ConfigureLogging.cs" />
@@ -109,7 +110,7 @@
     <Compile Include="Core\Infrastructure\IEvent.cs" />
     <Compile Include="Core\Engine\Expressions\ExpressionsModule.cs" />
     <Compile Include="Core\Infrastructure\ForEach.cs" />
-    <Compile Include="Core\Infrastructure\ApplicationController.cs" />
+    <Compile Include="Core\Infrastructure\AppController.cs" />
     <Compile Include="Core\Infrastructure\Bootstrapper.cs" />
     <Compile Include="Core\Capture.cs" />
     <Compile Include="Core\CaptureTarget.cs" />

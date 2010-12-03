@@ -17,11 +17,11 @@ namespace Woofy.Flows.Main
 
     public class ToggleDownloadHandler : ICommandHandler<ToggleDownload>
     {
-        private readonly IApplicationController applicationController;
+        private readonly IAppController appController;
 
-        public ToggleDownloadHandler(IApplicationController applicationController)
+        public ToggleDownloadHandler(IAppController appController)
         {
-            this.applicationController = applicationController;
+            this.appController = appController;
         }
 
         public void Handle(ToggleDownload command)
@@ -34,13 +34,13 @@ namespace Woofy.Flows.Main
             {
                 case Status.Paused:
                     comic.Status = Status.Running;
-					applicationController.Raise(new ComicChanged(comic));
-                    applicationController.Execute(new StartDownload(comic));
+					appController.Raise(new ComicChanged(comic));
+                    appController.Execute(new StartDownload(comic));
                     break;
                 case Status.Running:
                     comic.Status = Status.Paused;
-					applicationController.Raise(new ComicChanged(comic));
-					applicationController.Execute(new PauseDownload(comic));
+					appController.Raise(new ComicChanged(comic));
+					appController.Execute(new PauseDownload(comic));
                     break;
                 default:
                    throw new InvalidEnumArgumentException("command.Comic.Status", (int)command.Comic.Status, typeof(Status));

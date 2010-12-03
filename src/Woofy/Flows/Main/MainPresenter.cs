@@ -39,7 +39,7 @@ namespace Woofy.Flows.Main
 		IEventHandler<ComicRemoved>,
 		ICommandHandler<HideOrShowApplication>
     {
-        private readonly IApplicationController appController;
+        private readonly IAppController appController;
         private readonly IUiThread uiThread;
         private readonly IComicStore comicStore;
         private readonly IAppLog appLog;
@@ -63,7 +63,7 @@ namespace Woofy.Flows.Main
 
         private MainForm form;
 
-        public MainPresenter(IApplicationController appController, IUiThread uiThread, IComicStore comicStore, IAppLog appLog, IComicViewModelMapper mapper, IComicPath comicPath, IDirectoryProxy directory, IUserSettings settings)
+        public MainPresenter(IAppController appController, IUiThread uiThread, IComicStore comicStore, IAppLog appLog, IComicViewModelMapper mapper, IComicPath comicPath, IDirectoryProxy directory, IUserSettings settings)
         {
             this.appController = appController;
             this.settings = settings;

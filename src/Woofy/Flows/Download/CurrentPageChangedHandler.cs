@@ -7,12 +7,12 @@ namespace Woofy.Flows.Download
     public class CurrentPageChangedHandler : IEventHandler<CurrentPageChanged>
     {
         private readonly IComicStore comicStore;
-        private readonly IApplicationController applicationController;
+        private readonly IAppController appController;
 
-        public CurrentPageChangedHandler(IComicStore comicStore, IApplicationController applicationController)
+        public CurrentPageChangedHandler(IComicStore comicStore, IAppController appController)
         {
             this.comicStore = comicStore;
-            this.applicationController = applicationController;
+            this.appController = appController;
         }
 
         public void Handle(CurrentPageChanged eventData)
@@ -21,7 +21,7 @@ namespace Woofy.Flows.Download
             var comic = comicStore.Find(eventData.ComicId);
             comic.CurrentPage = eventData.Url;
 
-            applicationController.Raise(new ComicChanged(comic));
+            appController.Raise(new ComicChanged(comic));
         }
     }
 }

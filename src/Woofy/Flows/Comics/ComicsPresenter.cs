@@ -15,9 +15,9 @@ namespace Woofy.Flows.Comics
 	public class ComicsPresenter : IComicsPresenter, ICommandHandler<AddComic>, ICommandHandler<EditComic>
 	{
 		private readonly IComicStore comicStore;
-        private readonly IApplicationController appController;
+        private readonly IAppController appController;
 
-		public ComicsPresenter(IComicStore comicStore, IApplicationController appController)
+		public ComicsPresenter(IComicStore comicStore, IAppController appController)
 		{
 		    this.comicStore = comicStore;
 		    this.appController = appController;

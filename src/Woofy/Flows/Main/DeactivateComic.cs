@@ -16,9 +16,9 @@ namespace Woofy.Flows.Main
 
 	public class DeactivateComicHandler : ICommandHandler<DeactivateComic>
 	{
-		private readonly IApplicationController appController;
+		private readonly IAppController appController;
 
-		public DeactivateComicHandler(IApplicationController appController)
+		public DeactivateComicHandler(IAppController appController)
 		{
 			this.appController = appController;
 		}
