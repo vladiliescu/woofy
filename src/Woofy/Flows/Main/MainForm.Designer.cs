@@ -70,8 +70,8 @@ namespace Woofy.Flows.Main
             // splitContainer1.Panel2
             // 
             splitContainer1.Panel2.Controls.Add(this.txtAppLog);
-            splitContainer1.Size = new System.Drawing.Size(642, 491);
-            splitContainer1.SplitterDistance = 335;
+            splitContainer1.Size = new System.Drawing.Size(792, 548);
+            splitContainer1.SplitterDistance = 373;
             splitContainer1.TabIndex = 10;
             // 
             // dgvwTasks
@@ -102,7 +102,7 @@ namespace Woofy.Flows.Main
             this.dgvwTasks.RowHeadersVisible = false;
             this.dgvwTasks.RowTemplate.Height = 24;
             this.dgvwTasks.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvwTasks.Size = new System.Drawing.Size(642, 335);
+            this.dgvwTasks.Size = new System.Drawing.Size(792, 373);
             this.dgvwTasks.TabIndex = 7;
             this.dgvwTasks.DoubleClick += new System.EventHandler(this.OnToggleComicState);
             this.dgvwTasks.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.OnGridCellFormatting);
@@ -159,7 +159,7 @@ namespace Woofy.Flows.Main
             this.txtAppLog.Location = new System.Drawing.Point(0, 0);
             this.txtAppLog.Name = "txtAppLog";
             this.txtAppLog.ReadOnly = true;
-            this.txtAppLog.Size = new System.Drawing.Size(642, 152);
+            this.txtAppLog.Size = new System.Drawing.Size(792, 171);
             this.txtAppLog.TabIndex = 9;
             this.txtAppLog.Text = "";
             // 
@@ -187,7 +187,7 @@ namespace Woofy.Flows.Main
             this.toolStrip.Location = new System.Drawing.Point(0, 0);
             this.toolStrip.Name = "toolStrip";
             this.toolStrip.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
-            this.toolStrip.Size = new System.Drawing.Size(642, 25);
+            this.toolStrip.Size = new System.Drawing.Size(792, 25);
             this.toolStrip.TabIndex = 8;
             this.toolStrip.Text = "toolStrip";
             // 
@@ -266,7 +266,7 @@ namespace Woofy.Flows.Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(642, 516);
+            this.ClientSize = new System.Drawing.Size(792, 573);
             this.Controls.Add(splitContainer1);
             this.Controls.Add(this.toolStrip);
             this.KeyPreview = true;
