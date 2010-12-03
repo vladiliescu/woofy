@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Text;
 using System.Threading;
 using Woofy.Core.Infrastructure;
 using Woofy.Core.SystemProxies;
@@ -14,12 +16,14 @@ namespace Woofy.Core.Engine.Expressions
 		private readonly IFileDownloader downloader;
 		private readonly IComicPath comicPath;
         private readonly IFileProxy file;
+        private readonly IAppSettings appSettings;
 
-        public DownloadExpression(IAppLog appLog, IPageParser parser, IApplicationController applicationController, IFileDownloader downloader, IComicPath comicPath, IFileProxy file, IWebClientProxy webClient)
+        public DownloadExpression(IAppLog appLog, IPageParser parser, IApplicationController applicationController, IFileDownloader downloader, IComicPath comicPath, IFileProxy file, IWebClientProxy webClient, IAppSettings appSettings)
             : base(appLog, webClient)
         {
             this.parser = parser;
-		    this.file = file;
+            this.appSettings = appSettings;
+            this.file = file;
             this.comicPath = comicPath;
 			this.downloader = downloader;
         	this.applicationController = applicationController;
@@ -34,34 +38,70 @@ namespace Woofy.Core.Engine.Expressions
             if (links.Length == 0)
             {
                 ReportNoStripsFound(context);
-                return null;
+                return new object[0];
             }
             ReportStripsFound(links, context);
 
+            var downloadedFiles = Download(links, context);
+            return downloadedFiles;
+        }
+
+        private string[] Download(IEnumerable<Uri> links, Context context)
+        {
             var downloadedFiles = new List<string>();
-        	foreach (var link in links)
-        	{
+            foreach (var link in links)
+            {
                 var downloadPath = comicPath.DownloadPathFor(context.ComicId, link);
 
-				ReportStripDownloading(link, downloadPath, context);
-                //i add each file to the downloaded files list regardless if it has actually been downloaded or not; 
-                //this is because I want other expressions (e.g. write_meta_to_xmp) to be able to access files that have already been downloaded - this is useful in case Woofy crashes after downloading but before embedding the metadata
-                downloadedFiles.Add(downloadPath);      
+                ReportStripDownloading(link, downloadPath, context);
                 if (file.Exists(downloadPath))
                 {
                     ReportStripAlreadyDownloaded(link, context);
                     continue;
                 }
 
-        	    downloader.Download(link, downloadPath);
-				
+                downloader.Download(link, downloadPath);
+                downloadedFiles.Add(downloadPath);
+                EmbedMetadataIfEnabled(downloadPath, context);
+
                 ReportStripDownloaded(link, context);
-				Sleep(context);
-        	}
+                Sleep(context);
+            }
 
-            context.DownloadedFiles = downloadedFiles.ToArray();
+            return downloadedFiles.ToArray();
+        }
 
-            return null;
+        private void EmbedMetadataIfEnabled(string fileName, Context context)
+        {
+            var metaBuilder = new StringBuilder();
+            AddIfPossible("title", metaBuilder, context);
+            AddIfPossible("description", metaBuilder, context);
+            AddIfPossible("source", metaBuilder, context.CurrentAddress.AbsoluteUri);
+            
+            var arguments = @"{0} ""{1}""".FormatTo(metaBuilder.ToString(), fileName);
+            Log(context, "running exiftool with the following arguments: {0}", arguments);
+
+            var run = new ProcessStartInfo(appSettings.ExifToolPath, arguments) { CreateNoWindow = true, RedirectStandardOutput = true, UseShellExecute = false };
+
+            var process = Process.Start(run);
+            process.WaitForExit();
+            Log(context, process.StandardOutput.ReadToEnd());
+        }
+
+        private void AddIfPossible(string tag, StringBuilder metaBuilder, Context context)
+        {
+            if (!context.Metadata.ContainsKey(tag))
+                return;
+
+            metaBuilder.AppendFormat(@" -xmp:{0}=""{1}""", tag, context.Metadata[tag]);
+        }
+
+        private void AddIfPossible(string tag, StringBuilder metaBuilder, string value)
+        {
+            if (string.IsNullOrEmpty(value))
+                return;
+
+            metaBuilder.AppendFormat(@" -xmp:{0}=""{1}""", tag, value);
         }
 
         private void ReportStripDownloading(Uri link, string downloadPath, Context context)

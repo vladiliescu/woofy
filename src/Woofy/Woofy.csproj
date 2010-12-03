@@ -95,7 +95,6 @@
     <Compile Include="Core\Engine\Expressions\MetaExpression.cs" />
     <Compile Include="Core\Engine\Expressions\SleepExpression.cs" />
     <Compile Include="Core\Engine\Expressions\WriteMetaToTextExpression.cs" />
-    <Compile Include="Core\Engine\Expressions\WriteMetaToXmpExpression.cs" />
     <Compile Include="Core\Infrastructure\ConfigureLogging.cs" />
     <Compile Include="Core\ComicPath.cs" />
     <Compile Include="Core\ThreadCanceler.cs" />

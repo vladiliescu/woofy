@@ -11,7 +11,6 @@ namespace Woofy.Core.Engine.Expressions
             builder.RegisterType<SleepExpression>().Named<IExpression>(Expressions.Sleep).InstancePerDependency();
 			builder.RegisterType<MetaExpression>().Named<IExpression>(Expressions.Meta).InstancePerDependency();
             builder.RegisterType<WriteMetaToTextExpression>().Named<IExpression>(Expressions.WriteMetaToText).InstancePerDependency();
-            builder.RegisterType<WriteMetaToXmpExpression>().Named<IExpression>(Expressions.WriteMetaToXmp).InstancePerDependency();
         }
     }
 }
