@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Text;
+using System.Threading;
 using Woofy.Core;
 using Woofy.Core.ComicManagement;
 using Woofy.Core.Engine;
@@ -85,7 +86,7 @@ namespace Woofy.Flows.Main
 
             appLog.Send("Hello World");
 
-            appController.Execute<AppUpdateCheck>();
+            ThreadPool.QueueUserWorkItem(o => appController.Execute<AppUpdateCheck>());
             Comics = new BindingList<ComicViewModel>(
                 comicStore
                     .GetActiveComics()

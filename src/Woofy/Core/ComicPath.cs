@@ -47,7 +47,6 @@ namespace Woofy.Core
                 return rawFileName;
 
             return "{0:0000}_{1}".FormatTo(comic.DownloadedStrips + 1, rawFileName);
-            
         }
 
         public string DownloadPathFor(string comicId, Uri link)
