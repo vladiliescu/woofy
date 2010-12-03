@@ -10,17 +10,19 @@ namespace Woofy.Core
         string DownloadPathFor(Comic comic, string fileName);
         string DownloadFolderFor(string comicId);
     	string DownloadPathFor(string comicId, string fileName);
-        string FileNameFor(Uri link);
+        string FileNameFor(string comicId, Uri link);
         string DownloadPathFor(string comicId, Uri link);
     }
 
     public class ComicPath : IComicPath
     {
         private readonly IUserSettings userSettings;
+        private readonly IComicStore comicStore;
 
-        public ComicPath(IUserSettings userSettings)
+        public ComicPath(IUserSettings userSettings, IComicStore comicStore)
         {
             this.userSettings = userSettings;
+            this.comicStore = comicStore;
         }
 
         public string DownloadFolderFor(string comicId)
@@ -36,14 +38,21 @@ namespace Woofy.Core
 			return Path.Combine(DownloadFolderFor(comicId), fileName);
 		}
 
-        public string FileNameFor(Uri link)
+        public string FileNameFor(string comicId, Uri link)
         {
-            return WebPath.GetFileName(link);
+            var comic = comicStore.Find(comicId);
+            var rawFileName = WebPath.GetFileName(link);
+
+            if (!comic.PrependIndexToStrips)
+                return rawFileName;
+
+            return "{0:0000}_{1}".FormatTo(comic.DownloadedStrips + 1, rawFileName);
+            
         }
 
         public string DownloadPathFor(string comicId, Uri link)
         {
-            return DownloadPathFor(comicId, FileNameFor(link));
+            return DownloadPathFor(comicId, FileNameFor(comicId, link));
         }
 
         public string DownloadFolderFor(Comic comic)

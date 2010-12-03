@@ -41,9 +41,9 @@ namespace Woofy.Core.Engine.Expressions
             var downloadedFiles = new List<string>();
         	foreach (var link in links)
         	{
-				ReportStripDownloading(link, context);
+                var downloadPath = comicPath.DownloadPathFor(context.ComicId, link);
 
-				var downloadPath = comicPath.DownloadPathFor(context.ComicId, link);
+				ReportStripDownloading(link, downloadPath, context);
                 //i add each file to the downloaded files list regardless if it has actually been downloaded or not; 
                 //this is because I want other expressions (e.g. write_meta_to_xmp) to be able to access files that have already been downloaded - this is useful in case Woofy crashes after downloading but before embedding the metadata
                 downloadedFiles.Add(downloadPath);      
@@ -54,8 +54,8 @@ namespace Woofy.Core.Engine.Expressions
                 }
 
         	    downloader.Download(link, downloadPath);
-				ReportStripDownloaded(link, context);
-
+				
+                ReportStripDownloaded(link, context);
 				Sleep(context);
         	}
 
@@ -64,13 +64,18 @@ namespace Woofy.Core.Engine.Expressions
             return null;
         }
 
-    	private void Sleep(Context context)
+        private void ReportStripDownloading(Uri link, string downloadPath, Context context)
+        {
+            Log(context, "downloading {0} to {1}", link, downloadPath);
+        }
+
+        private void Sleep(Context context)
     	{
 			Log(context, "sleeping for 2 seconds..");
 			Thread.Sleep(2000);
     	}
 
-    	private void ReportStripsFound(Uri[] links, Context context)
+        private void ReportStripsFound(Uri[] links, Context context)
         {
             Log(context, "found {0} strips", links.Length);
         }
@@ -89,11 +94,6 @@ namespace Woofy.Core.Engine.Expressions
         {
             Log(context, "downloaded {0}", link);
             applicationController.Raise(new StripDownloaded(context.ComicId));
-        }
-
-        private void ReportStripDownloading(Uri link, Context context)
-        {
-            Log(context, "downloading {0}", link);
         }
 
         protected override string ExpressionName

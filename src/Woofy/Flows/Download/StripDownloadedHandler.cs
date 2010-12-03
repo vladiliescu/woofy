@@ -1,5 +1,3 @@
-using System;
-using Woofy.Core;
 using Woofy.Core.ComicManagement;
 using Woofy.Core.Engine;
 using Woofy.Core.Infrastructure;
