@@ -1,8 +1,9 @@
 ﻿using System.Diagnostics;
 using System.Windows.Forms;
+using Woofy.Gui.CompilationError;
 using Woofy.Properties;
 
-namespace Woofy.Gui.CompilationError
+namespace Woofy.Flows.CompilationError
 {
 	public partial class CompilationErrorDetails : Form
 	{

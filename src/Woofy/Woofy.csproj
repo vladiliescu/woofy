@@ -156,9 +156,6 @@
     <Compile Include="Flows\Comics\EditModel.cs" />
     <Compile Include="Flows\Download\CurrentPageChangedHandler.cs" />
     <Compile Include="Flows\Download\StripDownloadedHandler.cs" />
-    <Compile Include="Flows\ExRichTextBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Core\Infrastructure\DefaultComponentsModule.cs" />
     <Compile Include="Core\Infrastructure\ContainerAccessor.cs" />
     <Compile Include="Core\Engine\PageParser.cs" />
@@ -187,10 +184,8 @@
     <Compile Include="Flows\Tray\HideOrShowApplication.cs" />
     <Compile Include="Flows\Tray\TrayIconController.cs" />
     <Compile Include="Core\FileDownloader.cs" />
-    <Compile Include="Core\ComicManagement\ComicDefinition.cs" />
     <Compile Include="Core\ComicManagement\Comic.cs" />
     <Compile Include="Flows\Main\DownloadSupervisor.cs" />
-    <Compile Include="Core\Logger.cs" />
     <Compile Include="Core\WebPath.cs" />
     <Compile Include="Core\Engine\Status.cs" />
     <Compile Include="Flows\About\AboutForm.cs">

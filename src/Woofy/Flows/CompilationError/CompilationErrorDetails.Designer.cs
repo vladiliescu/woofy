@@ -1,7 +1,6 @@
 ﻿using System.Windows.Forms;
-using Woofy.External;
 
-namespace Woofy.Gui.CompilationError
+namespace Woofy.Flows.CompilationError
 {
 	partial class CompilationErrorDetails
 	{

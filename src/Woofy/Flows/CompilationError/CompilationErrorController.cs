@@ -1,5 +1,6 @@
 using System.Windows.Forms;
 using Woofy.Core.Engine;
+using Woofy.Flows.CompilationError;
 
 namespace Woofy.Gui.CompilationError
 {
