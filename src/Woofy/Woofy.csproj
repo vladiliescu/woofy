@@ -124,7 +124,9 @@
     <Compile Include="Core\SystemProxies\DateTimeProxy.cs" />
     <Compile Include="Core\SystemProxies\DirectoryProxy.cs" />
     <Compile Include="Core\SystemProxies\FileProxy.cs" />
-    <Compile Include="Core\SystemProxies\WebClientProxy.cs" />
+    <Compile Include="Core\SystemProxies\WebClientProxy.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Core\VersionConverter.cs" />
     <Compile Include="Flows\About\AboutPresenter.cs" />
     <Compile Include="Flows\About\DisplayAboutScreen.cs" />
