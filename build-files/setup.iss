@@ -26,10 +26,10 @@ Name: "program\autostart"; Types: standard; Description: "Start Woofy on system 
 Name: "program\portable"; Types: portable; Description: "Portable mode"
 
 [Files]
-Source: "Woofy\*.*"; DestDir: "{app}"; Components: program
+Source: "Woofy\*.*"; Excludes: "*.exe.config"; DestDir: "{app}"; Components: program
 Source: "Woofy\definitions\*.def"; DestDir: "{app}\definitions"; Components: program
 
-;Source: "Woofy.exe.config"; DestDir: "{app}"; Components: program\portable
+Source: "Woofy.exe.config"; DestDir: "{app}"; Components: program\portable
 
 [Icons]
 Name: "{group}\Woofy"; Filename: "{app}\Woofy.exe"
