@@ -10,6 +10,8 @@ Compression=lzma2
 SolidCompression=yes
 LicenseFile=license.txt
 WizardImageFile=WizardImageFile.bmp
+WizardSmallImageFile=Woofy.bmp
+SetupIconFile=Woofy.ico
 OutputDir=.
 OutputBaseFilename=Woofy-@APPVERSION@
 
