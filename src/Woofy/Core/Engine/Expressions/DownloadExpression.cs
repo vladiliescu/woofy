@@ -79,7 +79,7 @@ namespace Woofy.Core.Engine.Expressions
             AddIfPossible("source", metaBuilder, context.CurrentAddress.AbsoluteUri);
             
             var arguments = @"{0} ""{1}""".FormatTo(metaBuilder.ToString(), fileName);
-            Log(context, "running exiftool with the following arguments: {0}", arguments);
+            Log(context, "running exiftool.exe {0}", arguments);
 
             var run = new ProcessStartInfo(appSettings.ExifToolPath, arguments) { CreateNoWindow = true, RedirectStandardOutput = true, UseShellExecute = false };
 
