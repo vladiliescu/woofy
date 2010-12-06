@@ -23,7 +23,7 @@ namespace Woofy.Tests
 
         public ComicStore CreateComicStore()
         {
-            return new ComicStore(AppSettings.Object, DefinitionStore.Object, File.Object, UserSettings.Object);
+            return new ComicStore(AppSettings.Object, DefinitionStore.Object, File.Object);
         }
 
         public VisitExpression CreateVisitExpression()

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using Newtonsoft.Json;
 using System.Linq;
 using Woofy.Core.Engine;
@@ -24,13 +23,11 @@ namespace Woofy.Core.ComicManagement
 		private readonly IAppSettings appSettings;
 		private readonly IDefinitionStore definitionStore;
         private readonly IFileProxy file;
-        private readonly IUserSettings userSettings;
 		private readonly object writeLock = new object();
 
-		public ComicStore(IAppSettings appSettings, IDefinitionStore definitionStore, IFileProxy file, IUserSettings userSettings)
+		public ComicStore(IAppSettings appSettings, IDefinitionStore definitionStore, IFileProxy file)
 		{
 			this.appSettings = appSettings;
-		    this.userSettings = userSettings;
 		    this.file = file;
 		    this.definitionStore = definitionStore;
 		}
