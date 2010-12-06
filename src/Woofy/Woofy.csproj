@@ -163,7 +163,6 @@
     <Compile Include="Core\Infrastructure\ContainerAccessor.cs" />
     <Compile Include="Core\Engine\PageParser.cs" />
     <Compile Include="Core\StringExtensions.cs" />
-    <Compile Include="Exceptions\RegexException.cs" />
     <Compile Include="Core\DefinitionStore.cs" />
     <Compile Include="Flows\CompilationError\CompilationErrorDetails.cs">
       <SubType>Form</SubType>
@@ -187,21 +186,13 @@
     <Compile Include="Flows\Main\ToggleDownload.cs" />
     <Compile Include="Flows\Tray\HideOrShowApplication.cs" />
     <Compile Include="Flows\Tray\TrayIconController.cs" />
-    <Compile Include="EventArgs\DownloadCompletedEventArgs.cs" />
-    <Compile Include="EventArgs\DownloadedFileChunkEventArgs.cs" />
-    <Compile Include="EventArgs\DownloadErrorEventArgs.cs" />
-    <Compile Include="EventArgs\DownloadFileCompletedEventArgs.cs" />
-    <Compile Include="EventArgs\DownloadStripCompletedEventArgs.cs" />
     <Compile Include="Core\FileDownloader.cs" />
     <Compile Include="Core\ComicManagement\ComicDefinition.cs" />
-    <Compile Include="Core\Engine\Bot.cs" />
     <Compile Include="Core\ComicManagement\Comic.cs" />
     <Compile Include="Flows\Main\DownloadSupervisor.cs" />
     <Compile Include="Core\Logger.cs" />
     <Compile Include="Core\WebPath.cs" />
-    <Compile Include="Enums\DownloadOutcome.cs" />
     <Compile Include="Core\Engine\Status.cs" />
-    <Compile Include="EventArgs\ResponseReceivedEventArgs.cs" />
     <Compile Include="Flows\About\AboutForm.cs">
       <SubType>Form</SubType>
     </Compile>

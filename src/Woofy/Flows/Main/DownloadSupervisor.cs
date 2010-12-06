@@ -49,7 +49,7 @@ namespace Woofy.Flows.Main
 
 		private static void Start(Comic comic)
 		{
-			ThreadPool.QueueUserWorkItem(o => comic.Definition.Run());
+            new Thread(() => comic.Definition.Run());
 		}
     }
 }
