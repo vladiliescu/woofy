@@ -62,9 +62,10 @@ namespace Woofy.Core.Engine.Expressions
 
                 downloader.Download(link, downloadPath);
                 downloadedFiles.Add(downloadPath);
+                ReportStripDownloaded(link, context);
+
                 EmbedMetadataIfEnabled(downloadPath, context);
 
-                ReportStripDownloaded(link, context);
                 Sleep(context);
             }
 
