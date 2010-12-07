@@ -47,6 +47,8 @@ namespace Woofy.Flows.Main
         private readonly IComicPath comicPath;
         private readonly IDirectoryProxy directory;
         private readonly IUserSettings settings;
+        private readonly IAppInfo appInfo;
+        private readonly IAppSettings appSettings;
 
         public BindingList<ComicViewModel> Comics { get; private set; }
 
@@ -63,9 +65,11 @@ namespace Woofy.Flows.Main
 
         private MainForm form;
 
-        public MainPresenter(IAppController appController, IUiThread uiThread, IComicStore comicStore, IAppLog appLog, IComicViewModelMapper mapper, IComicPath comicPath, IDirectoryProxy directory, IUserSettings settings)
+        public MainPresenter(IAppController appController, IUiThread uiThread, IComicStore comicStore, IAppLog appLog, IComicViewModelMapper mapper, IComicPath comicPath, IDirectoryProxy directory, IUserSettings settings, IAppInfo appInfo, IAppSettings appSettings)
         {
             this.appController = appController;
+            this.appSettings = appSettings;
+            this.appInfo = appInfo;
             this.settings = settings;
             this.directory = directory;
             this.comicPath = comicPath;
@@ -84,8 +88,9 @@ namespace Woofy.Flows.Main
         {
 			this.form = form;
 
-            appLog.Send("Hello World");
-
+            appLog.Send("Woofy {0} (c) {1}", appInfo.Version.ToPrettyString(), appInfo.Company);
+            appLog.Send(appSettings.HomePage);
+            
             ThreadPool.QueueUserWorkItem(o => appController.Execute<AppUpdateCheck>());
             Comics = new BindingList<ComicViewModel>(
                 comicStore
