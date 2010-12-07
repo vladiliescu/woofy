@@ -35,8 +35,10 @@ namespace Woofy.Flows.Main
 			txtAppLog.LinkClicked += (o, e) => Presenter.Open(e.LinkText);
 			txtAppLog.TextChanged += (o, e) =>
 			{
+                txtAppLog.SuspendLayout();
 				txtAppLog.SelectionStart = txtAppLog.Text.Length;
 				txtAppLog.ScrollToCaret();
+                txtAppLog.ResumeLayout();
 			};
 
             tsbOpenFolder.Click += (o, e) => {
