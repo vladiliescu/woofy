@@ -6,23 +6,25 @@ namespace Woofy.Flows.ApplicationLog
     public class AppLogEntryAdded : IEvent
     {
         public string Message { get; private set; }
-        public string Tag { get; private set; }
+        public string ExpressionName { get; private set; }
+        public string ComicId { get; private set; }
 
         public AppLogEntryAdded(string message)
-            : this(null, message)
+            : this(message, null, null)
         {
         }
 
-        public AppLogEntryAdded(string tag, string message)
+        public AppLogEntryAdded(string message, string tag, string comicId)
         {
-            Tag = tag;
+            ExpressionName = tag;
             Message = message;
+            ComicId = comicId;
         }
 
         public override string ToString()
         {
-            if (Tag.IsNotNullOrEmpty())
-                return "[{0}] {1}".FormatTo(Tag, Message);
+            if (ExpressionName.IsNotNullOrEmpty())
+                return "[{0}] {1}".FormatTo(ExpressionName, Message);
             return Message;
         }
     }

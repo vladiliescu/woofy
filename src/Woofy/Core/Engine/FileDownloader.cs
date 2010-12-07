@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using Woofy.Core.SystemProxies;
 
-namespace Woofy.Core
+namespace Woofy.Core.Engine
 {
 	public interface IFileDownloader
 	{

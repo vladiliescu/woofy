@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 using System.Text;
 using System.Threading;
@@ -144,7 +145,11 @@ namespace Woofy.Flows.Main
 
         public void Handle(AppLogEntryAdded eventData)
         {
-            appLogBuilder.AppendFormat("{0}\n", eventData);
+            if (eventData.ComicId.IsNotNullOrEmpty())
+                appLogBuilder.AppendFormat("[{0:T}][{1} {2}] {3}\n", DateTime.Now, eventData.ComicId, eventData.ExpressionName, eventData.Message);
+            else
+                appLogBuilder.AppendFormat("[{0:T}] {1}\n", DateTime.Now, eventData.Message);
+            
             uiThread.Send(OnAppLogChanged);
         }
 

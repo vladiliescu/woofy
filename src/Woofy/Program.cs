@@ -41,7 +41,7 @@ namespace Woofy
     	[STAThread]
         static void Main()
         {
-            ContainerAccessor.RegisterComponents();
+            using (ContainerAccessor.RegisterComponents())
             using (var mutex = CreateApplicationSpecificMutex())
             {
                 Bootstrapper.BootstrapApplication();

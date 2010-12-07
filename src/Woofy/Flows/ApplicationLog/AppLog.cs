@@ -1,4 +1,3 @@
-using System;
 using Woofy.Core.Infrastructure;
 using Woofy.Core;
 

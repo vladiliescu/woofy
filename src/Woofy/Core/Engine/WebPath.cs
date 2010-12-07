@@ -1,7 +1,7 @@
 using System;
 using System.Text;
 
-namespace Woofy.Core
+namespace Woofy.Core.Engine
 {
     /// <summary>
     /// Provides several utility methods for web paths, similar to the ones provided by the <see cref="System.IO.Path"/> class.

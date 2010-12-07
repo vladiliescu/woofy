@@ -8,7 +8,7 @@ namespace Woofy.Core.Infrastructure
 	{
 		public static IContainer Container { get; private set; }
 
-		public static void RegisterComponents(params Module[] additionalModules)
+        public static IContainer RegisterComponents(params Module[] additionalModules)
 		{
 			if (Container != null)
 				throw new InvalidOperationException("The container has already been initialized.");
@@ -21,6 +21,8 @@ namespace Woofy.Core.Infrastructure
                 builder.RegisterModule(module);
 
 			Container = builder.Build();
+
+            return Container;
 		}
 		
 		public static T Resolve<T>()

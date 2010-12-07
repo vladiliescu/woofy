@@ -1,5 +1,6 @@
 using System;
 using Woofy.Core;
+using Woofy.Core.Engine;
 using Xunit;
 
 namespace Woofy.Tests

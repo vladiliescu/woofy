@@ -80,6 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\AppInfo.cs" />
+    <Compile Include="Core\AppLogEntriesToFile.cs" />
     <Compile Include="Core\ComicManagement\ComicAutoPersister.cs" />
     <Compile Include="Core\Donate.cs" />
     <Compile Include="Core\Engine\Expressions\BaseExpression.cs" />
@@ -114,8 +115,6 @@
     <Compile Include="Core\Infrastructure\ForEach.cs" />
     <Compile Include="Core\Infrastructure\AppController.cs" />
     <Compile Include="Core\Infrastructure\Bootstrapper.cs" />
-    <Compile Include="Core\Capture.cs" />
-    <Compile Include="Core\CaptureTarget.cs" />
     <Compile Include="Core\ComicManagement\ComicStore.cs" />
     <Compile Include="Core\Infrastructure\ICommandHandler.cs" />
     <Compile Include="Core\Infrastructure\IEventHandler.cs" />
@@ -187,10 +186,10 @@
     <Compile Include="Flows\Main\ToggleDownload.cs" />
     <Compile Include="Flows\Tray\HideOrShowApplication.cs" />
     <Compile Include="Flows\Tray\TrayIconController.cs" />
-    <Compile Include="Core\FileDownloader.cs" />
+    <Compile Include="Core\Engine\FileDownloader.cs" />
     <Compile Include="Core\ComicManagement\Comic.cs" />
     <Compile Include="Flows\Main\DownloadSupervisor.cs" />
-    <Compile Include="Core\WebPath.cs" />
+    <Compile Include="Core\Engine\WebPath.cs" />
     <Compile Include="Core\Engine\Status.cs" />
     <Compile Include="Flows\About\AboutForm.cs">
       <SubType>Form</SubType>

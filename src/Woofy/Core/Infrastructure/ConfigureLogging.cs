@@ -8,21 +8,26 @@ namespace Woofy.Core.Infrastructure
     {
         public static void Run()
         {
-            var appInfo = ContainerAccessor.Resolve<IAppInfo>();
             var config = new LoggingConfiguration();
+            
+            AddErrorRule(config);
+
+            LogManager.Configuration = config;
+        }
+
+        private static void AddErrorRule(LoggingConfiguration config)
+        {
+            var appInfo = ContainerAccessor.Resolve<IAppInfo>();
 
             var errorTarget = new EventLogTarget
-            {
-                Log = "Application",
-                Source = appInfo.NameAndVersion,
-                Layout = "${date} ${message} ${exception:format=ToString}"
-            };
-
+                                  {
+                                      Log = "Application",
+                                      Source = appInfo.NameAndVersion,
+                                      Layout = "${date} ${message} ${exception:format=ToString}"
+                                  };
             var errorRule = new LoggingRule("*", LogLevel.Error, errorTarget);
             config.AddTarget("error", errorTarget);
             config.LoggingRules.Add(errorRule);
-
-            LogManager.Configuration = config;
         }
     }
 }

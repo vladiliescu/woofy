@@ -1,5 +1,6 @@
 using System.Reflection;
 using Autofac;
+using Woofy.Core.Engine;
 using Woofy.Core.SystemProxies;
 using Module = Autofac.Module;
 

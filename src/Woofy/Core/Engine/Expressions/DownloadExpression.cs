@@ -85,7 +85,8 @@ namespace Woofy.Core.Engine.Expressions
 
             var process = Process.Start(run);
             process.WaitForExit();
-            Log(context, process.StandardOutput.ReadToEnd());
+
+            Log(context, process.StandardOutput.ReadToEnd().TrimEnd('\n'));
         }
 
         private void AddIfPossible(string tag, StringBuilder metaBuilder, Context context)
