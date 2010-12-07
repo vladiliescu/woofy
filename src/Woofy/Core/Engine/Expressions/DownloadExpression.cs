@@ -31,8 +31,7 @@ namespace Woofy.Core.Engine.Expressions
 
         public override IEnumerable<object> Invoke(object argument, Context context)
         {
-            if (ContentIsEmpty(context))
-                InitializeContent(context);
+            EnsureContentIsInitialized(context);
 
             var links = parser.RetrieveLinksFromPage((string)argument, context.CurrentAddress, context.PageContent);
             if (links.Length == 0)

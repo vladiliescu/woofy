@@ -35,6 +35,12 @@ namespace Woofy.Core.Engine.Expressions
         }
 
         [Meta]
+        public static MethodInvocationExpression go_to(StringLiteralExpression regex)
+        {
+            return GenerateIExpressionInvocationFor(Expressions.GoTo, regex);
+        }
+
+        [Meta]
         public static MethodInvocationExpression peek(StringLiteralExpression regex)
         {
             return GenerateIExpressionInvocationFor(Expressions.Peek, regex);
@@ -59,9 +65,27 @@ namespace Woofy.Core.Engine.Expressions
 		}
 
         [Meta]
+        public static MethodInvocationExpression title(StringLiteralExpression value)
+        {
+            return meta(new StringLiteralExpression("title"), value);
+        }
+
+        [Meta]
+        public static MethodInvocationExpression description(StringLiteralExpression value)
+        {
+            return meta(new StringLiteralExpression("description"), value);
+        }
+
+        [Meta]
         public static MethodInvocationExpression write_meta_to_text()
         {
             return GenerateIExpressionInvocationFor(Expressions.WriteMetaToText);
+        }
+
+        [Meta]
+        public static MethodInvocationExpression match(StringLiteralExpression value)
+        {
+            return GenerateIExpressionInvocationFor(Expressions.Match);
         }
     }
 }

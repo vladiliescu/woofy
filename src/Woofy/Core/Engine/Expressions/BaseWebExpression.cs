@@ -23,5 +23,11 @@ namespace Woofy.Core.Engine.Expressions
 
             context.PageContent = webClient.DownloadString(context.CurrentAddress);
         }
+
+        protected void EnsureContentIsInitialized(Context context)
+        {
+            if (ContentIsEmpty(context))
+                InitializeContent(context);
+        }
     }
 }
