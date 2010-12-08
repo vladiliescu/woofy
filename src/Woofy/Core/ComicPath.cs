@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using Woofy.Core.ComicManagement;
 using Woofy.Core.Engine;
+using Woofy.Core.SystemProxies;
 
 namespace Woofy.Core
 {
@@ -14,16 +15,19 @@ namespace Woofy.Core
         string FileNameFor(string comicId, Uri link);
         string DownloadPathFor(string comicId, Uri link);
         string DownloadFolderRoot();
+        void EnsureDownloadFolderExistsFor(string comicId);
     }
 
     public class ComicPath : IComicPath
     {
         private readonly IUserSettings userSettings;
         private readonly IComicStore comicStore;
+        private readonly IDirectoryProxy directory;
 
-        public ComicPath(IUserSettings userSettings, IComicStore comicStore)
+        public ComicPath(IUserSettings userSettings, IComicStore comicStore, IDirectoryProxy directory)
         {
             this.userSettings = userSettings;
+            this.directory = directory;
             this.comicStore = comicStore;
         }
 
@@ -33,6 +37,15 @@ namespace Woofy.Core
                 return AppDomain.CurrentDomain.BaseDirectory;
 
             return userSettings.DownloadFolder;
+        }
+
+        public void EnsureDownloadFolderExistsFor(string comicId)
+        {
+            var dir = DownloadFolderFor(comicId);
+            if (directory.Exists(dir))
+                return;
+
+            directory.CreateDirectory(dir);
         }
 
         public string DownloadFolderFor(string comicId)

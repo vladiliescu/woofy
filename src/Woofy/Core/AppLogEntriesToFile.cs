@@ -26,6 +26,7 @@ namespace Woofy.Core
 
             lock (fileLock)
             {
+                comicPath.EnsureDownloadFolderExistsFor(eventData.ComicId);
                 var comicFolder = comicPath.DownloadFolderFor(eventData.ComicId);
                 var log = Path.Combine(comicFolder, eventData.ComicId + ".txt");
 
