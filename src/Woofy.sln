@@ -37,6 +37,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NDepend) = preSolution
-		Project = ".\Woofy.ndproj"
+		Project = ""
 	EndGlobalSection
 EndGlobal

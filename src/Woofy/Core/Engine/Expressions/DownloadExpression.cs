@@ -74,35 +74,29 @@ namespace Woofy.Core.Engine.Expressions
         private void EmbedMetadataIfEnabled(string fileName, Context context)
         {
             var metaBuilder = new StringBuilder();
-            AddIfPossible("title", metaBuilder, context);
-            AddIfPossible("description", metaBuilder, context);
-            AddIfPossible("source", metaBuilder, context.CurrentAddress.AbsoluteUri);
+
+            metaBuilder.AddIfPossible("xmp:title", "title", context);
+            metaBuilder.AddIfPossible("xmp:description", "description", context);
+
+            metaBuilder.AddIfPossible("xmp:source", context.CurrentAddress.AbsoluteUri);
+            metaBuilder.AddIfPossible("comment", "downloaded with Woofy - http://code.google.com/p/woofy");
             
             var arguments = @"{0} ""{1}""".FormatTo(metaBuilder.ToString(), fileName);
             Log(context, "running exiftool.exe {0}", arguments);
 
-            var run = new ProcessStartInfo(appSettings.ExifToolPath, arguments) { CreateNoWindow = true, RedirectStandardOutput = true, UseShellExecute = false };
+            var run = new ProcessStartInfo(appSettings.ExifToolPath, arguments) { CreateNoWindow = true, RedirectStandardError = true, RedirectStandardOutput = true, UseShellExecute = false };
 
             var process = Process.Start(run);
+
             process.WaitForExit();
 
-            Log(context, process.StandardOutput.ReadToEnd().TrimEnd('\n'));
-        }
+            var error = process.StandardError.ReadToEnd().Trim();
+            var output = process.StandardOutput.ReadToEnd().Trim();
 
-        private void AddIfPossible(string tag, StringBuilder metaBuilder, Context context)
-        {
-            if (!context.Metadata.ContainsKey(tag))
-                return;
-
-            metaBuilder.AppendFormat(@" -xmp:{0}=""{1}""", tag, context.Metadata[tag]);
-        }
-
-        private void AddIfPossible(string tag, StringBuilder metaBuilder, string value)
-        {
-            if (string.IsNullOrEmpty(value))
-                return;
-
-            metaBuilder.AppendFormat(@" -xmp:{0}=""{1}""", tag, value);
+            if (error.IsNotNullOrEmpty())
+                Log(context, "exiftool: {0}", error);
+            if (output.IsNotNullOrEmpty())
+                Log(context, "exiftool: {0}", output);
         }
 
         private void ReportStripDownloading(Uri link, string downloadPath, Context context)
@@ -140,6 +134,30 @@ namespace Woofy.Core.Engine.Expressions
         protected override string ExpressionName
         {
             get { return Expressions.Download; }
+        }
+    }
+
+    static class StringBuilderXmpExtensions
+    {
+        public static void AddIfPossible(this StringBuilder builder, string xmpTag, string metadata, Context context)
+        {
+            if (!context.Metadata.ContainsKey(metadata))
+                return;
+
+            AppendFormat(builder, xmpTag, context.Metadata[metadata]);
+        }
+
+        public static void AddIfPossible(this StringBuilder builder, string xmpTag, string value)
+        {
+            if (string.IsNullOrEmpty(value))
+                return;
+
+            AppendFormat(builder, xmpTag, value);
+        }
+
+        public static void AppendFormat(StringBuilder builder, string tag, string value)
+        {
+            builder.AppendFormat(@" -{0}=""{1}""", tag, value);
         }
     }
 }
