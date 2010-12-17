@@ -53,7 +53,10 @@ namespace Woofy.Core.Engine.Expressions
                 var downloadPath = comicPath.DownloadPathFor(context.ComicId, link);
 
                 ReportStripDownloading(link, downloadPath, context);
-                if (file.Exists(downloadPath))
+                if (
+                    file.Exists(comicPath.DownloadPathForPreviousIndex(context.ComicId, link)) ||
+                    file.Exists(downloadPath)
+                    )
                 {
                     ReportStripAlreadyDownloaded(link, context);
                     continue;

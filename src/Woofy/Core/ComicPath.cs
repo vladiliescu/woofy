@@ -12,10 +12,11 @@ namespace Woofy.Core
         string DownloadPathFor(Comic comic, string fileName);
         string DownloadFolderFor(string comicId);
     	string DownloadPathFor(string comicId, string fileName);
-        string FileNameFor(string comicId, Uri link);
         string DownloadPathFor(string comicId, Uri link);
         string DownloadFolderRoot();
         void EnsureDownloadFolderExistsFor(string comicId);
+        //HACK: added so I could check whether the current strip has been downloaded before, while the PrependIndexToStrip option is selected
+        string DownloadPathForPreviousIndex(string comicId, Uri link);
     }
 
     public class ComicPath : IComicPath
@@ -58,7 +59,12 @@ namespace Woofy.Core
 			return Path.Combine(DownloadFolderFor(comicId), fileName);
 		}
 
-        public string FileNameFor(string comicId, Uri link)
+        private string FileNameFor(string comicId, Uri link)
+        {
+            return FileNameFor(comicId, link, 1);
+        }
+
+        private string FileNameFor(string comicId, Uri link, int indexOffset)
         {
             var comic = comicStore.Find(comicId);
             var rawFileName = WebPath.GetFileName(link);
@@ -66,12 +72,17 @@ namespace Woofy.Core
             if (!comic.PrependIndexToStrips)
                 return rawFileName;
 
-            return "{0:0000}_{1}".FormatTo(comic.DownloadedStrips + 1, rawFileName);
+            return "{0:0000}_{1}".FormatTo(comic.DownloadedStrips + indexOffset, rawFileName);
         }
 
         public string DownloadPathFor(string comicId, Uri link)
         {
             return DownloadPathFor(comicId, FileNameFor(comicId, link));
+        }
+
+        public string DownloadPathForPreviousIndex(string comicId, Uri link)
+        {
+            return DownloadPathFor(comicId, FileNameFor(comicId, link, 0));
         }
 
         public string DownloadFolderFor(Comic comic)
