@@ -2,10 +2,19 @@
 AppName=Woofy
 AppVersion=@APPVERSION@
 AppVerName=Woofy @APPVERSION@
+VersionInfoVersion=@APPFULLVERSION@
+AppPublisher=Vlad Iliescu
+AppPublisherURL=http://vladiliescu.ro
 AppMutex=C59EAB54-6C2C-41a0-B516-55452A5AB3D2
+AppCopyright=(c) Vlad Iliescu
 DefaultDirName={pf}\Woofy
 DefaultGroupName=Woofy
+
+Uninstallable=not IsComponentSelected('program\portable')
+CreateUninstallRegKey=not IsComponentSelected('program\portable')
 UninstallDisplayIcon={app}\Woofy.exe
+DisableProgramGroupPage=auto
+
 Compression=lzma2
 SolidCompression=yes
 LicenseFile=license.txt
@@ -32,8 +41,8 @@ Source: "Woofy\definitions\*.def"; DestDir: "{app}\definitions"; Components: pro
 Source: "Woofy.exe.config"; DestDir: "{app}"; Components: program\portable
 
 [Icons]
-Name: "{group}\Woofy"; Filename: "{app}\Woofy.exe"
-Name: "{group}\{cm:UninstallProgram,Woofy}"; Filename: "{uninstallexe}"
+Name: "{group}\Woofy"; Filename: "{app}\Woofy.exe"; Check: IsTaskSelected('program\portable')
+Name: "{group}\{cm:UninstallProgram,Woofy}"; Filename: "{uninstallexe}"; Check: IsTaskSelected('program\portable')
 
 Name: "{userstartup}\Woofy"; Filename: "{app}\Woofy.exe"; Components: program\autostart
 
