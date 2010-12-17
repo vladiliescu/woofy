@@ -7,7 +7,7 @@ namespace Woofy.Core.Engine.Expressions
     [CompilerGlobalScope]
     public static class MetaMethods
     {
-		public static MethodInvocationExpression GenerateIExpressionInvocationFor(string expressionName, params StringLiteralExpression[] arguments)
+		public static MethodInvocationExpression GenerateIExpressionInvocationFor(string expressionName, params Expression[] arguments)
 		{
             var @this = new SelfLiteralExpression();
             var invoke = new MemberReferenceExpression(@this, "InvokeExpression");
@@ -85,7 +85,19 @@ namespace Woofy.Core.Engine.Expressions
         [Meta]
         public static MethodInvocationExpression match(StringLiteralExpression value)
         {
-            return GenerateIExpressionInvocationFor(Expressions.Match);
+            return GenerateIExpressionInvocationFor(Expressions.Match, value);
+        }
+
+        [Meta]
+        public static MethodInvocationExpression warn(Expression value)
+        {
+            return GenerateIExpressionInvocationFor(Expressions.Warn, value);
+        }
+
+        [Meta]
+        public static MethodInvocationExpression log(Expression value)
+        {
+            return GenerateIExpressionInvocationFor(Expressions.Log, value);
         }
     }
 }

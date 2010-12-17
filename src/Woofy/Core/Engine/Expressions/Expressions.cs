@@ -10,5 +10,7 @@ namespace Woofy.Core.Engine.Expressions
         public static readonly string Meta = "meta";
         public static readonly string WriteMetaToText = "write_meta_to_text";
         public static readonly string Match = "match";
+        public static readonly string Warn = "warn";
+        public static readonly string Log = "log";
     }
 }

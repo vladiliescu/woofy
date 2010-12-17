@@ -109,8 +109,8 @@ namespace Woofy.Core.Engine.Expressions
 
         private void Sleep(Context context)
     	{
-			Log(context, "sleeping for 2 seconds..");
-			Thread.Sleep(2000);
+			Log(context, "sleeping for 3 seconds..");
+			Thread.Sleep(3000);
     	}
 
         private void ReportStripsFound(Uri[] links, Context context)

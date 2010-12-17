@@ -20,7 +20,7 @@ namespace Woofy.Core.Engine.Expressions
             var regex = (string)argument;
 
             var content = parser.RetrieveContent(regex, context.PageContent);
-            return new object[] { content.Length != 0 };
+            return content.Length != 0 ? content : null;
         }
 
         protected override string ExpressionName

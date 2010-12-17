@@ -93,12 +93,15 @@
     <Compile Include="Core\Engine\DownloadFinished.cs" />
     <Compile Include="Core\Engine\Expressions\BaseWebExpression.cs" />
     <Compile Include="Core\Engine\Expressions\Expressions.cs" />
+    <Compile Include="Core\Engine\Expressions\LogExpression.cs" />
     <Compile Include="Core\Engine\Expressions\MatchExpression.cs" />
     <Compile Include="Core\Engine\Expressions\MetaExpression.cs" />
     <Compile Include="Core\Engine\Expressions\PeekExpression.cs" />
     <Compile Include="Core\Engine\Expressions\SleepExpression.cs" />
     <Compile Include="Core\Engine\Expressions\GoToExpression.cs" />
+    <Compile Include="Core\Engine\Expressions\WarnExpression.cs" />
     <Compile Include="Core\Engine\Expressions\WriteMetaToTextExpression.cs" />
+    <Compile Include="Core\Engine\Methods\Extensions.cs" />
     <Compile Include="Core\Infrastructure\ConfigureLogging.cs" />
     <Compile Include="Core\ComicPath.cs" />
     <Compile Include="Core\ThreadCanceler.cs" />

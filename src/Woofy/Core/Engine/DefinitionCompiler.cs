@@ -1,3 +1,4 @@
+using System.IO;
 using Boo.Lang.Compiler;
 using Boo.Lang.Compiler.IO;
 using Boo.Lang.Compiler.Pipelines;
@@ -35,7 +36,7 @@ namespace Woofy.Core.Engine
 				references.ForEach(reference => parameters.References.Add(reference));
 
 			foreach (var definitionFile in definitionFiles)
-				parameters.Input.Add(new FileInput(definitionFile));
+				parameters.Input.Add(Input(definitionFile));
 
 			parameters.Pipeline.Insert(1, new DefinitionClassCompilerStep());
 
@@ -49,7 +50,14 @@ namespace Woofy.Core.Engine
 
 		}
 
-    	public Assembly Compile(params string[] definitionFiles)
+        private ICompilerInput Input(string definitionFile)
+        {
+            var content = File.ReadAllText(definitionFile);
+            content = "import Woofy.Core.Engine.Methods\n" + content;
+            return new StringInput(Path.GetFileNameWithoutExtension(definitionFile), content);
+        }
+
+        public Assembly Compile(params string[] definitionFiles)
         {
 			return Compile(null, definitionFiles);
         }

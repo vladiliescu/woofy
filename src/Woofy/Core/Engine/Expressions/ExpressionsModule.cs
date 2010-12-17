@@ -6,14 +6,25 @@ namespace Woofy.Core.Engine.Expressions
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<VisitExpression>().Named<IExpression>(Expressions.Visit).InstancePerDependency();
-            builder.RegisterType<GoToExpression>().Named<IExpression>(Expressions.GoTo).InstancePerDependency();
-            builder.RegisterType<DownloadExpression>().Named<IExpression>(Expressions.Download).InstancePerDependency();
-            builder.RegisterType<PeekExpression>().Named<IExpression>(Expressions.Peek).InstancePerDependency();
-            builder.RegisterType<SleepExpression>().Named<IExpression>(Expressions.Sleep).InstancePerDependency();
-			builder.RegisterType<MetaExpression>().Named<IExpression>(Expressions.Meta).InstancePerDependency();
-            builder.RegisterType<WriteMetaToTextExpression>().Named<IExpression>(Expressions.WriteMetaToText).InstancePerDependency();
-            builder.RegisterType<MatchExpression>().Named<IExpression>(Expressions.Match).InstancePerDependency();
+            builder.RegisterExpression<VisitExpression>(Expressions.Visit);
+            builder.RegisterExpression<GoToExpression>(Expressions.GoTo);
+            builder.RegisterExpression<DownloadExpression>(Expressions.Download);
+            builder.RegisterExpression<PeekExpression>(Expressions.Peek);
+            builder.RegisterExpression<SleepExpression>(Expressions.Sleep);
+			builder.RegisterExpression<MetaExpression>(Expressions.Meta);
+            builder.RegisterExpression<WriteMetaToTextExpression>(Expressions.WriteMetaToText);
+            builder.RegisterExpression<MatchExpression>(Expressions.Match);
+            builder.RegisterExpression<WarnExpression>(Expressions.Warn);
+            builder.RegisterExpression<LogExpression>(Expressions.Log);
+        }
+    }
+
+    public static class BuilderExtensions
+    {
+        public static void RegisterExpression<T>(this ContainerBuilder builder, string expressionName)
+            where T : IExpression
+        {
+            builder.RegisterType<T>().Named<IExpression>(expressionName).InstancePerDependency();
         }
     }
 }

@@ -1,13 +1,6 @@
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using Autofac;
-using Boo.Lang;
-using Boo.Lang.Compiler.Ast;
 using Woofy.Core.Engine;
-using Woofy.Core.Engine.Expressions;
 using Woofy.Core.Infrastructure;
 using Xunit;
-using Module = Autofac.Module;
 
 namespace Woofy.Tests.DefinitionCompilerTests
 {
@@ -76,66 +69,15 @@ namespace Woofy.Tests.DefinitionCompilerTests
 		{
 			var assembly = CompileReferencingTests("several_arguments.boo");
 			var definition = (Definition)assembly.CreateInstance("_several_arguments");
-			definition.ComicInstance = new Core.ComicManagement.Comic();
+            definition.ShouldNotBeNull();
 		}
-    }
 
-	public class CustomKeywordModule : Module
-	{
-		protected override void Load(ContainerBuilder builder)
-		{
-			builder.RegisterType<FooExpression>()
-				.Named<IExpression>("foo")
-				.SingleInstance();
-
-			builder.RegisterType<BarExpression>()
-				.Named<IExpression>("bar")
-				.SingleInstance();
-		}
-	}
-
-	public class FooExpression : IExpression
-    {
-        public int TimesInvoked { get; private set; }
-		public Context Context { get; private set; }
-
-        public IEnumerable<object> Invoke(object argument, Context context)
+        [Fact]
+        public void Can_compile_expressions_with_arguments_other_than_string_literals()
         {
-			Context = context;
-            TimesInvoked++;
-            return new object[] { TimesInvoked };
+            var assembly = CompileReferencingTests("reference_arguments.boo");
+            var definition = (Definition)assembly.CreateInstance("_reference_arguments");
+            definition.ShouldNotBeNull();
         }
     }
-
-	public class BarExpression : IExpression
-	{
-		public Context Context { get; private set; }
-		public string Argument { get; private set; }
-
-        public IEnumerable<object> Invoke(object argument, Context context)
-		{
-			Context = context;
-			Argument = (string)argument;
-			return null;
-		}
-	}
-}
-
-namespace Woofy.Core.Engine
-{
-	[CompilerGlobalScope]
-	public static class CustomKeywordMetaMethodContainer
-	{
-		[Meta]
-		public static MethodInvocationExpression foo()
-		{
-			return MetaMethods.GenerateIExpressionInvocationFor("foo", null);
-		}
-
-		[Meta]
-		public static MethodInvocationExpression bar(StringLiteralExpression argument)
-		{
-			return MetaMethods.GenerateIExpressionInvocationFor("bar", argument);
-		}
-	}
 }

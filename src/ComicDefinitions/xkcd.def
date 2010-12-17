@@ -1,8 +1,12 @@
 ﻿comic "xkcd"
 start_at "http://xkcd.com/1"
 
-for page in visit("""<a\shref=\"(?<content>/[\d]*/)\"\saccesskey=\"n\">"""):
+for page in visit("""<a href="(?<content>/[\d]*/)" accesskey="n">"""):
     meta("title", """<h1>(?<content>[^\n]*?)</h1>""")
-    meta("description", """<img src=\"http://imgs.xkcd.com/comics/[\w()-]*\.(gif|jpg|jpeg|png)" title="(?<content>[^\n]*?)" """)
-        
-    download("""<img\ssrc=\"(?<content>http://imgs.xkcd.com/comics/[\w()-]*\.(gif|jpg|jpeg|png))""")
+    meta("description", """<img src="http://imgs.xkcd.com/comics/[\w()-]*\.(gif|jpg|jpeg|png)" title="(?<content>[^\n]*?)" """)
+   
+    download("""<img src="(?<content>http://imgs.xkcd.com/comics/[\w()-]*\.(gif|jpg|jpeg|png))""")
+    
+    extra_link = match("""<a href="(?<content>[^\n]*?)"><img src="http://imgs.xkcd.com/comics/[\w()-]*\.(gif|jpg|jpeg|png)""") as (string)    
+    if extra_link != null:
+        warn("{0} contains an extra link: {1}" % (page, extra_link[0]))
