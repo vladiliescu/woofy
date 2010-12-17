@@ -101,7 +101,6 @@
     <Compile Include="Core\Engine\Expressions\GoToExpression.cs" />
     <Compile Include="Core\Engine\Expressions\WarnExpression.cs" />
     <Compile Include="Core\Engine\Expressions\WriteMetaToTextExpression.cs" />
-    <Compile Include="Core\Engine\Methods\Extensions.cs" />
     <Compile Include="Core\Infrastructure\ConfigureLogging.cs" />
     <Compile Include="Core\ComicPath.cs" />
     <Compile Include="Core\ThreadCanceler.cs" />

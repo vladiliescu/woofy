@@ -53,7 +53,7 @@ namespace Woofy.Core.Engine
         private ICompilerInput Input(string definitionFile)
         {
             var content = File.ReadAllText(definitionFile);
-            content = "import Woofy.Core.Engine.Methods\n" + content;
+            //content = "import Woofy.Core.Engine.Methods\n" + content;
             return new StringInput(Path.GetFileNameWithoutExtension(definitionFile), content);
         }
 
