@@ -101,6 +101,7 @@
             <filterchain>
                 <replacetokens>
                     <token key="APPVERSION" value="${woofy.Version}" />
+                    <token key="APPFULLVERSION" value="${woofy.Version}" />
                     <!--<token key="WOOFYEXEFILENAME" value="${woofy.ExeFileName}" />
                     
                     <token key="TODAY" value="${date.Today}" />-->
