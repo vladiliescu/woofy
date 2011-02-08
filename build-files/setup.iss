@@ -41,8 +41,8 @@ Source: "Woofy\definitions\*.def"; DestDir: "{app}\definitions"; Components: pro
 Source: "Woofy.exe.config"; DestDir: "{app}"; Components: program\portable
 
 [Icons]
-Name: "{group}\Woofy"; Filename: "{app}\Woofy.exe"; Check: IsTaskSelected('program\portable')
-Name: "{group}\{cm:UninstallProgram,Woofy}"; Filename: "{uninstallexe}"; Check: IsTaskSelected('program\portable')
+Name: "{group}\Woofy"; Filename: "{app}\Woofy.exe"; Check: not IsTaskSelected('program\portable')
+Name: "{group}\{cm:UninstallProgram,Woofy}"; Filename: "{uninstallexe}"; Check: not IsTaskSelected('program\portable')
 
 Name: "{userstartup}\Woofy"; Filename: "{app}\Woofy.exe"; Components: program\autostart
 
