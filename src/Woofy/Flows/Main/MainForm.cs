@@ -71,7 +71,7 @@ namespace Woofy.Flows.Main
 
 		private void OnResize(object sender, EventArgs e)
 		{
-			if (!Presenter.MinimizeToTray)
+			if (Presenter == null || !Presenter.MinimizeToTray)
 				return;
 
 			if (WindowState == FormWindowState.Minimized)
