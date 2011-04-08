@@ -17,7 +17,7 @@ namespace Woofy.Core.Engine
             ComicId = id;
             Comic = comic;
             CurrentAddress = startAt;
-			Metadata = new Dictionary<string, string>();
-        }	    
+	        Metadata = new Dictionary<string, string>();
+        }
 	}
 }

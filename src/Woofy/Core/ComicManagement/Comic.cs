@@ -16,11 +16,13 @@ namespace Woofy.Core.ComicManagement
     	public Status Status { get; set; }
     	public Uri CurrentPage { get; set; }
         public bool PrependIndexToStrips { get; set; }
+        public bool EmbedMetadata { get; set; }
 
 		[JsonIgnore]
 		public bool HasFinished { get; set; }
 		[JsonIgnore]
     	public Definition Definition { get; private set; }
+        
 
         public void SetDefinition(Definition definition)
         {

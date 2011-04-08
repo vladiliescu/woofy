@@ -22,11 +22,15 @@ namespace Woofy.Flows.Comics
             gbComic.Text = viewModel.Name;
             Text = "Edit {0}".FormatTo(viewModel.Name);
             chkPrependIndex.Checked = viewModel.PrependIndexToStrips;
+            chkEmbedMetadata.Checked = viewModel.EmbedMetadata;
+
+            ttInfo.SetToolTip(chkPrependIndex, "If checked, Woofy will rename each strip, prepending the strip's index to the filename.");
+            ttInfo.SetToolTip(chkEmbedMetadata, "If checked, Woofy will embed additional metadata such as the strip's address inside each downloaded strip.\nYou can view the metadata using an image viewer that supports the XMP format, such as XnView MP.");
         }
 
         private void OnOk(object sender, System.EventArgs e)
         {
-            presenter.EditComic(new EditInputModel(comicId, chkPrependIndex.Checked));
+            presenter.EditComic(new EditInputModel(comicId, chkPrependIndex.Checked, chkEmbedMetadata.Checked));
         }
     }
 }

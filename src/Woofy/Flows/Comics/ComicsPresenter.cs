@@ -38,6 +38,7 @@ namespace Woofy.Flows.Comics
             
             comic.Status = Status.Running;
             comic.PrependIndexToStrips = inputModel.PrependIndexToStrips;
+            comic.EmbedMetadata = inputModel.EmbedMetadata;
 
             comicStore.PersistComics();
             appController.Raise(new ComicActivated(comic));
@@ -47,6 +48,7 @@ namespace Woofy.Flows.Comics
 	    {
             var comic = comicStore.Find(inputModel.ComicId);
             comic.PrependIndexToStrips = inputModel.PrependIndexToStrips;
+            comic.EmbedMetadata = inputModel.EmbedMetadata;
 
             comicStore.PersistComics();
 	    }
@@ -62,7 +64,7 @@ namespace Woofy.Flows.Comics
 	    public void Handle(EditComic command)
 	    {
             var comic = comicStore.Find(command.ComicId);
-            using (var form = new EditForm(this, new EditViewModel(comic.Id, comic.Name, comic.PrependIndexToStrips)))
+            using (var form = new EditForm(this, new EditViewModel(comic.Id, comic.Name, comic.PrependIndexToStrips, comic.EmbedMetadata)))
             {
                 form.ShowDialog();
             }

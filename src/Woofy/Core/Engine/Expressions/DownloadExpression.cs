@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using System.Threading;
+using Woofy.Core.ComicManagement;
 using Woofy.Core.Infrastructure;
 using Woofy.Core.SystemProxies;
 using Woofy.Flows.ApplicationLog;
@@ -17,11 +18,13 @@ namespace Woofy.Core.Engine.Expressions
 		private readonly IComicPath comicPath;
         private readonly IFileProxy file;
         private readonly IAppSettings appSettings;
+        private readonly IComicStore comicStore;
 
-        public DownloadExpression(IAppLog appLog, IPageParser parser, IAppController appController, IFileDownloader downloader, IComicPath comicPath, IFileProxy file, IWebClientProxy webClient, IAppSettings appSettings)
+        public DownloadExpression(IAppLog appLog, IPageParser parser, IAppController appController, IFileDownloader downloader, IComicPath comicPath, IFileProxy file, IWebClientProxy webClient, IAppSettings appSettings, IComicStore comicStore)
             : base(appLog, webClient)
         {
             this.parser = parser;
+            this.comicStore = comicStore;
             this.appSettings = appSettings;
             this.file = file;
             this.comicPath = comicPath;
@@ -76,6 +79,9 @@ namespace Woofy.Core.Engine.Expressions
 
         private void EmbedMetadataIfEnabled(string fileName, Context context)
         {
+            if (MetadataEmbeddingIsDisabled(context.ComicId))
+                return;
+
             var metaBuilder = new StringBuilder();
 
             metaBuilder.AddIfPossible("xmp:title", "title", context);
@@ -102,6 +108,12 @@ namespace Woofy.Core.Engine.Expressions
                 Log(context, "exiftool: {0}", output);
         }
 
+        private bool MetadataEmbeddingIsDisabled(string comicId)
+        {
+            var comic = comicStore.Find(comicId);
+            return !comic.EmbedMetadata;
+        }
+
         private void ReportStripDownloading(Uri link, string downloadPath, Context context)
         {
             Log(context, "downloading {0} to {1}", link, downloadPath);
@@ -109,7 +121,7 @@ namespace Woofy.Core.Engine.Expressions
 
         private void Sleep(Context context)
     	{
-			Log(context, "sleeping for 3 seconds..");
+			Log(context, "sleeping for 3 seconds...");
 			Thread.Sleep(3000);
     	}
 

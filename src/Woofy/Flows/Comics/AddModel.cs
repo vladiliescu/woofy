@@ -26,11 +26,13 @@ namespace Woofy.Flows.Comics
     {
         public string ComicId { get; private set; }
         public bool PrependIndexToStrips { get; private set; }
+        public bool EmbedMetadata { get; private set; }
 
-        public AddInputModel(string comicId, bool prependIndexToStrips)
+        public AddInputModel(string comicId, bool prependIndexToStrips, bool embedMetadata)
         {
             ComicId = comicId;
             PrependIndexToStrips = prependIndexToStrips;
+            EmbedMetadata = embedMetadata;
         }
     }
 }

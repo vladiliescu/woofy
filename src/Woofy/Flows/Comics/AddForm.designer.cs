@@ -28,11 +28,14 @@ namespace Woofy.Flows.Comics
 		/// </summary>
 		private void InitializeComponent()
 		{
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.GroupBox groupBox1;
             this.cbComics = new System.Windows.Forms.ComboBox();
             this.btnOk = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
             this.chkPrependIndex = new System.Windows.Forms.CheckBox();
+            this.chkEmbedMetadata = new System.Windows.Forms.CheckBox();
+            this.ttInfo = new System.Windows.Forms.ToolTip(this.components);
             groupBox1 = new System.Windows.Forms.GroupBox();
             groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -67,7 +70,7 @@ namespace Woofy.Flows.Comics
             // btnOk
             // 
             this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnOk.Location = new System.Drawing.Point(262, 105);
+            this.btnOk.Location = new System.Drawing.Point(262, 117);
             this.btnOk.Margin = new System.Windows.Forms.Padding(2);
             this.btnOk.Name = "btnOk";
             this.btnOk.Size = new System.Drawing.Size(75, 23);
@@ -80,7 +83,7 @@ namespace Woofy.Flows.Comics
             // 
             this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.btnCancel.Location = new System.Drawing.Point(341, 105);
+            this.btnCancel.Location = new System.Drawing.Point(341, 117);
             this.btnCancel.Margin = new System.Windows.Forms.Padding(2);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(75, 23);
@@ -98,13 +101,30 @@ namespace Woofy.Flows.Comics
             this.chkPrependIndex.Text = "Prepend the index to each downloaded strip";
             this.chkPrependIndex.UseVisualStyleBackColor = true;
             // 
+            // chkEmbedMetadata
+            // 
+            this.chkEmbedMetadata.AutoSize = true;
+            this.chkEmbedMetadata.Location = new System.Drawing.Point(17, 93);
+            this.chkEmbedMetadata.Name = "chkEmbedMetadata";
+            this.chkEmbedMetadata.Size = new System.Drawing.Size(132, 17);
+            this.chkEmbedMetadata.TabIndex = 5;
+            this.chkEmbedMetadata.Text = "Embed XMP metadata";
+            this.chkEmbedMetadata.UseVisualStyleBackColor = true;
+            // 
+            // ttInfo
+            // 
+            this.ttInfo.AutoPopDelay = 10000;
+            this.ttInfo.InitialDelay = 500;
+            this.ttInfo.ReshowDelay = 100;
+            // 
             // AddForm
             // 
             this.AcceptButton = this.btnOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
-            this.ClientSize = new System.Drawing.Size(427, 139);
+            this.ClientSize = new System.Drawing.Size(427, 151);
+            this.Controls.Add(this.chkEmbedMetadata);
             this.Controls.Add(this.chkPrependIndex);
             this.Controls.Add(groupBox1);
             this.Controls.Add(this.btnCancel);
@@ -131,5 +151,7 @@ namespace Woofy.Flows.Comics
 		private System.Windows.Forms.Button btnOk;
 		private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.CheckBox chkPrependIndex;
+        private System.Windows.Forms.CheckBox chkEmbedMetadata;
+        private System.Windows.Forms.ToolTip ttInfo;
 	}
 }
