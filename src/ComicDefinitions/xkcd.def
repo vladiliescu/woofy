@@ -2,8 +2,8 @@
 start_at "http://xkcd.com/1"
 
 for page in visit("""<a href="(?<content>/[\d]*/)" accesskey="n">"""):
-    meta("title", """<h1>(?<content>[^\n]*?)</h1>""")
-    meta("description", """<img src="http://imgs.xkcd.com/comics/[\w()-]*\.(gif|jpg|jpeg|png)" title="(?<content>[^\n]*?)" """)
+    title("""<h1>(?<content>[^\n]*?)</h1>""")
+    description("""<img src="http://imgs.xkcd.com/comics/[\w()-]*\.(gif|jpg|jpeg|png)" title="(?<content>[^\n]*?)" """)
    
     download("""<img src="(?<content>http://imgs.xkcd.com/comics/[\w()-]*\.(gif|jpg|jpeg|png))""")
     
