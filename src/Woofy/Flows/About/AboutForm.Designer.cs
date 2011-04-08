@@ -47,7 +47,7 @@ namespace Woofy.Flows.About
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new System.Drawing.Point(13, 58);
+            label1.Location = new System.Drawing.Point(13, 55);
             label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             label1.Name = "label1";
             label1.Size = new System.Drawing.Size(190, 13);
@@ -141,7 +141,7 @@ namespace Woofy.Flows.About
             // lnkFamFamFam
             // 
             this.lnkFamFamFam.AutoSize = true;
-            this.lnkFamFamFam.Location = new System.Drawing.Point(28, 72);
+            this.lnkFamFamFam.Location = new System.Drawing.Point(28, 69);
             this.lnkFamFamFam.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lnkFamFamFam.Name = "lnkFamFamFam";
             this.lnkFamFamFam.Size = new System.Drawing.Size(213, 13);

@@ -104,6 +104,8 @@ namespace Woofy.Flows.Comics
             // chkEmbedMetadata
             // 
             this.chkEmbedMetadata.AutoSize = true;
+            this.chkEmbedMetadata.Checked = true;
+            this.chkEmbedMetadata.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkEmbedMetadata.Location = new System.Drawing.Point(17, 93);
             this.chkEmbedMetadata.Name = "chkEmbedMetadata";
             this.chkEmbedMetadata.Size = new System.Drawing.Size(132, 17);
