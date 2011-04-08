@@ -1,11 +1,9 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Woofy", "Woofy\Woofy.csproj", "{25F085AE-B31D-40E6-9546-0D357ECD18FE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Woofy.Tests", "Woofy.Tests\Woofy.Tests.csproj", "{2F3A2ADE-0B08-4CBD-8C69-6CD3A995FCF1}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Woofy.Console", "Woofy.Console\Woofy.Console.csproj", "{D45D0438-6611-4F05-80B0-C339D62D54A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,12 +24,6 @@ Global
 		{2F3A2ADE-0B08-4CBD-8C69-6CD3A995FCF1}.DebugInstaller|Any CPU.Build.0 = Debug|Any CPU
 		{2F3A2ADE-0B08-4CBD-8C69-6CD3A995FCF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F3A2ADE-0B08-4CBD-8C69-6CD3A995FCF1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D45D0438-6611-4F05-80B0-C339D62D54A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D45D0438-6611-4F05-80B0-C339D62D54A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D45D0438-6611-4F05-80B0-C339D62D54A7}.DebugInstaller|Any CPU.ActiveCfg = Debug|Any CPU
-		{D45D0438-6611-4F05-80B0-C339D62D54A7}.DebugInstaller|Any CPU.Build.0 = Debug|Any CPU
-		{D45D0438-6611-4F05-80B0-C339D62D54A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D45D0438-6611-4F05-80B0-C339D62D54A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
