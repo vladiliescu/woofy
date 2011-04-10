@@ -19,6 +19,7 @@
     </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -74,7 +75,6 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
   </ItemGroup>
@@ -101,6 +101,9 @@
     <Compile Include="Core\Engine\Expressions\GoToExpression.cs" />
     <Compile Include="Core\Engine\Expressions\WarnExpression.cs" />
     <Compile Include="Core\Engine\Expressions\WriteMetaToTextExpression.cs" />
+    <Compile Include="Core\MonoWebBits\Helpers.cs" />
+    <Compile Include="Core\MonoWebBits\HttpEncoder.cs" />
+    <Compile Include="Core\MonoWebBits\HttpUtility.cs" />
     <Compile Include="Core\Infrastructure\ConfigureLogging.cs" />
     <Compile Include="Core\ComicPath.cs" />
     <Compile Include="Core\ThreadCanceler.cs" />
