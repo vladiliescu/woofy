@@ -29,14 +29,23 @@ end;
 procedure FormButtonOnClick(Sender: TObject);
 var
   Form: TSetupForm;
+  Edit: TNewEdit;
   OKButton, CancelButton: TNewButton;
 begin
   Form := CreateCustomForm();
   try
     Form.ClientWidth := ScaleX(256);
-    Form.ClientHeight := ScaleY(256);
+    Form.ClientHeight := ScaleY(128);
     Form.Caption := 'TSetupForm';
     Form.CenterInsideControl(WizardForm, False);
+
+    Edit := TNewEdit.Create(Form);
+    Edit.Top := ScaleY(10);
+    Edit.Left := ScaleX(10);
+    Edit.Width := Form.ClientWidth - ScaleX(2 * 10);
+    Edit.Height := ScaleY(23);
+    Edit.Text := 'TNewEdit';
+    Edit.Parent := Form;
 
     OKButton := TNewButton.Create(Form);
     OKButton.Parent := Form;
@@ -46,6 +55,7 @@ begin
     OKButton.Top := Form.ClientHeight - ScaleY(23 + 10);
     OKButton.Caption := 'OK';
     OKButton.ModalResult := mrOk;
+    OKButton.Default := True;
 
     CancelButton := TNewButton.Create(Form);
     CancelButton.Parent := Form;
@@ -57,7 +67,7 @@ begin
     CancelButton.ModalResult := mrCancel;
     CancelButton.Cancel := True;
 
-    Form.ActiveControl := OKButton;
+    Form.ActiveControl := Edit;
 
     if Form.ShowModal() = mrOk then
       MsgBox('You clicked OK.', mbInformation, MB_OK);
@@ -320,7 +330,10 @@ begin
   URLLabel.Parent := ParentForm;
   { Alter Font *after* setting Parent so the correct defaults are inherited first }
   URLLabel.Font.Style := URLLabel.Font.Style + [fsUnderline];
-  URLLabel.Font.Color := clBlue;
+  if GetWindowsVersion >= $040A0000 then   { Windows 98 or later? }
+    URLLabel.Font.Color := clHotLight
+  else
+    URLLabel.Font.Color := clBlue;
   URLLabel.Top := AboutButton.Top + AboutButton.Height - URLLabel.Height - 2;
   URLLabel.Left := AboutButton.Left + AboutButton.Width + ScaleX(20);
 end;
