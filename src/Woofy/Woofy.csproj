@@ -254,6 +254,7 @@
     <Content Include="license.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\WoofyLogo.png" />
     <None Include="Resources\exit.png" />
     <Content Include="Resources\donate.png" />
     <Content Include="Resources\folder_image.png" />
@@ -267,7 +268,6 @@
     <None Include="Resources\warning.png" />
     <None Include="Resources\error.png" />
     <None Include="Resources\world_go.png" />
-    <None Include="Resources\WoofyLogo.png" />
     <EmbeddedResource Include="Flows\Comics\AddForm.resx">
       <DependentUpon>AddForm.cs</DependentUpon>
     </EmbeddedResource>
