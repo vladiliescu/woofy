@@ -6,7 +6,7 @@
 	<property name="configuration" value="Release"/>
 	<property name="version.Major" value="1" />
 	<property name="version.Minor" value="1" />
-	<property name="version.BuildNumber" value="0" />
+	<property name="version.BuildNumber" value="1" />
 	<property name="version.Revision" value="0"  />
 	
 	<property name="dir.Current" value="${directory::get-current-directory()}"/>
@@ -21,7 +21,7 @@
 	<property name="date.Now" value="${datetime::now()}"/>
     <property name="date.Today" value="${datetime::get-year(date.Now)}-${string::pad-left(int::to-string(datetime::get-month(date.Now)), 2, '0')}-${string::pad-left(int::to-string(datetime::get-day(date.Now)), 2, '0')}"/>
     
-    <property name="woofy.Version" value="${version.Major}.${version.Minor}.${version.BuildNumber}" />
+    <property name="woofy.Version" value="${version.Major}.${version.Minor}${version.BuildNumber}" />
     <property name="woofy.ZipFileName" value="Woofy-${woofy.Version}.zip"/>
     <property name="woofy.ZipFile" value="${dir.Build}\${woofy.ZipFileName}"/>
     <property name="woofy.ExeFileName" value="Woofy-${woofy.Version}-setup.exe"/>
