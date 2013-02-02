@@ -3,6 +3,5 @@ start_at "http://www.snowflakescomic.com/?id=103&sl=1"
 
 for page in visit("""<a href=(?<content>/\?id=[\d]*&sl=[\d]*)><img src="images/nav_next-ON.gif" border="0"></a>"""):
     title("""<h1>(?<content>.*?)</h1>""")
-    description("""<p class="comic-news">(?<content>.*?\n?)<div""")
 	
     download("""src="(?<content>http://www.snowflakescomic.com/comics/[^\n]*?\.jpg)">""")
