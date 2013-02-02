@@ -18,6 +18,7 @@ UninstallDisplayIcon={app}\Woofy.exe
 DisableProgramGroupPage=yes
 DisableDirPage=yes
 AlwaysShowDirOnReadyPage=yes
+AlwaysShowComponentsList=no
 
 Compression=lzma2
 SolidCompression=yes
@@ -30,11 +31,11 @@ OutputBaseFilename=Woofy-@APPVERSION@
 
 [Types]
 Name: "standard"; Description: "Standard installation"
-Name: "custom"; Description: "Custom installation"; Flags: iscustom
+;Name: "custom"; Description: "Custom installation"; Flags: iscustom
 
 [Components]
-Name: "program"; Description: "Woofy"; Types: standard custom; Flags: fixed
-Name: "program\autostart"; Types: standard; Description: "Start Woofy on system startup"
+Name: "program"; Description: "Woofy"; Types: standard; Flags: fixed
+;Name: "program\autostart"; Types: standard; Description: "Start Woofy on system startup"
 
 [Files]
 Source: "Woofy\*.*"; Excludes: "*.exe.config"; DestDir: "{app}"; Components: program
@@ -44,7 +45,7 @@ Source: "Woofy\definitions\*.def"; DestDir: "{app}\definitions"; Components: pro
 Name: "{group}\Woofy"; Filename: "{app}\Woofy.exe";
 Name: "{group}\{cm:UninstallProgram,Woofy}"; Filename: "{uninstallexe}";
 
-Name: "{userstartup}\Woofy"; Filename: "{app}\Woofy.exe"; Components: program\autostart
+;Name: "{userstartup}\Woofy"; Filename: "{app}\Woofy.exe"; Components: program\autostart
 
 [Run]
 Filename: {app}\Woofy.exe; Flags: postinstall nowait; Description: Run Woofy when I press Finish
