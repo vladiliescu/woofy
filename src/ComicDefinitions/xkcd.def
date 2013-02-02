@@ -1,8 +1,8 @@
 ﻿comic "xkcd"
 start_at "http://xkcd.com/1"
 
-for page in visit("""<a href="(?<content>/[\d]*/)" accesskey="n">"""):
-    title("""<h1>(?<content>[^\n]*?)</h1>""")
+for page in visit("""<a rel="next" href="(?<content>/[\d]*/)" accesskey="n">"""):
+    title("""<div id="ctitle">(?<content>[^\n]*?)</div>""")
     description("""<img src="http://imgs.xkcd.com/comics/[\w()-]*\.(gif|jpg|jpeg|png)" title="(?<content>[^\n]*?)" """)
    
     download("""<img src="(?<content>http://imgs.xkcd.com/comics/[\w()-]*\.(gif|jpg|jpeg|png))""")
