@@ -5,6 +5,9 @@ using Woofy.Flows.ApplicationLog;
 
 namespace Woofy.Core.Engine.Expressions
 {
+    /// <summary>
+    /// Used to log all metadata found in the current page to a file (named after the comic's id).
+    /// </summary>
     public class WriteMetaToTextExpression : BaseExpression
     {
         private readonly IFileProxy file;

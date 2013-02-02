@@ -6,6 +6,9 @@ using Woofy.Flows.ApplicationLog;
 
 namespace Woofy.Core.Engine.Expressions
 {
+    /// <summary>
+    /// Will redirect to the specified page (not a regular expression, but a valid url)
+    /// </summary>
     public class GoToExpression : BaseExpression
     {
         private readonly IAppController appController;
@@ -19,13 +22,21 @@ namespace Woofy.Core.Engine.Expressions
 
         public override IEnumerable<object> Invoke(object argument, Context context)
         {
-            var link = new Uri((string)argument);
+            Uri link = UriEx.From((string)argument, () => ReportBadArgument(context, argument));
+            if (link == null)
+                return null;            
+
             ReportVisitingPage(link, context);
 
             context.CurrentAddress = link;
             context.PageContent = webClient.DownloadString(link);
             
             return null;
+        }
+
+        private void ReportBadArgument(Context context, object argument)
+        {
+            Log(context, "argument {0} is not a valid url", argument);
         }
 
         private void ReportVisitingPage(Uri page, Context context)
@@ -38,5 +49,5 @@ namespace Woofy.Core.Engine.Expressions
         {
             get { return Expressions.GoTo; }
         }
-    }
+    }   
 }

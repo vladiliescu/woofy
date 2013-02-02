@@ -4,6 +4,9 @@ using Woofy.Flows.ApplicationLog;
 
 namespace Woofy.Core.Engine.Expressions
 {
+    /// <summary>
+    /// Used to retrieve metadata from a page, based on a given regular expression.
+    /// </summary>
 	public class MetaExpression : BaseWebExpression
 	{
 		private readonly IPageParser parser;

@@ -4,6 +4,9 @@ using Woofy.Flows.ApplicationLog;
 
 namespace Woofy.Core.Engine.Expressions
 {
+    /// <summary>
+    /// Used to check if a certain regular expression captures anything in the current page.
+    /// </summary>
     public class MatchExpression : BaseWebExpression
     {
         private readonly IPageParser parser;

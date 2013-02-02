@@ -6,6 +6,9 @@ using Woofy.Flows.ApplicationLog;
 
 namespace Woofy.Core.Engine.Expressions
 {
+    /// <summary>
+    /// Used to iterate between multiple pages. Will search the page for a new link using the argument, and when found it will redirect to that new page.
+    /// </summary>
     public class VisitExpression : BaseWebExpression
     {
         private readonly IPageParser parser;
@@ -29,7 +32,8 @@ namespace Woofy.Core.Engine.Expressions
             var regex = (string)argument;
             do
             {
-                var links = parser.RetrieveLinksFromPage(regex, context.CurrentAddress, context.PageContent);
+                var links = parser.RetrieveLinksFromPage(regex, context.CurrentAddress, context.PageContent, (r, l) => ReportBadRegex(context, r, l));
+
                 ReportLinksFound(links, context);
 				if (links.Length == 0)
 					yield break;
@@ -42,7 +46,7 @@ namespace Woofy.Core.Engine.Expressions
                 yield return link;
             }
             while (true);
-        }
+        }        
 
         private void ReportLinksFound(Uri[] links, Context context)
         {

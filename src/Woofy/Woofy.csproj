@@ -133,6 +133,7 @@
     <Compile Include="Core\SystemProxies\WebClientProxy.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Core\UriEx.cs" />
     <Compile Include="Core\VersionConverter.cs" />
     <Compile Include="Flows\About\AboutPresenter.cs" />
     <Compile Include="Flows\About\DisplayAboutScreen.cs" />

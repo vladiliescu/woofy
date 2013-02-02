@@ -7,7 +7,7 @@ namespace Woofy.Core.Engine
 {
 	public interface IPageParser
 	{
-		Uri[] RetrieveLinksFromPage(string regexPattern, Uri currentUri, string pageContent);
+        Uri[] RetrieveLinksFromPage(string regexPattern, Uri currentUri, string pageContent, Action<string, string> reportFormatException);
 		string[] RetrieveContent(string regex, string pageContent);
 	}
 
@@ -20,16 +20,23 @@ namespace Woofy.Core.Engine
 			this.appSettings = appSettings;
 		}
 
-		public Uri[] RetrieveLinksFromPage(string regex, Uri currentUri, string pageContent)
+        public Uri[] RetrieveLinksFromPage(string regex, Uri currentUri, string pageContent, Action<string, string> reportFormatException)
 		{
 			var rawLinks = RetrieveContent(regex, pageContent);
 			var links = new List<Uri>();
 			foreach (var link in rawLinks)
 			{
-				if (WebPath.IsAbsolute(link))
-					links.Add(new Uri(link));
-				else
-					links.Add(new Uri(currentUri, link));
+                try
+                {
+                    if (WebPath.IsAbsolute(link))
+                        links.Add(new Uri(link));
+                    else
+                        links.Add(new Uri(currentUri, link));
+                }
+                catch (UriFormatException)
+                {
+                    reportFormatException(regex, link);
+                }
 			}
 
 			return links.ToArray();

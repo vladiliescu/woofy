@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net;
 using System.Text;
 using System.Threading;
 using Woofy.Core.ComicManagement;
@@ -10,6 +11,9 @@ using Woofy.Flows.ApplicationLog;
 
 namespace Woofy.Core.Engine.Expressions
 {
+    /// <summary>
+    /// Used to download an item from the current page. If it finds multiple matches in the current page, it will try to download them all;
+    /// </summary>
     public class DownloadExpression : BaseWebExpression
     {
         private readonly IPageParser parser;
@@ -36,7 +40,8 @@ namespace Woofy.Core.Engine.Expressions
         {
             EnsureContentIsInitialized(context);
 
-            var links = parser.RetrieveLinksFromPage((string)argument, context.CurrentAddress, context.PageContent);
+            var links = parser.RetrieveLinksFromPage((string)argument, context.CurrentAddress, context.PageContent, (r, l) => ReportBadRegex(context, r, l));            
+
             if (links.Length == 0)
             {
                 ReportNoStripsFound(context);
@@ -65,7 +70,16 @@ namespace Woofy.Core.Engine.Expressions
                     continue;
                 }
 
-                downloader.Download(link, downloadPath);
+                try
+                {
+                    downloader.Download(link, downloadPath);
+                }
+                catch (WebException ex)
+                {
+                    Warn(context, ex.Message);
+                    continue;
+                }
+
                 downloadedFiles.Add(downloadPath);
                 ReportStripDownloaded(link, context);
 

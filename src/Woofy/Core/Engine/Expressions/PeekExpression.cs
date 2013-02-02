@@ -6,6 +6,9 @@ using Woofy.Flows.ApplicationLog;
 
 namespace Woofy.Core.Engine.Expressions
 {
+    /// <summary>
+    /// Used to visit multiple pages found in the current page, one by one.
+    /// </summary>
     public class PeekExpression : BaseWebExpression
     {
         private readonly IPageParser parser;
@@ -23,7 +26,7 @@ namespace Woofy.Core.Engine.Expressions
                 InitializeContent(context);
 
             var regex = (string)argument;
-            var links = parser.RetrieveLinksFromPage(regex, context.CurrentAddress, context.PageContent);
+            var links = parser.RetrieveLinksFromPage(regex, context.CurrentAddress, context.PageContent, (r, l) => ReportBadRegex(context, r, l));
             ReportLinksFound(links, context);
             if (links.Length == 0)
                 yield break;

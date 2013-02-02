@@ -4,6 +4,9 @@ using Woofy.Flows.ApplicationLog;
 
 namespace Woofy.Core.Engine.Expressions
 {
+    /// <summary>
+    /// Used to pause the download for two seconds.
+    /// </summary>
     public class SleepExpression : BaseExpression
     {
         public SleepExpression(IAppLog appLog) : base(appLog)

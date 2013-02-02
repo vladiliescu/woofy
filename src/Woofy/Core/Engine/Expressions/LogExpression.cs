@@ -3,6 +3,9 @@ using Woofy.Flows.ApplicationLog;
 
 namespace Woofy.Core.Engine.Expressions
 {
+    /// <summary>
+    /// Used to log a message.
+    /// </summary>
     public class LogExpression : BaseExpression
     {
         public LogExpression(IAppLog appLog) : base(appLog)

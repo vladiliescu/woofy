@@ -29,5 +29,10 @@ namespace Woofy.Core.Engine.Expressions
             if (ContentIsEmpty(context))
                 InitializeContent(context);
         }
+
+        protected void ReportBadRegex(Context context, string regex, string link)
+        {
+            Warn(context, "found '{0}' using the regex '{1}', but it's not a valid link", link, regex);
+        }
     }
 }
