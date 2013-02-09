@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <updateDescription>
     <woofy>
-        <release versionNumber="1.1.1" downloadAddress="http://woofy.googlecode.com/files/Woofy-1.11.exe" releaseDate="2013-02-02" size="4578293">
+        <release versionNumber="1.1.2" downloadAddress="http://woofy.googlecode.com/files/Woofy-1.12.exe" releaseDate="2013-02-09" size="4578475">
             <changes>
                 <change>-</change>
             </changes>
