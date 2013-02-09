@@ -53,11 +53,9 @@ namespace Woofy.Flows.Main
 
         public BindingList<ComicViewModel> Comics { get; private set; }
 
+        private readonly object appLogBuilderLock = new object();
         private readonly StringBuilder appLogBuilder = new StringBuilder();
-        public string AppLog
-        {
-            get { return appLogBuilder.ToString(); }
-        }
+        public string AppLog { get; private set; }
 
         public bool MinimizeToTray
         {
@@ -145,10 +143,13 @@ namespace Woofy.Flows.Main
 
         public void Handle(AppLogEntryAdded eventData)
         {
-            if (eventData.ComicId.IsNotNullOrEmpty())
-                appLogBuilder.AppendFormat("[{0:T}][{1} {2}] {3}\n", DateTime.Now, eventData.ComicId, eventData.ExpressionName, eventData.Message);
-            else
-                appLogBuilder.AppendFormat("[{0:T}] {1}\n", DateTime.Now, eventData.Message);
+            lock (appLogBuilderLock)
+            {
+                if (eventData.ComicId.IsNotNullOrEmpty())
+                    appLogBuilder.AppendFormat("[{0:T}][{1} {2}] {3}\n", DateTime.Now, eventData.ComicId, eventData.ExpressionName, eventData.Message);
+                else
+                    appLogBuilder.AppendFormat("[{0:T}] {1}\n", DateTime.Now, eventData.Message);
+            }            
             
             uiThread.Send(OnAppLogChanged);
         }
@@ -156,10 +157,15 @@ namespace Woofy.Flows.Main
     	public event PropertyChangedEventHandler PropertyChanged;
     	private void OnAppLogChanged()
         {
-            var eventHandler = PropertyChanged;
+            var eventHandler = Interlocked.CompareExchange<PropertyChangedEventHandler>(ref PropertyChanged, null, null);
             if (eventHandler == null)
                 return;
 
+            lock (appLogBuilderLock)
+            {
+                AppLog = appLogBuilder.ToString();
+            }
+            
             eventHandler(this, new PropertyChangedEventArgs("AppLog"));
         }
 
