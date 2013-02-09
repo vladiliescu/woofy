@@ -1,0 +1,8 @@
+* Increase version in woofy.build and commit
+* Tag the latest commit with the new version and push
+* Build the thing
+* Upload the setup kit and the portable version to Google Code
+* Update the WhatsNew wiki page on Google Code
+* Update the pad_file.xml and updatesDescriptionFile.xml in the Woofy repository
+* Update the updateInfo.json file on vladiliescu.ro
+* Post the news on the forum

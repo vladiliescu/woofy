@@ -1,0 +1,5 @@
+﻿comic "Stuff No One Told Me"
+start_at "http://stuffnoonetoldme.blogspot.com/2010/05/01.html"
+
+for page in visit("""class='blog-pager-newer-link' href='(?<content>[^\n]*?)'"""):
+    download("""entry-content'>[\s\n]*?[^\n]*?href="(?<content>[^\n^>]*?.(gif|jpg|jpeg|png))[^\n]*?>""")

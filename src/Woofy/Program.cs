@@ -1,44 +1,78 @@
 using System;
+using System.Threading;
 using System.Windows.Forms;
+using NLog;
 using Woofy.Core;
-using Woofy.Gui;
+using Woofy.Core.ComicManagement;
+using Woofy.Core.Engine;
+using Woofy.Core.Infrastructure;
+using Woofy.Flows.Main;
+using Woofy.Flows.Tray;
+using Woofy.Gui.CompilationError;
 
 namespace Woofy
 {
     static class Program
     {
-        [STAThread]
+		public static SynchronizationContext SynchronizationContext { get; private set; }
+
+    	private static void CompileDefinitions()
+    	{
+    		var definitionStore = ContainerAccessor.Resolve<IDefinitionStore>();
+    		var compilationErrorController = ContainerAccessor.Resolve<ICompilationErrorController>();
+
+    		do
+    		{
+    			try
+    			{
+    				definitionStore.InitializeDefinitionCache();
+    				return;
+    			}
+    			catch (CompilationException ex)
+    			{
+    				var shouldRetry = compilationErrorController.DisplayError(ex);
+    				if (!shouldRetry)
+    					Environment.Exit(1);
+    			}
+    		}
+    		while (true);
+    	}
+
+    	[STAThread]
         static void Main()
         {
-			Bootstrapper.BootstrapApplication();
+            using (ContainerAccessor.RegisterComponents())
+            using (var mutex = CreateApplicationSpecificMutex())
+            {
+                Bootstrapper.BootstrapApplication();
 
-            Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+                Application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
+                AppDomain.CurrentDomain.UnhandledException +=
+                    (sender, e) => LogManager.GetLogger("errorLog").Error((Exception) e.ExceptionObject);
 
-            //Application.ThreadException += Application_ThreadException;
-            AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+                CompileDefinitions();
+                ContainerAccessor.Resolve<IComicStore>().InitializeComicCache();
 
-            Application.Run(new MainForm());
+                var mainForm = new MainForm();
+                //the synchronization context only becomes available after creating the form
+                SynchronizationContext = SynchronizationContext.Current;
+                //the DownloadSupervisor needs the SynchronizationContext, so I resolve it only after initializing the context
+                mainForm.Presenter = ContainerAccessor.Resolve<IMainPresenter>();
+
+                ContainerAccessor.Resolve<ITrayIconController>().DisplayIcon();
+                Application.Run(mainForm);
+
+                GC.KeepAlive(mutex);
+            }
         }
 
         /// <summary>
-        /// Log exceptions on the additional threads.
+        /// Used by the setup kit to determine if the app is running or not.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        static void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
+        private static Mutex CreateApplicationSpecificMutex()
         {
-            Logger.LogException((Exception)e.ExceptionObject);
-        }
-
-        /// <summary>
-        /// Log exceptions on the main UI thread.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        static void Application_ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
-        {
-            Logger.LogException(e.Exception);
+            var appSettings = ContainerAccessor.Resolve<IAppSettings>();
+            return new Mutex(true, appSettings.ApplicationGuid.ToString());
         }
     }
 }

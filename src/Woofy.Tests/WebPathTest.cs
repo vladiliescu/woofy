@@ -1,8 +1,9 @@
 using System;
 using Woofy.Core;
+using Woofy.Core.Engine;
 using Xunit;
 
-namespace UnitTests
+namespace Woofy.Tests
 {
     public class WebPathTest
     {

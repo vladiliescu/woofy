@@ -1,4 +1,5 @@
-﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -16,7 +17,10 @@
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
-    <OldToolsVersion>2.0</OldToolsVersion>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -26,6 +30,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -36,111 +41,202 @@
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <CodeAnalysisRules>-Microsoft.Globalization#CA1301;-Microsoft.Globalization#CA1302;-Microsoft.Globalization#CA1303;-Microsoft.Globalization#CA1306;-Microsoft.Globalization#CA1304;-Microsoft.Globalization#CA1305;-Microsoft.Globalization#CA1300;-Microsoft.Interoperability#CA1403;-Microsoft.Interoperability#CA1406;-Microsoft.Interoperability#CA1413;-Microsoft.Interoperability#CA1402;-Microsoft.Interoperability#CA1407;-Microsoft.Interoperability#CA1404;-Microsoft.Interoperability#CA1410;-Microsoft.Interoperability#CA1411;-Microsoft.Interoperability#CA1405;-Microsoft.Interoperability#CA1409;-Microsoft.Interoperability#CA1415;-Microsoft.Interoperability#CA1408;-Microsoft.Interoperability#CA1414;-Microsoft.Interoperability#CA1412;-Microsoft.Interoperability#CA1400;-Microsoft.Interoperability#CA1401;-Microsoft.Mobility#CA1600;-Microsoft.Mobility#CA1601</CodeAnalysisRules>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LinqBridge, Version=1.0.0.0, Culture=neutral, PublicKeyToken=c2b14eb747628076, processorArchitecture=MSIL">
+    <Reference Include="Autofac, Version=1.3.2.449, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Autofac\LinqBridge.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\lib\Autofac\Autofac.dll</HintPath>
     </Reference>
-    <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
+    <Reference Include="Boo.Lang, Version=2.0.9.3, Culture=neutral, PublicKeyToken=32c39770e9a21a67, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\log4net.dll</HintPath>
+      <HintPath>..\..\lib\Boo\Boo.Lang.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json.Net20, Version=3.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+    <Reference Include="Boo.Lang.Compiler, Version=2.0.9.3, Culture=neutral, PublicKeyToken=32c39770e9a21a67, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\lib\Json.Net\Newtonsoft.Json.Net20.dll</HintPath>
+      <HintPath>..\..\lib\Boo\Boo.Lang.Compiler.dll</HintPath>
+    </Reference>
+    <Reference Include="Boo.Lang.Parser, Version=2.0.9.3, Culture=neutral, PublicKeyToken=32c39770e9a21a67, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Boo\Boo.Lang.Parser.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json.Net35">
+      <HintPath>..\..\lib\Json.Net\Newtonsoft.Json.Net35.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\NLog\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="Rhino.DSL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\lib\Rhino.DSL\Rhino.DSL.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\ApplicationInfo.cs" />
-    <Compile Include="Core\Bootstrapper.cs" />
-    <Compile Include="Core\Capture.cs" />
-    <Compile Include="Core\CaptureTarget.cs" />
-    <Compile Include="Core\CountingFileDownloader.cs" />
-    <Compile Include="Core\ExRichTextBox.cs">
+    <Compile Include="Core\AppInfo.cs" />
+    <Compile Include="Core\AppLogEntriesToFile.cs" />
+    <Compile Include="Core\ComicManagement\ComicAutoPersister.cs" />
+    <Compile Include="Core\Donate.cs" />
+    <Compile Include="Core\Engine\Expressions\BaseExpression.cs" />
+    <Compile Include="Core\Engine\CompilationException.cs" />
+    <Compile Include="Core\Engine\CurrentPageChanged.cs" />
+    <Compile Include="Core\Engine\Definition.cs" />
+    <Compile Include="Core\Engine\DefinitionClassCompilerStep.cs" />
+    <Compile Include="Core\Engine\Context.cs" />
+    <Compile Include="Core\Engine\DefinitionCompiler.cs" />
+    <Compile Include="Core\Engine\DownloadFinished.cs" />
+    <Compile Include="Core\Engine\Expressions\BaseWebExpression.cs" />
+    <Compile Include="Core\Engine\Expressions\Expressions.cs" />
+    <Compile Include="Core\Engine\Expressions\LogExpression.cs" />
+    <Compile Include="Core\Engine\Expressions\MatchExpression.cs" />
+    <Compile Include="Core\Engine\Expressions\MetaExpression.cs" />
+    <Compile Include="Core\Engine\Expressions\PeekExpression.cs" />
+    <Compile Include="Core\Engine\Expressions\SleepExpression.cs" />
+    <Compile Include="Core\Engine\Expressions\GoToExpression.cs" />
+    <Compile Include="Core\Engine\Expressions\WarnExpression.cs" />
+    <Compile Include="Core\Engine\Expressions\WriteMetaToTextExpression.cs" />
+    <Compile Include="Core\MonoWebBits\Helpers.cs" />
+    <Compile Include="Core\MonoWebBits\HttpEncoder.cs" />
+    <Compile Include="Core\MonoWebBits\HttpUtility.cs" />
+    <Compile Include="Core\Infrastructure\ConfigureLogging.cs" />
+    <Compile Include="Core\ComicPath.cs" />
+    <Compile Include="Core\ThreadCanceler.cs" />
+    <Compile Include="Core\Engine\WorkerStoppedException.cs" />
+    <Compile Include="Core\Engine\Expressions\DownloadExpression.cs" />
+    <Compile Include="Core\Engine\IExpression.cs" />
+    <Compile Include="Core\Engine\ComicMacro.cs" />
+    <Compile Include="Core\Engine\StartAtMacro.cs" />
+    <Compile Include="Core\Engine\Expressions\MetaMethods.cs" />
+    <Compile Include="Core\Engine\Expressions\VisitExpression.cs" />
+    <Compile Include="Core\Infrastructure\ICommand.cs" />
+    <Compile Include="Core\Infrastructure\IEvent.cs" />
+    <Compile Include="Core\Engine\Expressions\ExpressionsModule.cs" />
+    <Compile Include="Core\Infrastructure\ForEach.cs" />
+    <Compile Include="Core\Infrastructure\AppController.cs" />
+    <Compile Include="Core\Infrastructure\Bootstrapper.cs" />
+    <Compile Include="Core\ComicManagement\ComicStore.cs" />
+    <Compile Include="Core\Infrastructure\ICommandHandler.cs" />
+    <Compile Include="Core\Infrastructure\IEventHandler.cs" />
+    <Compile Include="Core\Result.cs" />
+    <Compile Include="Core\Engine\StripDownloaded.cs" />
+    <Compile Include="Core\UiThread.cs" />
+    <Compile Include="Core\ServiceResult.cs" />
+    <Compile Include="Core\SystemProxies\DateTimeProxy.cs" />
+    <Compile Include="Core\SystemProxies\DirectoryProxy.cs" />
+    <Compile Include="Core\SystemProxies\FileProxy.cs" />
+    <Compile Include="Core\SystemProxies\WebClientProxy.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Core\PageParser.cs" />
-    <Compile Include="Exceptions\RegexException.cs" />
-    <Compile Include="Settings\UserSettingsData.cs" />
-    <Compile Include="EventArgs\DownloadCompletedEventArgs.cs" />
-    <Compile Include="EventArgs\DownloadedFileChunkEventArgs.cs" />
-    <Compile Include="EventArgs\DownloadErrorEventArgs.cs" />
-    <Compile Include="EventArgs\DownloadFileCompletedEventArgs.cs" />
-    <Compile Include="EventArgs\DownloadStripCompletedEventArgs.cs" />
-    <Compile Include="Core\IFileDownloader.cs" />
-    <Compile Include="Core\FileDownloader.cs" />
-    <Compile Include="Core\ComicDefinition.cs" />
-    <Compile Include="Core\ComicsProvider.cs" />
-    <Compile Include="Core\ComicTask.cs" />
-    <Compile Include="Core\ComicTaskController.cs" />
-    <Compile Include="Core\Logger.cs" />
-    <Compile Include="Core\WebConnectionFactory.cs" />
-    <Compile Include="Core\WebPath.cs" />
-    <Compile Include="Enums\DownloadOutcome.cs" />
-    <Compile Include="Enums\TaskStatus.cs" />
-    <Compile Include="EventArgs\ResponseReceivedEventArgs.cs" />
-    <Compile Include="Exceptions\MissingFriendlyNameException.cs" />
-    <Compile Include="Gui\AboutForm.cs">
+    <Compile Include="Core\UriEx.cs" />
+    <Compile Include="Core\VersionConverter.cs" />
+    <Compile Include="Flows\About\AboutPresenter.cs" />
+    <Compile Include="Flows\About\DisplayAboutScreen.cs" />
+    <Compile Include="Flows\Comics\AddComic.cs" />
+    <Compile Include="Flows\Comics\ComicAdded.cs" />
+    <Compile Include="Flows\Comics\ComicActivated.cs" />
+    <Compile Include="Flows\Comics\AddForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Gui\AboutForm.Designer.cs">
+    <Compile Include="Flows\Comics\AddForm.designer.cs">
+      <DependentUpon>AddForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Flows\Comics\AddModel.cs" />
+    <Compile Include="Flows\Comics\ComicsPresenter.cs" />
+    <Compile Include="Flows\ApplicationLog\AppLog.cs" />
+    <Compile Include="Flows\ApplicationLog\AppLogEntryAdded.cs" />
+    <Compile Include="Flows\AutoUpdate\AppUpdateCheck.cs" />
+    <Compile Include="Flows\AutoUpdate\AppUpdateChecker.cs" />
+    <Compile Include="Flows\AutoUpdate\AppUpdateCheckHandler.cs" />
+    <Compile Include="Core\Engine\ComicChanged.cs" />
+    <Compile Include="Flows\AutoUpdate\UpdateInfo.cs" />
+    <Compile Include="Flows\Comics\EditComic.cs" />
+    <Compile Include="Flows\Comics\EditForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Flows\Comics\EditForm.Designer.cs">
+      <DependentUpon>EditForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Flows\Comics\EditModel.cs" />
+    <Compile Include="Flows\Download\CurrentPageChangedHandler.cs" />
+    <Compile Include="Flows\Download\StripDownloadedHandler.cs" />
+    <Compile Include="Core\Infrastructure\DefaultComponentsModule.cs" />
+    <Compile Include="Core\Infrastructure\ContainerAccessor.cs" />
+    <Compile Include="Core\Engine\PageParser.cs" />
+    <Compile Include="Core\StringExtensions.cs" />
+    <Compile Include="Core\DefinitionStore.cs" />
+    <Compile Include="Flows\CompilationError\CompilationErrorDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Flows\CompilationError\CompilationErrorDetails.Designer.cs">
+      <DependentUpon>CompilationErrorDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Flows\CompilationError\CompilationErrorController.cs" />
+    <Compile Include="Flows\CompilationError\CompilationErrorModel.cs" />
+    <Compile Include="Flows\FormatExtensions.cs" />
+    <Compile Include="Flows\Main\ComicModel.cs" />
+    <Compile Include="Flows\Main\ComicRemoved.cs" />
+    <Compile Include="Flows\Main\ComicViewModelMapper.cs" />
+    <Compile Include="Flows\Main\DeactivateComic.cs" />
+    <Compile Include="Flows\Main\MainPresenter.cs" />
+    <Compile Include="Core\UserSettings.cs" />
+    <Compile Include="Core\StartProcess.cs" />
+    <Compile Include="Flows\Main\PauseDownload.cs" />
+    <Compile Include="Flows\Main\StartAllDownloads.cs" />
+    <Compile Include="Flows\Main\StartDownload.cs" />
+    <Compile Include="Flows\Main\ToggleDownload.cs" />
+    <Compile Include="Flows\Tray\HideOrShowApplication.cs" />
+    <Compile Include="Flows\Tray\TrayIconController.cs" />
+    <Compile Include="Core\Engine\FileDownloader.cs" />
+    <Compile Include="Core\ComicManagement\Comic.cs" />
+    <Compile Include="Flows\Main\DownloadSupervisor.cs" />
+    <Compile Include="Core\Engine\WebPath.cs" />
+    <Compile Include="Core\Engine\Status.cs" />
+    <Compile Include="Flows\About\AboutForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Flows\About\AboutForm.Designer.cs">
       <DependentUpon>AboutForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\DefinitionsDebugForm.cs">
+    <Compile Include="Flows\DownloadProgressForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Gui\DefinitionsDebugForm.Designer.cs">
-      <DependentUpon>DefinitionsDebugForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Gui\DownloadProgressForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Gui\DownloadProgressForm.Designer.cs">
+    <Compile Include="Flows\DownloadProgressForm.Designer.cs">
       <DependentUpon>DownloadProgressForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\MainForm.cs">
+    <Compile Include="Flows\Main\MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Gui\MainForm.Designer.cs">
+    <Compile Include="Flows\Main\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Gui\SettingsForm.cs">
+    <Compile Include="Flows\SettingsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Gui\SettingsForm.Designer.cs">
+    <Compile Include="Flows\SettingsForm.Designer.cs">
       <DependentUpon>SettingsForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Gui\TaskDetailsForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Gui\TaskDetailsForm.Designer.cs">
-      <DependentUpon>TaskDetailsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Gui\AboutForm.resx">
+    <EmbeddedResource Include="Flows\About\AboutForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>AboutForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gui\MainForm.resx">
+    <EmbeddedResource Include="Flows\Main\MainForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gui\SettingsForm.resx">
+    <EmbeddedResource Include="Flows\SettingsForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>SettingsForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Gui\TaskDetailsForm.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>TaskDetailsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -153,30 +249,39 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
-    <Compile Include="Settings\AppSettings.cs" />
-    <Compile Include="Settings\UserSettings.cs" />
-    <Compile Include="Updates\ChangeCollection.cs" />
-    <Compile Include="Updates\Release.cs" />
-    <Compile Include="Updates\ReleaseCollection.cs" />
-    <Compile Include="Updates\UpdateDescription.cs" />
-    <Compile Include="Updates\UpdateManager.cs" />
+    <Compile Include="Core\AppSettings.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="exiftool.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="license.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\WoofyLogo.png" />
+    <None Include="Resources\exit.png" />
+    <Content Include="Resources\donate.png" />
+    <Content Include="Resources\folder_image.png" />
+    <Content Include="Resources\image_add.png" />
+    <Content Include="Resources\image_delete.png" />
+    <Content Include="Resources\image_edit.png" />
     <Content Include="Resources\page_copy.png" />
     <Content Include="Resources\user.png" />
+    <None Include="Resources\woofy.png" />
     <None Include="Resources\bug_delete.png" />
     <None Include="Resources\warning.png" />
     <None Include="Resources\error.png" />
     <None Include="Resources\world_go.png" />
-    <None Include="Resources\WoofyLogo.png" />
-    <EmbeddedResource Include="Gui\DefinitionsDebugForm.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>DefinitionsDebugForm.cs</DependentUpon>
+    <EmbeddedResource Include="Flows\Comics\AddForm.resx">
+      <DependentUpon>AddForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Gui\DownloadProgressForm.resx">
+    <EmbeddedResource Include="Flows\Comics\EditForm.resx">
+      <DependentUpon>EditForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Flows\CompilationError\CompilationErrorDetails.resx">
+      <DependentUpon>CompilationErrorDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Flows\DownloadProgressForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>DownloadProgressForm.cs</DependentUpon>
     </EmbeddedResource>

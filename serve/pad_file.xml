@@ -34,10 +34,10 @@
 	</Company_Info>
 	<Program_Info>
 		<Program_Name>Woofy</Program_Name>
-		<Program_Version>0.6.2</Program_Version>
-		<Program_Release_Month>10</Program_Release_Month>
-		<Program_Release_Day>4</Program_Release_Day>
-		<Program_Release_Year>2010</Program_Release_Year>
+		<Program_Version>1.1.2</Program_Version>
+		<Program_Release_Month>09</Program_Release_Month>
+		<Program_Release_Day>02</Program_Release_Day>
+		<Program_Release_Year>2013</Program_Release_Year>
 		<Program_Cost_Dollars />
 		<Program_Cost_Other_Code />
 		<Program_Cost_Other />
@@ -46,14 +46,14 @@
 		<Program_Install_Support>Install and Uninstall</Program_Install_Support>
 		<Program_OS_Support>Windows2000,WinXP,Windows2003,Windows Vista Starter,Windows Vista Home Basic,Windows Vista Home Premium,Windows Vista Business,Windows Vista Enterprise,Windows Vista Ultimate,Windows Vista Home Basic x64,Windows Vista Home Premium x64,Windows Vista Business x64,Windows Vista Enterprise x64,Windows Vista Ultimate x64</Program_OS_Support>
 		<Program_Language>English</Program_Language>
-		<Program_Change_Info>Pages containing Unicode characters are now retrieved correctly.</Program_Change_Info>
+		<Program_Change_Info>Fixed the random crashes. Fixed the issue that prevented Woofy from visiting urls that ended with a dot. Woofy is now compiled for .NET 4.5, which means that it will no longer run on Windows XP. </Program_Change_Info>
 		<Program_Specific_Category>Home/Hobby</Program_Specific_Category>
 		<Program_Category_Class>Home &amp; Hobby::Recreation</Program_Category_Class>
 		<Program_System_Requirements />
 		<File_Info>
-			<File_Size_Bytes>663538</File_Size_Bytes>
-			<File_Size_K>1010</File_Size_K>
-			<File_Size_MB>1</File_Size_MB>
+			<File_Size_Bytes>4578475/File_Size_Bytes>
+			<File_Size_K>4470</File_Size_K>
+			<File_Size_MB>4</File_Size_MB>
 		</File_Info>
 		<Expire_Info>
 			<Has_Expire_Info>N</Has_Expire_Info>
@@ -74,24 +74,25 @@
 			<Char_Desc_450>Woofy is a free webcomic downloader, designed for simplicity and ease of use. Its purpose is to help you download and keep an archive of your favorite online comics, while not getting in your way too much. It can download a fixed number of comics, or all the comics published since the last time it was run. Also, it uses comic information files in order to know how to download a certain comic, so it can be easily extended to support new comics.</Char_Desc_450>
 			<Char_Desc_2000>Woofy is a free webcomic downloader, designed for simplicity and ease of use. Its purpose is to help you download and keep an archive of your favorite online comics, while not getting in your way too much. 
 
-Its main features are:
-* It can download a fixed number of comics, or all the comics that have been published since the last time it was run. 
-* Uses comic information files in order to know how to download a certain comic, so it can be easily extended to support new comics.
-* It can download several comics at the same time, and remembers the active tasks when restarted.
-* Written in C# 2.0 for the .NET Framework.
-* Open source, licensed under the GPL.</Char_Desc_2000>
+Main features:
+ * A completely rewritten download engine, with definitions written in a Python-like DSL.
+ * An improved user interface, with more information about the download  process.
+ * Downloads comics from start to finish, and not backwards.
+ * Can embed additional metadata such as the title and description inside each downloaded strip (the metadata can be viewed using any image viewer that supports the XMP standard, such as XnView MP or Zoner Photo Studio)
+ * The settings files are stored under each user's profile - should fix some issues with Windows 7/Vista.
+ * Open source, licensed under the GPL.</Char_Desc_2000>
 		</English>
 	</Program_Descriptions>
 	<Web_Info>
 		<Application_URLs>
-			<Application_Info_URL>http://code.google.com/p/woofy/</Application_Info_URL>
+			<Application_Info_URL>http://vladiliescu.ro/woofy/</Application_Info_URL>
 			<Application_Order_URL />
 			<Application_Screenshot_URL>http://woofy.googlecode.com/hg/serve/screenshots/main_window.png</Application_Screenshot_URL>
 			<Application_Icon_URL />
 			<Application_XML_File_URL>http://woofy.googlecode.com/hg/serve/pad_file.xml</Application_XML_File_URL>
 		</Application_URLs>
 		<Download_URLs>
-			<Primary_Download_URL>http://woofy.googlecode.com/files/Woofy-0.6.2-setup.exe</Primary_Download_URL>
+			<Primary_Download_URL>http://woofy.googlecode.com/files/Woofy-1.12.exe</Primary_Download_URL>
 			<Secondary_Download_URL />
 			<Additional_Download_URL_1 />
 			<Additional_Download_URL_2 />
