@@ -16,7 +16,6 @@ namespace Woofy.Core.ComicManagement
 
         public void Handle(ComicChanged eventData)
         {
-#warning not thread-safe
             comicStore.PersistComics();
         }
     }

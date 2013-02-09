@@ -85,6 +85,12 @@ namespace Woofy.Core.ComicManagement
 			return Comics.Where(x => x.Status == Status.Inactive).ToArray();
 		}
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <remarks>
+        /// Thread-safe.
+        /// </remarks>
 		public void PersistComics()
 		{
 	    	lock (writeLock)
