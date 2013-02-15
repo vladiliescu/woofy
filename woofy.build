@@ -47,6 +47,12 @@
 				<exclude name="obj\**" />
 			</fileset>
 		</copy>
+		
+		<copy todir="${dir.Build}\packages">
+        <fileset basedir="${dir.Current}\src\packages">
+            <include name="**.*"/>
+        </fileset>
+    </copy>
 
 		<copy file="${dir.BuildTemplates}\AssemblyInfo.template" tofile="${dir.Source}\Properties\AssemblyInfo.cs" overwrite="true">
 			<filterchain>			
@@ -85,15 +91,14 @@
                     <token key="WOOFYVERSION" value="${woofy.Version}" />
                 </replacetokens>
             </filterchain>
-        </copy>        
+        </copy>     
 
         <copy todir="${dir.Build}\Woofy\definitions">
             <fileset basedir="${dir.ComicDefinitions}">
                 <include name="*.def"/>
             </fileset>
         </copy>
-
-
+        
         <copy todir="${dir.Build}">
             <fileset basedir="${dir.BuildTemplates}">
                 <include name="*.*" />
