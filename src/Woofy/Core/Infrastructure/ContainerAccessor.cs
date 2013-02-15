@@ -32,7 +32,7 @@ namespace Woofy.Core.Infrastructure
 
         public static T Resolve<T>(string serviceName)
         {
-            return Container.Resolve<T>(serviceName);
+            return Container.ResolveNamed<T>(serviceName);
         }
 	}
 }
