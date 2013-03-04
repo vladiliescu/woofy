@@ -82,7 +82,7 @@ namespace Woofy.Core.ComicManagement
 
 		public Comic[] GetInactiveComics()
 		{
-			return Comics.Where(x => x.Status == Status.Inactive).ToArray();
+			return Comics.Where(x => x.Status == Status.Inactive).OrderBy(x => x.Name).ToArray();
 		}
 
         /// <summary>
