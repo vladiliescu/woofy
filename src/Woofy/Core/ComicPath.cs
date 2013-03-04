@@ -67,7 +67,7 @@ namespace Woofy.Core
         private string FileNameFor(string comicId, Uri link, int indexOffset)
         {
             var comic = comicStore.Find(comicId);
-            var rawFileName = WebPath.GetFileName(link);
+            var rawFileName = link.Segments[link.Segments.Length - 1];
 
             if (!comic.PrependIndexToStrips)
                 return rawFileName;
