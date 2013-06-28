@@ -8,6 +8,7 @@ using Woofy.Core.ComicManagement;
 using Woofy.Core.Infrastructure;
 using Woofy.Core.SystemProxies;
 using Woofy.Flows.ApplicationLog;
+using System.Linq;
 
 namespace Woofy.Core.Engine.Expressions
 {
@@ -40,7 +41,8 @@ namespace Woofy.Core.Engine.Expressions
         {
             EnsureContentIsInitialized(context);
 
-            var links = parser.RetrieveLinksFromPage((string)argument, context.CurrentAddress, context.PageContent, (r, l) => ReportBadRegex(context, r, l));            
+            var arg = (argument is IEnumerable<string>) ? ((IEnumerable<string>)argument).FirstOrDefault() : (string)argument;
+            var links = parser.RetrieveLinksFromPage(arg, context.CurrentAddress, context.PageContent, (r, l) => ReportBadRegex(context, r, l));            
 
             if (links.Length == 0)
             {

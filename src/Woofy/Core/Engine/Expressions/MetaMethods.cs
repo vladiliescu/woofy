@@ -53,6 +53,12 @@ namespace Woofy.Core.Engine.Expressions
 		}
 
         [Meta]
+        public static MethodInvocationExpression download(ReferenceExpression reference)
+        {
+            return GenerateIExpressionInvocationFor(Expressions.Download, reference);
+        }
+
+        [Meta]
         public static MethodInvocationExpression sleep()
         {
             return GenerateIExpressionInvocationFor(Expressions.Sleep);
