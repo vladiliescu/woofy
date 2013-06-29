@@ -107,7 +107,6 @@
     <Compile Include="ExpressionTests\When_downloading.cs" />
     <Compile Include="ExpressionTests\When_visiting.cs" />
     <Compile Include="ObjectMother.cs" />
-    <Compile Include="WebPathTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Woofy\Woofy.csproj">

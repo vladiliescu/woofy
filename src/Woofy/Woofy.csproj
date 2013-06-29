@@ -198,7 +198,6 @@
     <Compile Include="Core\Engine\FileDownloader.cs" />
     <Compile Include="Core\ComicManagement\Comic.cs" />
     <Compile Include="Flows\Main\DownloadSupervisor.cs" />
-    <Compile Include="Core\Engine\WebPath.cs" />
     <Compile Include="Core\Engine\Status.cs" />
     <Compile Include="Flows\About\AboutForm.cs">
       <SubType>Form</SubType>

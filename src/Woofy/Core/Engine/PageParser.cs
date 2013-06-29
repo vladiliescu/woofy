@@ -28,10 +28,9 @@ namespace Woofy.Core.Engine
 			{
                 try
                 {
-                    if (WebPath.IsAbsolute(link))
-                        links.Add(new Uri(link));
-                    else
-                        links.Add(new Uri(currentUri, link));
+                    links.Add(Uri.IsWellFormedUriString(link, UriKind.Absolute)
+                        ? new Uri(link)
+                        : new Uri(currentUri, link));
                 }
                 catch (UriFormatException)
                 {
