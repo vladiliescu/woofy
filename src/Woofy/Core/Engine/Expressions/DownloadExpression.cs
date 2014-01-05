@@ -143,7 +143,7 @@ namespace Woofy.Core.Engine.Expressions
 
         private void ReportStripsFound(Uri[] links, Context context)
         {
-            Log(context, "found {0} strips", links.Length);
+            Log(context, "found {0} images", links.Length);
         }
 
         private void ReportStripAlreadyDownloaded(Uri link, Context context)
@@ -153,7 +153,7 @@ namespace Woofy.Core.Engine.Expressions
 
         private void ReportNoStripsFound(Context context)
         {
-            Warn(context, "no strips found.");
+            Warn(context, "no images found.");
         }
 
         private void ReportStripDownloaded(Uri link, Context context)
