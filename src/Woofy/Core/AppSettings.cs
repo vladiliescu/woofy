@@ -3,6 +3,7 @@ using System.Configuration;
 using System.IO;
 using Woofy.Core.SystemProxies;
 using Woofy.Core;
+using Uri = Mono.System.Uri;
 
 namespace Woofy.Core
 {

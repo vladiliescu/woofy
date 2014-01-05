@@ -1,6 +1,7 @@
 using System;
 using Newtonsoft.Json;
 using Woofy.Core.Engine;
+using Uri = Mono.System.Uri;
 
 namespace Woofy.Core.ComicManagement
 {

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Web;
+using Mono.System.Web;
+using Uri = Mono.System.Uri;
 
 namespace Woofy.Core.Engine
 {
@@ -32,7 +34,7 @@ namespace Woofy.Core.Engine
 			{
                 try
                 {
-                    if (Uri.IsWellFormedUriString(link, UriKind.Absolute))
+                    if (Uri.IsWellFormedUriString(link, Mono.System.UriKind.Absolute))
                         links.Add(new Uri(link));
                     else if (baseUri != null)
                         links.Add(new Uri(baseUri, link));
@@ -55,7 +57,7 @@ namespace Woofy.Core.Engine
                 return null;
 
             Uri baseUri;
-            if (!Uri.TryCreate(baseElement[0], UriKind.Absolute, out baseUri))
+            if (!Uri.TryCreate(baseElement[0], Mono.System.UriKind.Absolute, out baseUri))
                 return null;
 
             return baseUri;

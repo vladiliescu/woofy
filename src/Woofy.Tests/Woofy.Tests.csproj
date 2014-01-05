@@ -104,6 +104,7 @@
     <Compile Include="DefinitionCompilerTests\CustomKeywordModule.cs" />
     <Compile Include="DefinitionCompilerTests\FooExpression.cs" />
     <Compile Include="DefinitionCompilerTests\When_expanding_meta_methods.cs" />
+    <Compile Include="ExpressionTests\GoToExpressionTests.cs" />
     <Compile Include="ExpressionTests\When_visiting.cs" />
     <Compile Include="ObjectMother.cs" />
   </ItemGroup>

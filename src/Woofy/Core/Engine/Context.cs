@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Uri = Mono.System.Uri;
 
 namespace Woofy.Core.Engine
 {

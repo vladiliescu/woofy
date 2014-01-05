@@ -1,5 +1,6 @@
 using System;
 using Woofy.Core.Infrastructure;
+using Uri = Mono.System.Uri;
 
 namespace Woofy.Core.Engine
 {

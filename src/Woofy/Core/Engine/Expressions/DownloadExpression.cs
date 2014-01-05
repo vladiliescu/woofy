@@ -10,6 +10,8 @@ using Woofy.Core.SystemProxies;
 using Woofy.Flows.ApplicationLog;
 using System.Linq;
 
+using Uri = Mono.System.Uri;
+
 namespace Woofy.Core.Engine.Expressions
 {
     /// <summary>

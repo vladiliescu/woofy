@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Woofy.Core.ComicManagement;
 using Woofy.Core.Infrastructure;
+using Uri = Mono.System.Uri;
 
 namespace Woofy.Core.Engine
 {

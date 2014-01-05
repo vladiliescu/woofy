@@ -40,7 +40,8 @@ namespace Woofy
 
     	[STAThread]
         static void Main()
-        {
+    	{
+    	   
             using (ContainerAccessor.RegisterComponents())
             using (var mutex = CreateApplicationSpecificMutex())
             {

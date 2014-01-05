@@ -1,4 +1,3 @@
-using System;
 using Moq;
 using Woofy.Core;
 using Woofy.Core.ComicManagement;

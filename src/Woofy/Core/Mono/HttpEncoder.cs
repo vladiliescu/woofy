@@ -39,7 +39,7 @@ using System.Text;
 using System.Web.Configuration;
 #endif
 
-namespace System.Web.Util
+namespace Mono.System.Web.Util
 {
 #if NET_4_0
 	public

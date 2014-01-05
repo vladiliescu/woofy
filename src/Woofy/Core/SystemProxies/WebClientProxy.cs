@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using Uri = Mono.System.Uri;
 
 namespace Woofy.Core.SystemProxies
 {

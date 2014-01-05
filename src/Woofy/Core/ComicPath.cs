@@ -3,6 +3,7 @@ using System.IO;
 using Woofy.Core.ComicManagement;
 using Woofy.Core.Engine;
 using Woofy.Core.SystemProxies;
+using Uri = Mono.System.Uri;
 
 namespace Woofy.Core
 {

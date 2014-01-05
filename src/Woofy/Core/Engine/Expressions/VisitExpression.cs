@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Woofy.Core.Infrastructure;
 using Woofy.Core.SystemProxies;
 using Woofy.Flows.ApplicationLog;
+using Uri = Mono.System.Uri;
 
 namespace Woofy.Core.Engine.Expressions
 {

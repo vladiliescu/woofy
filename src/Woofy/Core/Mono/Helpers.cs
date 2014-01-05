@@ -29,7 +29,7 @@
 using System;
 using System.Globalization;
 
-namespace System.Web.Util
+namespace Mono.System.Web.Util
 {
     class Helpers
     {
