@@ -183,7 +183,7 @@ namespace Woofy.Core.Engine.Expressions
             if (string.IsNullOrEmpty(value))
                 return;
 
-            AppendFormat(builder, xmpTag, value);
+            AppendFormat(builder, xmpTag, value.Replace("\"", "\\\""));
         }
 
         public static void AppendFormat(StringBuilder builder, string tag, string value)
