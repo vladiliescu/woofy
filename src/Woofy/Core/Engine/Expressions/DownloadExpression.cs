@@ -104,7 +104,7 @@ namespace Woofy.Core.Engine.Expressions
             metaBuilder.AddIfPossible("xmp:description", "description", context);
 
             metaBuilder.AddIfPossible("xmp:source", context.CurrentAddress.AbsoluteUri);
-            metaBuilder.AddIfPossible("comment", "downloaded with Woofy - http://code.google.com/p/woofy");
+            metaBuilder.AddIfPossible("comment", "downloaded with Woofy - http://vladiliescu.ro/woofy");
             
             var arguments = @"{0} ""{1}""".FormatTo(metaBuilder.ToString(), fileName);
             Log(context, "running exiftool.exe {0}", arguments);
