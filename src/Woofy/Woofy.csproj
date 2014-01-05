@@ -63,9 +63,9 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="NLog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+    <Reference Include="NLog, Version=2.1.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NLog.2.0.0.2000\lib\net40\NLog.dll</HintPath>
+      <HintPath>..\packages\NLog.2.1.0\lib\net45\NLog.dll</HintPath>
     </Reference>
     <Reference Include="Rhino.DSL, Version=1.0.0.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -115,6 +115,9 @@
     <Compile Include="Core\MonoWebBits\HttpUtility.cs" />
     <Compile Include="Core\Infrastructure\ConfigureLogging.cs" />
     <Compile Include="Core\ComicPath.cs" />
+    <Compile Include="Core\SystemProxies\CookieAwareWebClient.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Core\ThreadCanceler.cs" />
     <Compile Include="Core\Engine\WorkerStoppedException.cs" />
     <Compile Include="Core\Engine\Expressions\DownloadExpression.cs" />
@@ -139,9 +142,7 @@
     <Compile Include="Core\SystemProxies\DateTimeProxy.cs" />
     <Compile Include="Core\SystemProxies\DirectoryProxy.cs" />
     <Compile Include="Core\SystemProxies\FileProxy.cs" />
-    <Compile Include="Core\SystemProxies\WebClientProxy.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="Core\SystemProxies\WebClientProxy.cs" />
     <Compile Include="Core\UriEx.cs" />
     <Compile Include="Core\VersionConverter.cs" />
     <Compile Include="Flows\About\AboutPresenter.cs" />
