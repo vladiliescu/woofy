@@ -16,6 +16,14 @@ Also, due to the fact that it uses comic definition files for downloading the co
 
 ## Version history
 
+### 1.22
+released on 2014.02.02
+
+#### Bugfixes
+* A better fix for the 404 issue.
+
+---
+
 ### 1.21
 released on 2014.01.25
 
