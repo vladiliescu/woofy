@@ -1,3 +1,4 @@
+using System.Net;
 using Woofy.Core.SystemProxies;
 using Woofy.Flows.ApplicationLog;
 
@@ -21,7 +22,14 @@ namespace Woofy.Core.Engine.Expressions
         {
             Log(context, "starting at {0}", context.CurrentAddress);
 
-            context.PageContent = webClient.DownloadString(context.CurrentAddress);
+            try
+            {
+                context.PageContent = webClient.DownloadString(context.CurrentAddress);
+            }
+            catch (WebException ex)
+            {
+                Warn(context, ex.Message);
+            }
         }
 
         protected void EnsureContentIsInitialized(Context context)

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Net;
 using Woofy.Core.Infrastructure;
 using Woofy.Core.SystemProxies;
 using Woofy.Flows.ApplicationLog;
@@ -29,8 +30,16 @@ namespace Woofy.Core.Engine.Expressions
             ReportVisitingPage(link, context);
 
             context.CurrentAddress = link;
-            context.PageContent = webClient.DownloadString(link);
-            
+
+            try
+            {
+                context.PageContent = webClient.DownloadString(link);
+            }
+            catch (WebException ex)
+            {
+                Warn(context, ex.Message);
+            }
+
             return null;
         }
 
