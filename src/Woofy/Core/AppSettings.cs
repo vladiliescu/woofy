@@ -22,7 +22,7 @@ namespace Woofy.Core
 	}
 
 	/// <summary>
-	/// This will eventually replace the old static AppSettingsOld class.
+	/// This has eventually replaced the old static AppSettingsOld class.
 	/// </summary>
 	public class AppSettings : IAppSettings
 	{

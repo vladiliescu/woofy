@@ -7,14 +7,20 @@ namespace Woofy.Core.SystemProxies
     {
         private readonly CookieContainer container = new CookieContainer();
 
+        public CookieAwareWebClient(IAppInfo appInfo)
+        {
+            Headers.Add("user-agent", string.Format("Woofy/{0}", appInfo.Version.ToPrettyString()));
+        }
+
         protected override WebRequest GetWebRequest(Uri address)
         {
             var request = base.GetWebRequest(address);
-            if (request is HttpWebRequest)
-            {
-                (request as HttpWebRequest).CookieContainer = container;
-            }
-            return request;
+            var webRequest = request as HttpWebRequest;
+            if (webRequest == null)
+                return request;
+            
+            webRequest.CookieContainer = container;
+            return webRequest;
         }
     }
 }

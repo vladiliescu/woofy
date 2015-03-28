@@ -13,13 +13,13 @@ namespace Woofy.Core.SystemProxies
 
     public class WebClientProxy : IWebClientProxy
 	{
-		readonly CookieAwareWebClient webClient = new CookieAwareWebClient();
+		private readonly CookieAwareWebClient webClient;
+	    private readonly IAppLog appLog;        
 
-	    private readonly IAppLog appLog;
-
-	    public WebClientProxy(IAppLog appLog)
+	    public WebClientProxy(IAppLog appLog, IAppInfo appInfo)
 	    {
 	        this.appLog = appLog;
+            webClient = new CookieAwareWebClient(appInfo);
 	    }
 
 	    public string DownloadString(Uri address)

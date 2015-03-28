@@ -1,7 +1,7 @@
 using System;
 using Woofy.Core;
 
-namespace Woofy.Flows
+namespace Woofy.Core
 {
 	public static class FormatExtensions
 	{
