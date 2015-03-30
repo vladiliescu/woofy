@@ -16,6 +16,15 @@ Also, due to the fact that it uses comic definition files for downloading the co
 
 ## Version history
 
+### 1.23
+released on 2015.03.28
+
+#### Improvements
+* Woofy sends an user agent with each request, in the form of "Woofy/<version number>".
+
+---
+
+
 ### 1.22
 released on 2014.02.02
 
