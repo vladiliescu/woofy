@@ -40,6 +40,11 @@ namespace Woofy.Core.Engine.Expressions
         public override IEnumerable<object> Invoke(object argument, Context context)
         {
             EnsureContentIsInitialized(context);
+            if (!context.PageContent.IsNotNullOrEmpty())
+            {
+                ReportContentEmpty(context);
+                return new object[0];
+            }
 
             var arg = (argument is IEnumerable<string>) ? ((IEnumerable<string>)argument).FirstOrDefault() : (string)argument;
             var links = parser.RetrieveLinksFromPage(arg, context.CurrentAddress, context.PageContent, (r, l) => ReportBadRegex(context, r, l));            
@@ -54,7 +59,7 @@ namespace Woofy.Core.Engine.Expressions
             var downloadedFiles = Download(links, context);
             return downloadedFiles;
         }
-
+        
         private string[] Download(IEnumerable<Uri> links, Context context)
         {
             var downloadedFiles = new List<string>();
@@ -161,6 +166,12 @@ namespace Woofy.Core.Engine.Expressions
             Log(context, "downloaded {0}", link);
             appController.Raise(new StripDownloaded(context.ComicId));
         }
+
+        private void ReportContentEmpty(Context context)
+        {
+            Warn(context, "content is empty - stopping download");
+        }
+
 
         protected override string ExpressionName
         {
