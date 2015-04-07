@@ -1,6 +1,6 @@
 # Woofy
 
-Woofy is a pretty neat webcomic downloader, designed for simplicity and extensibility. Its purpose is to help you download and maintain an archive of your favorite online comics, while not getting too much in your way.
+A webcomic downloader with a (crazy) powerful download engine. Will download comics for offline reading, including metadata such as the title and description. 
 
 Also, due to the fact that it uses comic definition files for downloading the comics, it can easily be extended to support new comics.
 
