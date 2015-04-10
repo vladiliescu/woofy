@@ -32,15 +32,26 @@ namespace Woofy.Core.Engine.Expressions
             }
         }
 
-        protected void EnsureContentIsInitialized(Context context)
+        protected bool EnsureContentIsInitialized(Context context)
         {
             if (ContentIsEmpty(context))
                 InitializeContent(context);
+
+            //in case the initialization fails
+            if (ContentIsEmpty(context))
+                return false;
+
+            return true;
         }
 
         protected void ReportBadRegex(Context context, string regex, string link)
         {
             Warn(context, "found '{0}' using the regex '{1}', but it's not a valid link", link, regex);
+        }
+
+        protected void ReportContentEmpty(Context context)
+        {
+            Warn(context, "content is empty - skipping");
         }
     }
 }

@@ -39,8 +39,7 @@ namespace Woofy.Core.Engine.Expressions
 
         public override IEnumerable<object> Invoke(object argument, Context context)
         {
-            EnsureContentIsInitialized(context);
-            if (!context.PageContent.IsNotNullOrEmpty())
+            if (!EnsureContentIsInitialized(context))
             {
                 ReportContentEmpty(context);
                 return new object[0];
@@ -165,11 +164,6 @@ namespace Woofy.Core.Engine.Expressions
         {
             Log(context, "downloaded {0}", link);
             appController.Raise(new StripDownloaded(context.ComicId));
-        }
-
-        private void ReportContentEmpty(Context context)
-        {
-            Warn(context, "content is empty - stopping download");
         }
 
 

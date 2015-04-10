@@ -18,10 +18,13 @@ namespace Woofy.Core.Engine.Expressions
 
 		public override IEnumerable<object> Invoke(object argument, Context context)
 		{
-			if (ContentIsEmpty(context))
-				InitializeContent(context);
-    
-			var args = (string[])argument;
+            if (!EnsureContentIsInitialized(context))
+            {
+                ReportContentEmpty(context);
+                return null;
+            }
+
+		    var args = (string[])argument;
 			var key = args[0];
 			var regex = args[1];
 
