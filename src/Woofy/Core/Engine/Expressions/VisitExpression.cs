@@ -58,11 +58,16 @@ namespace Woofy.Core.Engine.Expressions
                 catch (WebException ex)
                 {
                     Warn(context, ex.Message);
-                    continue;
+                    yield break;
                 }
                 yield return link;
             }
             while (true);
+        }
+
+        private void ReportInfiniteLoop(Context context)
+        {
+            Warn(context, "unable to continue - infinite loop detected (check previous warning)");
         }        
 
         private void ReportLinksFound(Uri[] links, Context context)
