@@ -16,8 +16,7 @@ Also, due to the fact that it uses comic definition files for downloading the co
 
 ## Version history
 
-### 1.24
-released on 2015.04.11
+### 1.24 (2015.04.11)
 
 #### Bugfixes
 * Woofy doesn't crash anymore when the network goes down.
@@ -25,8 +24,7 @@ released on 2015.04.11
 
 ---
 
-### 1.23
-released on 2015.03.28
+### 1.23 (2015.03.28)
 
 #### Improvements
 * Woofy sends an user agent with each request, in the form of "Woofy/<version number>".
@@ -34,16 +32,14 @@ released on 2015.03.28
 ---
 
 
-### 1.22
-released on 2014.02.02
+### 1.22 (2014.02.02)
 
 #### Bugfixes
 * A better fix for the 404 issue.
 
 ---
 
-### 1.21
-released on 2014.01.25
+### 1.21 (2014.01.25)
 
 #### Improvements
 * Errors are now logged in a flat file instead of the system Event Log, to prevent the need for administrative priviledges.
@@ -55,8 +51,7 @@ released on 2014.01.25
 
 ---
 
-### 1.20
-released on 2013.06.29
+### 1.20 (2013.06.29)
 
 #### Improvements
 * Added a definition for Dead Winter.
@@ -69,8 +64,7 @@ released on 2013.06.29
 
 ---
 
-### 1.12 Final
-released on 2013.02.09
+### 1.12 Final (2013.02.09)
 
 #### Bugfixes
 * Fixed the random crashes.
@@ -79,8 +73,7 @@ released on 2013.02.09
 
 ---
 
-### 1.11 Beta
-released on 2013.02.02
+### 1.11 Beta (2013.02.02)
 
 #### Improvements
 * The installer no longer requires administrative permissions to run (will be installed on a per-user basis, similar to Google Chrome).
@@ -94,8 +87,7 @@ released on 2013.02.02
 
 ---
 
-### 1.1 Beta
-released on 2011.04.10
+### 1.1 Beta (2011.04.10)
 
 #### Improvements
 * Added the ability to rename strips based on their index
@@ -111,8 +103,7 @@ released on 2011.04.10
 
 ---
 
-###1.0 Alpha
-released on 2010.11.27
+###1.0 Alpha (2010.11.27)
 
 #### Improvements
 * A completely rewritten download engine.
@@ -128,8 +119,7 @@ released on 2010.11.27
 
 ---
 
-### 0.6.2
-released on 2010.10.04
+### 0.6.2 (2010.10.04)
 
 #### Improvements
 * A few UI tweaks
@@ -139,8 +129,7 @@ released on 2010.10.04
 
 ---
 
-###0.6.1
-released on 2010.03.28
+###0.6.1 (2010.03.28)
 
 #### Improvements
 * Added an option to enable random pauses between comic downloads
@@ -152,8 +141,7 @@ released on 2010.03.28
 
 ---
 
-### 0.6.0
-released on 2010.02.17
+### 0.6.0 (2010.02.17)
 
 #### Improvements
 * Removed all comic definitions except xkcd, in order to avoid any further complaints.
