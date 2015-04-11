@@ -18,7 +18,8 @@ namespace Woofy.Core.Engine.Expressions
 
         public override IEnumerable<object> Invoke(object argument, Context context)
         {
-            EnsureContentIsInitialized(context);
+            if (!TryToEnsureThatContentIsInitialized(context))
+                return null;
 
             var regex = (string)argument;
 

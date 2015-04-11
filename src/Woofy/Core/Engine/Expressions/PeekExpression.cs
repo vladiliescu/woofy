@@ -23,8 +23,11 @@ namespace Woofy.Core.Engine.Expressions
 
         public override IEnumerable<object> Invoke(object argument, Context context)
         {
-            if (ContentIsEmpty(context))
-                InitializeContent(context);
+            if (!TryToEnsureThatContentIsInitialized(context))
+            {
+                ReportContentEmpty(context);
+                yield break;
+            }
 
             var regex = (string)argument;
             var links = parser.RetrieveLinksFromPage(regex, context.CurrentAddress, context.PageContent, (r, l) => ReportBadRegex(context, r, l));

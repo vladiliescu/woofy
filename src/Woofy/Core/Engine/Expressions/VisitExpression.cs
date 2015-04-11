@@ -27,7 +27,15 @@ namespace Woofy.Core.Engine.Expressions
             if (ContentIsEmpty(context))
             {
                 InitializeContent(context);
-                yield return context.CurrentAddress;
+
+                if (context.PageContent.IsNotNullOrEmpty())
+                {
+                    yield return context.CurrentAddress;
+                }
+                else
+                {
+                    yield break;
+                }
             }
 
             var regex = (string)argument;

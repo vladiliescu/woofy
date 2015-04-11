@@ -32,7 +32,7 @@ namespace Woofy.Core.Engine.Expressions
             }
         }
 
-        protected bool EnsureContentIsInitialized(Context context)
+        protected bool TryToEnsureThatContentIsInitialized(Context context)
         {
             if (ContentIsEmpty(context))
                 InitializeContent(context);

@@ -18,7 +18,7 @@ namespace Woofy.Core.Engine.Expressions
 
 		public override IEnumerable<object> Invoke(object argument, Context context)
 		{
-            if (!EnsureContentIsInitialized(context))
+            if (!TryToEnsureThatContentIsInitialized(context))
             {
                 ReportContentEmpty(context);
                 return null;
