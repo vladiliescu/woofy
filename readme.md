@@ -16,6 +16,15 @@ Also, due to the fact that it uses comic definition files for downloading the co
 
 ## Version history
 
+### 1.24
+released on 2015.04.11
+
+#### Bugfixes
+* Woofy doesn't crash anymore when the network goes down.
+* Woofy doesn't crash anymore when a site returns an error (e.g. 403 Forbidden).
+
+---
+
 ### 1.23
 released on 2015.03.28
 
