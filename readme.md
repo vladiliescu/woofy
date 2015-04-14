@@ -19,8 +19,7 @@ Also, due to the fact that it uses comic definition files for downloading the co
 ### 1.24 (2015.04.11)
 
 #### Bugfixes
-* Woofy doesn't crash anymore when the network goes down.
-* Woofy doesn't crash anymore when a site returns an error (e.g. 403 Forbidden).
+* Woofy doesn't crash anymore when the network goes down or when a site returns an error (e.g. 403 Forbidden).
 
 ---
 
