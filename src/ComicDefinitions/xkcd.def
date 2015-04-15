@@ -3,10 +3,10 @@ start_at "http://xkcd.com/1"
 
 for page in visit("""<a rel="next" href="(?<content>/[\d]*/)" accesskey="n">"""):
     title("""<div id="ctitle">(?<content>[^\n]*?)</div>""")
-    description("""<img src="http://imgs.xkcd.com/comics/[\w()-]*\.(gif|jpg|jpeg|png)" title="(?<content>[^\n]*?)" """)
+    description("""<img src="//imgs.xkcd.com/comics/[\w()-]*\.(gif|jpg|jpeg|png)" title="(?<content>[^\n]*?)" """)
    
-    download("""<img src="(?<content>http://imgs.xkcd.com/comics/[\w()-]*\.(gif|jpg|jpeg|png))""")
+    download("""<img src="(?<content>//imgs.xkcd.com/comics/[\w()-]*\.(gif|jpg|jpeg|png))""")
     
-    extra_link = match("""<a href="(?<content>[^\n]*?)"><img src="http://imgs.xkcd.com/comics/[\w()-]*\.(gif|jpg|jpeg|png)""") as (string)    
+    extra_link = match("""<a href="(?<content>[^\n]*?)"><img src="//imgs.xkcd.com/comics/[\w()-]*\.(gif|jpg|jpeg|png)""") as (string)    
     if extra_link != null:
         warn("{0} contains an extra link: {1}" % (page, extra_link[0]))
