@@ -1,5 +1,0 @@
-This document contains a series of architecture/design/the-way-it-should-work principles, in order to prevent me from forgetting them :)
-
-* The definitions should be parsed and loaded once and only once, at startup - no more "where does this instance come from?"
-* A comic instance is created for each definition. Comics can be active (in the download list) or inactive.
-* Each UI story should be in its own folder - I find it easier to find related functionality this way.
