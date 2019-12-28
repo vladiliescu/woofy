@@ -102,7 +102,7 @@ Also, due to the fact that it uses comic definition files for downloading the co
 
 ---
 
-###1.0 Alpha (2010.11.27)
+### 1.0 Alpha (2010.11.27)
 
 #### Improvements
 * A completely rewritten download engine.
