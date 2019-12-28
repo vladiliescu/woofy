@@ -1,6 +1,6 @@
 # Woofy
 
-A webcomic downloader with a (crazy) powerful download engine. Will download comics for offline reading, including metadata such as the title and description. 
+A webcomic downloader with a (crazy) powerful download engine. Will download comics for offline reading, including metadata such as the title and description. _Just a liiittle bit discontinued 🙈_
 
 Also, due to the fact that it uses comic definition files for downloading the comics, it can easily be extended to support new comics.
 
