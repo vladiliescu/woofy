@@ -58,7 +58,7 @@ Also, due to the fact that it uses comic definition files for downloading the co
 * The "download" expression can receive arguments from other expressions, such as "match".
 * The "base" HTML element is now handled correctly.
 
-####Bugfixes
+#### Bugfixes
 * Fixed crash when trying to download images from urls containing query arguments.
 
 ---
@@ -128,7 +128,7 @@ Also, due to the fact that it uses comic definition files for downloading the co
 
 ---
 
-###0.6.1 (2010.03.28)
+### 0.6.1 (2010.03.28)
 
 #### Improvements
 * Added an option to enable random pauses between comic downloads
