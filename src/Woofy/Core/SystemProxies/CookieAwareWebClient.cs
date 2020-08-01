@@ -14,6 +14,11 @@ namespace Woofy.Core.SystemProxies
 
         protected override WebRequest GetWebRequest(Uri address)
         {
+            ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls
+                | SecurityProtocolType.Tls11
+                | SecurityProtocolType.Tls12
+                | SecurityProtocolType.Ssl3;
             var request = base.GetWebRequest(address);
             var webRequest = request as HttpWebRequest;
             if (webRequest == null)
