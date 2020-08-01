@@ -50,9 +50,9 @@ namespace Woofy.Core
 
             isPortable = ConfigurationManager.AppSettings["isPortable"].ParseAsSafe<bool>();
 
-			UpdateInfoAddress = new Uri("http://vladiliescu.ro/woofy/updateInfo.json");
-            HomePage = "http://vladiliescu.ro/woofy";
-            AuthorHomePage = "http://vladiliescu.ro";
+			UpdateInfoAddress = new Uri("https://vladiliescu.net/woofy/updateInfo.json");
+            HomePage = "https://vladiliescu.net/woofy";
+            AuthorHomePage = "https://vladiliescu.net";
             ApplicationGuid = new Guid("C59EAB54-6C2C-41a0-B516-55452A5AB3D2");
 
             ContentGroupName = "content";

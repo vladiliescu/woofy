@@ -172,7 +172,7 @@ namespace Woofy.Flows.About
             this.lnkHomePage.Size = new System.Drawing.Size(99, 13);
             this.lnkHomePage.TabIndex = 34;
             this.lnkHomePage.TabStop = true;
-            this.lnkHomePage.Text = "http://vladiliescu.ro";
+            this.lnkHomePage.Text = "https://vladiliescu.net";
             this.lnkHomePage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OnHomePageClicked);
             // 
             // AboutForm
