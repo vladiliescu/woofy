@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 using System.Threading;
 using System.Windows.Forms;
 using NLog;
@@ -45,6 +46,7 @@ namespace Woofy
             using (var mutex = CreateApplicationSpecificMutex())
             {
                 Bootstrapper.BootstrapApplication();
+                ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
 
                 Application.SetUnhandledExceptionMode(UnhandledExceptionMode.ThrowException);
                 AppDomain.CurrentDomain.UnhandledException +=
