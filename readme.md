@@ -6,6 +6,8 @@ Also, due to the fact that it uses comic definition files for downloading the co
 
 
 
+![A screenshot of Woofy](woofy.png?raw=true)
+
 ## What's new in version 1.x
 
 * A completely rewritten download engine.
