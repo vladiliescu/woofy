@@ -4,6 +4,8 @@ A webcomic downloader with a (crazy) powerful download engine. Will download com
 
 Also, due to the fact that it uses comic definition files for downloading the comics, it can easily be extended to support new comics.
 
+
+
 ## What's new in version 1.x
 
 * A completely rewritten download engine.
@@ -15,6 +17,12 @@ Also, due to the fact that it uses comic definition files for downloading the co
 
 
 ## Version history
+
+### 1.25 (2020.08.01)
+* Woofy now supports TLS 1.2
+
+#### Bugfixes
+* Woofy doesn't crash anymore when the network goes down or when a site returns an error (e.g. 403 Forbidden).
 
 ### 1.24 (2015.04.11)
 
