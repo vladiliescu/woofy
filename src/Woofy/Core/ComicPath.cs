@@ -68,11 +68,18 @@ namespace Woofy.Core
         {
             var comic = comicStore.Find(comicId);
             var rawFileName = link.Segments[link.Segments.Length - 1];
+            var windowsSafeFileName = ReplaceIllegalCharactersInFileName(rawFileName);
 
             if (!comic.PrependIndexToStrips)
-                return rawFileName;
+                return windowsSafeFileName;
 
-            return "{0:0000}_{1}".FormatTo(comic.DownloadedStrips + indexOffset, rawFileName);
+            return "{0:0000}_{1}".FormatTo(comic.DownloadedStrips + indexOffset, windowsSafeFileName);
+        }
+
+        private string ReplaceIllegalCharactersInFileName(string fileName)
+        {
+            //windows illegal characters are \/:*?"<>|
+            return fileName.Replace('\\', '_').Replace('/', '_').Replace(':', '_').Replace('*', '_').Replace('?', '_').Replace('"', '_').Replace('<', '_').Replace('>', '_').Replace('|', '_');
         }
 
         public string DownloadPathFor(string comicId, Uri link)
