@@ -78,8 +78,13 @@ namespace Woofy.Core
 
         private string ReplaceIllegalCharactersInFileName(string fileName)
         {
-            //windows illegal characters are \/:*?"<>|
-            return fileName.Replace('\\', '_').Replace('/', '_').Replace(':', '_').Replace('*', '_').Replace('?', '_').Replace('"', '_').Replace('<', '_').Replace('>', '_').Replace('|', '_');
+            string resultName = fileName;
+            char[] invalidChars = Path.GetInvalidFileNameChars();
+            foreach (char invalidChar in invalidChars)
+            {
+                resultName = resultName.Replace(invalidChar, '_');
+            }
+            return resultName;
         }
 
         public string DownloadPathFor(string comicId, Uri link)
